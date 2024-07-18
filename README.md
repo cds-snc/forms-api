@@ -1,10 +1,7 @@
-# Generic Project Template
+# GC Forms API
 
-This repository provides some base files for setting up a repository at
-CDS. Plan is to create more project template for specific technologies:
+Machine-to-machine interface for downloading form submissions.
 
-- project-template-terraform
-- project-template-python
-- project-template-nodejs
+## To run locally
 
-Note that default community health files are maintained at https://github.com/cds-snc/.github 
+`npm run start`
