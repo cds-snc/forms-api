@@ -6,8 +6,6 @@ WORKDIR /src
 
 COPY yarn.lock package.json ./
 
-RUN corepack enable
-
 # Install production dependencies.
 RUN yarn install
 
