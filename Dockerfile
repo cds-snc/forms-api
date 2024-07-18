@@ -1,22 +1,19 @@
-# Use the official Node.js image.
-# https://hub.docker.com/_/node
-FROM node:20
+FROM node:21-alpine3.19
+ENV NODE_ENV=production
 
 # Create and change to the app directory.
-WORKDIR /usr/src/app
+WORKDIR /src
 
-# Copy application dependency manifests to the container image.
-# A wildcard is used to ensure both package.json AND package-lock.json are copied.
-COPY package*.json ./
+COPY yarn.lock package.json ./
+
+RUN corepack enable
 
 # Install production dependencies.
-RUN npm install
+RUN yarn install
 
 # Copy local code to the container image.
 COPY . .
 
-# Run the web service on container startup.
-CMD [ "node", "index.js" ]
-
-# Document that the service listens on port 3000.
 EXPOSE 3000
+
+ENTRYPOINT [ "yarn", "start"]

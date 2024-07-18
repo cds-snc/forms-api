@@ -2,7 +2,14 @@
   "name": "forms-api",
   "version": "1.0.0",
   "description": "Machine-to-machine interface for downloading form submissions",
-  "main": "index.js",
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "printWidth": 100,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": false
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
@@ -12,5 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
   }
 }

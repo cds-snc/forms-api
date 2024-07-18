@@ -1,2 +1,14 @@
 node_modules
 npm-debug.log
+terraform
+.git
+.github
+.DS_Store
+.next
+.vscode
+.env
+config
+documentation
+test
+coverage
+cdk
