@@ -10,4 +10,4 @@ Machine-to-machine interface for downloading form submissions.
 
 `docker build -t forms-api .`
 
-`docker run -p 3000:3000 forms-api`
+`docker run -p 3001:3001 forms-api`
