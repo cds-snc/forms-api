@@ -12,6 +12,6 @@ RUN yarn install
 # Copy local code to the container image.
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3001
 
 ENTRYPOINT [ "yarn", "start"]
