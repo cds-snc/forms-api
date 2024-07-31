@@ -1,18 +1,19 @@
 export default function () {
   let operations = {
-    GET
+    GET,
   };
 
-  function GET(req, res, next) {
+  function GET(req, res) {
     const submission = {
       id: req.params.id,
       submission: "My form response",
-    }
+    };
     res.status(200).json(submission);
   }
 
   GET.apiDoc = {
-    summary: "Retrieves the oldest submission with status ‘new’ and modifies status to ‘downloaded’",
+    summary:
+      "Retrieves the oldest submission with status ‘new’ and modifies status to ‘downloaded’",
     parameters: [
       {
         name: "id",
