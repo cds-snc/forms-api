@@ -1,6 +1,5 @@
-import express from 'express';
-import { initialize } from 'express-openapi';
-
+import express from "express";
+import { initialize } from "express-openapi";
 
 const app = new express();
 const port = process.env.PORT || 3001;
@@ -19,7 +18,7 @@ app.listen(port, () => {
 
 app.get("/status", (request, response) => {
   const status = {
-    "Status": "Running"
+    Status: "Running",
   };
 
   response.send(status);

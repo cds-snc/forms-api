@@ -1,0 +1,23 @@
+{
+  "name": "Forms API",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:debian@sha256:f1ac6335fc8cdd253c673a76edf77d81b5aa4bf9746bc67ecce4337d6bbaeb20",
+  "containerEnv": {
+    "SHELL": "/bin/zsh"
+  },
+  "features": {
+    "aws-cli": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22.5.1"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["github.copilot", "github.vscode-github-actions"]
+    }
+  },
+  "appPort": [3001],
+  "postCreateCommand": "yarn install",
+  "remoteUser": "vscode"
+}
