@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'tests/**'
+      - "tests/**"
 
 jobs:
   test-docker-build:
