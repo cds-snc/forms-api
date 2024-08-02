@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: "22.5.1"
 
+      - name: Yarn update to v4
+        run: corepack enable && yarn set version 4.3.1
+
       - name: Cache Yarn dependencies
         id: yarn-cache
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
