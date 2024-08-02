@@ -9,6 +9,6 @@ terraform
 .env
 config
 documentation
-test
+tests
 coverage
 cdk
