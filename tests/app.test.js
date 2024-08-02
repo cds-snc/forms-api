@@ -1,9 +1,9 @@
 import request from "supertest";
 import { initialize } from "express-openapi";
-import { describe, expect, it, jest } from "@jest/globals";
+import { describe, expect, it, vi } from "vitest";
 import app from "../app";
 
-jest.mock("express-openapi");
+vi.mock("express-openapi");
 
 describe("OpenAPI init", () => {
   it("should initialize the API", () => {

@@ -1,10 +1,14 @@
-import { describe, expect, it, jest } from "@jest/globals";
+import { describe, expect, it, vi } from "vitest";
 import app from "../app";
 import "../server";
 
-jest.mock("../app", () => ({
-  listen: jest.fn(),
-}));
+vi.mock("../app", () => {
+  return {
+    default: {
+      listen: vi.fn(),
+    },
+  };
+});
 
 describe("Server", () => {
   it("should start the server on the default port", () => {

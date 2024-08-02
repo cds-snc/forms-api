@@ -1,4 +1,4 @@
-import { describe, expect, it, jest } from "@jest/globals";
+import { describe, expect, it, vi } from "vitest";
 import handler from "../../../../../api/v1/routes/forms/{id}/submission/new";
 
 describe("GET handler", () => {
@@ -10,8 +10,8 @@ describe("GET handler", () => {
     };
 
     const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn(),
     };
 
     handler().GET(req, res);
