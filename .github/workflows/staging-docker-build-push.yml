@@ -1,0 +1,68 @@
+name: "Staging — Docker build and push"
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "tests/**"
+
+env:
+  AWS_ACCOUNT_ID: ${{ vars.STAGING_AWS_ACCOUNT_ID }}
+  AWS_REGION: ca-central-1
+  ECR_REPOSITORY: forms/api
+  GITHUB_SHA: ${{ github.sha }}
+
+permissions:
+  id-token: write
+  contents: write
+  security-events: write
+
+jobs:
+  push-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Build Docker image
+        run: docker build -t forms/api .
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/forms-api-apply
+          role-session-name: ECRPush
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Staging Amazon ECR
+        id: login-ecr-staging
+        uses: aws-actions/amazon-ecr-login@8308922cec0e5e898b1f51cf0908258552976578
+
+      - name: Tag Images for Staging
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr-staging.outputs.registry }}
+        run: |
+          docker tag base $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
+          docker tag base $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Push containers to Staging Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr-staging.outputs.registry }}
+        run: |
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Docker generate SBOM
+        uses: cds-snc/security-tools/.github/actions/generate-sbom@598deeaed48ab3bb0df85f0ed124ba53f0ade385 # v3.1.0
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr-staging.outputs.registry }}
+        with:
+          docker_image: "${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.GITHUB_SHA }}"
+          dockerfile_path: "Dockerfile"
+          sbom_name: "forms-api"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Logout of Staging Amazon ECR
+        if: always()
+        run: docker logout ${{ steps.login-ecr-staging.outputs.registry }}
