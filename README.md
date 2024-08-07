@@ -2,10 +2,16 @@
 
 Machine-to-machine interface for downloading form submissions.
 
-## To run locally
+## To run locally in development mode
 
 ```sh
-yarn install & yarn start
+pnpm install & pnpm dev
+```
+
+## To run locally in production mode
+
+```sh
+pnpm install & pnpm build & pnpm start
 ```
 
 ## With docker
