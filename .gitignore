@@ -4,3 +4,4 @@ npm-debug.log
 *.gz
 .env
 build/
+.pnpm-store
