@@ -41,14 +41,14 @@ jobs:
 
       - name: Update ECS task image
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@5f07eab76e1851cbd4e07dea0f3ed53b304475bd # v1.3.0
+        uses: aws-actions/amazon-ecs-render-task-definition@0ae3bf578ea7b3c073260b3c4096016813d401ab # v1.4.0
         with:
           task-definition: task-definition.json
           container-name: ${{ env.SERVICE_NAME }}
           image: "${{ env.REGISTRY }}:${{ github.sha }}"
 
       - name: Deploy updated ECS task
-        uses: aws-actions/amazon-ecs-deploy-task-definition@69e7aed9b8acdd75a6c585ac669c33831ab1b9a3 # v1.5.0
+        uses: aws-actions/amazon-ecs-deploy-task-definition@0a9a8fb7b39516cf53cc01d453b05c67c6fc7a2c # v2.0.0
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.SERVICE_NAME }}
