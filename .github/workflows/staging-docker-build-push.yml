@@ -43,8 +43,8 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr-staging.outputs.registry }}
         run: |
-          docker tag base $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
-          docker tag base $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker tag forms/api $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
+          docker tag forms/api $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: Push containers to Staging Amazon ECR
         env:

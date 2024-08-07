@@ -1,0 +1,65 @@
+name: Staging - Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Staging — Docker build and push
+    types:
+      - completed
+
+env:
+  AWS_ACCOUNT_ID: ${{ vars.STAGING_AWS_ACCOUNT_ID }}
+  AWS_REGION: ca-central-1
+  CLUSTER_NAME: Forms
+  SERVICE_NAME: form-api
+  REGISTRY: ${{ vars.STAGING_AWS_ACCOUNT_ID }}.dkr.ecr.ca-central-1.amazonaws.com/forms/api
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-form-viewer-service:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/forms-api-apply
+          role-session-name: ECSDeploy
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Download ECS task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition ${{ env.SERVICE_NAME }} \
+            --query taskDefinition > task-definition.json
+  
+      - name: Update ECS task image
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@5f07eab76e1851cbd4e07dea0f3ed53b304475bd # v1.3.0
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ env.SERVICE_NAME }}
+          image: "${{ env.REGISTRY }}:${{ github.sha }}"
+  
+      - name: Deploy updated ECS task
+        uses: aws-actions/amazon-ecs-deploy-task-definition@69e7aed9b8acdd75a6c585ac669c33831ab1b9a3 # v1.5.0
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.SERVICE_NAME }}
+          cluster: ${{ env.CLUSTER_NAME }}
+          wait-for-service-stability: true
+
+      - name: Report deployment to Sentinel
+        if: always()
+        uses: cds-snc/sentinel-forward-data-action@main
+        with:
+          input_data: '{"product": "forms", "sha": "${{ github.sha }}", "version": "${{ github.sha }}", "repository": "${{ github.repository }}", "environment": "staging", "status": "${{ job.status }}"}'
+          log_type: CDS_Product_Deployment_Data
+          log_analytics_workspace_id: ${{ secrets.LOG_ANALYTICS_WORKSPACE_ID }}
+          log_analytics_workspace_key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}

@@ -1,0 +1,21 @@
+name: Workflow failure
+
+on:
+  workflow_run:
+    workflows:
+      - "Staging - Deploy"
+      - "Staging — Docker build and push"
+    types:
+      - completed
+
+jobs:
+  on-failure:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'failure'
+    env:
+      SLACK_WEBHOOK_URL: ${{ contains(github.event.workflow.name, 'Staging') && secrets.SLACK_WEBHOOK_FORM_STAGING_EVENTS || secrets.SLACK_WEBHOOK_FORM_PRODUCTION_EVENTS }}
+    steps:
+      - name: Notify Slack
+        run: |
+          json='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":":red: Forms API workflow failed: <${{ github.event.workflow_run.html_url }}|${{ github.event.workflow.name }}>"}}]}'
+          curl -X POST -H 'Content-type: application/json' --data "$json" ${{ env.SLACK_WEBHOOK_URL }}
