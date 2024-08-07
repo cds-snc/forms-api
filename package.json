@@ -2,8 +2,6 @@
   "name": "forms-api",
   "version": "1.0.0",
   "description": "Machine-to-machine interface for downloading form submissions",
-  "type": "module",
-  "main": "server.js",
   "repository": "git@github.com:cds-snc/forms-api.git",
   "prettier": {
     "trailingComma": "es5",
@@ -14,27 +12,42 @@
     "singleQuote": false
   },
   "scripts": {
+    "build": "tsc",
+    "start": "node build/server.js",
+    "dev": "nodemon",
     "test": "vitest run",
-    "start": "node server.js",
-    "lint": "eslint --fix .",
-    "lint:check": "eslint .",
+    "lint": "eslint --fix",
+    "lint:check": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "exec": "tsx src/server.ts",
+    "ext": "*"
   },
   "keywords": [],
   "author": "Canadian Digital Service",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-openapi": "^12.1.3"
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
-    "eslint": "9.x",
-    "globals": "^15.8.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.1.0",
+    "@types/supertest": "^6.0.2",
+    "eslint": "~9.8.0",
+    "nodemon": "^3.1.4",
     "prettier": "^3.3.3",
     "supertest": "^7.0.0",
+    "tsx": "^4.16.5",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1",
     "vitest": "^2.0.5"
   },
   "packageManager": "pnpm@9.6.0"
