@@ -47,13 +47,18 @@ jobs:
           container-name: ${{ env.SERVICE_NAME }}
           image: "${{ env.REGISTRY }}:${{ github.sha }}"
 
-      - name: Deploy updated ECS task
+      - name: Create the new ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@0a9a8fb7b39516cf53cc01d453b05c67c6fc7a2c # v2.0.0
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.SERVICE_NAME }}
           cluster: ${{ env.CLUSTER_NAME }}
-          wait-for-service-stability: true
+
+      - name: Deploy the new ECS task definition
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.CLUSTER_NAME }} \
+            --service ${{ env.SERVICE_NAME }} \
+            --force-new-deployment
 
       - name: Report deployment to Sentinel
         if: always()
