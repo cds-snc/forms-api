@@ -17,28 +17,17 @@ jobs:
         with:
           node-version: "22.5.1"
 
-      - name: Yarn update to v4
-        run: corepack enable && yarn set version 4.3.1
-
-      - name: Cache Yarn dependencies
-        id: yarn-cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
-        with:
-          path: |
-            ~/.cache/yarn
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - name: PNPM update to v9.6.0
+        run: corepack enable pnpm && corepack use pnpm@9.6.0
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
       - name: Format
-        run: yarn format:check
+        run: pnpm format:check
 
       - name: Lint
-        run: yarn lint:check
+        run: pnpm lint:check
 
       - name: Test
-        run: yarn test
+        run: pnpm test

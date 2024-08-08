@@ -2,3 +2,6 @@ node_modules/
 npm-debug.log
 .DS_Store
 *.gz
+.env
+build/
+.pnpm-store
