@@ -61,6 +61,9 @@ jobs:
             --service ${{ env.SERVICE_NAME }} \
             --task-definition ${{ env.TASK_DEFINITION_NAME }} \
             --force-new-deployment > /dev/null 2>&1
+          aws ecs wait services-stable \
+            --cluster ${{ env.CLUSTER_NAME }} \
+            --services ${{ env.SERVICE_NAME }}
 
       - name: Report deployment to Sentinel
         if: always()
