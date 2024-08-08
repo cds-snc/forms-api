@@ -12,6 +12,7 @@ env:
   AWS_REGION: ca-central-1
   CLUSTER_NAME: Forms
   SERVICE_NAME: forms-api
+  TASK_DEFINITION_NAME: forms-api
   REGISTRY: ${{ vars.STAGING_AWS_ACCOUNT_ID }}.dkr.ecr.ca-central-1.amazonaws.com/forms/api
 
 permissions:
@@ -58,7 +59,8 @@ jobs:
           aws ecs update-service \
             --cluster ${{ env.CLUSTER_NAME }} \
             --service ${{ env.SERVICE_NAME }} \
-            --force-new-deployment
+            --task-definition ${{ env.TASK_DEFINITION_NAME }} \
+            --force-new-deployment > /dev/null 2>&1
 
       - name: Report deployment to Sentinel
         if: always()
