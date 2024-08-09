@@ -3,14 +3,6 @@
   "version": "1.0.0",
   "description": "Machine-to-machine interface for downloading form submissions",
   "repository": "git@github.com:cds-snc/forms-api.git",
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "printWidth": 100,
-    "useTabs": false,
-    "semi": true,
-    "singleQuote": false
-  },
   "scripts": {
     "build": "tsc",
     "start": "node build/server.js",

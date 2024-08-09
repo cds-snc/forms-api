@@ -1,8 +1,17 @@
 import { Router } from "express";
-import { route as formsRoute } from "./routes/forms";
-import { route as healthCheckRoute } from "./routes/healthCheck";
+import formsRouter from "./routes/forms/router";
+import statusRouter from "./routes/status/router";
+import routeNotFoundMiddleware from "./middleware/routeNotFound/middleware";
+import globalErrorHandlerMiddleware from "./middleware/globalErrorHandler/middleware";
 
-export const router = Router();
+const router = Router();
 
-router.use("/status", healthCheckRoute);
-router.use("/forms", formsRoute);
+router
+  .use("/forms", formsRouter)
+  .use("/status", statusRouter)
+  // 404: Catches all unmatched routes
+  .use(routeNotFoundMiddleware)
+  // 500: Catches all unhandled errors from non async functions and errors passed through next() in async functions
+  .use(globalErrorHandlerMiddleware);
+
+export default router;
