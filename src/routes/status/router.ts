@@ -1,11 +1,9 @@
-import { Response, Router } from "express";
+import { type Response, Router } from "express";
 
-const router = Router();
+export const statusApiRoute = Router();
 
-router.get("/", (_, response: Response) => {
+statusApiRoute.get("/", (_, response: Response) => {
   response.json({
     status: "running",
   });
 });
-
-export default router;

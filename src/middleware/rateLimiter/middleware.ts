@@ -1,7 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
-async function main(request: Request, response: Response, next: NextFunction) {
+export function rateLimiterMiddleware(
+  _request: Request,
+  _response: Response,
+  next: NextFunction,
+) {
   next();
 }
-
-export default main;

@@ -1,8 +1,6 @@
-async function main(formId: string, submissionId: string) {
+export function getSubmission(formId: string, submissionId: string) {
   return {
     formId,
     submissionId,
   };
 }
-
-export default main;

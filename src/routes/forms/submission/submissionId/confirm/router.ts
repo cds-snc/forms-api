@@ -1,10 +1,8 @@
 import { Router } from "express";
-import confirmationCodeRouter from "./confirmationCode/router";
+import { confirmationCodeApiRoute } from "./confirmationCode/router";
 
-const router = Router({
+export const confirmApiRoute = Router({
   mergeParams: true,
 });
 
-router.use("/:confirmationCode", confirmationCodeRouter);
-
-export default router;
+confirmApiRoute.use("/:confirmationCode", confirmationCodeApiRoute);
