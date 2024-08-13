@@ -1,17 +1,20 @@
 import type { NextFunction, Request, Response } from "express";
 import { SignJWT } from "jose";
 import axios from "axios";
-import crypto from "crypto";
+// biome-ignore lint/correctness/noNodejsModules: we need the node crypto module
+import crypto from "node:crypto";
 
 export async function authenticationMiddleware(
   _request: Request,
   _response: Response,
   next: NextFunction,
 ) {
-  const authHeader = _request.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const authHeader = _request.headers.authorization;
+  const token = authHeader?.split("·")[1];
 
-  if (!token) return _response.sendStatus(401);
+  if (!token) {
+    return _response.sendStatus(401);
+  }
 
   const tokenData = await introspectToken(token);
 
@@ -47,12 +50,15 @@ async function introspectToken(token: string) {
     .sign(privateKey);
 
   const introspectionEndpoint = `${process.env.ZITADEL_DOMAIN}/oauth/v2/introspect`;
+
   const tokenData = await axios
     .post(
       introspectionEndpoint,
       new URLSearchParams({
+        // biome-ignore lint/style/useNamingConvention: by the spec
         client_assertion_type:
           "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        // biome-ignore lint/style/useNamingConvention: by the spec
         client_assertion: jwt,
         token: token,
       }),

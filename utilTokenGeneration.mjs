@@ -14,7 +14,7 @@ const main = async () => {
       key,
       keyId,
       userId,
-    } = require("./clzctlsjk00001y2t0o7dwnv9_private_api_key.json");
+    } = require("./example_client_private_key.json");
     const alg = "RS256";
     const privateKey = await importPKCS8(key, alg);
 
