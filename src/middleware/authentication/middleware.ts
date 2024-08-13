@@ -32,7 +32,9 @@ async function introspectToken(token: string) {
   const privateKey = crypto.createPrivateKey({
     key: JSON.parse(`${process.env.ZITADEL_APPLICATION_KEY}`).key,
   });
-  const clientId = JSON.parse(`${process.env.ZITADEL_APPLICATION_KEY}`).clientId;
+  const clientId = JSON.parse(
+    `${process.env.ZITADEL_APPLICATION_KEY}`,
+  ).clientId;
   const kid = JSON.parse(`${process.env.ZITADEL_APPLICATION_KEY}`).keyId;
 
   const jwt = await new SignJWT()
@@ -49,7 +51,8 @@ async function introspectToken(token: string) {
     .post(
       introspectionEndpoint,
       new URLSearchParams({
-        client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        client_assertion_type:
+          "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
         client_assertion: jwt,
         token: token,
       }),
@@ -57,7 +60,7 @@ async function introspectToken(token: string) {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+      },
     )
     .then((res) => res.data)
     .catch((err) => {

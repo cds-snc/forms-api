@@ -10,7 +10,11 @@ const require = createRequire(import.meta.url);
 
 const main = async () => {
   try {
-    const { key, keyId, userId } = require("./clzctlsjk00001y2t0o7dwnv9_private_api_key.json");
+    const {
+      key,
+      keyId,
+      userId,
+    } = require("./clzctlsjk00001y2t0o7dwnv9_private_api_key.json");
     const alg = "RS256";
     const privateKey = await importPKCS8(key, alg);
 
@@ -36,7 +40,7 @@ const main = async () => {
         {
           params: reqData,
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        }
+        },
       )
       .catch((e) => {
         console.error(e);
