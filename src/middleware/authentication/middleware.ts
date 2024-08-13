@@ -7,7 +7,7 @@ async function main(request: Request, response: Response, next: NextFunction) {
   const authHeader = request.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (token == null) return response.sendStatus(401);
+  if (!token) return response.sendStatus(401);
 
   const tokenData = await introspectToken(token);
 
