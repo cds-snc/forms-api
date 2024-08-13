@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { formsApiRoute } from "./routes/forms/router";
-import { statusApiRoute } from "./routes/status/router";
-import { routeNotFoundMiddleware } from "./middleware/routeNotFound/middleware";
-import { globalErrorHandlerMiddleware } from "./middleware/globalErrorHandler/middleware";
+import { formsApiRoute } from "@routes/forms/router";
+import { statusApiRoute } from "@routes/status/router";
+import { routeNotFoundMiddleware } from "@middleware/routeNotFound/middleware";
+import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler/middleware";
 
 export const router = Router();
 

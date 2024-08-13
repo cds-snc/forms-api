@@ -7,7 +7,7 @@ export const confirmationCodeApiRoute = Router({
 confirmationCodeApiRoute.put("/", (request: Request, response: Response) => {
   response.json({
     formId: request.params.formId,
-    submissionId: request.params.submissionId,
+    submissionName: request.params.submissionName,
     confirmationCode: request.params.confirmationCode,
   });
 });
