@@ -1,12 +1,10 @@
 import { Router } from "express";
-import submissionRouter from "./submission/router";
-import authenticationMiddleware from "../../middleware/authentication/middleware";
-import rateLimiterMiddleware from "../../middleware/rateLimiter/middleware";
+import { submissionApiRoute } from "./submission/router";
+import { authenticationMiddleware } from "../../middleware/authentication/middleware";
+import { rateLimiterMiddleware } from "../../middleware/rateLimiter/middleware";
 
-const router = Router();
+export const formsApiRoute = Router();
 
-router
+formsApiRoute
   .use(rateLimiterMiddleware)
-  .use("/:formId/submission", authenticationMiddleware, submissionRouter);
-
-export default router;
+  .use("/:formId/submission", authenticationMiddleware, submissionApiRoute);

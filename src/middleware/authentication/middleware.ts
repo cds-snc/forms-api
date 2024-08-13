@@ -1,25 +1,27 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { SignJWT } from "jose";
 import axios from "axios";
 import crypto from "crypto";
 
-async function main(request: Request, response: Response, next: NextFunction) {
-  const authHeader = request.headers["authorization"];
+export async function authenticationMiddleware(
+  _request: Request,
+  _response: Response,
+  next: NextFunction,
+) {
+  const authHeader = _request.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) return response.sendStatus(401);
+  if (!token) return _response.sendStatus(401);
 
   const tokenData = await introspectToken(token);
 
   const { username, exp } = tokenData;
-  if (request.params.formId !== username) {
-    response.status(403).json({ message: "Invalid token" });
-    return;
+  if (_request.params.formId !== username) {
+    return _response.status(403).json({ message: "Invalid token" });
   }
 
   if (!exp || exp < Date.now() / 1000) {
-    response.status(401).json({ message: "Token expired" });
-    return;
+    return _response.status(401).json({ message: "Token expired" });
   }
 
   next();
@@ -64,5 +66,3 @@ async function introspectToken(token: string) {
     });
   return tokenData;
 }
-
-export default main;
