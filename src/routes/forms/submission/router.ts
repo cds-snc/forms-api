@@ -1,15 +1,13 @@
 import { Router } from "express";
-import newRouter from "./new/router";
-import downloadedRouter from "./downloaded/router";
-import submissionIdRouter from "./submissionId/router";
+import { newApiRoute } from "./new/router";
+import { downloadedApiRoute } from "./downloaded/router";
+import { submissionIdApiRoute } from "./submissionId/router";
 
-const router = Router({
+export const submissionApiRoute = Router({
   mergeParams: true,
 });
 
-router
-  .use("/new", newRouter)
-  .use("/downloaded", downloadedRouter)
-  .use("/:submissionId", submissionIdRouter);
-
-export default router;
+submissionApiRoute
+  .use("/new", newApiRoute)
+  .use("/downloaded", downloadedApiRoute)
+  .use("/:submissionId", submissionIdApiRoute);

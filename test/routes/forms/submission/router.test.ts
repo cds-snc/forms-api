@@ -1,14 +1,14 @@
 import { vi, describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
 import express from "express";
-import router from "../../../../src/routes/forms/router";
+import { formsApiRoute } from "../../../../src/routes/forms/router";
 
 vi.mock("../../../../src/middleware/authentication/middleware", () => ({
-  default: (_req, _res, next) => next(),
+  authenticationMiddleware: (_req, _res, next) => next(),
 }));
 
 vi.mock("../../../../src/middleware/rateLimiter/middleware", () => ({
-  default: (_req, _res, next) => next(),
+  rateLimiterMiddleware: (_req, _res, next) => next(),
 }));
 
 describe("routes/forms/submission", () => {
@@ -16,7 +16,7 @@ describe("routes/forms/submission", () => {
 
   beforeAll(() => {
     app = express();
-    app.use("/", router);
+    app.use("/", formsApiRoute);
   });
 
   it("GET /new", async () => {

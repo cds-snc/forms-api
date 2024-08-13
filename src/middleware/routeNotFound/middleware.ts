@@ -1,7 +1,5 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
-function main(_request: Request, response: Response) {
+export function routeNotFoundMiddleware(_request: Request, response: Response) {
   response.sendStatus(404);
 }
-
-export default main;

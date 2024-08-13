@@ -1,13 +1,11 @@
-import { Request, Response, Router } from "express";
+import { type Request, type Response, Router } from "express";
 
-const router = Router({
+export const downloadedApiRoute = Router({
   mergeParams: true,
 });
 
-router.get("/", async (request: Request, response: Response) => {
+downloadedApiRoute.get("/", (request: Request, response: Response) => {
   response.json({
     formId: request.params.formId,
   });
 });
-
-export default router;

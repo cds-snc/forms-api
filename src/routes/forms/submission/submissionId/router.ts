@@ -1,18 +1,16 @@
-import { Request, Response, Router } from "express";
-import confirmRouter from "./confirm/router";
-import getSubmission from "../../../../lib/vault/getSubmission";
+import { type Request, type Response, Router } from "express";
+import { confirmApiRoute } from "./confirm/router";
+import { getSubmission } from "../../../../lib/vault/getSubmission";
 
-const router = Router({
+export const submissionIdApiRoute = Router({
   mergeParams: true,
 });
 
-router.get("/", async (request: Request, response: Response) => {
+submissionIdApiRoute.get("/", (request: Request, response: Response) => {
   const formId = request.params.formId;
   const submissionId = request.params.submissionId;
-  const submission = await getSubmission(formId, submissionId);
+  const submission = getSubmission(formId, submissionId);
   response.json(submission);
 });
 
-router.use("/confirm", confirmRouter);
-
-export default router;
+submissionIdApiRoute.use("/confirm", confirmApiRoute);

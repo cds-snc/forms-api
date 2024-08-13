@@ -1,14 +1,14 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
 import express from "express";
-import router from "../../../src/routes/status/router";
+import { statusApiRoute } from "../../../src/routes/status/router";
 
 describe("routes/status", () => {
   let app: express.Express;
 
   beforeAll(() => {
     app = express();
-    app.use("/", router);
+    app.use("/", statusApiRoute);
   });
 
   it("GET /status", async () => {
