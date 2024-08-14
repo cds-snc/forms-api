@@ -5,26 +5,26 @@ import axios from "axios";
 import crypto from "node:crypto";
 
 export async function authenticationMiddleware(
-  _request: Request,
-  _response: Response,
+  request: Request,
+  response: Response,
   next: NextFunction,
 ) {
-  const authHeader = _request.headers.authorization;
-  const token = authHeader?.split("·")[1];
+  const authHeader = request.headers.authorization;
+  const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    return _response.sendStatus(401);
+    return response.sendStatus(401);
   }
 
   const tokenData = await introspectToken(token);
-
+  console.log(tokenData);
   const { username, exp } = tokenData;
-  if (_request.params.formId !== username) {
-    return _response.status(403).json({ message: "Invalid token" });
+  if (request.params.formId !== username) {
+    return response.status(403).json({ message: "Invalid token" });
   }
 
   if (!exp || exp < Date.now() / 1000) {
-    return _response.status(401).json({ message: "Token expired" });
+    return response.status(401).json({ message: "Token expired" });
   }
 
   next();
