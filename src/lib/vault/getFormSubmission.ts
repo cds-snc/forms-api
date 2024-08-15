@@ -12,13 +12,13 @@ export async function getFormSubmission(
   try {
     const response = await dynamodbClient.send(
       new GetCommand({
-        // biome-ignore lint/style/useNamingConvention: <explanation>
+        // biome-ignore lint/style/useNamingConvention: <AWS variable naming convention is beyond our control>
         TableName: "Vault",
-        // biome-ignore lint/style/useNamingConvention: <explanation>
+        // biome-ignore lint/style/useNamingConvention: <AWS variable naming convention is beyond our control>
         Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
-        // biome-ignore lint/style/useNamingConvention: <explanation>
+        // biome-ignore lint/style/useNamingConvention: <AWS variable naming convention is beyond our control>
         ProjectionExpression: "FormSubmission",
-      }),
+      })
     );
 
     if (response.Item === undefined) {
