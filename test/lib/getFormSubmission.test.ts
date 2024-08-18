@@ -2,6 +2,7 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { getFormSubmission } from "@lib/vault/getFormSubmission";
+import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -12,7 +13,6 @@ describe("getFormSubmission should", () => {
 
   it("return an undefined form submission if DynamoDB was not able to find it", async () => {
     dynamoDbMock.on(GetCommand).resolvesOnce({
-      // biome-ignore lint/style/useNamingConvention: <explanation>
       Item: undefined,
     });
 
@@ -26,9 +26,8 @@ describe("getFormSubmission should", () => {
 
   it("return a form submission if DynamoDB was able to find it", async () => {
     dynamoDbMock.on(GetCommand).resolvesOnce({
-      // biome-ignore lint/style/useNamingConvention: <explanation>
       Item: {
-        // biome-ignore lint/style/useNamingConvention: <explanation>
+        Status: "Downloaded",
         FormSubmission: "Here is my form submission",
       },
     });
@@ -39,7 +38,8 @@ describe("getFormSubmission should", () => {
     );
 
     expect(formSubmission).toStrictEqual({
-      content: "Here is my form submission",
+      status: FormSubmissionStatus.Downloaded,
+      answers: "Here is my form submission",
     });
   });
 

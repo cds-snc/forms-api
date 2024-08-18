@@ -2,11 +2,11 @@ import { vi, describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
 import express, { type Express } from "express";
 import { submissionApiRoute } from "@routes/forms/submission/router";
+import { getFormSubmission } from "@src/lib/vault/getFormSubmission";
+import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission";
 
-vi.mock("@lib/vault/getFormSubmission", () => ({
-  getFormSubmission: (_formId: string, _submissionName: string) =>
-    Promise.resolve({ content: "here is my form" }),
-}));
+vi.mock("@lib/vault/getFormSubmission");
+const getFormSubmissionMock = vi.mocked(getFormSubmission);
 
 describe("/forms/:formId/submission", () => {
   let server: Express;
@@ -33,7 +33,13 @@ describe("/forms/:formId/submission", () => {
   describe("/:submissionName", () => {
     describe("Response to GET operation when", () => {
       it("submissionName format is valid", async () => {
+        getFormSubmissionMock.mockResolvedValueOnce({
+          status: FormSubmissionStatus.Downloaded,
+          answers: "Here is my form submission",
+        });
+
         const response = await request(server).get("/01-08-a571");
+
         expect(response.status).toBe(200);
       });
 

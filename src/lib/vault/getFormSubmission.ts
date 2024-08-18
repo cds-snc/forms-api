@@ -1,9 +1,9 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 import { dynamodbClient } from "@lib/awsServicesConnector";
-
-interface FormSubmission {
-  content: string;
-}
+import {
+  formSubmissionFromDynamoDbResponse,
+  type FormSubmission,
+} from "@lib/vault/dataStructures/formSubmission";
 
 export async function getFormSubmission(
   formId: string,
@@ -12,22 +12,20 @@ export async function getFormSubmission(
   try {
     const response = await dynamodbClient.send(
       new GetCommand({
-        // biome-ignore lint/style/useNamingConvention: <AWS variable naming convention is beyond our control>
         TableName: "Vault",
-        // biome-ignore lint/style/useNamingConvention: <AWS variable naming convention is beyond our control>
         Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
-        // biome-ignore lint/style/useNamingConvention: <AWS variable naming convention is beyond our control>
-        ProjectionExpression: "FormSubmission",
-      })
+        ProjectionExpression: "#status,FormSubmission",
+        ExpressionAttributeNames: {
+          "#status": "Status",
+        },
+      }),
     );
 
     if (response.Item === undefined) {
       return undefined;
     }
 
-    return {
-      content: response.Item.FormSubmission,
-    };
+    return formSubmissionFromDynamoDbResponse(response.Item);
   } catch (error) {
     console.error(
       `[dynamodb] Failed to retrieve form submission. FormId: ${formId} / SubmissionName: ${submissionName}. Reason: ${JSON.stringify(
