@@ -6,6 +6,9 @@ import { rateLimiterMiddleware } from "@middleware/rateLimiter/middleware";
 export const formsApiRoute = Router();
 
 formsApiRoute
-  .use(authenticationMiddleware)
   .use(rateLimiterMiddleware)
-  .use("/:formId(c[a-z0-9]{24})/submission", submissionApiRoute);
+  .use(
+    "/:formId(c[a-z0-9]{24})/submission",
+    authenticationMiddleware,
+    submissionApiRoute,
+  );
