@@ -34,7 +34,7 @@ describe("/forms/:formId/submission", () => {
     describe("Response to GET operation when", () => {
       it("submissionName format is valid", async () => {
         getFormSubmissionMock.mockResolvedValueOnce({
-          status: FormSubmissionStatus.Downloaded,
+          status: FormSubmissionStatus.New,
           answers: "Here is my form submission",
         });
 

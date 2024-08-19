@@ -1,7 +1,6 @@
 import { type Request, type Response, Router } from "express";
 import { confirmApiRoute } from "@src/routes/forms/submission/submissionName/confirm/router";
 import { getFormSubmission } from "@lib/vault/getFormSubmission";
-import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission";
 
 export const submissionNameApiRoute = Router({
   mergeParams: true,
@@ -20,13 +19,6 @@ submissionNameApiRoute.get(
         return response
           .status(404)
           .json({ error: "Requested form submission does not exist" });
-      }
-
-      if (formSubmission.status === FormSubmissionStatus.New) {
-        return response.status(403).json({
-          error:
-            "Requested form submission can't be retrieved because it is a new one",
-        });
       }
 
       return response.json(formSubmission);

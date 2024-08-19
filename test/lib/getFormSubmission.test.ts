@@ -27,7 +27,7 @@ describe("getFormSubmission should", () => {
   it("return a form submission if DynamoDB was able to find it", async () => {
     dynamoDbMock.on(GetCommand).resolvesOnce({
       Item: {
-        Status: "Downloaded",
+        Status: "New",
         FormSubmission: "Here is my form submission",
       },
     });
@@ -38,7 +38,7 @@ describe("getFormSubmission should", () => {
     );
 
     expect(formSubmission).toStrictEqual({
-      status: FormSubmissionStatus.Downloaded,
+      status: FormSubmissionStatus.New,
       answers: "Here is my form submission",
     });
   });

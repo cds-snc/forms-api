@@ -28,7 +28,7 @@ describe("/forms/:formId/submission/:submissionName", () => {
       });
     });
 
-    it("form submission does exist but is a new one", async () => {
+    it("form submission does exist", async () => {
       getFormSubmissionMock.mockResolvedValueOnce({
         status: FormSubmissionStatus.New,
         answers: "Here is my form submission",
@@ -36,24 +36,9 @@ describe("/forms/:formId/submission/:submissionName", () => {
 
       const response = await request(server).get("/");
 
-      expect(response.status).toBe(403);
-      expect(response.body).toEqual({
-        error:
-          "Requested form submission can't be retrieved because it is a new one",
-      });
-    });
-
-    it("form submission does exist", async () => {
-      getFormSubmissionMock.mockResolvedValueOnce({
-        status: FormSubmissionStatus.Downloaded,
-        answers: "Here is my form submission",
-      });
-
-      const response = await request(server).get("/");
-
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
-        status: FormSubmissionStatus.Downloaded,
+        status: FormSubmissionStatus.New,
         answers: "Here is my form submission",
       });
     });
