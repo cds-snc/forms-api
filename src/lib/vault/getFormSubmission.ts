@@ -1,5 +1,5 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
-import { dynamodbClient } from "@lib/awsServicesConnector";
+import { AwsServicesConnector } from "@lib/awsServicesConnector";
 import {
   formSubmissionFromDynamoDbResponse,
   type FormSubmission,
@@ -10,16 +10,17 @@ export async function getFormSubmission(
   submissionName: string,
 ): Promise<FormSubmission | undefined> {
   try {
-    const response = await dynamodbClient.send(
-      new GetCommand({
-        TableName: "Vault",
-        Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
-        ProjectionExpression: "#status,FormSubmission",
-        ExpressionAttributeNames: {
-          "#status": "Status",
-        },
-      }),
-    );
+    const response =
+      await AwsServicesConnector.getInstance().dynamodbClient.send(
+        new GetCommand({
+          TableName: "Vault",
+          Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
+          ProjectionExpression: "#status,FormSubmission",
+          ExpressionAttributeNames: {
+            "#status": "Status",
+          },
+        }),
+      );
 
     if (response.Item === undefined) {
       return undefined;

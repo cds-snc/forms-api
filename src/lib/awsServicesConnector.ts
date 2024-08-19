@@ -12,9 +12,25 @@ const localstackConfig = {
   }),
 };
 
-export const dynamodbClient = DynamoDBDocumentClient.from(
-  new DynamoDBClient({
-    ...globalConfig,
-    ...localstackConfig,
-  }),
-);
+export class AwsServicesConnector {
+  private static instance: AwsServicesConnector | undefined = undefined;
+
+  public dynamodbClient: DynamoDBDocumentClient;
+
+  private constructor() {
+    this.dynamodbClient = DynamoDBDocumentClient.from(
+      new DynamoDBClient({
+        ...globalConfig,
+        ...localstackConfig,
+      }),
+    );
+  }
+
+  public static getInstance(): AwsServicesConnector {
+    if (AwsServicesConnector.instance === undefined) {
+      AwsServicesConnector.instance = new AwsServicesConnector();
+    }
+
+    return AwsServicesConnector.instance;
+  }
+}
