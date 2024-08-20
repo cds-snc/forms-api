@@ -15,7 +15,7 @@ export async function getFormSubmission(
         new GetCommand({
           TableName: "Vault",
           Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
-          ProjectionExpression: "#status,FormSubmission",
+          ProjectionExpression: "#status,FormSubmission,ConfirmationCode",
           ExpressionAttributeNames: {
             "#status": "Status",
           },
@@ -34,6 +34,7 @@ export async function getFormSubmission(
         Object.getOwnPropertyNames(error),
       )}`,
     );
+
     throw error;
   }
 }

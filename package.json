@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "test": "vitest run",
     "lint": "biome lint --write .",
-    "lint:check": "biome lint .",
+    "lint:check": "biome lint --error-on-warnings .",
     "format": "biome format --write .",
     "format:check": "biome format ."
   },

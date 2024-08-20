@@ -6,6 +6,8 @@ export const submissionNameApiRoute = Router({
   mergeParams: true,
 });
 
+submissionNameApiRoute.use("/confirm", confirmApiRoute);
+
 submissionNameApiRoute.get(
   "/",
   async (request: Request, response: Response) => {
@@ -18,7 +20,7 @@ submissionNameApiRoute.get(
       if (formSubmission === undefined) {
         return response
           .status(404)
-          .json({ error: "Requested form submission does not exist" });
+          .json({ error: "Form submission does not exist" });
       }
 
       return response.json(formSubmission);
@@ -33,5 +35,3 @@ submissionNameApiRoute.get(
     }
   },
 );
-
-submissionNameApiRoute.use("/confirm", confirmApiRoute);
