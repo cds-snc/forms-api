@@ -15,7 +15,7 @@ export async function authenticationMiddleware(
 
   const tokenData = await introspectToken(token);
 
-  if (!tokenData || typeof tokenData !== 'object') {
+  if (!tokenData || typeof tokenData !== "object") {
     return response.sendStatus(403);
   }
 

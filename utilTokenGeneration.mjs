@@ -20,24 +20,18 @@ const prompt = (query) => new Promise((resolve) => readline.question(query, reso
 
 async function getPrivateKeyData() {
   try {
-    // Prompt for the file path
     const filePath = await prompt('Enter private key file: ');
 
-    // Validate input
     if (!filePath.trim()) {
       throw new Error('File path cannot be empty.');
     }
 
-    // Read the file
     const fileContent = await readFile(filePath.trim(), 'utf8');
 
-    // Parse JSON content
-    const data = JSON.parse(fileContent);
-
-    return data;
+    return JSON.parse(fileContent);
   } catch (error) {
     console.error('An error occurred:', error.message);
-    throw error; // Re-throw the error after logging it
+    throw error;
   }
 }
 
