@@ -46,16 +46,11 @@ describe("Authorization middleware", () => {
         formId: "def",
       },
     };
-    const mockResponseSent = { json: vi.fn() };
-    mockResponse = {
-      status: vi.fn().mockImplementation(() => {
-        return mockResponseSent;
-      }),
-    };
 
-    const spy = vi.spyOn(introspectToken, "introspectToken");
-    spy.mockReturnValue(
-      Promise.resolve({ username: "abc", exp: Date.now() / 1000 + 1000 }),
+    const introspectTokenSpy = vi.spyOn(introspectToken, "introspectToken");
+    
+    introspectTokenSpy.mockReturnValue(
+      Promise.resolve(undefined),
     );
 
     authenticationMiddleware(
@@ -63,6 +58,8 @@ describe("Authorization middleware", () => {
       mockResponse as Response,
       nextFunction,
     );
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(introspectTokenSpy).toHaveBeenCalledTimes(1);
+    expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
+
   });
 });
