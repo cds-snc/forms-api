@@ -14,9 +14,14 @@ export async function authenticationMiddleware(
   }
 
   const tokenData = await introspectToken(token);
+
+  if (!tokenData || typeof tokenData !== "object") {
+    return response.sendStatus(403);
+  }
+
   const { username, exp } = tokenData;
   if (request.params.formId !== username) {
-    return response.status(403);
+    return response.sendStatus(403);
   }
 
   if (!exp || exp < Date.now() / 1000) {

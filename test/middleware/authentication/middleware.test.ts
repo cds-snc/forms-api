@@ -16,28 +16,31 @@ describe("Authorization middleware", () => {
     };
   });
 
-  it("without headers", () => {
-    authenticationMiddleware(
+  it("without headers", async () => {
+    await authenticationMiddleware(
       mockRequest as Request,
       mockResponse as Response,
       nextFunction,
     );
+
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
   });
 
-  it("with headers but no bearer token", () => {
+  it("with headers but no bearer token", async () => {
     mockRequest = {
       headers: {},
     };
-    authenticationMiddleware(
+
+    await authenticationMiddleware(
       mockRequest as Request,
       mockResponse as Response,
       nextFunction,
     );
+
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
   });
 
-  it("with headers and a bearer token", () => {
+  it("with headers and an invalid bearer token", async () => {
     mockRequest = {
       headers: {
         authorization: "Bearer abc",
@@ -46,23 +49,17 @@ describe("Authorization middleware", () => {
         formId: "def",
       },
     };
-    const mockResponseSent = { json: vi.fn() };
-    mockResponse = {
-      status: vi.fn().mockImplementation(() => {
-        return mockResponseSent;
-      }),
-    };
 
-    const spy = vi.spyOn(introspectToken, "introspectToken");
-    spy.mockReturnValue(
-      Promise.resolve({ username: "abc", exp: Date.now() / 1000 + 1000 }),
-    );
+    const introspectTokenSpy = vi.spyOn(introspectToken, "introspectToken");
+    introspectTokenSpy.mockReturnValueOnce(Promise.resolve(undefined));
 
-    authenticationMiddleware(
+    await authenticationMiddleware(
       mockRequest as Request,
       mockResponse as Response,
       nextFunction,
     );
-    expect(spy).toHaveBeenCalledTimes(1);
+
+    expect(introspectTokenSpy).toHaveBeenCalledTimes(1);
+    expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
   });
 });
