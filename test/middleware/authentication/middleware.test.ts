@@ -48,10 +48,8 @@ describe("Authorization middleware", () => {
     };
 
     const introspectTokenSpy = vi.spyOn(introspectToken, "introspectToken");
-    
-    introspectTokenSpy.mockReturnValue(
-      Promise.resolve(undefined),
-    );
+
+    introspectTokenSpy.mockReturnValue(Promise.resolve(undefined));
 
     authenticationMiddleware(
       mockRequest as Request,
@@ -60,6 +58,5 @@ describe("Authorization middleware", () => {
     );
     expect(introspectTokenSpy).toHaveBeenCalledTimes(1);
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
-
   });
 });
