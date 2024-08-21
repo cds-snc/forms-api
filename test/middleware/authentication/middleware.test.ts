@@ -37,7 +37,7 @@ describe("Authorization middleware", () => {
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
   });
 
-  it("with headers and a bearer token", () => {
+  it("with headers and an invalid bearer token", async () => {
     mockRequest = {
       headers: {
         authorization: "Bearer abc",
@@ -48,15 +48,14 @@ describe("Authorization middleware", () => {
     };
 
     const introspectTokenSpy = vi.spyOn(introspectToken, "introspectToken");
-
-    introspectTokenSpy.mockReturnValue(Promise.resolve(undefined));
+    introspectTokenSpy.mockReturnValueOnce(Promise.resolve(undefined));
 
     authenticationMiddleware(
       mockRequest as Request,
       mockResponse as Response,
       nextFunction,
     );
-    expect(introspectTokenSpy).toHaveBeenCalledTimes(1);
+    await expect(introspectTokenSpy).toHaveBeenCalledTimes(1);
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
   });
 });
