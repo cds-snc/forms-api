@@ -16,24 +16,27 @@ describe("Authorization middleware", () => {
     };
   });
 
-  it("without headers", () => {
-    authenticationMiddleware(
+  it("without headers", async () => {
+    await authenticationMiddleware(
       mockRequest as Request,
       mockResponse as Response,
       nextFunction,
     );
+
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
   });
 
-  it("with headers but no bearer token", () => {
+  it("with headers but no bearer token", async () => {
     mockRequest = {
       headers: {},
     };
-    authenticationMiddleware(
+
+    await authenticationMiddleware(
       mockRequest as Request,
       mockResponse as Response,
       nextFunction,
     );
+
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
   });
 
@@ -55,6 +58,7 @@ describe("Authorization middleware", () => {
       mockResponse as Response,
       nextFunction,
     );
+
     expect(introspectTokenSpy).toHaveBeenCalledTimes(1);
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
   });
