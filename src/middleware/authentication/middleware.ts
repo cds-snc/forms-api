@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { introspectToken } from "../../lib/idp/introspectToken";
+import { introspectToken } from "@lib/idp/introspectToken";
 
 export async function authenticationMiddleware(
   request: Request,

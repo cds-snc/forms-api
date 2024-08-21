@@ -1,42 +1,62 @@
 import { vi, describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
-import express from "express";
-import { formsApiRoute } from "../../../../src/routes/forms/router";
+import express, { type Express } from "express";
+import { submissionApiRoute } from "@routes/forms/submission/router";
+import { getFormSubmission } from "@src/lib/vault/getFormSubmission";
+import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission";
 
-vi.mock("../../../../src/middleware/authentication/middleware", () => ({
-  authenticationMiddleware: (_req, _res, next) => next(),
-}));
+vi.mock("@lib/vault/getFormSubmission");
+const getFormSubmissionMock = vi.mocked(getFormSubmission);
 
-vi.mock("../../../../src/middleware/rateLimiter/middleware", () => ({
-  rateLimiterMiddleware: (_req, _res, next) => next(),
-}));
-
-describe("routes/forms/submission", () => {
-  let app: express.Express;
+describe("/forms/:formId/submission", () => {
+  let server: Express;
 
   beforeAll(() => {
-    app = express();
-    app.use("/", formsApiRoute);
+    server = express();
+    server.use("/", submissionApiRoute);
   });
 
-  it("GET /new", async () => {
-    const response = await request(app).get("/1234/submission/new");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ formId: "1234" });
+  describe("/new", () => {
+    it("Response to GET operation", async () => {
+      const response = await request(server).get("/new");
+      expect(response.status).toBe(200);
+    });
   });
 
-  it("GET /downloaded", async () => {
-    const response = await request(app).get("/1234/submission/downloaded");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ formId: "1234" });
+  describe("/downloaded", () => {
+    it("Response to GET operation", async () => {
+      const response = await request(server).get("/downloaded");
+      expect(response.status).toBe(200);
+    });
   });
 
-  it("GET /:submissionId", async () => {
-    const response = await request(app).get("/1234/submission/5678");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({
-      formId: "1234",
-      submissionId: "5678",
+  describe("/:submissionName", () => {
+    describe("Response to GET operation when", () => {
+      it("submissionName format is valid", async () => {
+        getFormSubmissionMock.mockResolvedValueOnce({
+          status: FormSubmissionStatus.New,
+          answers: "Here is my form submission",
+        });
+
+        const response = await request(server).get("/01-08-a571");
+
+        expect(response.status).toBe(200);
+      });
+
+      it.each([
+        "invalid",
+        "010-08-a571",
+        "01-08-a51",
+        "0-8-a71",
+        "ab-01-a571",
+        "01-ab-a571",
+      ])(
+        "submissionName format is not valid (testing %s)",
+        async (submissionName: string) => {
+          const response = await request(server).get(`/${submissionName}`);
+          expect(response.status).toBe(404);
+        },
+      );
     });
   });
 });

@@ -1,6 +1,6 @@
 import express, { type Express } from "express";
-import { SERVER_PORT } from "./config";
-import { router } from "./router";
+import { SERVER_PORT } from "@src/config";
+import { router } from "@src/router";
 
 const server: Express = express();
 

@@ -1,7 +1,8 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import type { NextFunction, Request, Response } from "express";
-import { authenticationMiddleware } from "../../../src/middleware/authentication/middleware";
-import * as introspectToken from "../../../src/lib/idp/introspectToken";
+import { authenticationMiddleware } from "@middleware/authentication/middleware";
+// biome-ignore lint/style/noNamespaceImport: To be able to use the Vitest `spyOn` function we need to import all
+import * as introspectToken from "@lib/idp/introspectToken";
 
 describe("Authorization middleware", () => {
   let mockRequest: Partial<Request>;
