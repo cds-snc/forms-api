@@ -18,7 +18,9 @@ export async function getFormNewSubmissions(
           FilterExpression: "#status = :status",
           ProjectionExpression: "CreatedAt,#Name",
           ExpressionAttributeNames: {
+            "#FormID": "FormID",
             "#status": "Status",
+            "#Name": "Name",
           },
           ExpressionAttributeValues: {
             ":formId": formId,
