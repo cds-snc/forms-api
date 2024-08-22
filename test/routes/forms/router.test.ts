@@ -32,7 +32,7 @@ describe("/forms/:formId/submission", () => {
   describe("Response to GET operation when", () => {
     it("formId format is valid", async () => {
       const response = await request(server).get(
-        "/clzsn6tao000611j50dexeob0/submission/new", // Calling /new because the forms sub router does not implement any HTTP operation
+        "/clzsn6tao000611j50dexeob0/submission/downloaded", // Calling /downloaded (dummy) because the forms sub router does not implement any HTTP operation
       );
       expect(response.status).toBe(200);
     });

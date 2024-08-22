@@ -4,9 +4,13 @@ import express, { type Express } from "express";
 import { submissionApiRoute } from "@routes/forms/submission/router";
 import { getFormSubmission } from "@src/lib/vault/getFormSubmission";
 import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission";
+import { getFormNewSubmissions } from "@src/lib/vault/getFormNewSubmissions";
 
 vi.mock("@lib/vault/getFormSubmission");
 const getFormSubmissionMock = vi.mocked(getFormSubmission);
+
+vi.mock("@lib/vault/getFormNewSubmissions");
+const getFormNewSubmissionsMock = vi.mocked(getFormNewSubmissions);
 
 describe("/forms/:formId/submission", () => {
   let server: Express;
@@ -18,7 +22,15 @@ describe("/forms/:formId/submission", () => {
 
   describe("/new", () => {
     it("Response to GET operation", async () => {
+      getFormNewSubmissionsMock.mockResolvedValueOnce([
+        {
+          createdAt: 123,
+          submissionName: "ABC",
+        },
+      ]);
+
       const response = await request(server).get("/new");
+
       expect(response.status).toBe(200);
     });
   });
