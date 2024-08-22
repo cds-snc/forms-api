@@ -20,7 +20,7 @@ newApiRoute.get("/", async (request: Request, response: Response) => {
     return response.json(formNewSubmissions);
   } catch (error) {
     console.error(
-      `[route] Internal error while serving request: /forms/${formId}/submission/${submissionName}. Reason: ${JSON.stringify(
+      `[route] Internal error while serving request: /forms/${formId}/submission/new. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),
       )}`,
