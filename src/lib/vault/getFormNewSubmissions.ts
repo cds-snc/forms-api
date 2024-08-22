@@ -16,12 +16,9 @@ export async function getFormNewSubmissions(
           TableName: "Vault",
           KeyConditionExpression: "#FormID = :formId",
           FilterExpression: "#status = :status",
-          ProjectionExpression: "#CreatedAt,#Name",
+          ProjectionExpression: "CreatedAt,#Name",
           ExpressionAttributeNames: {
-            "#FormID": "FormID",
             "#status": "Status",
-            "#CreatedAt": "CreatedAt",
-            "#Name": "Name",
           },
           ExpressionAttributeValues: {
             ":formId": formId,

@@ -1,4 +1,4 @@
-import { getFormNewSubmissions } from "@src/lib/vault/getFormNewSubmission";
+import { getFormNewSubmissions } from "@src/lib/vault/getFormNewSubmissions";
 import { type Request, type Response, Router } from "express";
 
 export const newApiRoute = Router({
