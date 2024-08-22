@@ -10,6 +10,11 @@ export interface FormSubmission {
   answers: string;
 }
 
+export interface FormNewSubmission {
+  createdAt: number;
+  submissionName: string;
+}
+
 export function formSubmissionFromDynamoDbResponse(
   response: Record<string, unknown>,
 ): FormSubmission {
@@ -17,4 +22,17 @@ export function formSubmissionFromDynamoDbResponse(
     status: response.Status as FormSubmissionStatus,
     answers: response.FormSubmission as string,
   };
+}
+
+export function formNewSubmissionFromDynamoDbResponse(
+  response: Record<string, unknown>[],
+): FormNewSubmission[] {
+  const formSubmissions: FormNewSubmission[] = [];
+  for (const item of response) {
+    formSubmissions.push({
+      createdAt: item.CreatedAt as number,
+      submissionName: item.Name as string,
+    });
+  }
+  return formSubmissions;
 }
