@@ -14,12 +14,12 @@ export async function getFormNewSubmissions(
       await AwsServicesConnector.getInstance().dynamodbClient.send(
         new QueryCommand({
           TableName: "Vault",
-          KeyConditionExpression: "#FormID = :formId",
-          FilterExpression: "#status = :status",
+          IndexName: "Status",
+          KeyConditionExpression: "#FormID = :formId AND #Status = :status",
           ProjectionExpression: "CreatedAt,#Name",
           ExpressionAttributeNames: {
             "#FormID": "FormID",
-            "#status": "Status",
+            "#Status": "Status",
             "#Name": "Name",
           },
           ExpressionAttributeValues: {
