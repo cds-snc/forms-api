@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     include: ["test/**"],
+    setupFiles: "vitest-setup.ts",
   },
 });
