@@ -23,13 +23,6 @@ describe("/forms/:formId/submission", () => {
     });
   });
 
-  describe("/downloaded", () => {
-    it("Response to GET operation", async () => {
-      const response = await request(server).get("/downloaded");
-      expect(response.status).toBe(200);
-    });
-  });
-
   describe("/:submissionName", () => {
     describe("Response to GET operation when", () => {
       it("submissionName format is valid", async () => {

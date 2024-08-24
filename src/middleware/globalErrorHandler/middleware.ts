@@ -7,5 +7,5 @@ export function globalErrorHandlerMiddleware(
   _next: NextFunction,
 ) {
   console.error(JSON.stringify(error, Object.getOwnPropertyNames(error)));
-  response.sendStatus(500);
+  return response.sendStatus(500);
 }
