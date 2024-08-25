@@ -8,13 +8,14 @@ import {
 
 export async function getFormNewSubmissions(
   formId: string,
-): Promise<FormNewSubmission[] | undefined> {
+): Promise<FormNewSubmission[]> {
   try {
     const response =
       await AwsServicesConnector.getInstance().dynamodbClient.send(
         new QueryCommand({
           TableName: "Vault",
           IndexName: "Status",
+          ScanIndexForward: false,
           KeyConditionExpression: "#FormID = :formId AND #Status = :status",
           ProjectionExpression: "CreatedAt,#Name",
           ExpressionAttributeNames: {
@@ -24,12 +25,12 @@ export async function getFormNewSubmissions(
           },
           ExpressionAttributeValues: {
             ":formId": formId,
-            ":status": FormSubmissionStatus.New,
+            ":status": "New",
           },
         }),
       );
 
-    if (response.Items && response.Items.length > 0) {
+    if (response.Items) {
       return formNewSubmissionFromDynamoDbResponse(response.Items);
     }
     return undefined;

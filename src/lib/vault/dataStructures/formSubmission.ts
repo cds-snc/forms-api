@@ -27,12 +27,10 @@ export function formSubmissionFromDynamoDbResponse(
 export function formNewSubmissionFromDynamoDbResponse(
   response: Record<string, unknown>[],
 ): FormNewSubmission[] {
-  const formSubmissions: FormNewSubmission[] = [];
-  for (const item of response) {
-    formSubmissions.push({
+  return response.map((item) => {
+    return {
       createdAt: item.CreatedAt as number,
       submissionName: item.Name as string,
-    });
-  }
-  return formSubmissions;
+    };
+  });
 }

@@ -11,12 +11,6 @@ newApiRoute.get("/", async (request: Request, response: Response) => {
   try {
     const formNewSubmissions = await getFormNewSubmissions(formId);
 
-    if (formNewSubmissions === undefined) {
-      return response
-        .status(404)
-        .json({ error: "No new form submissions found" });
-    }
-
     return response.json(formNewSubmissions);
   } catch (error) {
     console.error(
