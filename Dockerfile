@@ -29,6 +29,9 @@ COPY --from=build /src/build ./build
 RUN corepack enable pnpm &&\
     corepack use pnpm@$PNPM_VERSION
 
+ARG ENVIRONMENT_MODE
+ENV ENVIRONMENT_MODE=$ENVIRONMENT_MODE
+
 EXPOSE 3001
 
 ENTRYPOINT ["pnpm", "start"]
