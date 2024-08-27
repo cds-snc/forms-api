@@ -5,13 +5,9 @@ import { submissionApiRoute } from "@routes/forms/submission/router";
 import { getFormSubmission } from "@src/lib/vault/getFormSubmission";
 import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission";
 import { buildMockedFormSubmission } from "test/mocks/formSubmission";
-import { getNewFormSubmissions } from "@src/lib/vault/getNewFormSubmissions";
 
 vi.mock("@lib/vault/getFormSubmission");
 const getFormSubmissionMock = vi.mocked(getFormSubmission);
-
-vi.mock("@lib/vault/getNewFormSubmissions");
-const getNewFormSubmissionsMock = vi.mocked(getNewFormSubmissions);
 
 describe("/forms/:formId/submission", () => {
   let server: Express;
