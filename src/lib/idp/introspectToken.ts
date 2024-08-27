@@ -7,6 +7,7 @@ import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config";
 type IntrospectionResult = {
   username: string;
   exp: number;
+  serviceAccountId: string;
 };
 
 const algorithm = "RS256";
@@ -17,9 +18,7 @@ const privateKey = createPrivateKey({
 });
 const introspectionEndpoint = `${ZITADEL_DOMAIN}/oauth/v2/introspect`;
 
-export async function introspectToken(
-  token: string,
-): Promise<IntrospectionResult | undefined> {
+export async function introspectToken(token: string): Promise<IntrospectionResult | undefined> {
   const jwt = await new SignJWT()
     .setProtectedHeader({ alg: algorithm, kid: keyId })
     .setIssuedAt()
@@ -33,8 +32,7 @@ export async function introspectToken(
     const response = await axios.post(
       introspectionEndpoint,
       new URLSearchParams({
-        client_assertion_type:
-          "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
         client_assertion: jwt,
         token: token,
       }),
@@ -42,7 +40,7 @@ export async function introspectToken(
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      },
+      }
     );
 
     const introspectionResponse = response.data as Record<string, unknown>;
@@ -56,6 +54,7 @@ export async function introspectToken(
     return {
       username: introspectionResponse.username as string,
       exp: introspectionResponse.exp as number,
+      serviceAccountId: introspectionResponse.sub as string,
     };
   } catch (error) {
     console.error((error as AxiosError).response?.data);

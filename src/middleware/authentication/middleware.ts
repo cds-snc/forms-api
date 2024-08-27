@@ -1,10 +1,14 @@
 import type { NextFunction, Request, Response } from "express";
 import { introspectToken } from "@lib/idp/introspectToken";
 
+interface CustomRequest extends Request {
+  serviceAccountId?: string;
+}
+
 export async function authenticationMiddleware(
-  request: Request,
+  request: CustomRequest,
   response: Response,
-  next: NextFunction,
+  next: NextFunction
 ) {
   const accessToken = request.headers.authorization?.split(" ")[1];
 
@@ -27,6 +31,8 @@ export async function authenticationMiddleware(
   if (introspectionResult.exp < Date.now() / 1000) {
     return response.status(401).json({ message: "Token expired" });
   }
+
+  request.serviceAccountId = introspectionResult.serviceAccountId;
 
   next();
 }

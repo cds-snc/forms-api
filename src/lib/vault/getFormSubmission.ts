@@ -7,20 +7,19 @@ import {
 
 export async function getFormSubmission(
   formId: string,
-  submissionName: string,
+  submissionName: string
 ): Promise<FormSubmission | undefined> {
   try {
-    const response =
-      await AwsServicesConnector.getInstance().dynamodbClient.send(
-        new GetCommand({
-          TableName: "Vault",
-          Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
-          ProjectionExpression: "#status,FormSubmission,ConfirmationCode",
-          ExpressionAttributeNames: {
-            "#status": "Status",
-          },
-        }),
-      );
+    const response = await AwsServicesConnector.getInstance().dynamodbClient.send(
+      new GetCommand({
+        TableName: "Vault",
+        Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
+        ProjectionExpression: "#status,FormSubmission,ConfirmationCode",
+        ExpressionAttributeNames: {
+          "#status": "Status",
+        },
+      })
+    );
 
     if (response.Item === undefined) {
       return undefined;
@@ -31,8 +30,8 @@ export async function getFormSubmission(
     console.error(
       `[dynamodb] Failed to retrieve form submission. FormId: ${formId} / SubmissionName: ${submissionName}. Reason: ${JSON.stringify(
         error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+        Object.getOwnPropertyNames(error)
+      )}`
     );
 
     throw error;
