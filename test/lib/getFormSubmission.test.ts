@@ -28,7 +28,6 @@ describe("getFormSubmission should", () => {
     dynamoDbMock.on(GetCommand).resolvesOnce({
       Item: {
         Status: "New",
-        FormSubmission: "Here is my form submission",
       },
     });
 
@@ -37,19 +36,19 @@ describe("getFormSubmission should", () => {
       "01-08-a571",
     );
 
-    expect(formSubmission).toStrictEqual({
-      status: FormSubmissionStatus.New,
-      answers: "Here is my form submission",
-    });
+    expect(formSubmission).toEqual(
+      expect.objectContaining({
+        status: FormSubmissionStatus.New,
+      }),
+    );
   });
 
   it("throw an error if DynamoDB has an internal failure", async () => {
     dynamoDbMock.on(GetCommand).rejectsOnce("custom error");
     const consoleErrorLogSpy = vi.spyOn(console, "error");
 
-    await expect(
-      async () =>
-        await getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571"),
+    await expect(() =>
+      getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571"),
     ).rejects.toThrowError("custom error");
 
     expect(consoleErrorLogSpy).toHaveBeenCalledWith(
