@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, QueryCommand } from "@aws-sdk/lib-dynamodb";
-import { getFormNewSubmissions } from "@lib/vault/getFormNewSubmissions";
+import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -15,11 +15,11 @@ describe("getFormNewSubmissions should", () => {
       Items: undefined,
     });
 
-    const formNewSubmissions = await getFormNewSubmissions(
+    const newFormSubmissions = await getNewFormSubmissions(
       "clzamy5qv0000115huc4bh90m",
     );
 
-    expect(formNewSubmissions).toBeUndefined();
+    expect(newFormSubmissions).toBeUndefined();
   });
 
   it("return new submissions if DynamoDB was able to find it", async () => {
@@ -36,11 +36,11 @@ describe("getFormNewSubmissions should", () => {
       ],
     });
 
-    const formNewSubmissions = await getFormNewSubmissions(
+    const newFormSubmissions = await getNewFormSubmissions(
       "clzamy5qv0000115huc4bh90m",
     );
 
-    expect(formNewSubmissions?.length).toBe(2);
+    expect(newFormSubmissions?.length).toBe(2);
   });
 
   it("throw an error if DynamoDB has an internal failure", async () => {
@@ -48,7 +48,7 @@ describe("getFormNewSubmissions should", () => {
     const consoleErrorLogSpy = vi.spyOn(console, "error");
 
     await expect(
-      async () => await getFormNewSubmissions("clzamy5qv0000115huc4bh90m"),
+      async () => await getNewFormSubmissions("clzamy5qv0000115huc4bh90m"),
     ).rejects.toThrowError("custom error");
 
     expect(consoleErrorLogSpy).toHaveBeenCalledWith(

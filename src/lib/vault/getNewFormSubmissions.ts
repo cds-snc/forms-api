@@ -1,14 +1,13 @@
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/awsServicesConnector";
 import {
-  formNewSubmissionFromDynamoDbResponse,
-  FormSubmissionStatus,
-  type FormNewSubmission,
+  newFormSubmissionFromDynamoDbResponse,
+  type NewFormSubmission,
 } from "@lib/vault/dataStructures/formSubmission";
 
-export async function getFormNewSubmissions(
+export async function getNewFormSubmissions(
   formId: string,
-): Promise<FormNewSubmission[]> {
+): Promise<NewFormSubmission[] | undefined> {
   try {
     const response =
       await AwsServicesConnector.getInstance().dynamodbClient.send(
@@ -16,7 +15,7 @@ export async function getFormNewSubmissions(
           TableName: "Vault",
           IndexName: "Status",
           ScanIndexForward: false,
-          KeyConditionExpression: "#FormID = :formId AND #Status = :status",
+          KeyConditionExpression: "FormID = :formId AND #Status = :status",
           ProjectionExpression: "CreatedAt,#Name",
           ExpressionAttributeNames: {
             "#FormID": "FormID",
@@ -31,7 +30,7 @@ export async function getFormNewSubmissions(
       );
 
     if (response.Items) {
-      return formNewSubmissionFromDynamoDbResponse(response.Items);
+      return newFormSubmissionFromDynamoDbResponse(response.Items);
     }
     return undefined;
   } catch (error) {
