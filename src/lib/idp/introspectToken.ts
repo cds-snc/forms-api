@@ -1,19 +1,27 @@
 import { SignJWT } from "jose";
-import axios from "axios";
+import axios, { type AxiosError } from "axios";
 // biome-ignore lint/correctness/noNodejsModules: we need the node crypto module
-import crypto from "node:crypto";
+import { createPrivateKey } from "node:crypto";
 import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config";
 
-export async function introspectToken(token: string) {
-  const alg = "RS256";
-  const privateKey = crypto.createPrivateKey({
-    key: JSON.parse(ZITADEL_APPLICATION_KEY).key,
-  });
-  const clientId = JSON.parse(ZITADEL_APPLICATION_KEY).clientId;
-  const kid = JSON.parse(ZITADEL_APPLICATION_KEY).keyId;
+type IntrospectionResult = {
+  username: string;
+  exp: number;
+};
 
+const algorithm = "RS256";
+const keyId = JSON.parse(ZITADEL_APPLICATION_KEY).keyId as string;
+const clientId = JSON.parse(ZITADEL_APPLICATION_KEY).clientId as string;
+const privateKey = createPrivateKey({
+  key: JSON.parse(ZITADEL_APPLICATION_KEY).key,
+});
+const introspectionEndpoint = `${ZITADEL_DOMAIN}/oauth/v2/introspect`;
+
+export async function introspectToken(
+  token: string,
+): Promise<IntrospectionResult | undefined> {
   const jwt = await new SignJWT()
-    .setProtectedHeader({ alg, kid })
+    .setProtectedHeader({ alg: algorithm, kid: keyId })
     .setIssuedAt()
     .setIssuer(clientId)
     .setSubject(clientId)
@@ -21,10 +29,8 @@ export async function introspectToken(token: string) {
     .setExpirationTime("1 minute") // long enough for the introspection to happen
     .sign(privateKey);
 
-  const introspectionEndpoint = `${ZITADEL_DOMAIN}/oauth/v2/introspect`;
-
-  const tokenData = await axios
-    .post(
+  try {
+    const response = await axios.post(
       introspectionEndpoint,
       new URLSearchParams({
         client_assertion_type:
@@ -37,11 +43,22 @@ export async function introspectToken(token: string) {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       },
-    )
-    .then((res) => res.data)
-    .catch((err) => {
-      console.error(err.response.data);
-      return null;
-    });
-  return tokenData;
+    );
+
+    const introspectionResponse = response.data as Record<string, unknown>;
+
+    const isTokenActive = introspectionResponse.active as boolean;
+
+    if (!isTokenActive) {
+      return undefined;
+    }
+
+    return {
+      username: introspectionResponse.username as string,
+      exp: introspectionResponse.exp as number,
+    };
+  } catch (error) {
+    console.error((error as AxiosError).response?.data);
+    return undefined;
+  }
 }

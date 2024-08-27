@@ -6,25 +6,25 @@ export async function authenticationMiddleware(
   response: Response,
   next: NextFunction,
 ) {
-  const authHeader = request.headers?.authorization;
-  const token = authHeader?.split(" ")[1];
+  const accessToken = request.headers.authorization?.split(" ")[1];
 
-  if (!token) {
+  if (!accessToken) {
     return response.sendStatus(401);
   }
 
-  const tokenData = await introspectToken(token);
+  const introspectionResult = await introspectToken(accessToken);
 
-  if (!tokenData || typeof tokenData !== "object") {
+  if (!introspectionResult) {
     return response.sendStatus(403);
   }
 
-  const { username, exp } = tokenData;
-  if (request.params.formId !== username) {
+  const formId = request.params.formId;
+
+  if (introspectionResult.username !== formId) {
     return response.sendStatus(403);
   }
 
-  if (!exp || exp < Date.now() / 1000) {
+  if (introspectionResult.exp < Date.now() / 1000) {
     return response.status(401).json({ message: "Token expired" });
   }
 

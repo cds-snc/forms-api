@@ -1,65 +1,111 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import type { NextFunction, Request, Response } from "express";
 import { authenticationMiddleware } from "@middleware/authentication/middleware";
-// biome-ignore lint/style/noNamespaceImport: To be able to use the Vitest `spyOn` function we need to import all
-import * as introspectToken from "@lib/idp/introspectToken";
+import { introspectToken } from "@lib/idp/introspectToken";
 
-describe("Authorization middleware", () => {
+vi.mock("@lib/idp/introspectToken");
+const introspectTokenMock = vi.mocked(introspectToken);
+
+function buildMockResponse() {
+  const res = {} as Response;
+
+  res.sendStatus = vi.fn();
+  res.json = vi.fn().mockReturnValue(res);
+  res.status = vi.fn().mockReturnValue(res);
+
+  return res;
+}
+
+describe("authenticationMiddleware should", () => {
   let mockRequest: Partial<Request>;
-  let mockResponse: Partial<Response>;
-  const nextFunction: NextFunction = vi.fn();
+  let mockResponse: Response;
+  const mockNext: NextFunction = vi.fn();
 
   beforeEach(() => {
-    mockRequest = {};
-    mockResponse = {
-      sendStatus: vi.fn(),
-    };
-  });
+    vi.resetAllMocks();
 
-  it("without headers", async () => {
-    await authenticationMiddleware(
-      mockRequest as Request,
-      mockResponse as Response,
-      nextFunction,
-    );
-
-    expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
-  });
-
-  it("with headers but no bearer token", async () => {
-    mockRequest = {
-      headers: {},
-    };
-
-    await authenticationMiddleware(
-      mockRequest as Request,
-      mockResponse as Response,
-      nextFunction,
-    );
-
-    expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
-  });
-
-  it("with headers and an invalid bearer token", async () => {
     mockRequest = {
       headers: {
         authorization: "Bearer abc",
       },
       params: {
-        formId: "def",
+        formId: "clzsn6tao000611j50dexeob0",
       },
     };
 
-    const introspectTokenSpy = vi.spyOn(introspectToken, "introspectToken");
-    introspectTokenSpy.mockReturnValueOnce(Promise.resolve(undefined));
+    mockResponse = buildMockResponse();
+  });
+
+  it("reject request with there is no authorization header", async () => {
+    mockRequest.headers = {};
 
     await authenticationMiddleware(
       mockRequest as Request,
-      mockResponse as Response,
-      nextFunction,
+      mockResponse,
+      mockNext,
     );
 
-    expect(introspectTokenSpy).toHaveBeenCalledTimes(1);
+    expect(mockNext).not.toHaveBeenCalled();
+    expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
+  });
+
+  it("reject request when the authorization header value is invalid", async () => {
+    introspectTokenMock.mockResolvedValueOnce(undefined);
+
+    await authenticationMiddleware(
+      mockRequest as Request,
+      mockResponse,
+      mockNext,
+    );
+
+    expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
+  });
+
+  it("reject request when the form identifier passed in the URL is different than the one associated to the token", async () => {
+    introspectTokenMock.mockResolvedValueOnce({ username: "invalid", exp: 0 });
+
+    await authenticationMiddleware(
+      mockRequest as Request,
+      mockResponse,
+      mockNext,
+    );
+
+    expect(mockNext).not.toHaveBeenCalled();
+    expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
+  });
+
+  it("reject request when the token is expired", async () => {
+    introspectTokenMock.mockResolvedValueOnce({
+      username: "clzsn6tao000611j50dexeob0",
+      exp: Date.now() / 1000 - 100000,
+    });
+
+    await authenticationMiddleware(
+      mockRequest as Request,
+      mockResponse,
+      mockNext,
+    );
+
+    expect(mockNext).not.toHaveBeenCalled();
+    expect(mockResponse.status).toHaveBeenCalledWith(401);
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      message: "Token expired",
+    });
+  });
+
+  it("accept request when the token is valid, not expired and associated to the form identifier passed in the URL", async () => {
+    introspectTokenMock.mockResolvedValueOnce({
+      username: "clzsn6tao000611j50dexeob0",
+      exp: Date.now() / 1000 + 100000,
+    });
+
+    await authenticationMiddleware(
+      mockRequest as Request,
+      mockResponse,
+      mockNext,
+    );
+
+    expect(mockNext).toHaveBeenCalled();
   });
 });

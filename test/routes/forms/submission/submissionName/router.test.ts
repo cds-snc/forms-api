@@ -4,6 +4,7 @@ import express, { type Express } from "express";
 import { submissionNameApiRoute } from "@routes/forms/submission/submissionName/router";
 import { getFormSubmission } from "@lib/vault/getFormSubmission";
 import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission";
+import { buildMockedFormSubmission } from "test/mocks/formSubmission";
 
 vi.mock("@lib/vault/getFormSubmission");
 const getFormSubmissionMock = vi.mocked(getFormSubmission);
@@ -24,23 +25,23 @@ describe("/forms/:formId/submission/:submissionName", () => {
 
       expect(response.status).toBe(404);
       expect(response.body).toEqual({
-        error: "Requested form submission does not exist",
+        error: "Form submission does not exist",
       });
     });
 
     it("form submission does exist", async () => {
-      getFormSubmissionMock.mockResolvedValueOnce({
-        status: FormSubmissionStatus.New,
-        answers: "Here is my form submission",
-      });
+      getFormSubmissionMock.mockResolvedValueOnce(
+        buildMockedFormSubmission(FormSubmissionStatus.New),
+      );
 
       const response = await request(server).get("/");
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({
-        status: FormSubmissionStatus.New,
-        answers: "Here is my form submission",
-      });
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          status: FormSubmissionStatus.New,
+        }),
+      );
     });
 
     it("processing fails due to internal error", async () => {

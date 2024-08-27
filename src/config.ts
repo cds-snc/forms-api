@@ -31,10 +31,6 @@ function loadOptionalEnvVar(envVarName: string): string | undefined {
 }
 
 function loadRequiredEnvVar(envVarName: string): string {
-  if (process.env.NODE_ENV === "test") {
-    return "TEST_IN_PROGRESS";
-  }
-
   const envVar = loadOptionalEnvVar(envVarName);
 
   if (envVar === undefined) {
