@@ -26,6 +26,9 @@ jobs:
       - name: Format
         run: pnpm format:check
 
+      - name: Lint:github report
+        run: pnpm lint:github
+
       - name: Lint
         run: pnpm lint:check
 
