@@ -26,7 +26,8 @@ jobs:
       - name: Format
         run: pnpm format:check
 
-      - name: Lint:github report
+      - name: Lint:report
+        continue-on-error: true
         run: pnpm lint:github
 
       - name: Lint
