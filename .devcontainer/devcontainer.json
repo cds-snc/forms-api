@@ -1,6 +1,8 @@
 {
   "name": "Forms API",
-  "image": "mcr.microsoft.com/vscode/devcontainers/base:debian@sha256:f1ac6335fc8cdd253c673a76edf77d81b5aa4bf9746bc67ecce4337d6bbaeb20",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace/forms-api",
   "containerEnv": {
     "SHELL": "/bin/zsh"
   },
@@ -17,7 +19,6 @@
       "extensions": ["github.copilot", "github.vscode-github-actions"]
     }
   },
-  "appPort": [3001],
-  "postCreateCommand": "corepack enable pnpm && corepack use pnpm@9.6.0 && pnpm install",
+  "postCreateCommand": "./.devcontainer/post-create.sh",
   "remoteUser": "vscode"
 }

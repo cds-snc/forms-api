@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  devcontainer:
+    image: mcr.microsoft.com/vscode/devcontainers/base:debian@sha256:f1ac6335fc8cdd253c673a76edf77d81b5aa4bf9746bc67ecce4337d6bbaeb20
+    command: sleep infinity
+    depends_on:
+      - dynamodb
+      - redis
+    ports:
+      - 3001:3001
+    volumes:
+      - ..:/workspace/forms-api:cached
+    environment:
+      AWS_REGION: ca-central-1
+      AWS_ACCESS_KEY_ID: AWSACCESSKEYID
+      AWS_SECRET_ACCESS_KEY: AWSSECRETACCESSKEY
+
+  dynamodb:
+    image: amazon/dynamodb-local:latest@sha256:d7ebddeb60fa418bcda218a6c6a402a58441b2a20d54c9cb1d85fd5194341753
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    restart: unless-stopped
+    user: root
+    ports:
+      - 8000:8000
+    volumes:
+      - dynamodb_data:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
+
+  redis:
+    image: redis:6.2@sha256:da122fff8a838685f3b4e25b3f797ad0c71a6425648e8f944cad8ee56a4e3b16
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+        - redis_data:/data
+
+volumes:
+  dynamodb_data:
+  redis_data:
