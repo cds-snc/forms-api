@@ -2,6 +2,7 @@ node_modules/
 npm-debug.log
 .DS_Store
 *.gz
+*_private_api_key.json
 .env
 build/
 .pnpm-store
