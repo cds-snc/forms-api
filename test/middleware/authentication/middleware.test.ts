@@ -2,6 +2,7 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import type { NextFunction, Request, Response } from "express";
 import { authenticationMiddleware } from "@middleware/authentication/middleware";
 import { introspectToken } from "@lib/idp/introspectToken";
+import { buildMockedResponse } from "test/mocks/express";
 import {
   getIntrospectionCache,
   setIntrospectionCache,
@@ -13,16 +14,6 @@ const setIntrospectionCacheMock = vi.mocked(setIntrospectionCache);
 
 vi.mock("@lib/idp/introspectToken");
 const introspectTokenMock = vi.mocked(introspectToken);
-
-function buildMockResponse() {
-  const res = {} as Response;
-
-  res.sendStatus = vi.fn();
-  res.json = vi.fn().mockReturnValue(res);
-  res.status = vi.fn().mockReturnValue(res);
-
-  return res;
-}
 
 describe("authenticationMiddleware should", () => {
   let mockRequest: Partial<Request>;
@@ -41,7 +32,7 @@ describe("authenticationMiddleware should", () => {
       },
     };
 
-    mockResponse = buildMockResponse();
+    mockResponse = buildMockedResponse();
   });
 
   it("reject request with there is no authorization header", async () => {

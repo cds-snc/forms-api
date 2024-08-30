@@ -1,0 +1,83 @@
+import { vi, describe, it, expect, beforeEach } from "vitest";
+import type { NextFunction, Request, Response } from "express";
+import { requestValidatorMiddleware } from "@middleware/requestValidator/middleware";
+import {
+  checkSchema,
+  type Schema,
+  validationResult,
+  type ValidationChain,
+  type ValidationError,
+  type Result,
+} from "express-validator";
+import type { RunnableValidationChains } from "express-validator/lib/middlewares/schema";
+import { buildMockedResponse } from "test/mocks/express";
+
+vi.mock("express-validator");
+const checkSchemaMock = vi.mocked(checkSchema);
+const validationResultMock = vi.mocked(validationResult);
+
+describe("requestValidatorMiddleware should", () => {
+  let mockRequest: Partial<Request>;
+  let mockResponse: Response;
+  const mockNext: NextFunction = vi.fn();
+
+  beforeEach(() => {
+    vi.resetAllMocks();
+
+    mockResponse = buildMockedResponse();
+
+    checkSchemaMock.mockReturnValue({
+      run: vi.fn(),
+    } as unknown as RunnableValidationChains<ValidationChain>);
+  });
+
+  it("accept request when validation is successful", async () => {
+    validationResultMock.mockReturnValueOnce({
+      isEmpty: vi.fn().mockReturnValue(true),
+    } as Partial<Result<ValidationError>> as Result<ValidationError>);
+
+    await requestValidatorMiddleware({} as Schema)(
+      mockRequest as Request,
+      mockResponse,
+      mockNext,
+    );
+
+    expect(mockNext).toHaveBeenCalled();
+  });
+
+  it("reject request when validation failed because errors were detected", async () => {
+    validationResultMock.mockReturnValueOnce({
+      isEmpty: vi.fn().mockReturnValue(false),
+      array: vi.fn().mockReturnValue([
+        {
+          type: "test",
+          value: "test",
+          msg: "test",
+          path: "test",
+          location: "test",
+        },
+      ]),
+    } as Partial<Result<ValidationError>> as Result<ValidationError>);
+
+    await requestValidatorMiddleware({} as Schema)(
+      mockRequest as Request,
+      mockResponse,
+      mockNext,
+    );
+
+    expect(mockNext).not.toHaveBeenCalled();
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      error: "Invalid payload",
+      details: [
+        {
+          type: "test",
+          value: "test",
+          msg: "test",
+          path: "test",
+          location: "test",
+        },
+      ],
+    });
+  });
+});

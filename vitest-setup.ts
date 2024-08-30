@@ -5,12 +5,12 @@ vi.mock("./src/config", async () => ({
   SERVER_PORT: 3001,
   LOCALSTACK_ENDPOINT: undefined,
   REDIS_URL: "redis",
+  ZITADEL_DOMAIN: "test",
   ZITADEL_APPLICATION_KEY: JSON.stringify({
     keyId: "test",
     clientId: "test",
     key: "test",
   }),
-  ZITADEL_DOMAIN: "test",
 }));
 
 vi.mock("node:crypto", async (importOriginal) => {
