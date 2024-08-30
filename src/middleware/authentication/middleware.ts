@@ -26,7 +26,7 @@ export async function authenticationMiddleware(
   // This is being done to reduce strain on the IdP.
   const accessTokenKey = getAccessTokenCacheKey(accessToken);
   const introspectionCached = await redisConnector.client.get(accessTokenKey);
-  console.debug("Introspection cache result", accessTokenKey, introspectionCached);
+  console.debug("Introspection cache", accessTokenKey, introspectionCached);
 
   const introspectionResult = introspectionCached
     ? JSON.parse(introspectionCached)
