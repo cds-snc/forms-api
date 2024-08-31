@@ -24,6 +24,7 @@ export class RedisConnector {
       .on("reconnecting", () => console.debug("Redis client reconnecting..."));
   }
 
+  // biome-ignore lint/suspicious/useAwait: Singleton Promise is resolved by the caller
   public static async getInstance(): Promise<RedisConnector> {
     if (RedisConnector.instance === undefined) {
       RedisConnector.instance = new RedisConnector();

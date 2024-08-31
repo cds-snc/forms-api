@@ -1,4 +1,5 @@
-import { createHash } from "crypto";
+// biome-ignore lint/correctness/noNodejsModules: we need the node crypto module
+import { createHash } from "node:crypto";
 import type { NextFunction, Request, Response } from "express";
 import { introspectToken } from "@lib/idp/introspectToken";
 import { RedisConnector } from "@src/lib/redisConnector";
