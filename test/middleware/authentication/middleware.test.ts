@@ -1,7 +1,12 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import type { NextFunction, Request, Response } from "express";
+import type { RedisClientType } from "redis";
 import { authenticationMiddleware } from "@middleware/authentication/middleware";
 import { introspectToken } from "@lib/idp/introspectToken";
+import { RedisConnector } from "@src/lib/redisConnector";
+
+vi.mock("@src/lib/redisConnector");
+const redisConnectorMock = vi.mocked(RedisConnector);
 
 vi.mock("@lib/idp/introspectToken");
 const introspectTokenMock = vi.mocked(introspectToken);
@@ -20,6 +25,12 @@ describe("authenticationMiddleware should", () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Response;
   const mockNext: NextFunction = vi.fn();
+  const redisClient: RedisClientType = {
+    get: vi.fn(),
+    set: vi.fn(),
+  } as unknown as RedisClientType;
+  const authTokenCacheKey =
+    "api:auth:ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -34,6 +45,8 @@ describe("authenticationMiddleware should", () => {
     };
 
     mockResponse = buildMockResponse();
+
+    redisConnectorMock.getInstance.mockResolvedValue({ client: redisClient });
   });
 
   it("reject request with there is no authorization header", async () => {
@@ -47,6 +60,8 @@ describe("authenticationMiddleware should", () => {
 
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
+    expect(redisClient.get).not.toHaveBeenCalled();
+    expect(redisClient.set).not.toHaveBeenCalled();
   });
 
   it("reject request when the authorization header value is invalid", async () => {
@@ -60,6 +75,8 @@ describe("authenticationMiddleware should", () => {
 
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
+    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
+    expect(redisClient.set).not.toHaveBeenCalled();
   });
 
   it("reject request when the form identifier passed in the URL is different than the one associated to the token", async () => {
@@ -73,6 +90,8 @@ describe("authenticationMiddleware should", () => {
 
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
+    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
+    expect(redisClient.set).not.toHaveBeenCalled();
   });
 
   it("reject request when the token is expired", async () => {
@@ -92,13 +111,16 @@ describe("authenticationMiddleware should", () => {
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: "Token expired",
     });
+    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
+    expect(redisClient.set).not.toHaveBeenCalled();
   });
 
   it("accept request when the token is valid, not expired and associated to the form identifier passed in the URL", async () => {
-    introspectTokenMock.mockResolvedValueOnce({
+    const introspectionResult = {
       username: "clzsn6tao000611j50dexeob0",
       exp: Date.now() / 1000 + 100000,
-    });
+    };
+    introspectTokenMock.mockResolvedValueOnce(introspectionResult);
 
     await authenticationMiddleware(
       mockRequest as Request,
@@ -107,5 +129,11 @@ describe("authenticationMiddleware should", () => {
     );
 
     expect(mockNext).toHaveBeenCalled();
+    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
+    expect(redisClient.set).toHaveBeenCalledWith(
+      authTokenCacheKey,
+      JSON.stringify(introspectionResult),
+      { EX: 60 },
+    );
   });
 });

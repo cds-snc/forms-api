@@ -3,8 +3,8 @@ import { REDIS_URL } from "@src/config";
 
 export class RedisConnector {
   private static instance: RedisConnector | undefined = undefined;
-  private static RETRY_MAX = 5;
-  private static RETRY_DELAY = 1000;
+  private static RETRY_MAX = 10;
+  private static RETRY_DELAY_STEP = 500; // milliseconds
 
   public client: RedisClientType;
 
@@ -12,9 +12,10 @@ export class RedisConnector {
     this.client = createClient({
       url: REDIS_URL,
       socket: {
+        // Reconnect strategy with exponential backoff
         reconnectStrategy: (retries: number): number | Error =>
           retries < RedisConnector.RETRY_MAX
-            ? RedisConnector.RETRY_DELAY
+            ? RedisConnector.RETRY_DELAY_STEP * retries
             : new Error("Failed to connect to Redis"),
       },
     });
@@ -24,6 +25,12 @@ export class RedisConnector {
       .on("reconnecting", () => console.debug("Redis client reconnecting..."));
   }
 
+  /**
+   * Uses the singleton promise pattern to initialize the RedisConnector class instance.
+   * This ensures that only one connection is attempted to the Redis server when the
+   * instance is first initialized, even if multiple concurrent calls are made.
+   * @returns {Promise<RedisConnector>}
+   */
   // biome-ignore lint/suspicious/useAwait: Singleton Promise is resolved by the caller
   public static async getInstance(): Promise<RedisConnector> {
     if (RedisConnector.instance === undefined) {
