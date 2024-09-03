@@ -16,19 +16,17 @@ vi.mock("express-validator");
 const checkSchemaMock = vi.mocked(checkSchema);
 const validationResultMock = vi.mocked(validationResult);
 
+const mockRequest: Partial<Request> = {};
+const mockResponse: Response = buildMockedResponse();
+const mockNext: NextFunction = vi.fn();
+
+checkSchemaMock.mockReturnValue({
+  run: vi.fn(),
+} as unknown as RunnableValidationChains<ValidationChain>);
+
 describe("requestValidatorMiddleware should", () => {
-  let mockRequest: Partial<Request>;
-  let mockResponse: Response;
-  const mockNext: NextFunction = vi.fn();
-
   beforeEach(() => {
-    vi.resetAllMocks();
-
-    mockResponse = buildMockedResponse();
-
-    checkSchemaMock.mockReturnValue({
-      run: vi.fn(),
-    } as unknown as RunnableValidationChains<ValidationChain>);
+    vi.clearAllMocks();
   });
 
   it("accept request when validation is successful", async () => {

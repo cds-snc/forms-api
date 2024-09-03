@@ -38,7 +38,7 @@ export type FreshdeskTicketPayload = {
   preferredLanguage: "en" | "fr";
 };
 
-class FreshdeskApiClient {
+export class FreshdeskApiClient {
   private axiosInstance: AxiosInstance;
 
   public constructor(apiUrl: string, apiKey: string, timeout: number) {

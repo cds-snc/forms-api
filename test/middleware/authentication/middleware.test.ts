@@ -15,13 +15,14 @@ const setIntrospectionCacheMock = vi.mocked(setIntrospectionCache);
 vi.mock("@lib/idp/introspectToken");
 const introspectTokenMock = vi.mocked(introspectToken);
 
+const mockResponse: Response = buildMockedResponse();
+const mockNext: NextFunction = vi.fn();
+
 describe("authenticationMiddleware should", () => {
   let mockRequest: Partial<Request>;
-  let mockResponse: Response;
-  const mockNext: NextFunction = vi.fn();
 
   beforeEach(() => {
-    vi.resetAllMocks();
+    vi.clearAllMocks();
 
     mockRequest = {
       headers: {
@@ -31,8 +32,6 @@ describe("authenticationMiddleware should", () => {
         formId: "clzsn6tao000611j50dexeob0",
       },
     };
-
-    mockResponse = buildMockedResponse();
   });
 
   it("reject request with there is no authorization header", async () => {
