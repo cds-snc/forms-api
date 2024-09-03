@@ -2,12 +2,12 @@ import { vi } from "vitest";
 import { EnvironmentMode } from "./src/config";
 
 vi.doMock("./src/config", async (importOriginal) => {
-  const actual = (await importOriginal()) as object;
+  const original = (await importOriginal()) as object;
 
   return {
-    ...actual,
+    ...original,
     AWS_REGION: "ca-central-1",
-    ENVIRONMENT_MODE: EnvironmentMode.Local,
+    ENVIRONMENT_MODE: EnvironmentMode.Production,
     SERVER_PORT: 3001,
     FRESHDESK_API_URL: "test",
     FRESHDESK_API_KEY: "test",
@@ -22,10 +22,10 @@ vi.doMock("./src/config", async (importOriginal) => {
 });
 
 vi.mock("node:crypto", async (importOriginal) => {
-  const actual = (await importOriginal()) as object;
+  const original = (await importOriginal()) as object;
 
   return {
-    ...actual,
+    ...original,
     createPrivateKey: vi.fn(),
   };
 });

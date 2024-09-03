@@ -55,7 +55,7 @@ Here is my problem<br/>
       name: "test@test.com",
       preferredLanguage: "en",
       subject: "Problem with GC Forms / Problème avec Formulaires GC",
-      tags: ["Forms_Dev", "Forms_API_Submission"],
+      tags: ["Forms_Production", "Forms_API_Submission"],
       type: "Problem",
     });
   });
