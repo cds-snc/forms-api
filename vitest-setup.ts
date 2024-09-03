@@ -21,7 +21,7 @@ vi.doMock("./src/config", async (importOriginal) => {
   };
 });
 
-vi.doMock("node:crypto", async (importOriginal) => {
+vi.mock("node:crypto", async (importOriginal) => {
   const actual = (await importOriginal()) as object;
 
   return {
