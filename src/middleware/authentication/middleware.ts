@@ -4,10 +4,10 @@ import type { NextFunction, Request, Response } from "express";
 import { introspectToken } from "@lib/idp/introspectToken";
 import { RedisConnector } from "@src/lib/redisConnector";
 
-const cacheExpiry = 60; // seconds
+const cacheExpiry = 300; // seconds
 
 export function getAccessTokenCacheKey(accessToken: string): string {
-  const hash = createHash("sha256").update(accessToken).digest("hex");
+  const hash = createHash("sha256").update(accessToken).digest("base64");
   return `api:auth:${hash}`;
 }
 

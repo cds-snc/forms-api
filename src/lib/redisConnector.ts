@@ -31,11 +31,10 @@ export class RedisConnector {
    * instance is first initialized, even if multiple concurrent calls are made.
    * @returns {Promise<RedisConnector>}
    */
-  // biome-ignore lint/suspicious/useAwait: Singleton Promise is resolved by the caller
   public static async getInstance(): Promise<RedisConnector> {
     if (RedisConnector.instance === undefined) {
       RedisConnector.instance = new RedisConnector();
-      RedisConnector.instance.client.connect();
+      await RedisConnector.instance.client.connect();
     }
     return RedisConnector.instance;
   }

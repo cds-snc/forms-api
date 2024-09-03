@@ -30,7 +30,7 @@ describe("authenticationMiddleware should", () => {
     set: vi.fn(),
   } as unknown as RedisClientType;
   const authTokenCacheKey =
-    "api:auth:ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
+    "api:auth:ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=";
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -133,7 +133,7 @@ describe("authenticationMiddleware should", () => {
     expect(redisClient.set).toHaveBeenCalledWith(
       authTokenCacheKey,
       JSON.stringify(introspectionResult),
-      { EX: 60 },
+      { EX: 300 },
     );
   });
 });
