@@ -5,3 +5,4 @@ npm-debug.log
 .env
 build/
 .pnpm-store
+*private_api_key.json
