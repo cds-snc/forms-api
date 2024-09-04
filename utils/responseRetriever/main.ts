@@ -75,8 +75,19 @@ const main = async () => {
       throw new Error("Identity provider not set in .env file");
     }
 
-    const formID = "cm0ct9gyo0005v3aiaas2pc0u"; // await getValue("Form ID to retrieve responses for: ");
-    const submissionName = "27-08-7ab2"; // await getValue("Submission name to retrieve: ");
+    const menuSelection = await(getValue(`I want to:
+(1) Retrieve a form submission
+(2) Generate and dispaly an Access Token
+Selection (1): `));
+
+    if (menuSelection === "2") {
+          const accessToken = await getAccessToken();
+          console.log(`Access Token: \n${accessToken}`);
+          return;
+    }
+
+    const formID =  await getValue("Form ID to retrieve responses for: ");
+    const submissionName = await getValue("Submission name to retrieve: ");
     const accessToken = await getAccessToken();
     const timeStart = Date.now();
 
