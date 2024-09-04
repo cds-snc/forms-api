@@ -2,8 +2,8 @@
 
 import { config } from "dotenv";
 import axios from "axios";
-import readline from "readline";
-import * as jose from "jose";
+import readline from "node:readline";
+import { SignJWT } from "jose";
 import gcformsPrivate from "./private_api_key.json";
 import crypto from "node:crypto";
 
@@ -38,7 +38,7 @@ const getAccessToken = async () => {
   const serviceUserId = gcformsPrivate.userId;
   const kid = gcformsPrivate.keyId;
 
-  const jwt = await new jose.SignJWT()
+  const jwt = await new SignJWT()
     .setProtectedHeader({ alg, kid })
     .setIssuedAt()
     .setIssuer(serviceUserId)

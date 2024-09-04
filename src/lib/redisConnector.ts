@@ -1,5 +1,5 @@
 import { type RedisClientType, createClient } from "redis";
-import { REDIS_URL } from "@src/config";
+import { REDIS_URL } from "@src/config.js"
 
 export class RedisConnector {
   private static instance: RedisConnector | undefined = undefined;
