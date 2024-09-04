@@ -16,6 +16,10 @@ export const LOCALSTACK_ENDPOINT: string | undefined = loadOptionalEnvVar(
   "LOCALSTACK_ENDPOINT",
 );
 
+// Redis
+
+export const REDIS_URL: string = loadRequiredEnvVar("REDIS_URL");
+
 // Zitadel
 
 export const ZITADEL_APPLICATION_KEY: string = loadRequiredEnvVar(
