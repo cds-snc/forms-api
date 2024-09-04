@@ -5,18 +5,18 @@ import axios from "axios";
 import readline from "readline";
 import * as jose from "jose";
 import gcformsPrivate from "./private_api_key.json";
-import crypto from "crypto";
+import crypto from "node:crypto";
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+// const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-const twirlTimer = () => {
-  var P = ["\\", "|", "/", "-"];
-  var x = 0;
-  return setInterval(function () {
-    process.stdout.write("\r" + P[x++]);
-    x &= 3;
-  }, 250);
-};
+// const twirlTimer = () => {
+//   var P = ["\\", "|", "/", "-"];
+//   var x = 0;
+//   return setInterval(function () {
+//     process.stdout.write("\r" + P[x++]);
+//     x &= 3;
+//   }, 250);
+// };
 
 function getValue(query: string) {
   const rl = readline.createInterface({
@@ -75,8 +75,8 @@ const main = async () => {
       throw new Error("Identity provider not set in .env file");
     }
 
-    const formID = await getValue("Form ID to retrieve responses for: ");
-    const submissionName = await getValue("Submission name to retrieve: ");
+    const formID = "cm0ct9gyo0005v3aiaas2pc0u"; // await getValue("Form ID to retrieve responses for: ");
+    const submissionName = "27-08-7ab2"; // await getValue("Submission name to retrieve: ");
     const accessToken = await getAccessToken();
     const timeStart = Date.now();
 
@@ -92,19 +92,20 @@ const main = async () => {
         console.error(e.response.data);
       });
     const timeDecryptStart = Date.now();
-    const { encryptedResponses, encryptedIV, encryptedKey, encryptedAuthTag } = data;
+    const { encryptedResponses, encryptedNonce, encryptedKey, encryptedAuthTag } = data;
     console.log(
       `Encrypted Responses: ${Buffer.from(encryptedResponses, "base64").toString("base64")}`
     );
+
     console.log("Decrypting responses.");
     const privateKey = crypto.createPrivateKey({ key: gcformsPrivate.key });
 
     const decryptedKey = crypto.privateDecrypt(privateKey, Buffer.from(encryptedKey, "base64"));
 
-    const decryptedIV = crypto.privateDecrypt(privateKey, Buffer.from(encryptedIV, "base64"));
+    const decryptedNonce = crypto.privateDecrypt(privateKey, Buffer.from(encryptedNonce, "base64"));
     const authTag = crypto.privateDecrypt(privateKey, Buffer.from(encryptedAuthTag, "base64"));
 
-    const decipher = crypto.createDecipheriv("aes-256-gcm", decryptedKey, decryptedIV);
+    const decipher = crypto.createDecipheriv("aes-256-gcm", decryptedKey, decryptedNonce);
     decipher.setAuthTag(authTag);
 
     const responses = Buffer.concat([

@@ -1,6 +1,6 @@
-import { getPublicKey } from "./getPublicKey";
-import type { FormSubmission } from "./dataStructures/formSubmission";
-import crypto from "crypto";
+import { getPublicKey } from "./getPublicKey.js";
+import type { FormSubmission } from "./dataStructures/formSubmission.js";
+import crypto from "node:crypto";
 
 export const encryptFormSubmission = async (
   serviceAccountId: string,
@@ -21,13 +21,13 @@ export const encryptFormSubmission = async (
   const authTag = cipher.getAuthTag();
   const publicKey = crypto.createPublicKey({ key: serviceAccountPublicKey });
   const encryptedKey = crypto.publicEncrypt(publicKey, encryptionKey).toString("base64");
-  const encryptedIV = crypto.publicEncrypt(publicKey, iv).toString("base64");
+  const encryptedNonce = crypto.publicEncrypt(publicKey, iv).toString("base64");
   const encryptedAuthTag = crypto.publicEncrypt(publicKey, authTag).toString("base64");
 
   return {
     encryptedResponses,
     encryptedKey,
-    encryptedIV,
+    encryptedNonce,
     encryptedAuthTag,
   };
 };

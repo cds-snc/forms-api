@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from "express";
-import { confirmApiRoute } from "@src/routes/forms/submission/submissionName/confirm/router";
-import { getFormSubmission } from "@lib/vault/getFormSubmission";
-import { encryptFormSubmission } from "@src/lib/vault/encryptFormSubmission";
+import { confirmApiRoute } from "@src/routes/forms/submission/submissionName/confirm/router.js";
+import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
+import { encryptFormSubmission } from "@src/lib/vault/encryptFormSubmission.js";
 
 export const submissionNameApiRoute = Router({
   mergeParams: true,
@@ -21,10 +21,11 @@ submissionNameApiRoute.get("/", async (request: Request, response: Response) => 
     }
 
     const serviceAccountId = request.serviceAccountId;
-    if (!serviceAccountId)
+    if (!serviceAccountId) {
       throw new Error(
         `Service Account ID not found in request when trying to download form submission ${submissionName} for form ${formId}`
       );
+    }
 
     const encryptedSubmission = await encryptFormSubmission(serviceAccountId, formSubmission);
 

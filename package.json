@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Machine-to-machine interface for downloading form submissions",
   "repository": "git@github.com:cds-snc/forms-api.git",
+  "type":"module",
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "start": "node build/server.js",
@@ -47,7 +48,8 @@
     "tsx": "^4.16.5",
     "typescript": "^5.5.4",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "vitest-mock-express": "^2.2.0"
   },
   "packageManager": "pnpm@9.6.0"
 }

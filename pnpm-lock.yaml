@@ -72,6 +72,9 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@22.1.0)
+      vitest-mock-express:
+        specifier: ^2.2.0
+        version: 2.2.0
 
 packages:
 
@@ -1711,6 +1714,9 @@ packages:
         optional: true
       terser:
         optional: true
+
+  vitest-mock-express@2.2.0:
+    resolution: {integrity: sha512-JoKVdo9KM4K5wo9GcQ0GabiRFU5XP2yJVMFv9R/C6arcv5wTPoDAiama2jJelO/ieIq+XcGETLr/V4vjCuqofA==}
 
   vitest@2.0.5:
     resolution: {integrity: sha512-8GUxONfauuIdeSl5f9GTgVEpg5BTOlplET4WEDaeY2QBiN8wSm68vxN/tb5z405OwppfoCavnwXafiaYBC/xOA==}
@@ -3967,6 +3973,10 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.1.0
       fsevents: 2.3.3
+
+  vitest-mock-express@2.2.0:
+    dependencies:
+      '@types/express': 4.17.21
 
   vitest@2.0.5(@types/node@22.1.0):
     dependencies:
