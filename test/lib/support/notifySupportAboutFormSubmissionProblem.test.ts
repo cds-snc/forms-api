@@ -4,6 +4,7 @@ import {
   FreshdeskApiClient,
   FreshdeskServiceConnector,
 } from "@lib/freshdeskServiceConnector";
+import { EnvironmentMode } from "@src/config";
 
 vi.mock("@lib/freshdeskServiceConnector");
 const freshdeskServiceConnectorMock = vi.mocked(FreshdeskServiceConnector);
@@ -33,8 +34,9 @@ describe("notifySupportAboutFormSubmissionProblem should", () => {
       ),
     ).resolves.not.toThrow();
 
-    expect(createTicketMock).toHaveBeenCalledWith({
-      description: `
+    expect(createTicketMock).toHaveBeenCalledWith(
+      {
+        description: `
 User (test@test.com) reported problems with some of the submissions for form \`clzamy5qv0000115huc4bh90m\`.<br/>
 <br/>
 Submission names:<br/>
@@ -51,13 +53,15 @@ Nom des soumissions:<br/>
 Description:<br/>
 Here is my problem<br/>
 `,
-      email: "test@test.com",
-      name: "test@test.com",
-      preferredLanguage: "en",
-      subject: "Problem with GC Forms / Problème avec Formulaires GC",
-      tags: ["Forms_Production", "Forms_API_Submission"],
-      type: "Problem",
-    });
+        email: "test@test.com",
+        name: "test@test.com",
+        preferredLanguage: "en",
+        subject: "Problem with GC Forms / Problème avec Formulaires GC",
+        tags: ["Forms_Production", "Forms_API_Submission"],
+        type: "Problem",
+      },
+      EnvironmentMode.Production,
+    );
   });
 
   it("throw an error if the createTicket function has an internal failure", async () => {

@@ -52,8 +52,11 @@ export class FreshdeskApiClient {
     });
   }
 
-  public async createTicket(payload: FreshdeskTicketPayload): Promise<void> {
-    if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
+  public async createTicket(
+    payload: FreshdeskTicketPayload,
+    environmentMode: EnvironmentMode,
+  ): Promise<void> {
+    if (environmentMode === EnvironmentMode.Local) {
       console.debug(
         `[local] Skip request to create Freshdesk ticket. Ticket payload = ${JSON.stringify(payload)}`,
       );

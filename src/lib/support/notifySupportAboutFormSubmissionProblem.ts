@@ -9,20 +9,23 @@ export async function notifySupportAboutFormSubmissionProblem(
   preferredLanguage: "en" | "fr",
 ): Promise<void> {
   try {
-    await FreshdeskServiceConnector.getInstance().mainClient.createTicket({
-      name: contactEmail,
-      email: contactEmail,
-      type: "Problem",
-      subject: "Problem with GC Forms / Problème avec Formulaires GC",
-      tags: [tagFromEnvironmentMode(), "Forms_API_Submission"],
-      description: prepareTicketDescription(
-        formId,
-        submissionName,
-        contactEmail,
-        description,
-      ),
-      preferredLanguage: preferredLanguage,
-    });
+    await FreshdeskServiceConnector.getInstance().mainClient.createTicket(
+      {
+        name: contactEmail,
+        email: contactEmail,
+        type: "Problem",
+        subject: "Problem with GC Forms / Problème avec Formulaires GC",
+        tags: [tagFromEnvironmentMode(), "Forms_API_Submission"],
+        description: prepareTicketDescription(
+          formId,
+          submissionName,
+          contactEmail,
+          description,
+        ),
+        preferredLanguage: preferredLanguage,
+      },
+      ENVIRONMENT_MODE,
+    );
   } catch (error) {
     console.error(
       `[support] Failed to notify support about form submission problem. FormId: ${formId} / SubmissionName: ${submissionName} / Contact email: ${contactEmail}. Reason: ${JSON.stringify(

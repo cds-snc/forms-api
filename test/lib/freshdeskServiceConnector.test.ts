@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { FreshdeskApiClient } from "@lib/freshdeskServiceConnector";
+import { EnvironmentMode } from "@src/config";
 
 const axiosPostMock = vi.fn();
 
@@ -31,15 +32,18 @@ describe("FreshdeskApiClient should", () => {
     );
 
     await expect(
-      freshdeskApiClient.createTicket({
-        name: "test",
-        email: "test@test.com",
-        type: "test",
-        subject: "test",
-        tags: ["test"],
-        description: "test",
-        preferredLanguage: "en",
-      }),
+      freshdeskApiClient.createTicket(
+        {
+          name: "test",
+          email: "test@test.com",
+          type: "test",
+          subject: "test",
+          tags: ["test"],
+          description: "test",
+          preferredLanguage: "en",
+        },
+        EnvironmentMode.Production,
+      ),
     ).resolves.not.toThrow();
 
     expect(axiosPostMock).toHaveBeenCalledWith("/v2/tickets", {
