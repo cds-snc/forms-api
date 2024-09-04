@@ -5,7 +5,7 @@ import { RedisConnector } from "@src/lib/redisConnector";
 
 const cacheExpiry = 300; // seconds
 
-export function getAccessTokenCacheKey(accessToken: string): string {
+function getAccessTokenCacheKey(accessToken: string): string {
   const hash = createHash("sha256").update(accessToken).digest("base64");
   return `api:auth:${hash}`;
 }

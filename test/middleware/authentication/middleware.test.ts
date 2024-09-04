@@ -1,12 +1,15 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import type { NextFunction, Request, Response } from "express";
-import type { RedisClientType } from "redis";
 import { authenticationMiddleware } from "@middleware/authentication/middleware";
 import { introspectToken } from "@lib/idp/introspectToken";
-import { RedisConnector } from "@src/lib/redisConnector";
+import {
+  getIntrospectionCache,
+  setIntrospectionCache,
+} from "@lib/idp/introspectionCache";
 
-vi.mock("@src/lib/redisConnector");
-const redisConnectorMock = vi.mocked(RedisConnector);
+vi.mock("@lib/idp/introspectionCache");
+const getIntrospectionCacheMock = vi.mocked(getIntrospectionCache);
+const setIntrospectionCacheMock = vi.mocked(setIntrospectionCache);
 
 vi.mock("@lib/idp/introspectToken");
 const introspectTokenMock = vi.mocked(introspectToken);
@@ -25,12 +28,6 @@ describe("authenticationMiddleware should", () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Response;
   const mockNext: NextFunction = vi.fn();
-  const redisClient: RedisClientType = {
-    get: vi.fn(),
-    set: vi.fn(),
-  } as unknown as RedisClientType;
-  const authTokenCacheKey =
-    "api:auth:ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=";
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -45,8 +42,6 @@ describe("authenticationMiddleware should", () => {
     };
 
     mockResponse = buildMockResponse();
-
-    redisConnectorMock.getInstance.mockResolvedValue({ client: redisClient });
   });
 
   it("reject request with there is no authorization header", async () => {
@@ -60,8 +55,8 @@ describe("authenticationMiddleware should", () => {
 
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(401);
-    expect(redisClient.get).not.toHaveBeenCalled();
-    expect(redisClient.set).not.toHaveBeenCalled();
+    expect(getIntrospectionCacheMock).not.toHaveBeenCalled();
+    expect(setIntrospectionCacheMock).not.toHaveBeenCalled();
   });
 
   it("reject request when the authorization header value is invalid", async () => {
@@ -75,8 +70,8 @@ describe("authenticationMiddleware should", () => {
 
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
-    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
-    expect(redisClient.set).not.toHaveBeenCalled();
+    expect(getIntrospectionCacheMock).toHaveBeenCalledWith("abc");
+    expect(setIntrospectionCacheMock).not.toHaveBeenCalled();
   });
 
   it("reject request when the form identifier passed in the URL is different than the one associated to the token", async () => {
@@ -90,8 +85,8 @@ describe("authenticationMiddleware should", () => {
 
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.sendStatus).toHaveBeenCalledWith(403);
-    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
-    expect(redisClient.set).not.toHaveBeenCalled();
+    expect(getIntrospectionCacheMock).toHaveBeenCalledWith("abc");
+    expect(setIntrospectionCacheMock).not.toHaveBeenCalled();
   });
 
   it("reject request when the token is expired", async () => {
@@ -111,8 +106,8 @@ describe("authenticationMiddleware should", () => {
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: "Token expired",
     });
-    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
-    expect(redisClient.set).not.toHaveBeenCalled();
+    expect(getIntrospectionCacheMock).toHaveBeenCalledWith("abc");
+    expect(setIntrospectionCacheMock).not.toHaveBeenCalled();
   });
 
   it("accept request when the token is valid, not expired and associated to the form identifier passed in the URL", async () => {
@@ -129,11 +124,10 @@ describe("authenticationMiddleware should", () => {
     );
 
     expect(mockNext).toHaveBeenCalled();
-    expect(redisClient.get).toHaveBeenCalledWith(authTokenCacheKey);
-    expect(redisClient.set).toHaveBeenCalledWith(
-      authTokenCacheKey,
-      JSON.stringify(introspectionResult),
-      { EX: 300 },
+    expect(getIntrospectionCacheMock).toHaveBeenCalledWith("abc");
+    expect(setIntrospectionCacheMock).toHaveBeenCalledWith(
+      "abc",
+      introspectionResult,
     );
   });
 });
