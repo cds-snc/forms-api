@@ -1,5 +1,4 @@
 import {
-  ENVIRONMENT_MODE,
   EnvironmentMode,
   FRESHDESK_API_KEY,
   FRESHDESK_API_URL,
