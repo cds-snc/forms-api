@@ -5,7 +5,7 @@ import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "./dataStructures/exceptions";
+} from "@lib/vault/dataStructures/exceptions";
 
 const REMOVAL_DATE_DELAY_IN_DAYS = 30;
 

@@ -1,20 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem";
-import {
-  FreshdeskApiClient,
-  FreshdeskServiceConnector,
-} from "@lib/freshdeskServiceConnector";
-import { EnvironmentMode } from "@lib/utils/environmentMode";
+import { createFreshdeskTicket } from "@src/lib/support/freshdeskApiClient";
+import { EnvironmentMode } from "@src/config";
 
-vi.mock("@lib/freshdeskServiceConnector");
-const freshdeskServiceConnectorMock = vi.mocked(FreshdeskServiceConnector);
-const createTicketMock = vi.mocked(FreshdeskApiClient.prototype.createTicket);
-
-freshdeskServiceConnectorMock.getInstance.mockReturnValue({
-  mainClient: {
-    createTicket: createTicketMock,
-  } as unknown as FreshdeskApiClient,
-});
+vi.mock("@src/lib/support/freshdeskApiClient");
+const createFreshdeskTicketMock = vi.mocked(createFreshdeskTicket);
 
 describe("notifySupportAboutFormSubmissionProblem should", () => {
   beforeEach(() => {
@@ -22,7 +12,7 @@ describe("notifySupportAboutFormSubmissionProblem should", () => {
   });
 
   it("successfully notify support about a form submission problem if Freshdesk create ticket operation did not throw any error", async () => {
-    createTicketMock.mockResolvedValueOnce();
+    createFreshdeskTicketMock.mockResolvedValueOnce();
 
     await expect(
       notifySupportAboutFormSubmissionProblem(
@@ -35,7 +25,7 @@ describe("notifySupportAboutFormSubmissionProblem should", () => {
       ),
     ).resolves.not.toThrow();
 
-    expect(createTicketMock).toHaveBeenCalledWith({
+    expect(createFreshdeskTicketMock).toHaveBeenCalledWith({
       description: `
 User (test@test.com) reported problems with some of the submissions for form \`clzamy5qv0000115huc4bh90m\`.<br/>
 <br/>
@@ -63,7 +53,7 @@ Here is my problem<br/>
   });
 
   it("throw an error if the createTicket function has an internal failure", async () => {
-    createTicketMock.mockRejectedValueOnce(new Error("custom error"));
+    createFreshdeskTicketMock.mockRejectedValueOnce(new Error("custom error"));
     const consoleErrorLogSpy = vi.spyOn(console, "error");
 
     await expect(() =>

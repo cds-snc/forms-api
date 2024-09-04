@@ -4,10 +4,7 @@ import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWit
 import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem";
 import type { Schema } from "express-validator";
 import { requestValidatorMiddleware } from "@src/middleware/requestValidator/middleware";
-import {
-  EnvironmentMode,
-  getEnvironmentModeFromRequestHostHeader,
-} from "@src/lib/utils/environmentMode";
+import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config";
 
 export const problemApiRoute = Router({
   mergeParams: true,
@@ -48,18 +45,14 @@ problemApiRoute.post(
     try {
       await reportProblemWithFormSubmission(formId, submissionName);
 
-      const environmentMode = getEnvironmentModeFromRequestHostHeader(
-        request.headers.host,
-      );
-
-      if (environmentMode !== EnvironmentMode.Local) {
+      if (ENVIRONMENT_MODE !== EnvironmentMode.Local) {
         await notifySupportAboutFormSubmissionProblem(
           formId,
           submissionName,
           contactEmail,
           description,
           preferredLanguage,
-          environmentMode,
+          ENVIRONMENT_MODE,
         );
       } else {
         console.debug(

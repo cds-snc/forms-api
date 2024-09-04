@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from "express";
-import { confirmApiRoute } from "@src/routes/forms/submission/submissionName/confirm/router";
+import { confirmApiRoute } from "@routes/forms/submission/submissionName/confirm/router";
 import { getFormSubmission } from "@lib/vault/getFormSubmission";
-import { problemApiRoute } from "./problem/router";
+import { problemApiRoute } from "@routes/forms/submission/submissionName/problem/router";
 
 export const submissionNameApiRoute = Router({
   mergeParams: true,

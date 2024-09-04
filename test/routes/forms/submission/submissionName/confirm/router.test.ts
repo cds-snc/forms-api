@@ -77,9 +77,9 @@ describe("/forms/:formId/submission/:submissionName/confirm/:confirmationCode", 
     });
 
     it("processing fails due to internal error", async () => {
-      confirmFormSubmissionMock.mockImplementationOnce(() => {
-        throw new Error("custom error");
-      });
+      confirmFormSubmissionMock.mockRejectedValueOnce(
+        new Error("custom error"),
+      );
       const consoleErrorLogSpy = vi.spyOn(console, "error");
 
       const response = await request(server).put(

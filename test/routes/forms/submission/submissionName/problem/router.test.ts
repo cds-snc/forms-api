@@ -94,9 +94,9 @@ describe("/forms/:formId/submission/:submissionName/problem", () => {
     });
 
     it("processing fails due to internal error caused by the reportProblemWithFormSubmission function", async () => {
-      reportProblemWithFormSubmissionMock.mockImplementationOnce(() => {
-        throw new Error("custom error");
-      });
+      reportProblemWithFormSubmissionMock.mockRejectedValueOnce(
+        new Error("custom error"),
+      );
       const consoleErrorLogSpy = vi.spyOn(console, "error");
 
       const response = await request(server)
@@ -112,9 +112,9 @@ describe("/forms/:formId/submission/:submissionName/problem", () => {
     });
 
     it("processing fails due to internal error caused by the notifySupportAboutFormSubmissionProblem function", async () => {
-      notifySupportAboutFormSubmissionProblemMock.mockImplementationOnce(() => {
-        throw new Error("custom error");
-      });
+      notifySupportAboutFormSubmissionProblemMock.mockRejectedValueOnce(
+        new Error("custom error"),
+      );
       const consoleErrorLogSpy = vi.spyOn(console, "error");
 
       const response = await request(server)

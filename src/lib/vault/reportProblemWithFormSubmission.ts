@@ -1,6 +1,6 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/awsServicesConnector";
-import { FormSubmissionNotFoundException } from "./dataStructures/exceptions";
+import { FormSubmissionNotFoundException } from "@lib/vault/dataStructures/exceptions";
 import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 
 export async function reportProblemWithFormSubmission(

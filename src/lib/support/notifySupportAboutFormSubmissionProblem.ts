@@ -1,5 +1,5 @@
-import { FreshdeskServiceConnector } from "../freshdeskServiceConnector";
-import { EnvironmentMode } from "../utils/environmentMode";
+import { createFreshdeskTicket } from "@lib/support/freshdeskApiClient";
+import { EnvironmentMode } from "@src/config";
 
 export async function notifySupportAboutFormSubmissionProblem(
   formId: string,
@@ -10,7 +10,7 @@ export async function notifySupportAboutFormSubmissionProblem(
   environmentMode: EnvironmentMode,
 ): Promise<void> {
   try {
-    await FreshdeskServiceConnector.getInstance().mainClient.createTicket({
+    await createFreshdeskTicket({
       name: contactEmail,
       email: contactEmail,
       type: "Problem",
