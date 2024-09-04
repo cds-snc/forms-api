@@ -4,6 +4,7 @@ process.env = {
   ...process.env,
   ENVIRONMENT_MODE: "production",
   FRESHDESK_API_KEY: "test",
+  REDIS_URL: "test",
   ZITADEL_DOMAIN: "test",
   ZITADEL_APPLICATION_KEY: JSON.stringify({
     keyId: "test",
