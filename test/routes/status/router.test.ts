@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
 import express, { type Express } from "express";
-import { statusApiRoute } from "@routes/status/router";
+import { statusApiRoute } from "@routes/status/router.js";
 
 describe("/status", () => {
   let server: Express;

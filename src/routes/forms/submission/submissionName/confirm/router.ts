@@ -1,9 +1,9 @@
-import { confirmFormSubmission } from "@src/lib/vault/confirmFormSubmission";
+import { confirmFormSubmission } from "@src/lib/vault/confirmFormSubmission.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "@src/lib/vault/dataStructures/exceptions";
+} from "@src/lib/vault/dataStructures/exceptions.js";
 import { type Request, type Response, Router } from "express";
 
 export const confirmApiRoute = Router({
@@ -22,31 +22,25 @@ confirmApiRoute.put(
       return response.sendStatus(200);
     } catch (error) {
       if (error instanceof FormSubmissionNotFoundException) {
-        return response
-          .status(404)
-          .json({ error: "Form submission does not exist" });
+        return response.status(404).json({ error: "Form submission does not exist" });
       }
 
       if (error instanceof FormSubmissionAlreadyConfirmedException) {
-        return response
-          .status(200)
-          .json({ info: "Form submission is already confirmed" });
+        return response.status(200).json({ info: "Form submission is already confirmed" });
       }
 
       if (error instanceof FormSubmissionIncorrectConfirmationCodeException) {
-        return response
-          .status(400)
-          .json({ error: "Confirmation code is incorrect" });
+        return response.status(400).json({ error: "Confirmation code is incorrect" });
       }
 
       console.error(
         `[route] Internal error while serving request: /forms/${formId}/submission/${submissionName}/confirm/${confirmationCode}. Reason: ${JSON.stringify(
           error,
-          Object.getOwnPropertyNames(error),
-        )}`,
+          Object.getOwnPropertyNames(error)
+        )}`
       );
 
       return response.sendStatus(500);
     }
-  },
+  }
 );

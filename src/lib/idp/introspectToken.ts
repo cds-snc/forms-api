@@ -1,8 +1,7 @@
 import { SignJWT } from "jose";
 import axios, { type AxiosError } from "axios";
-// biome-ignore lint/correctness/noNodejsModules: we need the node crypto module
 import { createPrivateKey } from "node:crypto";
-import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config";
+import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config.js";
 
 type IntrospectionResult = {
   username: string;

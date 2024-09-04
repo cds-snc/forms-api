@@ -7,24 +7,18 @@ import express, {
   type Request,
   Router,
 } from "express";
-import { formsApiRoute } from "@routes/forms/router";
+import { formsApiRoute } from "@routes/forms/router.js";
 
 vi.mock("@middleware/authentication/middleware", () => ({
-  authenticationMiddleware: (
-    _req: Request,
-    _res: Response,
-    next: NextFunction,
-  ) => next(),
+  authenticationMiddleware: (_req: Request, _res: Response, next: NextFunction) => next(),
 }));
 
 vi.mock("@middleware/rateLimiter/middleware", () => ({
-  rateLimiterMiddleware: (_req: Request, _res: Response, next: NextFunction) =>
-    next(),
+  rateLimiterMiddleware: (_req: Request, _res: Response, next: NextFunction) => next(),
 }));
 
 vi.mock("@middleware/rateLimiter/middleware", () => ({
-  rateLimiterMiddleware: (_req: Request, _res: Response, next: NextFunction) =>
-    next(),
+  rateLimiterMiddleware: (_req: Request, _res: Response, next: NextFunction) => next(),
 }));
 
 vi.mock("@routes/forms/submission/router", () => ({
@@ -43,9 +37,7 @@ describe("/forms/:formId/submission", () => {
 
   describe("Response to GET operation when", () => {
     it("formId format is valid", async () => {
-      const response = await request(server).get(
-        "/clzsn6tao000611j50dexeob0/submission",
-      );
+      const response = await request(server).get("/clzsn6tao000611j50dexeob0/submission");
       expect(response.status).toBe(200);
     });
 

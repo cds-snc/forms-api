@@ -1,6 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import { AWS_REGION, LOCALSTACK_ENDPOINT } from "@src/config";
+import { AWS_REGION, LOCALSTACK_ENDPOINT } from "@src/config.js";
 import { SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 
 const globalConfig = {
