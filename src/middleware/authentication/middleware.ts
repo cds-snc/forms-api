@@ -1,5 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
 import { introspectToken } from "@lib/idp/introspectToken.js";
+import {
+  getIntrospectionCache,
+  setIntrospectionCache,
+} from "@lib/idp/introspectionCache.js";
+
 
 interface CustomRequest extends Request {
   serviceAccountId?: string;
@@ -16,7 +21,9 @@ export async function authenticationMiddleware(
     return response.sendStatus(401);
   }
 
-  const introspectionResult = await introspectToken(accessToken);
+  const introspectionResult =
+    (await getIntrospectionCache(accessToken)) ??
+    (await introspectToken(accessToken));
 
   if (!introspectionResult) {
     return response.sendStatus(403);
@@ -33,6 +40,7 @@ export async function authenticationMiddleware(
   }
 
   request.serviceAccountId = introspectionResult.serviceAccountId;
+  await setIntrospectionCache(accessToken, introspectionResult);
 
   next();
 }

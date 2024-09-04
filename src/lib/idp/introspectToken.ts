@@ -3,7 +3,7 @@ import axios, { type AxiosError } from "axios";
 import { createPrivateKey } from "node:crypto";
 import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config.js";
 
-type IntrospectionResult = {
+export type IntrospectionResult = {
   username: string;
   exp: number;
   serviceAccountId: string;
