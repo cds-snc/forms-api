@@ -1,5 +1,5 @@
-import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config";
 import { FreshdeskServiceConnector } from "../freshdeskServiceConnector";
+import { EnvironmentMode } from "../utils/environmentMode";
 
 export async function notifySupportAboutFormSubmissionProblem(
   formId: string,
@@ -7,25 +7,23 @@ export async function notifySupportAboutFormSubmissionProblem(
   contactEmail: string,
   description: string,
   preferredLanguage: "en" | "fr",
+  environmentMode: EnvironmentMode,
 ): Promise<void> {
   try {
-    await FreshdeskServiceConnector.getInstance().mainClient.createTicket(
-      {
-        name: contactEmail,
-        email: contactEmail,
-        type: "Problem",
-        subject: "Problem with GC Forms / Problème avec Formulaires GC",
-        tags: [tagFromEnvironmentMode(), "Forms_API_Submission"],
-        description: prepareTicketDescription(
-          formId,
-          submissionName,
-          contactEmail,
-          description,
-        ),
-        preferredLanguage: preferredLanguage,
-      },
-      ENVIRONMENT_MODE,
-    );
+    await FreshdeskServiceConnector.getInstance().mainClient.createTicket({
+      name: contactEmail,
+      email: contactEmail,
+      type: "Problem",
+      subject: "Problem with GC Forms / Problème avec Formulaires GC",
+      tags: [tagFromEnvironmentMode(environmentMode), "Forms_API_Submission"],
+      description: prepareTicketDescription(
+        formId,
+        submissionName,
+        contactEmail,
+        description,
+      ),
+      preferredLanguage: preferredLanguage,
+    });
   } catch (error) {
     console.error(
       `[support] Failed to notify support about form submission problem. FormId: ${formId} / SubmissionName: ${submissionName} / Contact email: ${contactEmail}. Reason: ${JSON.stringify(
@@ -38,8 +36,8 @@ export async function notifySupportAboutFormSubmissionProblem(
   }
 }
 
-function tagFromEnvironmentMode(): string {
-  switch (ENVIRONMENT_MODE) {
+function tagFromEnvironmentMode(environmentMode: EnvironmentMode): string {
+  switch (environmentMode) {
     case EnvironmentMode.Local:
       return "Forms_Dev";
     case EnvironmentMode.Staging:

@@ -1,21 +1,10 @@
 import dotenv from "dotenv";
 
-export enum EnvironmentMode {
-  Local = "local",
-  Staging = "staging",
-  Production = "production",
-}
-
 dotenv.config();
 
 // AWS SDK
 
 export const AWS_REGION: string = "ca-central-1";
-
-// Environment mode
-
-export const ENVIRONMENT_MODE: EnvironmentMode =
-  mapEnvironmentModeFromStringToEnum(loadRequiredEnvVar("ENVIRONMENT_MODE"));
 
 // Express
 
@@ -53,10 +42,6 @@ function loadOptionalEnvVar(envVarName: string): string | undefined {
 }
 
 function loadRequiredEnvVar(envVarName: string): string {
-  if (process.env.NODE_ENV === "test") {
-    return "TEST_IN_PROGRESS";
-  }
-
   const envVar = loadOptionalEnvVar(envVarName);
 
   if (envVar === undefined) {
@@ -64,18 +49,4 @@ function loadRequiredEnvVar(envVarName: string): string {
   }
 
   return envVar;
-}
-
-function mapEnvironmentModeFromStringToEnum(
-  environmentMode: string,
-): EnvironmentMode {
-  if (environmentMode === "staging") {
-    return EnvironmentMode.Staging;
-  }
-
-  if (environmentMode === "production") {
-    return EnvironmentMode.Production;
-  }
-
-  return EnvironmentMode.Local;
 }

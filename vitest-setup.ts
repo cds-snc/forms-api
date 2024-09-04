@@ -1,13 +1,8 @@
 import { vi } from "vitest";
-import { EnvironmentMode } from "./src/config";
 
-vi.doMock("./src/config", async (importOriginal) => {
-  const original = (await importOriginal()) as object;
-
+vi.mock("./src/config", () => {
   return {
-    ...original,
     AWS_REGION: "ca-central-1",
-    ENVIRONMENT_MODE: EnvironmentMode.Production,
     SERVER_PORT: 3001,
     FRESHDESK_API_URL: "test",
     FRESHDESK_API_KEY: "test",

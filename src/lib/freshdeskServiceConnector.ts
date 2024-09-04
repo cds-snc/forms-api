@@ -1,8 +1,4 @@
-import {
-  EnvironmentMode,
-  FRESHDESK_API_KEY,
-  FRESHDESK_API_URL,
-} from "@src/config";
+import { FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@src/config";
 import axios, { type AxiosInstance } from "axios";
 
 export class FreshdeskServiceConnector {
@@ -51,17 +47,7 @@ export class FreshdeskApiClient {
     });
   }
 
-  public async createTicket(
-    payload: FreshdeskTicketPayload,
-    environmentMode: EnvironmentMode,
-  ): Promise<void> {
-    if (environmentMode === EnvironmentMode.Local) {
-      console.debug(
-        `[local] Skip request to create Freshdesk ticket. Ticket payload = ${JSON.stringify(payload)}`,
-      );
-      return Promise.resolve();
-    }
-
+  public async createTicket(payload: FreshdeskTicketPayload): Promise<void> {
     try {
       await this.axiosInstance.post("/v2/tickets", {
         name: payload.name,

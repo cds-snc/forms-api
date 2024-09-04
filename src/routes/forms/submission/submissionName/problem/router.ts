@@ -4,6 +4,10 @@ import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWit
 import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem";
 import type { Schema } from "express-validator";
 import { requestValidatorMiddleware } from "@src/middleware/requestValidator/middleware";
+import {
+  EnvironmentMode,
+  getEnvironmentModeFromRequestHostHeader,
+} from "@src/lib/utils/environmentMode";
 
 export const problemApiRoute = Router({
   mergeParams: true,
@@ -43,13 +47,25 @@ problemApiRoute.post(
 
     try {
       await reportProblemWithFormSubmission(formId, submissionName);
-      await notifySupportAboutFormSubmissionProblem(
-        formId,
-        submissionName,
-        contactEmail,
-        description,
-        preferredLanguage,
+
+      const environmentMode = getEnvironmentModeFromRequestHostHeader(
+        request.headers.host,
       );
+
+      if (environmentMode !== EnvironmentMode.Local) {
+        await notifySupportAboutFormSubmissionProblem(
+          formId,
+          submissionName,
+          contactEmail,
+          description,
+          preferredLanguage,
+          environmentMode,
+        );
+      } else {
+        console.debug(
+          "[local] Will not notify support about submission problem.",
+        );
+      }
 
       return response.sendStatus(200);
     } catch (error) {
