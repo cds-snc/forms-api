@@ -6,7 +6,7 @@ import {
 } from "@src/lib/idp/introspectionCache.js";
 import type { IntrospectionResult } from "@lib/idp/introspectToken.js";
 
-vi.mock("@src/lib/redisConnector");
+vi.mock("@src/lib/connectors/redisConnector");
 const redisConnectorMock = vi.mocked(RedisConnector);
 
 describe("introspectionCache", () => {

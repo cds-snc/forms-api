@@ -7,7 +7,6 @@ const cachePublicKey = async (publicKey: string, serviceAccountId: string) => {
   await redisConnector.client.set(
     `api:publicKey:${serviceAccountId}`,
     publicKey,
-    // biome-ignore lint/style/useNamingConvention: <'EX' is a Redis property>
     { EX: 300 },
   );
 };

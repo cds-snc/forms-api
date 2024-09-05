@@ -34,10 +34,8 @@ export async function introspectToken(
     const response = await axios.post(
       introspectionEndpoint,
       new URLSearchParams({
-        // biome-ignore lint/style/useNamingConvention: <search param defined by Zitadel>
         client_assertion_type:
           "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-        // biome-ignore lint/style/useNamingConvention: <search param defined by Zitadel>
         client_assertion: jwt,
         token: token,
       }),

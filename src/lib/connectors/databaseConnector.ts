@@ -18,7 +18,6 @@ export class DatabaseConnector {
       const response =
         await AwsServicesConnector.getInstance().secretsClient.send(
           new GetSecretValueCommand({
-            // biome-ignore lint/style/useNamingConvention: <AWS controls the property names>
             SecretId: "server-database-url",
           }),
         );

@@ -31,7 +31,6 @@ export async function setIntrospectionCache(
   await redisConnector.client.set(
     accessTokenKey,
     JSON.stringify(introspectionResult),
-    // biome-ignore lint/style/useNamingConvention: <'EX' is a Redis property>
     { EX: cacheExpiry },
   );
 }
