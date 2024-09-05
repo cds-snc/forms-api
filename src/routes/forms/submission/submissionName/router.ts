@@ -1,14 +1,16 @@
 import { type Request, type Response, Router } from "express";
-import { confirmApiRoute } from "@src/routes/forms/submission/submissionName/confirm/router.js";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@src/lib/vault/encryptFormSubmission.js";
 import { logMessage } from "@src/lib/logger.js";
+import { confirmApiRoute } from "@routes/forms/submission/submissionName/confirm/router.js";
+import { problemApiRoute } from "@routes/forms/submission/submissionName/problem/router.js";
 
 export const submissionNameApiRoute = Router({
   mergeParams: true,
 });
 
 submissionNameApiRoute.use("/confirm", confirmApiRoute);
+submissionNameApiRoute.use("/problem", problemApiRoute);
 
 submissionNameApiRoute.get(
   "/",

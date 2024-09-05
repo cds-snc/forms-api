@@ -28,3 +28,15 @@ export class FormSubmissionIncorrectConfirmationCodeException extends Error {
     );
   }
 }
+
+// Problem
+
+export class FormSubmissionAlreadyReportedAsProblematicException extends Error {
+  constructor() {
+    super("FormSubmissionAlreadyReportedAsProblematicException");
+    Object.setPrototypeOf(
+      this,
+      FormSubmissionAlreadyReportedAsProblematicException.prototype,
+    );
+  }
+}

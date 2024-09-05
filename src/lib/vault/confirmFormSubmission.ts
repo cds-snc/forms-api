@@ -5,8 +5,9 @@ import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "./dataStructures/exceptions.js";
+} from "@lib/vault/dataStructures/exceptions.js";
 import { logMessage } from "@lib/logger.js";
+
 const REMOVAL_DATE_DELAY_IN_DAYS = 30;
 
 export async function confirmFormSubmission(

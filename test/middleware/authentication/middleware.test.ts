@@ -2,6 +2,7 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import type { NextFunction, Request, Response } from "express";
 import { authenticationMiddleware } from "@middleware/authentication/middleware";
 import { introspectToken } from "@lib/idp/introspectToken";
+import { buildMockedResponse } from "test/mocks/express";
 import {
   getIntrospectionCache,
   setIntrospectionCache,
@@ -14,23 +15,14 @@ const setIntrospectionCacheMock = vi.mocked(setIntrospectionCache);
 vi.mock("@lib/idp/introspectToken");
 const introspectTokenMock = vi.mocked(introspectToken);
 
-function buildMockResponse() {
-  const res = {} as Response;
-
-  res.sendStatus = vi.fn();
-  res.json = vi.fn().mockReturnValue(res);
-  res.status = vi.fn().mockReturnValue(res);
-
-  return res;
-}
+const mockResponse: Response = buildMockedResponse();
+const mockNext: NextFunction = vi.fn();
 
 describe("authenticationMiddleware should", () => {
   let mockRequest: Partial<Request>;
-  let mockResponse: Response;
-  const mockNext: NextFunction = vi.fn();
 
   beforeEach(() => {
-    vi.resetAllMocks();
+    vi.clearAllMocks();
 
     mockRequest = {
       headers: {
@@ -40,8 +32,6 @@ describe("authenticationMiddleware should", () => {
         formId: "clzsn6tao000611j50dexeob0",
       },
     };
-
-    mockResponse = buildMockResponse();
   });
 
   it("reject request with there is no authorization header", async () => {
