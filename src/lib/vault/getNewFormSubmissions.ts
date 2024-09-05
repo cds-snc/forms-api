@@ -1,4 +1,4 @@
-import { QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { QueryCommand, type QueryCommandOutput } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/awsServicesConnector";
 import {
   newFormSubmissionFromDynamoDbResponse,
@@ -7,39 +7,54 @@ import {
 
 export async function getNewFormSubmissions(
   formId: string,
-): Promise<NewFormSubmission[] | undefined> {
+  limit: number,
+): Promise<NewFormSubmission[]> {
   try {
-    const response =
-      await AwsServicesConnector.getInstance().dynamodbClient.send(
-        new QueryCommand({
-          TableName: "Vault",
-          IndexName: "Status",
-          ScanIndexForward: false,
-          KeyConditionExpression: "FormID = :formId AND #Status = :status",
-          ProjectionExpression: "CreatedAt,#Name",
-          ExpressionAttributeNames: {
-            "#Status": "Status",
-            "#Name": "Name",
-          },
-          ExpressionAttributeValues: {
-            ":formId": formId,
-            ":status": "New",
-          },
-          Limit: 100, // Limit to 100 new submissions per call (not sorted by submission time)
-        }),
+    let newFormSubmissions: NewFormSubmission[] = [];
+    let lastEvaluatedKey: Record<string, string> | undefined | null = null;
+
+    while (lastEvaluatedKey !== undefined) {
+      const response: QueryCommandOutput =
+        await AwsServicesConnector.getInstance().dynamodbClient.send(
+          new QueryCommand({
+            TableName: "Vault",
+            IndexName: "StatusCreatedAt",
+            ExclusiveStartKey: lastEvaluatedKey ?? undefined,
+            Limit: limit - newFormSubmissions.length,
+            KeyConditionExpression:
+              "FormID = :formId AND begins_with(#statusCreatedAt, :status)",
+            ProjectionExpression: "CreatedAt,#name",
+            ExpressionAttributeNames: {
+              "#statusCreatedAt": "Status#CreatedAt",
+              "#name": "Name",
+            },
+            ExpressionAttributeValues: {
+              ":formId": formId,
+              ":status": "New",
+            },
+          }),
+        );
+
+      newFormSubmissions = newFormSubmissions.concat(
+        response.Items?.map(newFormSubmissionFromDynamoDbResponse) ?? [],
       );
 
-    if (response.Items) {
-      return newFormSubmissionFromDynamoDbResponse(response.Items);
+      if (newFormSubmissions.length >= limit) {
+        lastEvaluatedKey = undefined;
+      } else {
+        lastEvaluatedKey = response.LastEvaluatedKey;
+      }
     }
-    return undefined;
+
+    return newFormSubmissions;
   } catch (error) {
     console.error(
-      `[dynamodb] Failed to retrieve new submissions. FormId: ${formId}. Reason: ${JSON.stringify(
+      `[dynamodb] Failed to retrieve new form submissions. FormId: ${formId}. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),
       )}`,
     );
+
     throw error;
   }
 }

@@ -33,6 +33,7 @@ submissionNameApiRoute.get(
           Object.getOwnPropertyNames(error),
         )}`,
       );
+
       return response.sendStatus(500);
     }
   },

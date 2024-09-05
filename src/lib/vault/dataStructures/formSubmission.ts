@@ -12,8 +12,8 @@ export interface FormSubmission {
 }
 
 export interface NewFormSubmission {
-  createdAt: number;
   name: string;
+  createdAt: number;
 }
 
 export function formSubmissionFromDynamoDbResponse(
@@ -27,12 +27,10 @@ export function formSubmissionFromDynamoDbResponse(
 }
 
 export function newFormSubmissionFromDynamoDbResponse(
-  response: Record<string, unknown>[],
-): NewFormSubmission[] {
-  return response.map((item) => {
-    return {
-      createdAt: item.CreatedAt as number,
-      name: item.Name as string,
-    };
-  });
+  response: Record<string, unknown>,
+): NewFormSubmission {
+  return {
+    name: response.Name as string,
+    createdAt: response.CreatedAt as number,
+  };
 }

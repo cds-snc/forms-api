@@ -29,7 +29,9 @@ describe("/forms/:formId/submission", () => {
       getNewFormSubmissionsMock.mockResolvedValueOnce([
         buildMockedNewFormSubmission(),
       ]);
+
       const response = await request(server).get("/new");
+
       expect(response.status).toBe(200);
     });
   });
