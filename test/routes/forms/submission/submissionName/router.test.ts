@@ -36,7 +36,7 @@ describe("/forms/:formId/submission/:submissionName", () => {
 
     it("form submission does exist", async () => {
       getFormSubmissionMock.mockResolvedValueOnce(
-        buildMockedFormSubmission(FormSubmissionStatus.New)
+        buildMockedFormSubmission(FormSubmissionStatus.New),
       );
 
       getEncryptedFormSubmissionMock.mockResolvedValueOnce({
@@ -52,7 +52,7 @@ describe("/forms/:formId/submission/:submissionName", () => {
       expect(response.body).toEqual(
         expect.objectContaining({
           status: FormSubmissionStatus.New,
-        })
+        }),
       );
     });
 
@@ -67,8 +67,8 @@ describe("/forms/:formId/submission/:submissionName", () => {
       expect(response.status).toBe(500);
       expect(consoleErrorLogSpy).toHaveBeenCalledWith(
         expect.stringContaining(
-          "[route] Internal error while serving request: /forms/undefined/submission/undefined. Reason:"
-        )
+          "[route] Internal error while serving request: /forms/undefined/submission/undefined. Reason:",
+        ),
       );
     });
   });

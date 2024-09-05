@@ -16,7 +16,10 @@ describe("getFormSubmission should", () => {
       Item: undefined,
     });
 
-    const formSubmission = await getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571");
+    const formSubmission = await getFormSubmission(
+      "clzamy5qv0000115huc4bh90m",
+      "01-08-a571",
+    );
 
     expect(formSubmission).toBeUndefined();
   });
@@ -28,12 +31,15 @@ describe("getFormSubmission should", () => {
       },
     });
 
-    const formSubmission = await getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571");
+    const formSubmission = await getFormSubmission(
+      "clzamy5qv0000115huc4bh90m",
+      "01-08-a571",
+    );
 
     expect(formSubmission).toEqual(
       expect.objectContaining({
         status: FormSubmissionStatus.New,
-      })
+      }),
     );
   });
 
@@ -42,13 +48,13 @@ describe("getFormSubmission should", () => {
     const consoleErrorLogSpy = vi.spyOn(console, "error");
 
     await expect(() =>
-      getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571")
+      getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571"),
     ).rejects.toThrowError("custom error");
 
     expect(consoleErrorLogSpy).toHaveBeenCalledWith(
       expect.stringContaining(
-        "[dynamodb] Failed to retrieve form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571. Reason:"
-      )
+        "[dynamodb] Failed to retrieve form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571. Reason:",
+      ),
     );
   });
 });

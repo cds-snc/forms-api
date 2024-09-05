@@ -2,6 +2,8 @@ import pgp from "pg-promise";
 import { AwsServicesConnector } from "@lib/awsServicesConnector.js";
 import { GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import type pg from "pg-promise/typescript/pg-subset.js";
+import { logMessage } from "../logger.js";
+import { RedisConnector } from "../redisConnector.js";
 
 class DatabaseConnector {
   private static instance: DatabaseConnector | undefined = undefined;
@@ -14,12 +16,13 @@ class DatabaseConnector {
 
   private static getConnectionString = async () => {
     try {
-      const response = await AwsServicesConnector.getInstance().secretsClient.send(
-        new GetSecretValueCommand({
-          // biome-ignore lint/style/useNamingConvention: <AWS controls the property names>
-          SecretId: "server-database-url",
-        })
-      );
+      const response =
+        await AwsServicesConnector.getInstance().secretsClient.send(
+          new GetSecretValueCommand({
+            // biome-ignore lint/style/useNamingConvention: <AWS controls the property names>
+            SecretId: "server-database-url",
+          }),
+        );
 
       if (response.SecretString === undefined) {
         throw new Error("Database Connection URL not found in SecretsManager");
@@ -32,11 +35,11 @@ class DatabaseConnector {
 
       return response.SecretString;
     } catch (error) {
-      console.error(
+      logMessage.error(
         `[secrets-manager] Failed to retrieve server-database-url. Reason: ${JSON.stringify(
           error,
-          Object.getOwnPropertyNames(error)
-        )}`
+          Object.getOwnPropertyNames(error),
+        )}`,
       );
 
       throw error;
@@ -53,11 +56,34 @@ class DatabaseConnector {
   }
 }
 
+const cachePublicKey = async (publicKey: string, serviceAccountId: string) => {
+  const redisConnector = await RedisConnector.getInstance();
+  await redisConnector.client.set(
+    `api:publicKey:${serviceAccountId}`,
+    publicKey,
+    // biome-ignore lint/style/useNamingConvention: <'EX' is a Redis property>
+    { EX: 300 },
+  );
+};
+
+const getPublicKeyFromCache = async (serviceAccountId: string) => {
+  const redisConnector = await RedisConnector.getInstance();
+  return await redisConnector.client.get(`api:publicKey:${serviceAccountId}`);
+};
+
 export const getPublicKey = async (serviceAccountId: string) => {
   const connector = await DatabaseConnector.getInstance();
+  const cachedPublicKey = await getPublicKeyFromCache(serviceAccountId);
+  if (cachedPublicKey) {
+    return cachedPublicKey;
+  }
+
   const { publicKey }: { publicKey: string } = await connector.db.one(
     'SELECT "publicKey" FROM "ApiServiceAccount" WHERE id = $1',
-    [serviceAccountId]
+    [serviceAccountId],
   );
+
+  await cachePublicKey(publicKey, serviceAccountId);
+
   return publicKey;
 };

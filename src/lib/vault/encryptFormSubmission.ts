@@ -4,7 +4,7 @@ import crypto from "node:crypto";
 
 export const encryptFormSubmission = async (
   serviceAccountId: string,
-  submission: FormSubmission
+  submission: FormSubmission,
 ) => {
   const serviceAccountPublicKey = await getPublicKey(serviceAccountId);
 
@@ -20,9 +20,13 @@ export const encryptFormSubmission = async (
   ]);
   const authTag = cipher.getAuthTag();
   const publicKey = crypto.createPublicKey({ key: serviceAccountPublicKey });
-  const encryptedKey = crypto.publicEncrypt(publicKey, encryptionKey).toString("base64");
+  const encryptedKey = crypto
+    .publicEncrypt(publicKey, encryptionKey)
+    .toString("base64");
   const encryptedNonce = crypto.publicEncrypt(publicKey, iv).toString("base64");
-  const encryptedAuthTag = crypto.publicEncrypt(publicKey, authTag).toString("base64");
+  const encryptedAuthTag = crypto
+    .publicEncrypt(publicKey, authTag)
+    .toString("base64");
 
   return {
     encryptedResponses,

@@ -1,6 +1,5 @@
 import pino from "pino";
 
-
 export const logMessage = pino.default({
   level: process.env.NODE_ENV === "development" ? "debug" : "info",
 

@@ -6,6 +6,7 @@ import readline from "node:readline";
 import { SignJWT } from "jose";
 import gcformsPrivate from "./private_api_key.json";
 import crypto from "node:crypto";
+import { logMessage } from "../../src/lib/logger.js";
 
 // const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -28,7 +29,7 @@ function getValue(query: string) {
     rl.question(query, (ans) => {
       rl.close();
       resolve(ans);
-    })
+    }),
   );
 }
 
@@ -59,11 +60,11 @@ const getAccessToken = async () => {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+      },
     )
     .then((res) => res.data.access_token)
     .catch((e) => {
-      console.error(e.response);
+      logMessage.error(e.response);
     });
 };
 
@@ -75,48 +76,69 @@ const main = async () => {
       throw new Error("Identity provider not set in .env file");
     }
 
-    const menuSelection = await(getValue(`I want to:
+    const menuSelection = await getValue(`I want to:
 (1) Retrieve a form submission
 (2) Generate and dispaly an Access Token
-Selection (1): `));
+Selection (1): `);
 
     if (menuSelection === "2") {
-          const accessToken = await getAccessToken();
-          console.log(`Access Token: \n${accessToken}`);
-          return;
+      const accessToken = await getAccessToken();
+      logMessage.info(`Access Token: \n${accessToken}`);
+      return;
     }
 
-    const formID =  await getValue("Form ID to retrieve responses for: ");
+    const formID = await getValue("Form ID to retrieve responses for: ");
     const submissionName = await getValue("Submission name to retrieve: ");
     const accessToken = await getAccessToken();
     const timeStart = Date.now();
 
     const data = await axios
-      .get(`${process.env.GCFORMS_API_URL}/forms/${formID}/submission/${submissionName}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: "application/json",
+      .get(
+        `${process.env.GCFORMS_API_URL}/forms/${formID}/submission/${submissionName}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: "application/json",
+          },
         },
-      })
+      )
       .then((res) => res.data)
       .catch((e) => {
-        console.error(e.response.data);
+        logMessage.error(e.response.data);
       });
     const timeDecryptStart = Date.now();
-    const { encryptedResponses, encryptedNonce, encryptedKey, encryptedAuthTag } = data;
-    console.log(
-      `Encrypted Responses: ${Buffer.from(encryptedResponses, "base64").toString("base64")}`
+    const {
+      encryptedResponses,
+      encryptedNonce,
+      encryptedKey,
+      encryptedAuthTag,
+    } = data;
+    logMessage.info(
+      `Encrypted Responses: ${Buffer.from(encryptedResponses, "base64").toString("base64")}`,
     );
 
-    console.log("Decrypting responses.");
+    logMessage.info("Decrypting responses.");
     const privateKey = crypto.createPrivateKey({ key: gcformsPrivate.key });
 
-    const decryptedKey = crypto.privateDecrypt(privateKey, Buffer.from(encryptedKey, "base64"));
+    const decryptedKey = crypto.privateDecrypt(
+      privateKey,
+      Buffer.from(encryptedKey, "base64"),
+    );
 
-    const decryptedNonce = crypto.privateDecrypt(privateKey, Buffer.from(encryptedNonce, "base64"));
-    const authTag = crypto.privateDecrypt(privateKey, Buffer.from(encryptedAuthTag, "base64"));
+    const decryptedNonce = crypto.privateDecrypt(
+      privateKey,
+      Buffer.from(encryptedNonce, "base64"),
+    );
+    const authTag = crypto.privateDecrypt(
+      privateKey,
+      Buffer.from(encryptedAuthTag, "base64"),
+    );
 
-    const decipher = crypto.createDecipheriv("aes-256-gcm", decryptedKey, decryptedNonce);
+    const decipher = crypto.createDecipheriv(
+      "aes-256-gcm",
+      decryptedKey,
+      decryptedNonce,
+    );
     decipher.setAuthTag(authTag);
 
     const responses = Buffer.concat([
@@ -124,11 +146,13 @@ Selection (1): `));
       decipher.final(),
     ]);
     const timeEnd = Date.now();
-    console.log(responses.toString("utf-8"));
-    console.log(`Time taken to download and decrypt: ${timeEnd - timeStart}ms`);
-    console.log(`Time taken to decrypt: ${timeEnd - timeDecryptStart}ms`);
+    logMessage.info(responses.toString("utf-8"));
+    logMessage.info(
+      `Time taken to download and decrypt: ${timeEnd - timeStart}ms`,
+    );
+    logMessage.info(`Time taken to decrypt: ${timeEnd - timeDecryptStart}ms`);
   } catch (e) {
-    console.log(e);
+    logMessage.error(e);
   }
 };
 

@@ -7,4 +7,8 @@ export const formsApiRoute = Router();
 
 formsApiRoute
   .use(rateLimiterMiddleware)
-  .use("/:formId(c[a-z0-9]{24})/submission", authenticationMiddleware, submissionApiRoute);
+  .use(
+    "/:formId(c[a-z0-9]{24})/submission",
+    authenticationMiddleware,
+    submissionApiRoute,
+  );

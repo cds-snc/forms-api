@@ -2,6 +2,7 @@ import { SignJWT } from "jose";
 import axios, { type AxiosError } from "axios";
 import { createPrivateKey } from "node:crypto";
 import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config.js";
+import { logMessage } from "../logger.js";
 
 export type IntrospectionResult = {
   username: string;
@@ -17,7 +18,9 @@ const privateKey = createPrivateKey({
 });
 const introspectionEndpoint = `${ZITADEL_DOMAIN}/oauth/v2/introspect`;
 
-export async function introspectToken(token: string): Promise<IntrospectionResult | undefined> {
+export async function introspectToken(
+  token: string,
+): Promise<IntrospectionResult | undefined> {
   const jwt = await new SignJWT()
     .setProtectedHeader({ alg: algorithm, kid: keyId })
     .setIssuedAt()
@@ -31,7 +34,10 @@ export async function introspectToken(token: string): Promise<IntrospectionResul
     const response = await axios.post(
       introspectionEndpoint,
       new URLSearchParams({
-        client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        // biome-ignore lint/style/useNamingConvention: <search param defined by Zitadel>
+        client_assertion_type:
+          "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        // biome-ignore lint/style/useNamingConvention: <search param defined by Zitadel>
         client_assertion: jwt,
         token: token,
       }),
@@ -39,7 +45,7 @@ export async function introspectToken(token: string): Promise<IntrospectionResul
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+      },
     );
 
     const introspectionResponse = response.data as Record<string, unknown>;
@@ -56,7 +62,7 @@ export async function introspectToken(token: string): Promise<IntrospectionResul
       serviceAccountId: introspectionResponse.sub as string,
     };
   } catch (error) {
-    console.error((error as AxiosError).response?.data);
+    logMessage.error((error as AxiosError).response?.data);
     return undefined;
   }
 }

@@ -6,17 +6,18 @@ import {
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "./dataStructures/exceptions.js";
-
+import { logMessage } from "@lib/logger.js";
 const REMOVAL_DATE_DELAY_IN_DAYS = 30;
 
 export async function confirmFormSubmission(
   formId: string,
   submissionName: string,
-  confirmationCode: string
+  confirmationCode: string,
 ): Promise<void> {
   try {
     const confirmationTimestamp = Date.now();
-    const removalDate = confirmationTimestamp + REMOVAL_DATE_DELAY_IN_DAYS * 86400000;
+    const removalDate =
+      confirmationTimestamp + REMOVAL_DATE_DELAY_IN_DAYS * 86400000;
 
     await AwsServicesConnector.getInstance().dynamodbClient.send(
       new UpdateCommand({
@@ -46,18 +47,18 @@ export async function confirmFormSubmission(
           ":removalDate": removalDate,
         },
         ReturnValuesOnConditionCheckFailure: "ALL_OLD",
-      })
+      }),
     );
   } catch (error) {
     if (error instanceof ConditionalCheckFailedException) {
       handleConditionalCheckFailedException(error, confirmationCode);
     }
 
-    console.error(
+    logMessage.error(
       `[dynamodb] Failed to confirm form submission. FormId: ${formId} / SubmissionName: ${submissionName} / ConfirmationCode: ${confirmationCode}. Reason: ${JSON.stringify(
         error,
-        Object.getOwnPropertyNames(error)
-      )}`
+        Object.getOwnPropertyNames(error),
+      )}`,
     );
 
     throw error;
@@ -66,7 +67,7 @@ export async function confirmFormSubmission(
 
 function handleConditionalCheckFailedException(
   exception: ConditionalCheckFailedException,
-  confirmationCode: string
+  confirmationCode: string,
 ): void {
   const failedToBeUpdatedItem = exception.Item
     ? {

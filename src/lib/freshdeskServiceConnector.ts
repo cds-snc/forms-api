@@ -1,5 +1,10 @@
-import { EnvironmentMode, FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@src/config.js";
+import {
+  EnvironmentMode,
+  FRESHDESK_API_KEY,
+  FRESHDESK_API_URL,
+} from "@src/config.js";
 import axios, { type AxiosInstance } from "axios";
+import { logMessage } from "./logger.js";
 
 export class FreshdeskServiceConnector {
   private static instance: FreshdeskServiceConnector | undefined = undefined;
@@ -7,7 +12,11 @@ export class FreshdeskServiceConnector {
   public mainClient: FreshdeskApiClient;
 
   private constructor() {
-    this.mainClient = new FreshdeskApiClient(FRESHDESK_API_URL, FRESHDESK_API_KEY, 5000);
+    this.mainClient = new FreshdeskApiClient(
+      FRESHDESK_API_URL,
+      FRESHDESK_API_KEY,
+      5000,
+    );
   }
 
   public static getInstance(): FreshdeskServiceConnector {
@@ -45,13 +54,13 @@ export class FreshdeskApiClient {
 
   public async createTicket(
     payload: FreshdeskTicketPayload,
-    environmentMode: EnvironmentMode
+    environmentMode: EnvironmentMode,
   ): Promise<void> {
     if (environmentMode === EnvironmentMode.Local) {
-      console.debug(
+      logMessage.debug(
         `[local] Skip request to create Freshdesk ticket. Ticket payload = ${JSON.stringify(
-          payload
-        )}`
+          payload,
+        )}`,
       );
       return Promise.resolve();
     }
@@ -65,7 +74,8 @@ export class FreshdeskApiClient {
         tags: payload.tags,
         description: payload.description,
         custom_fields: {
-          cf_language: payload.preferredLanguage === "en" ? "English" : "Français",
+          cf_language:
+            payload.preferredLanguage === "en" ? "English" : "Français",
         },
         source: 2,
         priority: 1,
@@ -96,7 +106,9 @@ export class FreshdeskApiClient {
         errorMessage = `${(error as Error).message}.`;
       }
 
-      throw new Error(`Failed to create Freshdesk ticket. Reason: ${errorMessage}`);
+      throw new Error(
+        `Failed to create Freshdesk ticket. Reason: ${errorMessage}`,
+      );
     }
   }
 }

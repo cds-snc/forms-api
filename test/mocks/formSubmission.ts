@@ -4,7 +4,7 @@ import {
 } from "@src/lib/vault/dataStructures/formSubmission.js";
 
 export function buildMockedFormSubmission(
-  status: FormSubmissionStatus = FormSubmissionStatus.New
+  status: FormSubmissionStatus = FormSubmissionStatus.New,
 ): FormSubmission {
   return {
     status,

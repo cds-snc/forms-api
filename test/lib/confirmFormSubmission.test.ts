@@ -23,8 +23,8 @@ describe("confirmFormSubmission should", () => {
       confirmFormSubmission(
         "clzamy5qv0000115huc4bh90m",
         "01-08-a571",
-        "620b203c-9836-4000-bf30-1c3bcc26b834"
-      )
+        "620b203c-9836-4000-bf30-1c3bcc26b834",
+      ),
     ).resolves.not.toThrow();
   });
 
@@ -34,15 +34,15 @@ describe("confirmFormSubmission should", () => {
         $metadata: {},
         message: "",
         Item: undefined,
-      })
+      }),
     );
 
     await expect(
       confirmFormSubmission(
         "clzamy5qv0000115huc4bh90m",
         "01-08-a571",
-        "620b203c-9836-4000-bf30-1c3bcc26b834"
-      )
+        "620b203c-9836-4000-bf30-1c3bcc26b834",
+      ),
     ).rejects.toThrow(FormSubmissionNotFoundException);
   });
 
@@ -59,15 +59,15 @@ describe("confirmFormSubmission should", () => {
             S: "620b203c-9836-4000-bf30-1c3bcc26b834",
           },
         },
-      })
+      }),
     );
 
     await expect(
       confirmFormSubmission(
         "clzamy5qv0000115huc4bh90m",
         "01-08-a571",
-        "620b203c-9836-4000-bf30-1c3bcc26b834"
-      )
+        "620b203c-9836-4000-bf30-1c3bcc26b834",
+      ),
     ).rejects.toThrow(FormSubmissionAlreadyConfirmedException);
   });
 
@@ -84,15 +84,15 @@ describe("confirmFormSubmission should", () => {
             S: "bec5736a-0666-4d63-92f9-9685f21121cc",
           },
         },
-      })
+      }),
     );
 
     await expect(
       confirmFormSubmission(
         "clzamy5qv0000115huc4bh90m",
         "01-08-a571",
-        "620b203c-9836-4000-bf30-1c3bcc26b834"
-      )
+        "620b203c-9836-4000-bf30-1c3bcc26b834",
+      ),
     ).rejects.toThrow(FormSubmissionIncorrectConfirmationCodeException);
   });
 });

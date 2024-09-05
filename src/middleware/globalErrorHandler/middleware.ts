@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
+import { logMessage } from "@src/lib/logger.js";
 
 export function globalErrorHandlerMiddleware(
   error: Error,
@@ -6,6 +7,6 @@ export function globalErrorHandlerMiddleware(
   response: Response,
   _next: NextFunction,
 ) {
-  console.error(JSON.stringify(error, Object.getOwnPropertyNames(error)));
+  logMessage.error(JSON.stringify(error, Object.getOwnPropertyNames(error)));
   return response.sendStatus(500);
 }

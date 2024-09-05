@@ -24,15 +24,21 @@ describe("/forms/:formId/submission/:submissionName/confirm/:confirmationCode", 
     it("confirmation is successful", async () => {
       confirmFormSubmissionMock.mockResolvedValueOnce();
 
-      const response = await request(server).put("/620b203c-9836-4000-bf30-1c3bcc26b834");
+      const response = await request(server).put(
+        "/620b203c-9836-4000-bf30-1c3bcc26b834",
+      );
 
       expect(response.status).toBe(200);
     });
 
     it("form submission does not exist", async () => {
-      confirmFormSubmissionMock.mockRejectedValueOnce(new FormSubmissionNotFoundException());
+      confirmFormSubmissionMock.mockRejectedValueOnce(
+        new FormSubmissionNotFoundException(),
+      );
 
-      const response = await request(server).put("/620b203c-9836-4000-bf30-1c3bcc26b834");
+      const response = await request(server).put(
+        "/620b203c-9836-4000-bf30-1c3bcc26b834",
+      );
 
       expect(response.status).toBe(404);
       expect(response.body).toEqual({
@@ -42,10 +48,12 @@ describe("/forms/:formId/submission/:submissionName/confirm/:confirmationCode", 
 
     it("form submission is already confirmed", async () => {
       confirmFormSubmissionMock.mockRejectedValueOnce(
-        new FormSubmissionAlreadyConfirmedException()
+        new FormSubmissionAlreadyConfirmedException(),
       );
 
-      const response = await request(server).put("/620b203c-9836-4000-bf30-1c3bcc26b834");
+      const response = await request(server).put(
+        "/620b203c-9836-4000-bf30-1c3bcc26b834",
+      );
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -55,10 +63,12 @@ describe("/forms/:formId/submission/:submissionName/confirm/:confirmationCode", 
 
     it("confirmation code is incorrect", async () => {
       confirmFormSubmissionMock.mockRejectedValueOnce(
-        new FormSubmissionIncorrectConfirmationCodeException()
+        new FormSubmissionIncorrectConfirmationCodeException(),
       );
 
-      const response = await request(server).put("/620b203c-9836-4000-bf30-1c3bcc26b834");
+      const response = await request(server).put(
+        "/620b203c-9836-4000-bf30-1c3bcc26b834",
+      );
 
       expect(response.status).toBe(400);
       expect(response.body).toEqual({

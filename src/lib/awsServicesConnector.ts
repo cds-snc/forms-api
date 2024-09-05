@@ -25,7 +25,7 @@ export class AwsServicesConnector {
       new DynamoDBClient({
         ...globalConfig,
         ...localstackConfig,
-      })
+      }),
     );
     this.secretsClient = new SecretsManagerClient({
       ...globalConfig,

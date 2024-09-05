@@ -1,5 +1,6 @@
 import { type RedisClientType, createClient } from "redis";
-import { REDIS_URL } from "@src/config.js"
+import { REDIS_URL } from "@src/config.js";
+import { logMessage } from "./logger.js";
 
 export class RedisConnector {
   private static instance: RedisConnector | undefined = undefined;
@@ -20,9 +21,13 @@ export class RedisConnector {
       },
     });
     this.client
-      .on("error", (err: Error) => console.error("Redis client error:", err))
-      .on("ready", () => console.debug("Redis client ready!"))
-      .on("reconnecting", () => console.debug("Redis client reconnecting..."));
+      .on("error", (err: Error) =>
+        logMessage.error(`Redis client error: ${err.message}`),
+      )
+      .on("ready", () => logMessage.debug("Redis client ready!"))
+      .on("reconnecting", () =>
+        logMessage.debug("Redis client reconnecting..."),
+      );
   }
 
   /**

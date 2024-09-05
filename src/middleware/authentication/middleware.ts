@@ -5,7 +5,6 @@ import {
   setIntrospectionCache,
 } from "@lib/idp/introspectionCache.js";
 
-
 interface CustomRequest extends Request {
   serviceAccountId?: string;
 }
@@ -13,7 +12,7 @@ interface CustomRequest extends Request {
 export async function authenticationMiddleware(
   request: CustomRequest,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const accessToken = request.headers.authorization?.split(" ")[1];
 

@@ -28,7 +28,7 @@ describe("/forms/:formId/submission", () => {
     describe("Response to GET operation when", () => {
       it("submissionName format is valid", async () => {
         getFormSubmissionMock.mockResolvedValueOnce(
-          buildMockedFormSubmission(FormSubmissionStatus.New)
+          buildMockedFormSubmission(FormSubmissionStatus.New),
         );
 
         const response = await request(server).get("/01-08-a571");
@@ -36,12 +36,19 @@ describe("/forms/:formId/submission", () => {
         expect(response.status).toBe(200);
       });
 
-      it.each(["invalid", "010-08-a571", "01-08-a51", "0-8-a71", "ab-01-a571", "01-ab-a571"])(
+      it.each([
+        "invalid",
+        "010-08-a571",
+        "01-08-a51",
+        "0-8-a71",
+        "ab-01-a571",
+        "01-ab-a571",
+      ])(
         "submissionName format is not valid (testing %s)",
         async (submissionName: string) => {
           const response = await request(server).get(`/${submissionName}`);
           expect(response.status).toBe(404);
-        }
+        },
       );
     });
   });
