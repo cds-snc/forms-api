@@ -8,6 +8,7 @@ import {
   FormSubmissionNotFoundException,
 } from "@src/lib/vault/dataStructures/exceptions.js";
 import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
+import { logMessage } from "@src/lib/logger.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -98,7 +99,7 @@ describe("confirmFormSubmission should", () => {
 
   it("throw an error if DynamoDB has an internal failure", async () => {
     dynamoDbMock.on(UpdateCommand).rejectsOnce("custom error");
-    const consoleErrorLogSpy = vi.spyOn(console, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
       confirmFormSubmission(
@@ -108,7 +109,7 @@ describe("confirmFormSubmission should", () => {
       ),
     ).rejects.toThrowError("custom error");
 
-    expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+    expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining(
         "[dynamodb] Failed to confirm form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / ConfirmationCode: 620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
       ),

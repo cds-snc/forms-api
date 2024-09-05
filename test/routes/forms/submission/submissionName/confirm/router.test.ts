@@ -8,6 +8,7 @@ import {
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@src/lib/vault/dataStructures/exceptions.js";
+import { logMessage } from "@src/lib/logger.js";
 
 vi.mock("@lib/vault/confirmFormSubmission");
 const confirmFormSubmissionMock = vi.mocked(confirmFormSubmission);
@@ -80,14 +81,14 @@ describe("/forms/:formId/submission/:submissionName/confirm/:confirmationCode", 
       confirmFormSubmissionMock.mockRejectedValueOnce(
         new Error("custom error"),
       );
-      const consoleErrorLogSpy = vi.spyOn(console, "error");
+      const logMessageSpy = vi.spyOn(logMessage, "error");
 
       const response = await request(server).put(
         "/620b203c-9836-4000-bf30-1c3bcc26b834",
       );
 
       expect(response.status).toBe(500);
-      expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+      expect(logMessageSpy).toHaveBeenCalledWith(
         expect.stringContaining(
           "[route] Internal error while serving request: /forms/undefined/submission/undefined/confirm/620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
         ),

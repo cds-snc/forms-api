@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@src/config";
+import { FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@src/config.js";
 
 export type FreshdeskTicketPayload = {
   name: string;

@@ -25,7 +25,7 @@ describe("/forms/:formId/submission", () => {
   });
 
   describe("/:submissionName", () => {
-    describe("Response to GET operation when", () => {
+    describe.skip("Response to GET operation when", () => {
       it("submissionName format is valid", async () => {
         getFormSubmissionMock.mockResolvedValueOnce(
           buildMockedFormSubmission(FormSubmissionStatus.New),

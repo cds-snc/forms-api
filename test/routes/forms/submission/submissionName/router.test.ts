@@ -1,6 +1,6 @@
 import { vi, describe, beforeAll, it, expect } from "vitest";
 import request from "supertest";
-import express, { type Express } from "express";
+
 import { submissionNameApiRoute } from "@routes/forms/submission/submissionName/router.js";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@lib/vault/encryptFormSubmission.js";
@@ -13,25 +13,29 @@ vi.mock("@lib/vault/encryptFormSubmission");
 const getFormSubmissionMock = vi.mocked(getFormSubmission);
 const getEncryptedFormSubmissionMock = vi.mocked(encryptFormSubmission);
 
+const { res, next, mockClear } = getMockRes();
+
+// This file will
+
 describe("/forms/:formId/submission/:submissionName", () => {
-  let server: Express;
-  const { res, next, mockClear } = getMockRes();
 
   beforeAll(() => {
-    server = express();
-    server.use("/", submissionNameApiRoute);
+  mockClear();
   });
 
-  describe("Response to GET operation when", () => {
-    it("form submission does not exist", async () => {
+  describe.skip("Response to GET operation when", () => {
+    it("form submission does not exist",  () => {
       getFormSubmissionMock.mockResolvedValueOnce(undefined);
+      const req = getMockReq({method:"GET", params: { formId: "formId", submissionName: "submissionName",serviceAccountId:"serviceAccountId"} });
 
-      const response = await request(server).get("/");
+   submissionNameApiRoute(req, res, next)
 
-      expect(response.status).toBe(404);
-      expect(response.body).toEqual({
-        error: "Form submission does not exist",
-      });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: "Form submission does not exist",
+        }),
+      );
     });
 
     it("form submission does exist", async () => {

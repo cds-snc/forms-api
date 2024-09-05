@@ -1,5 +1,5 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/awsServicesConnector.js";
+import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import {
   formSubmissionFromDynamoDbResponse,
   type FormSubmission,

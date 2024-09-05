@@ -1,7 +1,8 @@
 import pino from "pino";
+import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
 
 export const logMessage = pino.default({
-  level: process.env.NODE_ENV === "development" ? "debug" : "info",
+  level: ENVIRONMENT_MODE === EnvironmentMode.Local ? "debug" : "info",
 
   formatters: {
     level: (label) => ({ level: label }),

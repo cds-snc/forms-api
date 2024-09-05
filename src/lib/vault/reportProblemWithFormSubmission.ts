@@ -1,9 +1,9 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/awsServicesConnector";
+import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@lib/vault/dataStructures/exceptions";
+} from "@lib/vault/dataStructures/exceptions.js";
 import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 
 export async function reportProblemWithFormSubmission(

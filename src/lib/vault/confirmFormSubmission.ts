@@ -1,6 +1,6 @@
 import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/awsServicesConnector.js";
+import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,

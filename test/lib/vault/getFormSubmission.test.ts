@@ -3,6 +3,7 @@ import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission.js";
+import { logMessage } from "@src/lib/logger.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -45,13 +46,13 @@ describe("getFormSubmission should", () => {
 
   it("throw an error if DynamoDB has an internal failure", async () => {
     dynamoDbMock.on(GetCommand).rejectsOnce("custom error");
-    const consoleErrorLogSpy = vi.spyOn(console, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
       getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571"),
     ).rejects.toThrowError("custom error");
 
-    expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+    expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining(
         "[dynamodb] Failed to retrieve form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571. Reason:",
       ),
