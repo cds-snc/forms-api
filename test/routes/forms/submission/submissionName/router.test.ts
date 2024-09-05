@@ -45,9 +45,7 @@ describe("/forms/:formId/submission/:submissionName", () => {
     });
 
     it("processing fails due to internal error", async () => {
-      getFormSubmissionMock.mockImplementationOnce(() => {
-        throw new Error("custom error");
-      });
+      getFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
       const consoleErrorLogSpy = vi.spyOn(console, "error");
 
       const response = await request(server).get("/");

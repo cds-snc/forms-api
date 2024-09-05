@@ -28,10 +28,10 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ steps.generate_token.outputs.token}}
-          commit-message: "Add catalog-info.yaml"
-          branch: "backstage/catalog-info"
-          title: "Add catalog-info.yaml"
-          body: "Adding a basic catalog-info.yaml to start populating the backstage catalog with your components."
-          labels: "backstage"
+          commit-message: 'Add catalog-info.yaml'
+          branch: 'backstage/catalog-info'
+          title: 'Add catalog-info.yaml'
+          body: 'Adding a basic catalog-info.yaml to start populating the backstage catalog with your components.'
+          labels: 'backstage'
           add-paths: |
             catalog-info.yaml
