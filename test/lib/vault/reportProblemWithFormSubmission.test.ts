@@ -25,7 +25,7 @@ describe("reportProblemWithFormSubmission should", () => {
 
   it("successfully report a problem with a form submission if everything goes well", async () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2024, 9, 5));
+    vi.setSystemTime(new Date(1519129853500));
 
     dynamoDbMock.on(GetCommand).resolvesOnce({
       Item: buildMockedVaultItem("New"),
@@ -46,9 +46,9 @@ describe("reportProblemWithFormSubmission should", () => {
         "#statusCreatedAtKey": "Status#CreatedAt",
       },
       ExpressionAttributeValues: {
-        ":problemTimestamp": 1728100800000,
+        ":problemTimestamp": 1519129853500,
         ":status": "Problem",
-        ":statusCreatedAtKeyValue": "Problem#1728100800000",
+        ":statusCreatedAtKeyValue": "Problem#1519129853500",
       },
       Key: {
         FormID: "clzamy5qv0000115huc4bh90m",

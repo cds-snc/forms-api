@@ -26,7 +26,7 @@ describe("confirmFormSubmission should", () => {
 
   it("successfully confirm a form submission if everything goes well", async () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2024, 9, 5));
+    vi.setSystemTime(new Date(1519129853500));
 
     dynamoDbMock.on(GetCommand).resolvesOnce({
       Item: buildMockedVaultItem("New", "620b203c-9836-4000-bf30-1c3bcc26b834"),
@@ -48,10 +48,10 @@ describe("confirmFormSubmission should", () => {
         "#statusCreatedAtKey": "Status#CreatedAt",
       },
       ExpressionAttributeValues: {
-        ":confirmTimestamp": 1728100800000,
-        ":removalDate": 1730692800000,
+        ":confirmTimestamp": 1519129853500,
+        ":removalDate": 1521721853500,
         ":status": "Confirmed",
-        ":statusCreatedAtKeyValue": "Confirmed#1728100800000",
+        ":statusCreatedAtKeyValue": "Confirmed#1519129853500",
       },
       Key: {
         FormID: "clzamy5qv0000115huc4bh90m",
