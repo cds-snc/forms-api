@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Request, Response } from "express";
-import { routeNotFoundMiddleware } from "@src/middleware/routeNotFound/middleware";
-import { buildMockedResponse } from "test/mocks/express";
+import { routeNotFoundMiddleware } from "@src/middleware/routeNotFound/middleware.js";
+import { buildMockedResponse } from "test/mocks/express.js";
 
 describe("routeNotFoundMiddleware should", () => {
   it("return HTTP code 404", () => {

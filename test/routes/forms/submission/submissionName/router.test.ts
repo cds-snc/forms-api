@@ -1,83 +1,78 @@
-import { vi, describe, beforeAll, it, expect } from "vitest";
-import request from "supertest";
+import { describe, beforeAll, } from "vitest";
+// import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
+// import { encryptFormSubmission } from "@lib/vault/encryptFormSubmission.js";
+// import { getMockRes } from "vitest-mock-express";
 
-import { submissionNameApiRoute } from "@routes/forms/submission/submissionName/router.js";
-import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
-import { encryptFormSubmission } from "@lib/vault/encryptFormSubmission.js";
-import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission.js";
-import { buildMockedFormSubmission } from "test/mocks/formSubmission.js";
-import { getMockReq, getMockRes } from "vitest-mock-express";
+// vi.mock("@lib/vault/getFormSubmission");
+// vi.mock("@lib/vault/encryptFormSubmission");
+// const getFormSubmissionMock = vi.mocked(getFormSubmission);
+// const getEncryptedFormSubmissionMock = vi.mocked(encryptFormSubmission);
 
-vi.mock("@lib/vault/getFormSubmission");
-vi.mock("@lib/vault/encryptFormSubmission");
-const getFormSubmissionMock = vi.mocked(getFormSubmission);
-const getEncryptedFormSubmissionMock = vi.mocked(encryptFormSubmission);
-
-const { res, next, mockClear } = getMockRes();
+// const { res, next, mockClear } = getMockRes();
 
 // This file will
 
 describe("/forms/:formId/submission/:submissionName", () => {
   beforeAll(() => {
-    mockClear();
+    // mockClear();
   });
 
-  describe.skip("Response to GET operation when", () => {
-    it("form submission does not exist", () => {
-      getFormSubmissionMock.mockResolvedValueOnce(undefined);
-      const req = getMockReq({
-        method: "GET",
-        params: {
-          formId: "formId",
-          submissionName: "submissionName",
-          serviceAccountId: "serviceAccountId",
-        },
-      });
+  // describe.skip("Response to GET operation when", () => {
+  //   it("form submission does not exist", () => {
+  //     getFormSubmissionMock.mockResolvedValueOnce(undefined);
+  //     const req = getMockReq({
+  //       method: "GET",
+  //       params: {
+  //         formId: "formId",
+  //         submissionName: "submissionName",
+  //         serviceAccountId: "serviceAccountId",
+  //       },
+  //     });
 
-      submissionNameApiRoute(req, res, next);
+  //     submissionNameApiRoute(req, res, next);
 
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          error: "Form submission does not exist",
-        }),
-      );
-    });
+  //     expect(res.status).toHaveBeenCalledWith(404);
+  //     expect(res.json).toHaveBeenCalledWith(
+  //       expect.objectContaining({
+  //         error: "Form submission does not exist",
+  //       }),
+  //     );
+  //   });
 
-    it("form submission does exist", async () => {
-      getFormSubmissionMock.mockResolvedValueOnce(
-        buildMockedFormSubmission(FormSubmissionStatus.New),
-      );
+  //   it("form submission does exist", async () => {
+  //     getFormSubmissionMock.mockResolvedValueOnce(
+  //       buildMockedFormSubmission(FormSubmissionStatus.New),
+  //     );
 
-      getEncryptedFormSubmissionMock.mockResolvedValueOnce({
-        encryptedResponses: Buffer.from("encryptedResponses"),
-        encryptedKey: "encryptedKey",
-        encryptedNonce: "encryptedNonce",
-        encryptedAuthTag: "encryptedAuthTag",
-      });
+  //     getEncryptedFormSubmissionMock.mockResolvedValueOnce({
+  //       encryptedResponses: Buffer.from("encryptedResponses"),
+  //       encryptedKey: "encryptedKey",
+  //       encryptedNonce: "encryptedNonce",
+  //       encryptedAuthTag: "encryptedAuthTag",
+  //     });
 
-      const response = await request(server).get("/");
+  //     const response = await request(server).get("/");
 
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(
-        expect.objectContaining({
-          status: FormSubmissionStatus.New,
-        }),
-      );
-    });
+  //     expect(response.status).toBe(200);
+  //     expect(response.body).toEqual(
+  //       expect.objectContaining({
+  //         status: FormSubmissionStatus.New,
+  //       }),
+  //     );
+  //   });
 
-    it("processing fails due to internal error", async () => {
-      getFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
-      const consoleErrorLogSpy = vi.spyOn(console, "error");
+  //   it("processing fails due to internal error", async () => {
+  //     getFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
+  //     const consoleErrorLogSpy = vi.spyOn(console, "error");
 
-      const response = await request(server).get("/");
+  //     const response = await request(server).get("/");
 
-      expect(response.status).toBe(500);
-      expect(consoleErrorLogSpy).toHaveBeenCalledWith(
-        expect.stringContaining(
-          "[route] Internal error while serving request: /forms/undefined/submission/undefined. Reason:",
-        ),
-      );
-    });
-  });
+  //     expect(response.status).toBe(500);
+  //     expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+  //       expect.stringContaining(
+  //         "[route] Internal error while serving request: /forms/undefined/submission/undefined. Reason:",
+  //       ),
+  //     );
+  //   });
+  // });
 });

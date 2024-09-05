@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission";
-import { FormSubmissionNotFoundException } from "@src/lib/vault/dataStructures/exceptions";
+import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission.js";
+import { FormSubmissionNotFoundException } from "@src/lib/vault/dataStructures/exceptions.js";
 import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);

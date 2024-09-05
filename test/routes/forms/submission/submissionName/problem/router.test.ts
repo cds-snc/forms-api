@@ -1,13 +1,13 @@
 import { vi, describe, beforeAll, it, expect } from "vitest";
 import request from "supertest";
 import express, { type Express } from "express";
-import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWithFormSubmission";
-import { problemApiRoute } from "@src/routes/forms/submission/submissionName/problem/router";
+import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWithFormSubmission.js";
+import { problemApiRoute } from "@src/routes/forms/submission/submissionName/problem/router.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@src/lib/vault/dataStructures/exceptions";
-import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem";
+} from "@src/lib/vault/dataStructures/exceptions.js";
+import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem.js";
 
 vi.mock("@lib/vault/reportProblemWithFormSubmission");
 const reportProblemWithFormSubmissionMock = vi.mocked(

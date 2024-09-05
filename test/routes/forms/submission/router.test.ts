@@ -25,6 +25,7 @@ describe("/forms/:formId/submission", () => {
   });
 
   describe("/:submissionName", () => {
+    // biome-ignore lint/suspicious/noSkippedTests: <Need to refactor due to authentication middleware>
     describe.skip("Response to GET operation when", () => {
       it("submissionName format is valid", async () => {
         getFormSubmissionMock.mockResolvedValueOnce(

@@ -1,12 +1,12 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import type { NextFunction, Request, Response } from "express";
-import { authenticationMiddleware } from "@middleware/authentication/middleware";
-import { introspectToken } from "@lib/idp/introspectToken";
-import { buildMockedResponse } from "test/mocks/express";
+import { authenticationMiddleware } from "@middleware/authentication/middleware.js";
+import { introspectToken } from "@lib/idp/introspectToken.js";
+import { buildMockedResponse } from "test/mocks/express.js";
 import {
   getIntrospectionCache,
   setIntrospectionCache,
-} from "@lib/idp/introspectionCache";
+} from "@lib/idp/introspectionCache.js";
 
 vi.mock("@lib/idp/introspectionCache");
 const getIntrospectionCacheMock = vi.mocked(getIntrospectionCache);
@@ -65,7 +65,7 @@ describe("authenticationMiddleware should", () => {
   });
 
   it("reject request when the form identifier passed in the URL is different than the one associated to the token", async () => {
-    introspectTokenMock.mockResolvedValueOnce({ username: "invalid", exp: 0 });
+    introspectTokenMock.mockResolvedValueOnce({ username: "invalid", exp: 0, serviceAccountId:"111111111111" });
 
     await authenticationMiddleware(
       mockRequest as Request,
@@ -83,6 +83,7 @@ describe("authenticationMiddleware should", () => {
     introspectTokenMock.mockResolvedValueOnce({
       username: "clzsn6tao000611j50dexeob0",
       exp: Date.now() / 1000 - 100000,
+      serviceAccountId: "11111111111"
     });
 
     await authenticationMiddleware(
@@ -104,6 +105,7 @@ describe("authenticationMiddleware should", () => {
     const introspectionResult = {
       username: "clzsn6tao000611j50dexeob0",
       exp: Date.now() / 1000 + 100000,
+      serviceAccountId: "11111111111"
     };
     introspectTokenMock.mockResolvedValueOnce(introspectionResult);
 
