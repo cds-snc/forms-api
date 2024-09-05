@@ -1,11 +1,7 @@
-
 import express, { type Express } from "express";
 import { SERVER_PORT } from "@src/config.js";
 import { router } from "@src/router.js";
 import { logMessage } from "./lib/logger.js";
-
-
-
 
 const server: Express = express();
 

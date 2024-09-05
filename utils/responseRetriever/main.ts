@@ -7,7 +7,6 @@ import { SignJWT } from "jose";
 import gcformsPrivate from "./private_api_key.json";
 import crypto from "node:crypto";
 
-
 function getValue(query: string) {
   const rl = readline.createInterface({
     input: process.stdin,

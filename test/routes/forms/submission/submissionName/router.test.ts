@@ -18,17 +18,23 @@ const { res, next, mockClear } = getMockRes();
 // This file will
 
 describe("/forms/:formId/submission/:submissionName", () => {
-
   beforeAll(() => {
-  mockClear();
+    mockClear();
   });
 
   describe.skip("Response to GET operation when", () => {
-    it("form submission does not exist",  () => {
+    it("form submission does not exist", () => {
       getFormSubmissionMock.mockResolvedValueOnce(undefined);
-      const req = getMockReq({method:"GET", params: { formId: "formId", submissionName: "submissionName",serviceAccountId:"serviceAccountId"} });
+      const req = getMockReq({
+        method: "GET",
+        params: {
+          formId: "formId",
+          submissionName: "submissionName",
+          serviceAccountId: "serviceAccountId",
+        },
+      });
 
-   submissionNameApiRoute(req, res, next)
+      submissionNameApiRoute(req, res, next);
 
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith(
