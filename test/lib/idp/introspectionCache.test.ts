@@ -32,7 +32,7 @@ describe("introspectionCache", () => {
       const introspectionResult: IntrospectionResult = {
         username: "Frodo",
         exp: 1234567890,
-        serviceAccountId: "11111111111111"
+        serviceAccountId: "11111111111111",
       };
       redisClient.get.mockResolvedValue(JSON.stringify(introspectionResult));
 
@@ -57,7 +57,7 @@ describe("introspectionCache", () => {
       const introspectionResult: IntrospectionResult = {
         username: "Frodo",
         exp: 1234567890,
-        serviceAccountId: "11111111111111"
+        serviceAccountId: "11111111111111",
       };
 
       await setIntrospectionCache(accessToken, introspectionResult);

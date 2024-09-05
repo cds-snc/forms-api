@@ -65,7 +65,11 @@ describe("authenticationMiddleware should", () => {
   });
 
   it("reject request when the form identifier passed in the URL is different than the one associated to the token", async () => {
-    introspectTokenMock.mockResolvedValueOnce({ username: "invalid", exp: 0, serviceAccountId:"111111111111" });
+    introspectTokenMock.mockResolvedValueOnce({
+      username: "invalid",
+      exp: 0,
+      serviceAccountId: "111111111111",
+    });
 
     await authenticationMiddleware(
       mockRequest as Request,
@@ -83,7 +87,7 @@ describe("authenticationMiddleware should", () => {
     introspectTokenMock.mockResolvedValueOnce({
       username: "clzsn6tao000611j50dexeob0",
       exp: Date.now() / 1000 - 100000,
-      serviceAccountId: "11111111111"
+      serviceAccountId: "11111111111",
     });
 
     await authenticationMiddleware(
@@ -105,7 +109,7 @@ describe("authenticationMiddleware should", () => {
     const introspectionResult = {
       username: "clzsn6tao000611j50dexeob0",
       exp: Date.now() / 1000 + 100000,
-      serviceAccountId: "11111111111"
+      serviceAccountId: "11111111111",
     };
     introspectTokenMock.mockResolvedValueOnce(introspectionResult);
 
