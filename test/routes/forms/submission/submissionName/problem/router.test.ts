@@ -3,7 +3,10 @@ import request from "supertest";
 import express, { type Express } from "express";
 import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWithFormSubmission";
 import { problemApiRoute } from "@src/routes/forms/submission/submissionName/problem/router";
-import { FormSubmissionNotFoundException } from "@src/lib/vault/dataStructures/exceptions";
+import {
+  FormSubmissionAlreadyReportedAsProblematicException,
+  FormSubmissionNotFoundException,
+} from "@src/lib/vault/dataStructures/exceptions";
 import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem";
 
 vi.mock("@lib/vault/reportProblemWithFormSubmission");
@@ -90,6 +93,21 @@ describe("/forms/:formId/submission/:submissionName/problem", () => {
       expect(response.status).toBe(404);
       expect(response.body).toEqual({
         error: "Form submission does not exist",
+      });
+    });
+
+    it("form submission is already reported as problematic", async () => {
+      reportProblemWithFormSubmissionMock.mockRejectedValueOnce(
+        new FormSubmissionAlreadyReportedAsProblematicException(),
+      );
+
+      const response = await request(server)
+        .post("/")
+        .send(buildReportProblemOperationPayload());
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        info: "Form submission is already reported as problematic",
       });
     });
 

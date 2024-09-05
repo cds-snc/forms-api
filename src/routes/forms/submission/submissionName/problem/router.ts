@@ -1,5 +1,8 @@
 import express, { type Request, type Response, Router } from "express";
-import { FormSubmissionNotFoundException } from "@src/lib/vault/dataStructures/exceptions";
+import {
+  FormSubmissionAlreadyReportedAsProblematicException,
+  FormSubmissionNotFoundException,
+} from "@src/lib/vault/dataStructures/exceptions";
 import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWithFormSubmission";
 import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem";
 import type { Schema } from "express-validator";
@@ -66,6 +69,14 @@ problemApiRoute.post(
         return response
           .status(404)
           .json({ error: "Form submission does not exist" });
+      }
+
+      if (
+        error instanceof FormSubmissionAlreadyReportedAsProblematicException
+      ) {
+        return response
+          .status(200)
+          .json({ info: "Form submission is already reported as problematic" });
       }
 
       console.error(

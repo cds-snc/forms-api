@@ -1,6 +1,9 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/awsServicesConnector";
-import { FormSubmissionNotFoundException } from "@lib/vault/dataStructures/exceptions";
+import {
+  FormSubmissionAlreadyReportedAsProblematicException,
+  FormSubmissionNotFoundException,
+} from "@lib/vault/dataStructures/exceptions";
 import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 
 export async function reportProblemWithFormSubmission(
@@ -19,8 +22,10 @@ export async function reportProblemWithFormSubmission(
          * An update operation will insert a new item in DynamoDB if the targeted one does not exist. Since this is not what we want to happen
          * with the report problem operation, we are adding a `attribute_exists` check. This way, if no item was found with the composite primary key
          * the condition will fail as no `Status` property will be found.
+         *
+         * Also, we only allow the update to be applied if the form submission is not already reported as problematic.
          */
-        ConditionExpression: "attribute_exists(#status)",
+        ConditionExpression: "attribute_exists(#status) AND #status <> :status",
         UpdateExpression:
           "SET #status = :status, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
         ExpressionAttributeNames: {
@@ -30,12 +35,12 @@ export async function reportProblemWithFormSubmission(
           ":status": "Problem",
           ":problemTimestamp": Date.now(),
         },
-        ReturnValuesOnConditionCheckFailure: "NONE",
+        ReturnValuesOnConditionCheckFailure: "ALL_OLD",
       }),
     );
   } catch (error) {
     if (error instanceof ConditionalCheckFailedException) {
-      throw new FormSubmissionNotFoundException();
+      handleConditionalCheckFailedException(error);
     }
 
     console.error(
@@ -47,4 +52,14 @@ export async function reportProblemWithFormSubmission(
 
     throw error;
   }
+}
+
+function handleConditionalCheckFailedException(
+  exception: ConditionalCheckFailedException,
+): void {
+  if (exception.Item === undefined) {
+    throw new FormSubmissionNotFoundException();
+  }
+
+  throw new FormSubmissionAlreadyReportedAsProblematicException();
 }
