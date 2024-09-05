@@ -6,6 +6,7 @@ export enum FormSubmissionStatus {
 }
 
 export interface FormSubmission {
+  createdAt: number;
   status: FormSubmissionStatus;
   confirmationCode: string;
   answers: string;
@@ -20,6 +21,7 @@ export function formSubmissionFromDynamoDbResponse(
   response: Record<string, unknown>,
 ): FormSubmission {
   return {
+    createdAt: response.CreatedAt as number,
     status: response.Status as FormSubmissionStatus,
     confirmationCode: response.ConfirmationCode as string,
     answers: response.FormSubmission as string,

@@ -1,9 +1,16 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
-import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  UpdateCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission";
-import { FormSubmissionNotFoundException } from "@src/lib/vault/dataStructures/exceptions";
-import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
+import {
+  FormSubmissionAlreadyReportedAsProblematicException,
+  FormSubmissionNotFoundException,
+} from "@src/lib/vault/dataStructures/exceptions";
+import { buildMockedVaultItem } from "test/mocks/dynamodb";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -12,7 +19,17 @@ describe("reportProblemWithFormSubmission should", () => {
     dynamoDbMock.reset();
   });
 
-  it("successfully report a problem with a form submission if DynamoDB update operation did not throw any error", async () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("successfully report a problem with a form submission if everything goes well", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2024, 9, 5));
+
+    dynamoDbMock.on(GetCommand).resolvesOnce({
+      Item: buildMockedVaultItem("New"),
+    });
     dynamoDbMock.on(UpdateCommand).resolvesOnce({});
 
     await expect(
@@ -21,15 +38,32 @@ describe("reportProblemWithFormSubmission should", () => {
         "01-08-a571",
       ),
     ).resolves.not.toThrow();
+
+    expect(dynamoDbMock.commandCalls(UpdateCommand).length).toEqual(1);
+    expect(dynamoDbMock.commandCalls(UpdateCommand)[0].args[0].input).toEqual({
+      ExpressionAttributeNames: {
+        "#status": "Status",
+        "#statusCreatedAtKey": "Status#CreatedAt",
+      },
+      ExpressionAttributeValues: {
+        ":problemTimestamp": 1728100800000,
+        ":status": "Problem",
+        ":statusCreatedAtKeyValue": "Problem#1728100800000",
+      },
+      Key: {
+        FormID: "clzamy5qv0000115huc4bh90m",
+        NAME_OR_CONF: "NAME#01-08-a571",
+      },
+      TableName: "Vault",
+      UpdateExpression:
+        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtKeyValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
+    });
   });
 
-  it("fail to report a problem with a form submission if DynamoDB update operation throws ConditionalCheckFailedException", async () => {
-    dynamoDbMock.on(UpdateCommand).rejectsOnce(
-      new ConditionalCheckFailedException({
-        $metadata: {},
-        message: "",
-      }),
-    );
+  it("fail to report a problem with a form submission if it does not exist", async () => {
+    dynamoDbMock.on(GetCommand).resolvesOnce({
+      Item: undefined,
+    });
 
     await expect(
       reportProblemWithFormSubmission(
@@ -39,8 +73,21 @@ describe("reportProblemWithFormSubmission should", () => {
     ).rejects.toThrow(FormSubmissionNotFoundException);
   });
 
+  it("fail to report a problem with a form submission if it has already been reported as such", async () => {
+    dynamoDbMock.on(GetCommand).resolvesOnce({
+      Item: buildMockedVaultItem("Problem"),
+    });
+
+    await expect(
+      reportProblemWithFormSubmission(
+        "clzamy5qv0000115huc4bh90m",
+        "01-08-a571",
+      ),
+    ).rejects.toThrow(FormSubmissionAlreadyReportedAsProblematicException);
+  });
+
   it("throw an error if DynamoDB has an internal failure", async () => {
-    dynamoDbMock.on(UpdateCommand).rejectsOnce("custom error");
+    dynamoDbMock.on(GetCommand).rejectsOnce("custom error");
     const consoleErrorLogSpy = vi.spyOn(console, "error");
 
     await expect(() =>

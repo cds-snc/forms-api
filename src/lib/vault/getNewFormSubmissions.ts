@@ -23,7 +23,7 @@ export async function getNewFormSubmissions(
             Limit: limit - newFormSubmissions.length,
             KeyConditionExpression:
               "FormID = :formId AND begins_with(#statusCreatedAt, :status)",
-            ProjectionExpression: "CreatedAt,#name",
+            ProjectionExpression: "#name,CreatedAt",
             ExpressionAttributeNames: {
               "#statusCreatedAt": "Status#CreatedAt",
               "#name": "Name",
