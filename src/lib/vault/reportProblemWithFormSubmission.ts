@@ -30,14 +30,14 @@ export async function reportProblemWithFormSubmission(
           NAME_OR_CONF: `NAME#${submissionName}`,
         },
         UpdateExpression:
-          "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtKeyValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
+          "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
         ExpressionAttributeNames: {
           "#status": "Status",
           "#statusCreatedAtKey": "Status#CreatedAt",
         },
         ExpressionAttributeValues: {
           ":status": "Problem",
-          ":statusCreatedAtKeyValue": `Problem#${formSubmission.createdAt}`,
+          ":statusCreatedAtValue": `Problem#${formSubmission.createdAt}`,
           ":problemTimestamp": Date.now(),
         },
       }),

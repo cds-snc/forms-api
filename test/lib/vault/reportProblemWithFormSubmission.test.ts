@@ -48,7 +48,7 @@ describe("reportProblemWithFormSubmission should", () => {
       ExpressionAttributeValues: {
         ":problemTimestamp": 1519129853500,
         ":status": "Problem",
-        ":statusCreatedAtKeyValue": "Problem#1519129853500",
+        ":statusCreatedAtValue": "Problem#1519129853500",
       },
       Key: {
         FormID: "clzamy5qv0000115huc4bh90m",
@@ -56,7 +56,7 @@ describe("reportProblemWithFormSubmission should", () => {
       },
       TableName: "Vault",
       UpdateExpression:
-        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtKeyValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
+        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
     });
   });
 

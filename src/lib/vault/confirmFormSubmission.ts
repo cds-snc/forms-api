@@ -42,14 +42,14 @@ export async function confirmFormSubmission(
           NAME_OR_CONF: `NAME#${submissionName}`,
         },
         UpdateExpression:
-          "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtKeyValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
+          "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
         ExpressionAttributeNames: {
           "#status": "Status",
           "#statusCreatedAtKey": "Status#CreatedAt",
         },
         ExpressionAttributeValues: {
           ":status": "Confirmed",
-          ":statusCreatedAtKeyValue": `Confirmed#${formSubmission.createdAt}`,
+          ":statusCreatedAtValue": `Confirmed#${formSubmission.createdAt}`,
           ":confirmTimestamp": confirmationTimestamp,
           ":removalDate": removalDate,
         },

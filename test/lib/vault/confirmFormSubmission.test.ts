@@ -51,7 +51,7 @@ describe("confirmFormSubmission should", () => {
         ":confirmTimestamp": 1519129853500,
         ":removalDate": 1521721853500,
         ":status": "Confirmed",
-        ":statusCreatedAtKeyValue": "Confirmed#1519129853500",
+        ":statusCreatedAtValue": "Confirmed#1519129853500",
       },
       Key: {
         FormID: "clzamy5qv0000115huc4bh90m",
@@ -59,7 +59,7 @@ describe("confirmFormSubmission should", () => {
       },
       TableName: "Vault",
       UpdateExpression:
-        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtKeyValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
+        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
     });
   });
 
