@@ -8,17 +8,6 @@ import gcformsPrivate from "./private_api_key.json";
 import crypto from "node:crypto";
 
 
-// const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
-// const twirlTimer = () => {
-//   var P = ["\\", "|", "/", "-"];
-//   var x = 0;
-//   return setInterval(function () {
-//     process.stdout.write("\r" + P[x++]);
-//     x &= 3;
-//   }, 250);
-// };
-
 function getValue(query: string) {
   const rl = readline.createInterface({
     input: process.stdin,
