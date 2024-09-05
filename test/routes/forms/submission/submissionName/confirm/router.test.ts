@@ -75,5 +75,23 @@ describe("/forms/:formId/submission/:submissionName/confirm/:confirmationCode", 
         error: "Confirmation code is incorrect",
       });
     });
+
+    it("processing fails due to internal error", async () => {
+      confirmFormSubmissionMock.mockRejectedValueOnce(
+        new Error("custom error"),
+      );
+      const consoleErrorLogSpy = vi.spyOn(console, "error");
+
+      const response = await request(server).put(
+        "/620b203c-9836-4000-bf30-1c3bcc26b834",
+      );
+
+      expect(response.status).toBe(500);
+      expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "[route] Internal error while serving request: /forms/undefined/submission/undefined/confirm/620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
+        ),
+      );
+    });
   });
 });

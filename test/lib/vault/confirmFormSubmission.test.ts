@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission";
@@ -94,5 +94,24 @@ describe("confirmFormSubmission should", () => {
         "620b203c-9836-4000-bf30-1c3bcc26b834",
       ),
     ).rejects.toThrow(FormSubmissionIncorrectConfirmationCodeException);
+  });
+
+  it("throw an error if DynamoDB has an internal failure", async () => {
+    dynamoDbMock.on(UpdateCommand).rejectsOnce("custom error");
+    const consoleErrorLogSpy = vi.spyOn(console, "error");
+
+    await expect(() =>
+      confirmFormSubmission(
+        "clzamy5qv0000115huc4bh90m",
+        "01-08-a571",
+        "620b203c-9836-4000-bf30-1c3bcc26b834",
+      ),
+    ).rejects.toThrowError("custom error");
+
+    expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining(
+        "[dynamodb] Failed to confirm form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / ConfirmationCode: 620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
+      ),
+    );
   });
 });
