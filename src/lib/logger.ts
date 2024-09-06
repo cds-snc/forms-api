@@ -7,7 +7,7 @@ export const logMessage = pino.default({
   formatters: {
     level: (label) => ({ level: label }),
   },
-  ...(process.env.NODE_ENV === "development" && {
+  ...(ENVIRONMENT_MODE === EnvironmentMode.Local && {
     transport: {
       target: "pino-pretty",
     },
