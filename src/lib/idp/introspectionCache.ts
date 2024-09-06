@@ -16,7 +16,6 @@ export async function getIntrospectionCache(
   const accessTokenKey = getAccessTokenCacheKey(accessToken);
   const redisConnector = await RedisConnector.getInstance();
   const introspectionCached = await redisConnector.client.get(accessTokenKey);
-  logMessage.debug("Introspection cache", accessTokenKey, introspectionCached);
   return introspectionCached
     ? (JSON.parse(introspectionCached) as IntrospectionResult)
     : undefined;
