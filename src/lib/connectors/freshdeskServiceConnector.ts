@@ -4,7 +4,7 @@ import {
   FRESHDESK_API_URL,
 } from "@src/config.js";
 import axios, { type AxiosInstance } from "axios";
-import { logMessage } from "../logger.js";
+import { logMessage } from "@src/lib/logger.js";
 
 export class FreshdeskServiceConnector {
   private static instance: FreshdeskServiceConnector | undefined = undefined;

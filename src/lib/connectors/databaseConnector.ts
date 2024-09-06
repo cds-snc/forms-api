@@ -2,7 +2,7 @@ import pgp from "pg-promise";
 import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import { GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import type pg from "pg-promise/typescript/pg-subset.js";
-import { logMessage } from "../logger.js";
+import { logMessage } from "@src/lib/logger.js";
 
 export class DatabaseConnector {
   private static instance: DatabaseConnector | undefined = undefined;

@@ -1,6 +1,6 @@
 import { DatabaseConnector } from "@lib/connectors/databaseConnector.js";
 import { RedisConnector } from "@lib/connectors/redisConnector.js";
-import { logMessage } from "../logger.js";
+import { logMessage } from "@src/lib/logger.js";
 
 const cachePublicKey = async (publicKey: string, serviceAccountId: string) => {
   const redisConnector = await RedisConnector.getInstance();
