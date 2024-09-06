@@ -1,13 +1,19 @@
 import { vi, describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
-import express, { type Express } from "express";
+import express, { Router, type Express, type Response } from "express";
 import { submissionApiRoute } from "@routes/forms/submission/router.js";
-import { getFormSubmission } from "@src/lib/vault/getFormSubmission.js";
-import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission.js";
-import { buildMockedFormSubmission } from "test/mocks/formSubmission.js";
 
-vi.mock("@lib/vault/getFormSubmission");
-const getFormSubmissionMock = vi.mocked(getFormSubmission);
+vi.mock("@routes/forms/submission/new/router", () => ({
+  newApiRoute: Router().get("/", (_, response: Response) => {
+    return response.sendStatus(200);
+  }),
+}));
+
+vi.mock("@routes/forms/submission/submissionName/router", () => ({
+  submissionNameApiRoute: Router().get("/", (_, response: Response) => {
+    return response.sendStatus(200);
+  }),
+}));
 
 describe("/forms/:formId/submission", () => {
   let server: Express;
@@ -25,15 +31,9 @@ describe("/forms/:formId/submission", () => {
   });
 
   describe("/:submissionName", () => {
-    // biome-ignore lint/suspicious/noSkippedTests: <Need to refactor due to authentication middleware>
-    describe.skip("Response to GET operation when", () => {
+    describe("Response to GET operation when", () => {
       it("submissionName format is valid", async () => {
-        getFormSubmissionMock.mockResolvedValueOnce(
-          buildMockedFormSubmission(FormSubmissionStatus.New),
-        );
-
         const response = await request(server).get("/01-08-a571");
-
         expect(response.status).toBe(200);
       });
 

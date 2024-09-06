@@ -10,6 +10,7 @@
     "dev": "tsx watch --ignore \"./utils/**/*\" --ignore \"./test/**/*\" --ignore \"./build/**/*\" src/server.ts",
     "test": "vitest run",
     "lint": "biome lint --write .",
+    "lint:github": "biome ci --reporter=github .",
     "lint:check": "biome lint --error-on-warnings .",
     "format": "biome format --write .",
     "format:check": "biome format ."

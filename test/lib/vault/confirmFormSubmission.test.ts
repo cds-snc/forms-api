@@ -1,14 +1,18 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
-import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  UpdateCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionIncorrectConfirmationCodeException,
   FormSubmissionNotFoundException,
 } from "@src/lib/vault/dataStructures/exceptions.js";
-import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
 import { logMessage } from "@src/lib/logger.js";
+import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -17,7 +21,17 @@ describe("confirmFormSubmission should", () => {
     dynamoDbMock.reset();
   });
 
-  it("successfully confirm a form submission if DynamoDB update operation did not throw any error", async () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("successfully confirm a form submission if everything goes well", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(1519129853500));
+
+    dynamoDbMock.on(GetCommand).resolvesOnce({
+      Item: buildMockedVaultItem("New", "620b203c-9836-4000-bf30-1c3bcc26b834"),
+    });
     dynamoDbMock.on(UpdateCommand).resolvesOnce({});
 
     await expect(
@@ -27,16 +41,33 @@ describe("confirmFormSubmission should", () => {
         "620b203c-9836-4000-bf30-1c3bcc26b834",
       ),
     ).resolves.not.toThrow();
+
+    expect(dynamoDbMock.commandCalls(UpdateCommand).length).toEqual(1);
+    expect(dynamoDbMock.commandCalls(UpdateCommand)[0].args[0].input).toEqual({
+      ExpressionAttributeNames: {
+        "#status": "Status",
+        "#statusCreatedAtKey": "Status#CreatedAt",
+      },
+      ExpressionAttributeValues: {
+        ":confirmTimestamp": 1519129853500,
+        ":removalDate": 1521721853500,
+        ":status": "Confirmed",
+        ":statusCreatedAtValue": "Confirmed#1519129853500",
+      },
+      Key: {
+        FormID: "clzamy5qv0000115huc4bh90m",
+        NAME_OR_CONF: "NAME#01-08-a571",
+      },
+      TableName: "Vault",
+      UpdateExpression:
+        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
+    });
   });
 
-  it("fail to confirm a form submission if DynamoDB update operation throws ConditionalCheckFailedException with undefined item", async () => {
-    dynamoDbMock.on(UpdateCommand).rejectsOnce(
-      new ConditionalCheckFailedException({
-        $metadata: {},
-        message: "",
-        Item: undefined,
-      }),
-    );
+  it("fail to confirm a form submission if it does not exist", async () => {
+    dynamoDbMock.on(GetCommand).resolvesOnce({
+      Item: undefined,
+    });
 
     await expect(
       confirmFormSubmission(
@@ -47,21 +78,13 @@ describe("confirmFormSubmission should", () => {
     ).rejects.toThrow(FormSubmissionNotFoundException);
   });
 
-  it("fail to confirm a form submission if DynamoDB update operation throws ConditionalCheckFailedException with item that already has a confirmed status", async () => {
-    dynamoDbMock.on(UpdateCommand).rejectsOnce(
-      new ConditionalCheckFailedException({
-        $metadata: {},
-        message: "",
-        Item: {
-          Status: {
-            S: "Confirmed",
-          },
-          ConfirmationCode: {
-            S: "620b203c-9836-4000-bf30-1c3bcc26b834",
-          },
-        },
-      }),
-    );
+  it("fail to confirm a form submission if it is already confirmed", async () => {
+    dynamoDbMock.on(GetCommand).resolvesOnce({
+      Item: buildMockedVaultItem(
+        "Confirmed",
+        "620b203c-9836-4000-bf30-1c3bcc26b834",
+      ),
+    });
 
     await expect(
       confirmFormSubmission(
@@ -72,21 +95,10 @@ describe("confirmFormSubmission should", () => {
     ).rejects.toThrow(FormSubmissionAlreadyConfirmedException);
   });
 
-  it("fail to confirm a form submission if DynamoDB update operation throws ConditionalCheckFailedException with item that has non corresponding confirmation code", async () => {
-    dynamoDbMock.on(UpdateCommand).rejectsOnce(
-      new ConditionalCheckFailedException({
-        $metadata: {},
-        message: "",
-        Item: {
-          Status: {
-            S: "New",
-          },
-          ConfirmationCode: {
-            S: "bec5736a-0666-4d63-92f9-9685f21121cc",
-          },
-        },
-      }),
-    );
+  it("fail to confirm a form submission if the confirmation is incorrect", async () => {
+    dynamoDbMock.on(GetCommand).resolvesOnce({
+      Item: buildMockedVaultItem("New", "59bec64e-f656-40b8-b23d-027d3fe25539"),
+    });
 
     await expect(
       confirmFormSubmission(
@@ -98,7 +110,7 @@ describe("confirmFormSubmission should", () => {
   });
 
   it("throw an error if DynamoDB has an internal failure", async () => {
-    dynamoDbMock.on(UpdateCommand).rejectsOnce("custom error");
+    dynamoDbMock.on(GetCommand).rejectsOnce("custom error");
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
