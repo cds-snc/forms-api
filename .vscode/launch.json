@@ -9,12 +9,7 @@
       "runtimeExecutable": "tsx",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": [
-        // Node.js internal core modules
-        "<node_internals>/**",
-        // Ignore all dependencies (optional)
-        "${workspaceFolder}/node_modules/**"
-      ]
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
     }
   ]
 }
