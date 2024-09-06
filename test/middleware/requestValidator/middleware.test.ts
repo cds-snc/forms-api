@@ -9,7 +9,7 @@ import {
   type ValidationError,
   type Result,
 } from "express-validator";
-import type { RunnableValidationChains } from "express-validator/lib/middlewares/schema";
+import type { RunnableValidationChains } from "express-validator/lib/middlewares/schema.js";
 import { buildMockedResponse } from "test/mocks/express.js";
 
 vi.mock("express-validator");
