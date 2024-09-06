@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express, { type Express } from "express";
 import { SERVER_PORT } from "@src/config.js";
 import { router } from "@src/router.js";
