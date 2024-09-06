@@ -20,9 +20,6 @@ export const getPublicKey = async (serviceAccountId: string) => {
   const connector = await DatabaseConnector.getInstance();
   const cachedPublicKey = await getPublicKeyFromCache(serviceAccountId);
   if (cachedPublicKey) {
-    logMessage.debug(
-      `Public key for service account ${serviceAccountId} found in cache with value ${cachedPublicKey}`,
-    );
     return cachedPublicKey;
   }
 
