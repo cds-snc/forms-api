@@ -7,6 +7,13 @@ import { SignJWT } from "jose";
 import gcformsPrivate from "./private_api_key.json";
 import crypto from "node:crypto";
 
+type EncryptedSubmission = {
+  encryptedResponses: string;
+  encryptedNonce: string;
+  encryptedKey: string;
+  encryptedAuthTag: string;
+};
+
 function getValue(query: string) {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -56,6 +63,63 @@ const getAccessToken = async () => {
     });
 };
 
+const retrieveSubmission = async (
+  formId: string,
+  submissionName: string,
+  accessToken: string,
+): Promise<EncryptedSubmission> => {
+  return axios
+    .get(
+      `${process.env.GCFORMS_API_URL}/forms/${formId}/submission/${submissionName}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+        },
+      },
+    )
+    .then((res) => res.data)
+    .catch((e) => {
+      console.error(e.response.data);
+    });
+};
+
+const decryptSubmission = (
+  {
+    encryptedKey,
+    encryptedAuthTag,
+    encryptedNonce,
+    encryptedResponses,
+  }: EncryptedSubmission,
+  privateKey: crypto.KeyObject,
+) => {
+  const decryptedKey = crypto.privateDecrypt(
+    privateKey,
+    Buffer.from(encryptedKey, "base64"),
+  );
+
+  const decryptedNonce = crypto.privateDecrypt(
+    privateKey,
+    Buffer.from(encryptedNonce, "base64"),
+  );
+  const authTag = crypto.privateDecrypt(
+    privateKey,
+    Buffer.from(encryptedAuthTag, "base64"),
+  );
+
+  const decipher = crypto.createDecipheriv(
+    "aes-256-gcm",
+    decryptedKey,
+    decryptedNonce,
+  );
+  decipher.setAuthTag(authTag);
+
+  return Buffer.concat([
+    decipher.update(Buffer.from(encryptedResponses, "base64")),
+    decipher.final(),
+  ]).toString("utf-8");
+};
+
 const main = async () => {
   try {
     const identityProvider = process.env.IDENTITY_PROVIDER;
@@ -76,69 +140,58 @@ Selection (1): `);
     }
 
     const formId = await getValue("Form ID to retrieve responses for: ");
-    const submissionName = await getValue("Submission name to retrieve: ");
     const accessToken = await getAccessToken();
-    const timeStart = Date.now();
 
-    const data = await axios
-      .get(
-        `${process.env.GCFORMS_API_URL}/forms/${formId}/submission/${submissionName}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            Accept: "application/json",
-          },
+    const namesToRetrieve: { name: string; createdAt: number }[] = await axios
+      .get(`${process.env.GCFORMS_API_URL}/forms/${formId}/submission/new`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
         },
-      )
+      })
       .then((res) => res.data)
       .catch((e) => {
         console.error(e.response.data);
       });
-    const timeDecryptStart = Date.now();
-    const {
-      encryptedResponses,
-      encryptedNonce,
-      encryptedKey,
-      encryptedAuthTag,
-    } = data;
-    console.info(
-      `Encrypted Responses: ${Buffer.from(encryptedResponses, "base64").toString("base64")}`,
+    console.info("Retrieving responses");
+    const retrieveTimeStart = Date.now();
+    const encryptedSubmissions = await Promise.all(
+      namesToRetrieve.map(async (submission) => {
+        const response = await retrieveSubmission(
+          formId,
+          submission.name,
+          accessToken,
+        );
+        return response;
+      }),
     );
 
+    const retrieveTimeEnd = Date.now();
+    console.info(
+      `Retrieving responses took ${retrieveTimeEnd - retrieveTimeStart}ms`,
+    );
     console.info("Decrypting responses.");
     const privateKey = crypto.createPrivateKey({ key: gcformsPrivate.key });
-
-    const decryptedKey = crypto.privateDecrypt(
-      privateKey,
-      Buffer.from(encryptedKey, "base64"),
+    const decryptTimeStart = Date.now();
+    const decryptedSubmissions = encryptedSubmissions.map(
+      (encryptedSubmission) => {
+        return decryptSubmission(encryptedSubmission, privateKey);
+      },
     );
 
-    const decryptedNonce = crypto.privateDecrypt(
-      privateKey,
-      Buffer.from(encryptedNonce, "base64"),
-    );
-    const authTag = crypto.privateDecrypt(
-      privateKey,
-      Buffer.from(encryptedAuthTag, "base64"),
-    );
-
-    const decipher = crypto.createDecipheriv(
-      "aes-256-gcm",
-      decryptedKey,
-      decryptedNonce,
-    );
-    decipher.setAuthTag(authTag);
-
-    const responses = Buffer.concat([
-      decipher.update(Buffer.from(encryptedResponses, "base64")),
-      decipher.final(),
-    ]);
-    const timeEnd = Date.now();
-    console.info(responses.toString("utf-8"));
+    const decryptTimeEnd = Date.now();
     console.info(
-      `Time taken to download and decrypt: ${timeEnd - timeStart}ms`,
+      `Decrypting responses took ${decryptTimeEnd - decryptTimeStart}ms`,
     );
-    console.info(`Time taken to decrypt: ${timeEnd - timeDecryptStart}ms`);
+
+    console.info("Decrypted responses:");
+    for (const submission of decryptedSubmissions) {
+      console.info(submission);
+    }
+
+    console.info(
+      `Time taken to download and decrypt: ${decryptTimeEnd - retrieveTimeStart}ms`,
+    );
   } catch (e) {
     console.error(e);
   }
