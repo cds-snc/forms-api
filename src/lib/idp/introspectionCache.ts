@@ -1,7 +1,6 @@
 import { createHash } from "node:crypto";
 import type { IntrospectionResult } from "@lib/idp/introspectToken.js";
 import { RedisConnector } from "@lib/connectors/redisConnector.js";
-import { logMessage } from "@src/lib/logger.js";
 
 const cacheExpiry = 300; // seconds
 
