@@ -8,7 +8,6 @@
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "start": "node build/server.js",
     "dev": "tsx watch --ignore \"./utils/**/*\" --ignore \"./test/**/*\" --ignore \"./build/**/*\" src/server.ts",
-    "dev:debug": "tsx watch --inspect-brk --ignore \"./utils/**/*\" --ignore \"./test/**/*\" --ignore \"./build/**/*\" src/server.ts",
     "test": "vitest run",
     "lint": "biome lint --write .",
     "lint:check": "biome lint --error-on-warnings .",
