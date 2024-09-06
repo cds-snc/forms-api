@@ -4,13 +4,24 @@ import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
 } from "@lib/vault/dataStructures/exceptions";
-import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
+import { getFormSubmission } from "@lib/vault/getFormSubmission";
+import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission";
 
 export async function reportProblemWithFormSubmission(
   formId: string,
   submissionName: string,
 ): Promise<void> {
   try {
+    const formSubmission = await getFormSubmission(formId, submissionName);
+
+    if (formSubmission === undefined) {
+      throw new FormSubmissionNotFoundException();
+    }
+
+    if (formSubmission.status === FormSubmissionStatus.Problem) {
+      throw new FormSubmissionAlreadyReportedAsProblematicException();
+    }
+
     await AwsServicesConnector.getInstance().dynamodbClient.send(
       new UpdateCommand({
         TableName: "Vault",
@@ -18,31 +29,20 @@ export async function reportProblemWithFormSubmission(
           FormID: formId,
           NAME_OR_CONF: `NAME#${submissionName}`,
         },
-        /**
-         * An update operation will insert a new item in DynamoDB if the targeted one does not exist. Since this is not what we want to happen
-         * with the report problem operation, we are adding a `attribute_exists` check. This way, if no item was found with the composite primary key
-         * the condition will fail as no `Status` property will be found.
-         *
-         * Also, we only allow the update to be applied if the form submission is not already reported as problematic.
-         */
-        ConditionExpression: "attribute_exists(#status) AND #status <> :status",
         UpdateExpression:
-          "SET #status = :status, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
+          "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
         ExpressionAttributeNames: {
           "#status": "Status",
+          "#statusCreatedAtKey": "Status#CreatedAt",
         },
         ExpressionAttributeValues: {
           ":status": "Problem",
+          ":statusCreatedAtValue": `Problem#${formSubmission.createdAt}`,
           ":problemTimestamp": Date.now(),
         },
-        ReturnValuesOnConditionCheckFailure: "ALL_OLD",
       }),
     );
   } catch (error) {
-    if (error instanceof ConditionalCheckFailedException) {
-      handleConditionalCheckFailedException(error);
-    }
-
     console.error(
       `[dynamodb] Failed to report problem with form submission. FormId: ${formId} / SubmissionName: ${submissionName}. Reason: ${JSON.stringify(
         error,
@@ -52,14 +52,4 @@ export async function reportProblemWithFormSubmission(
 
     throw error;
   }
-}
-
-function handleConditionalCheckFailedException(
-  exception: ConditionalCheckFailedException,
-): void {
-  if (exception.Item === undefined) {
-    throw new FormSubmissionNotFoundException();
-  }
-
-  throw new FormSubmissionAlreadyReportedAsProblematicException();
 }

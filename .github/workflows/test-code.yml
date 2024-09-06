@@ -26,6 +26,10 @@ jobs:
       - name: Format
         run: pnpm format:check
 
+      - name: Lint:report
+        continue-on-error: true
+        run: pnpm lint:github
+
       - name: Lint
         run: pnpm lint:check
 
