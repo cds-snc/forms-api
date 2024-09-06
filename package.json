@@ -15,14 +15,6 @@
     "format": "biome format --write .",
     "format:check": "biome format ."
   },
-  "nodemonConfig": {
-    "watch": [
-      "src",
-      ".env"
-    ],
-    "exec": "tsx src/server.ts",
-    "ext": "*"
-  },
   "keywords": [],
   "author": "Canadian Digital Service",
   "license": "MIT",
