@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, QueryCommand } from "@aws-sdk/lib-dynamodb";
-import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions";
+import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 

@@ -1,9 +1,9 @@
 import { QueryCommand, type QueryCommandOutput } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/awsServicesConnector";
+import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import {
   newFormSubmissionFromDynamoDbResponse,
   type NewFormSubmission,
-} from "@lib/vault/dataStructures/formSubmission";
+} from "@lib/vault/dataStructures/formSubmission.js";
 
 export async function getNewFormSubmissions(
   formId: string,
