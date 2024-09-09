@@ -5,46 +5,9 @@ import type pg from "pg-promise/typescript/pg-subset.js";
 import { logMessage } from "@src/lib/logger.js";
 import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
 
-const connectionString = await (async () => {
-  try {
-    // If we're in local mode, return the localstack connection string for the Postgres database
-    if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
-      return "postgres://localstack_postgres:chummy@localhost:4510/forms";
-    }
-
-    const response =
-      await AwsServicesConnector.getInstance().secretsClient.send(
-        new GetSecretValueCommand({
-          SecretId: "server-database-url",
-        }),
-      );
-
-    if (response.SecretString === undefined) {
-      throw new Error("Database Connection URL not found in SecretsManager");
-    }
-
-    logMessage.debug(
-      `[database-connector] Retrieved server-database-url: ${response.SecretString}`,
-    );
-
-    return response.SecretString;
-  } catch (error) {
-    logMessage.error(
-      `[database-connector] Failed to retrieve server-database-url. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
-    );
-
-    throw error;
-  }
-})();
-
 export class DatabaseConnector {
   private static instance: DatabaseConnector;
-  private static connectionStringPromise: Promise<
-    pgp.IDatabase<Record<string, unknown>, pg.IClient>
-  >;
+  private static connectionStringPromise: Promise<string>;
 
   public db: pgp.IDatabase<Record<string, unknown>, pg.IClient>;
 
@@ -52,10 +15,54 @@ export class DatabaseConnector {
     this.db = pgp()(connectionString);
   }
 
-  public static getInstance(): DatabaseConnector {
-    if (DatabaseConnector.instance === undefined) {
-      DatabaseConnector.instance = new DatabaseConnector(connectionString);
+  private async getConnectionString() {
+    try {
+      // If we're in local mode, return the localstack connection string for the Postgres database
+      if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
+        return "postgres://localstack_postgres:chummy@localhost:4510/forms";
+      }
+
+      const response =
+        await AwsServicesConnector.getInstance().secretsClient.send(
+          new GetSecretValueCommand({
+            SecretId: "server-database-url",
+          }),
+        );
+
+      if (response.SecretString === undefined) {
+        throw new Error("Database Connection URL not found in SecretsManager");
+      }
+
+      logMessage.debug(
+        `[database-connector] Retrieved server-database-url: ${response.SecretString}`,
+      );
+
+      return response.SecretString;
+    } catch (error) {
+      logMessage.error(
+        `[database-connector] Failed to retrieve server-database-url. Reason: ${JSON.stringify(
+          error,
+          Object.getOwnPropertyNames(error),
+        )}`,
+      );
+
+      throw error;
     }
+  }
+
+  public static async getInstance(): Promise<DatabaseConnector> {
+    // If the promise has not yet been created, create it and the instance
+    if (!DatabaseConnector.connectionStringPromise) {
+      DatabaseConnector.connectionStringPromise =
+        DatabaseConnector.instance.getConnectionString();
+
+      DatabaseConnector.instance = new DatabaseConnector(
+        await DatabaseConnector.connectionStringPromise,
+      );
+    }
+
+    // This is to ensure that any other calls to getInstance() will wait for the connection string to be resolved and the instance to be created
+    await DatabaseConnector.connectionStringPromise;
 
     return DatabaseConnector.instance;
   }
