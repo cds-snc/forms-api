@@ -5,12 +5,8 @@ import {
   setIntrospectionCache,
 } from "@lib/idp/introspectionCache.js";
 
-interface CustomRequest extends Request {
-  serviceAccountId?: string;
-}
-
 export async function authenticationMiddleware(
-  request: CustomRequest,
+  request: Request,
   response: Response,
   next: NextFunction,
 ) {
@@ -38,8 +34,9 @@ export async function authenticationMiddleware(
     return response.status(401).json({ message: "Token expired" });
   }
 
-  request.serviceAccountId = introspectionResult.serviceAccountId;
   await setIntrospectionCache(accessToken, introspectionResult);
+
+  request.serviceAccountId = introspectionResult.serviceAccountId;
 
   next();
 }
