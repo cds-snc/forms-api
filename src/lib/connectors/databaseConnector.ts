@@ -15,7 +15,7 @@ export class DatabaseConnector {
     this.db = pgp()(connectionString);
   }
 
-  private async getConnectionString() {
+  private static async getConnectionString() {
     try {
       // If we're in local mode, return the localstack connection string for the Postgres database
       if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
@@ -54,7 +54,7 @@ export class DatabaseConnector {
     // If the promise has not yet been created, create it and the instance
     if (!DatabaseConnector.connectionStringPromise) {
       DatabaseConnector.connectionStringPromise =
-        DatabaseConnector.instance.getConnectionString();
+        DatabaseConnector.getConnectionString();
 
       DatabaseConnector.instance = new DatabaseConnector(
         await DatabaseConnector.connectionStringPromise,
