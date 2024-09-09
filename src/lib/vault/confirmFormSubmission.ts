@@ -1,12 +1,13 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/awsServicesConnector";
+import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "@lib/vault/dataStructures/exceptions";
-import { getFormSubmission } from "@lib/vault/getFormSubmission";
-import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission";
+} from "@lib/vault/dataStructures/exceptions.js";
+import { logMessage } from "@lib/logger.js";
+import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
+import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission.js";
 
 const REMOVAL_DATE_DELAY_IN_DAYS = 30;
 
@@ -56,7 +57,7 @@ export async function confirmFormSubmission(
       }),
     );
   } catch (error) {
-    console.error(
+    logMessage.error(
       `[dynamodb] Failed to confirm form submission. FormId: ${formId} / SubmissionName: ${submissionName} / ConfirmationCode: ${confirmationCode}. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),

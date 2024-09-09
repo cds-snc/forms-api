@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { submissionApiRoute } from "@routes/forms/submission/router";
-import { authenticationMiddleware } from "@middleware/authentication/middleware";
-import { rateLimiterMiddleware } from "@middleware/rateLimiter/middleware";
+import { submissionApiRoute } from "@routes/forms/submission/router.js";
+import { authenticationMiddleware } from "@middleware/authentication/middleware.js";
+import { rateLimiterMiddleware } from "@middleware/rateLimiter/middleware.js";
 
 export const formsApiRoute = Router();
 

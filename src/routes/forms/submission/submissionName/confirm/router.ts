@@ -1,10 +1,11 @@
-import { confirmFormSubmission } from "@src/lib/vault/confirmFormSubmission";
+import { confirmFormSubmission } from "@src/lib/vault/confirmFormSubmission.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "@src/lib/vault/dataStructures/exceptions";
+} from "@src/lib/vault/dataStructures/exceptions.js";
 import { type Request, type Response, Router } from "express";
+import { logMessage } from "@src/lib/logger.js";
 
 export const confirmApiRoute = Router({
   mergeParams: true,
@@ -39,7 +40,7 @@ confirmApiRoute.put(
           .json({ error: "Confirmation code is incorrect" });
       }
 
-      console.error(
+      logMessage.error(
         `[route] Internal error while serving request: /forms/${formId}/submission/${submissionName}/confirm/${confirmationCode}. Reason: ${JSON.stringify(
           error,
           Object.getOwnPropertyNames(error),

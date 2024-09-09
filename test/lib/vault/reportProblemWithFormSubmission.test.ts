@@ -5,12 +5,12 @@ import {
   GetCommand,
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
-import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission";
+import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@src/lib/vault/dataStructures/exceptions";
-import { buildMockedVaultItem } from "test/mocks/dynamodb";
+} from "@src/lib/vault/dataStructures/exceptions.js";
+import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 

@@ -7,7 +7,7 @@ import express, {
   type Request,
   Router,
 } from "express";
-import { formsApiRoute } from "@routes/forms/router";
+import { formsApiRoute } from "@routes/forms/router.js";
 
 vi.mock("@middleware/authentication/middleware", () => ({
   authenticationMiddleware: (

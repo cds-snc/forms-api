@@ -2,12 +2,12 @@ import express, { type Request, type Response, Router } from "express";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@src/lib/vault/dataStructures/exceptions";
-import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWithFormSubmission";
-import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem";
+} from "@src/lib/vault/dataStructures/exceptions.js";
+import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWithFormSubmission.js";
+import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem.js";
 import type { Schema } from "express-validator";
-import { requestValidatorMiddleware } from "@src/middleware/requestValidator/middleware";
-import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config";
+import { requestValidatorMiddleware } from "@src/middleware/requestValidator/middleware.js";
+import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config.js";
 
 export const problemApiRoute = Router({
   mergeParams: true,

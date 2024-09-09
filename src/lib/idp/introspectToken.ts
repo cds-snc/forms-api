@@ -1,12 +1,13 @@
 import { SignJWT } from "jose";
 import axios, { type AxiosError } from "axios";
-// biome-ignore lint/correctness/noNodejsModules: we need the node crypto module
 import { createPrivateKey } from "node:crypto";
-import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config";
+import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config.js";
+import { logMessage } from "@src/lib/logger.js";
 
 export type IntrospectionResult = {
   username: string;
   exp: number;
+  serviceAccountId: string;
 };
 
 const algorithm = "RS256";
@@ -56,9 +57,10 @@ export async function introspectToken(
     return {
       username: introspectionResponse.username as string,
       exp: introspectionResponse.exp as number,
+      serviceAccountId: introspectionResponse.sub as string,
     };
   } catch (error) {
-    console.error((error as AxiosError).response?.data);
+    logMessage.error((error as AxiosError).response?.data);
     return undefined;
   }
 }

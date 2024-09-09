@@ -1,5 +1,5 @@
-import { createFreshdeskTicket } from "@lib/support/freshdeskApiClient";
-import { EnvironmentMode } from "@src/config";
+import { createFreshdeskTicket } from "@lib/support/freshdeskApiClient.js";
+import { EnvironmentMode } from "@src/config.js";
 
 export async function notifySupportAboutFormSubmissionProblem(
   formId: string,

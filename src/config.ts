@@ -1,14 +1,8 @@
-import dotenv from "dotenv";
-
 export enum EnvironmentMode {
   Local = "local",
   Staging = "staging",
   Production = "production",
 }
-
-// Load environment variables
-
-dotenv.config();
 
 // AWS SDK
 

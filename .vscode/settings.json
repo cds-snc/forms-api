@@ -1,0 +1,12 @@
+{
+  "editor.defaultFormatter": "biomejs.biome",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.validate.enable": true,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}

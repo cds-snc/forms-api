@@ -5,13 +5,14 @@ import {
   GetCommand,
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
-import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission";
+import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionIncorrectConfirmationCodeException,
   FormSubmissionNotFoundException,
-} from "@src/lib/vault/dataStructures/exceptions";
-import { buildMockedVaultItem } from "test/mocks/dynamodb";
+} from "@src/lib/vault/dataStructures/exceptions.js";
+import { logMessage } from "@src/lib/logger.js";
+import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -110,7 +111,7 @@ describe("confirmFormSubmission should", () => {
 
   it("throw an error if DynamoDB has an internal failure", async () => {
     dynamoDbMock.on(GetCommand).rejectsOnce("custom error");
-    const consoleErrorLogSpy = vi.spyOn(console, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
       confirmFormSubmission(
@@ -120,7 +121,7 @@ describe("confirmFormSubmission should", () => {
       ),
     ).rejects.toThrowError("custom error");
 
-    expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+    expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining(
         "[dynamodb] Failed to confirm form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / ConfirmationCode: 620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
       ),

@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
+import { introspectToken } from "@lib/idp/introspectToken.js";
 import {
   getIntrospectionCache,
   setIntrospectionCache,
-} from "@lib/idp/introspectionCache";
-import { introspectToken } from "@lib/idp/introspectToken";
+} from "@lib/idp/introspectionCache.js";
 
 export async function authenticationMiddleware(
   request: Request,
@@ -35,6 +35,8 @@ export async function authenticationMiddleware(
   }
 
   await setIntrospectionCache(accessToken, introspectionResult);
+
+  request.serviceAccountId = introspectionResult.serviceAccountId;
 
   next();
 }

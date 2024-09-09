@@ -1,9 +1,10 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/awsServicesConnector";
+import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import {
   formSubmissionFromDynamoDbResponse,
   type FormSubmission,
-} from "@lib/vault/dataStructures/formSubmission";
+} from "@lib/vault/dataStructures/formSubmission.js";
+import { logMessage } from "@lib/logger.js";
 
 export async function getFormSubmission(
   formId: string,
@@ -29,7 +30,7 @@ export async function getFormSubmission(
 
     return formSubmissionFromDynamoDbResponse(response.Item);
   } catch (error) {
-    console.error(
+    logMessage.error(
       `[dynamodb] Failed to retrieve form submission. FormId: ${formId} / SubmissionName: ${submissionName}. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),

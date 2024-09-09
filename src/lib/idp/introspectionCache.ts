@@ -1,7 +1,6 @@
-// biome-ignore lint/correctness/noNodejsModules: we need the node crypto module
 import { createHash } from "node:crypto";
-import type { IntrospectionResult } from "@lib/idp/introspectToken";
-import { RedisConnector } from "@src/lib/redisConnector";
+import type { IntrospectionResult } from "@lib/idp/introspectToken.js";
+import { RedisConnector } from "@lib/connectors/redisConnector.js";
 
 const cacheExpiry = 300; // seconds
 
@@ -16,7 +15,6 @@ export async function getIntrospectionCache(
   const accessTokenKey = getAccessTokenCacheKey(accessToken);
   const redisConnector = await RedisConnector.getInstance();
   const introspectionCached = await redisConnector.client.get(accessTokenKey);
-  console.debug("Introspection cache", accessTokenKey, introspectionCached);
   return introspectionCached
     ? (JSON.parse(introspectionCached) as IntrospectionResult)
     : undefined;

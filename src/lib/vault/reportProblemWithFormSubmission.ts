@@ -1,11 +1,11 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/awsServicesConnector";
+import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@lib/vault/dataStructures/exceptions";
-import { getFormSubmission } from "@lib/vault/getFormSubmission";
-import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission";
+} from "@lib/vault/dataStructures/exceptions.js";
+import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
+import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission.js";
 
 export async function reportProblemWithFormSubmission(
   formId: string,

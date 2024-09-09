@@ -1,6 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import { AWS_REGION, LOCALSTACK_ENDPOINT } from "@src/config";
+import { AWS_REGION, LOCALSTACK_ENDPOINT } from "@src/config.js";
+import { SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 
 const globalConfig = {
   region: AWS_REGION,
@@ -17,6 +18,8 @@ export class AwsServicesConnector {
 
   public dynamodbClient: DynamoDBDocumentClient;
 
+  public secretsClient: SecretsManagerClient;
+
   private constructor() {
     this.dynamodbClient = DynamoDBDocumentClient.from(
       new DynamoDBClient({
@@ -24,6 +27,10 @@ export class AwsServicesConnector {
         ...localstackConfig,
       }),
     );
+    this.secretsClient = new SecretsManagerClient({
+      ...globalConfig,
+      ...localstackConfig,
+    });
   }
 
   public static getInstance(): AwsServicesConnector {

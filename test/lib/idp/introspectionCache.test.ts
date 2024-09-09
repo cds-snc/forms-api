@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { RedisConnector } from "@src/lib/redisConnector";
+import { RedisConnector } from "@src/lib/connectors/redisConnector.js";
 import {
   getIntrospectionCache,
   setIntrospectionCache,
-} from "@src/lib/idp/introspectionCache";
-import type { IntrospectionResult } from "@lib/idp/introspectToken";
+} from "@src/lib/idp/introspectionCache.js";
+import type { IntrospectionResult } from "@lib/idp/introspectToken.js";
 
-vi.mock("@src/lib/redisConnector");
+vi.mock("@src/lib/connectors/redisConnector");
 const redisConnectorMock = vi.mocked(RedisConnector);
 
 describe("introspectionCache", () => {
@@ -32,6 +32,7 @@ describe("introspectionCache", () => {
       const introspectionResult: IntrospectionResult = {
         username: "Frodo",
         exp: 1234567890,
+        serviceAccountId: "11111111111111",
       };
       redisClient.get.mockResolvedValue(JSON.stringify(introspectionResult));
 
@@ -56,6 +57,7 @@ describe("introspectionCache", () => {
       const introspectionResult: IntrospectionResult = {
         username: "Frodo",
         exp: 1234567890,
+        serviceAccountId: "11111111111111",
       };
 
       await setIntrospectionCache(accessToken, introspectionResult);

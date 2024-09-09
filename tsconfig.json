@@ -4,14 +4,18 @@
     "esModuleInterop": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "target": "ES6",
+    "target": "ESNext",
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"],
       "@lib/*": ["src/lib/*"],
       "@middleware/*": ["src/middleware/*"],
       "@routes/*": ["src/routes/*"]
-    }
+    },
+    "typeRoots": ["@types", "./node_modules/@types"],
+    "resolveJsonModule": true,
+    "allowJs": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": ["src/**/*", "test/**/*", "utils/**/*"],
+  "exclude": ["node_modules", "**/node_modules/*"]
 }

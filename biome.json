@@ -5,7 +5,8 @@
       "**/build/**",
       "package.json",
       "pnpm-lock.yaml",
-      "utilTokenGeneration.mjs"
+      "utilTokenGeneration.mjs",
+      "node_modules/**"
     ]
   },
   "organizeImports": {
@@ -15,6 +16,9 @@
     "enabled": true,
     "rules": {
       "all": true,
+      "correctness": {
+        "noNodejsModules": "off"
+      },
       "style": {
         "useNamingConvention": "info"
       }
