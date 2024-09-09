@@ -6,6 +6,7 @@ export class RedisConnector {
   private static instance: RedisConnector | undefined = undefined;
   private static RETRY_MAX = 10;
   private static RETRY_DELAY_STEP = 500; // milliseconds
+  private static connectionPromise: Promise<RedisClientType>;
 
   public client: RedisClientType;
 
@@ -39,7 +40,12 @@ export class RedisConnector {
   public static async getInstance(): Promise<RedisConnector> {
     if (RedisConnector.instance === undefined) {
       RedisConnector.instance = new RedisConnector();
-      await RedisConnector.instance.client.connect();
+      RedisConnector.connectionPromise =
+        RedisConnector.instance.client.connect();
+      await RedisConnector.connectionPromise;
+    } else {
+      // Ensure all calls to getInstance() wait for the connection to be initialized before returnign the Redis Instance
+      await RedisConnector.connectionPromise;
     }
     return RedisConnector.instance;
   }

@@ -51,8 +51,11 @@ export class DatabaseConnector {
   }
 
   public static async getInstance(): Promise<DatabaseConnector> {
-    // If the promise has not yet been created, create it and the instance
-    if (!DatabaseConnector.connectionStringPromise) {
+    if (DatabaseConnector.connectionStringPromise) {
+      // This is to ensure that any other calls to getInstance() will wait for the connection string to be resolved and the instance to be created
+      await DatabaseConnector.connectionStringPromise;
+    } else {
+      // If the promise has not yet been created, create it and the instance
       DatabaseConnector.connectionStringPromise =
         DatabaseConnector.getConnectionString();
 
@@ -60,9 +63,6 @@ export class DatabaseConnector {
         await DatabaseConnector.connectionStringPromise,
       );
     }
-
-    // This is to ensure that any other calls to getInstance() will wait for the connection string to be resolved and the instance to be created
-    await DatabaseConnector.connectionStringPromise;
 
     return DatabaseConnector.instance;
   }
