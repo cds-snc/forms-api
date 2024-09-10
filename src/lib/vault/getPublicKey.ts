@@ -1,6 +1,5 @@
-import { DatabaseConnector } from "@lib/connectors/databaseConnector.js";
+import { DatabaseConnectorClient } from "@src/lib/connectors/databaseConnector.js";
 import { RedisConnector } from "@lib/connectors/redisConnector.js";
-import { logMessage } from "@src/lib/logger.js";
 
 const cachePublicKey = async (publicKey: string, serviceAccountId: string) => {
   const redisConnector = await RedisConnector.getInstance();
@@ -17,20 +16,16 @@ const getPublicKeyFromCache = async (serviceAccountId: string) => {
 };
 
 export const getPublicKey = async (serviceAccountId: string) => {
-  const connector = await DatabaseConnector.getInstance();
   const cachedPublicKey = await getPublicKeyFromCache(serviceAccountId);
   if (cachedPublicKey) {
     return cachedPublicKey;
   }
 
-  const { publicKey }: { publicKey: string } = await connector.db.one(
-    'SELECT "publicKey" FROM "ApiServiceAccount" WHERE id = $1',
-    [serviceAccountId],
-  );
-
-  logMessage.debug(
-    `Public key for service account ${serviceAccountId} found in database with value ${publicKey}`,
-  );
+  const { publicKey }: { publicKey: string } =
+    await DatabaseConnectorClient.one(
+      'SELECT "publicKey" FROM "ApiServiceAccount" WHERE id = $1',
+      [serviceAccountId],
+    );
 
   await cachePublicKey(publicKey, serviceAccountId);
 
