@@ -17,7 +17,7 @@ const getConnectionString = async () => {
     const response =
       await AwsServicesConnector.getInstance().secretsClient.send(
         new GetSecretValueCommand({
-          SecretId: "server-database-url",
+          SecretId: "database-url",
         }),
       );
 
@@ -30,7 +30,7 @@ const getConnectionString = async () => {
     return response.SecretString;
   } catch (error) {
     logMessage.error(
-      `[database-connector] Failed to retrieve server-database-url. Reason: ${JSON.stringify(
+      `[database-connector] Failed to retrieve database-url. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),
       )}`,
