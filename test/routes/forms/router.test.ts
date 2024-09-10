@@ -27,13 +27,13 @@ vi.mock("@middleware/rateLimiter/middleware", () => ({
     next(),
 }));
 
-vi.mock("@routes/forms/submission/router", () => ({
-  submissionApiRoute: Router().get("/", (_, response: Response) => {
+vi.mock("@routes/forms/formId/router", () => ({
+  formIdApiRoute: Router().get("/", (_, response: Response) => {
     return response.sendStatus(200);
   }),
 }));
 
-describe("/forms/:formId/submission", () => {
+describe("/forms", () => {
   let server: Express;
 
   beforeAll(() => {
@@ -43,9 +43,7 @@ describe("/forms/:formId/submission", () => {
 
   describe("Response to GET operation when", () => {
     it("formId format is valid", async () => {
-      const response = await request(server).get(
-        "/clzsn6tao000611j50dexeob0/submission",
-      );
+      const response = await request(server).get("/clzsn6tao000611j50dexeob0");
       expect(response.status).toBe(200);
     });
 
@@ -55,7 +53,7 @@ describe("/forms/:formId/submission", () => {
       "lzsn6tao000611j50dexeob0",
       "alzsn6tao000611j50dexeob0",
     ])("formId format is not valid (testing %s)", async (formId: string) => {
-      const response = await request(server).get(`/${formId}/submission`);
+      const response = await request(server).get(`/${formId}`);
       expect(response.status).toBe(404);
     });
   });

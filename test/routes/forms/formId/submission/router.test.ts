@@ -1,15 +1,15 @@
 import { vi, describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
 import express, { Router, type Express, type Response } from "express";
-import { submissionApiRoute } from "@routes/forms/submission/router.js";
+import { submissionApiRoute } from "@routes/forms/formId/submission/router.js";
 
-vi.mock("@routes/forms/submission/new/router", () => ({
+vi.mock("@routes/forms/formId/submission/new/router", () => ({
   newApiRoute: Router().get("/", (_, response: Response) => {
     return response.sendStatus(200);
   }),
 }));
 
-vi.mock("@routes/forms/submission/submissionName/router", () => ({
+vi.mock("@routes/forms/formId/submission/submissionName/router", () => ({
   submissionNameApiRoute: Router().get("/", (_, response: Response) => {
     return response.sendStatus(200);
   }),

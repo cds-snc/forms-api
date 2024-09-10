@@ -11,6 +11,7 @@ import {
   FormSubmissionNotFoundException,
 } from "@src/lib/vault/dataStructures/exceptions.js";
 import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
+import { logMessage } from "@src/lib/logger.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -88,7 +89,7 @@ describe("reportProblemWithFormSubmission should", () => {
 
   it("throw an error if DynamoDB has an internal failure", async () => {
     dynamoDbMock.on(GetCommand).rejectsOnce("custom error");
-    const consoleErrorLogSpy = vi.spyOn(console, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
       reportProblemWithFormSubmission(
@@ -97,7 +98,7 @@ describe("reportProblemWithFormSubmission should", () => {
       ),
     ).rejects.toThrowError("custom error");
 
-    expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+    expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining(
         "[dynamodb] Failed to report problem with form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571. Reason:",
       ),

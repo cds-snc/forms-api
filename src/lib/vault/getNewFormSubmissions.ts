@@ -4,6 +4,7 @@ import {
   newFormSubmissionFromDynamoDbResponse,
   type NewFormSubmission,
 } from "@lib/vault/dataStructures/formSubmission.js";
+import { logMessage } from "@lib/logger.js";
 
 export async function getNewFormSubmissions(
   formId: string,
@@ -48,7 +49,7 @@ export async function getNewFormSubmissions(
 
     return newFormSubmissions;
   } catch (error) {
-    console.error(
+    logMessage.error(
       `[dynamodb] Failed to retrieve new form submissions. FormId: ${formId}. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),

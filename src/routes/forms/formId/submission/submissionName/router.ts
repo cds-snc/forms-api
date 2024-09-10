@@ -2,8 +2,8 @@ import { type Request, type Response, Router } from "express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@src/lib/vault/encryptFormSubmission.js";
 import { logMessage } from "@src/lib/logger.js";
-import { confirmApiRoute } from "@routes/forms/submission/submissionName/confirm/router.js";
-import { problemApiRoute } from "@routes/forms/submission/submissionName/problem/router.js";
+import { confirmApiRoute } from "@routes/forms/formId/submission/submissionName/confirm/router.js";
+import { problemApiRoute } from "@routes/forms/formId/submission/submissionName/problem/router.js";
 
 export const submissionNameApiRoute = Router({
   mergeParams: true,
