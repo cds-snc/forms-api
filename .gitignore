@@ -6,3 +6,5 @@ npm-debug.log
 build/
 .pnpm-store
 *private_api_key.json
+bin/
+obj/
