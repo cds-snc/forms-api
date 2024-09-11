@@ -15,6 +15,12 @@ process.env = {
 
 vi.mock("axios");
 
+vi.mock("./src/lib/connectors/databaseConnector", () => ({
+  DatabaseConnectorClient: {
+    oneOrNone: vi.fn(),
+  },
+}));
+
 vi.mock("node:crypto", async (importOriginal) => {
   const original = (await importOriginal()) as object;
 

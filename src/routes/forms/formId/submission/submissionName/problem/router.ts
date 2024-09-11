@@ -8,6 +8,7 @@ import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notify
 import type { Schema } from "express-validator";
 import { requestValidatorMiddleware } from "@src/middleware/requestValidator/middleware.js";
 import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config.js";
+import { logMessage } from "@src/lib/logger.js";
 
 export const problemApiRoute = Router({
   mergeParams: true,
@@ -58,7 +59,7 @@ problemApiRoute.post(
           ENVIRONMENT_MODE,
         );
       } else {
-        console.debug(
+        logMessage.debug(
           "[local] Will not notify support about submission problem.",
         );
       }
@@ -79,7 +80,7 @@ problemApiRoute.post(
           .json({ info: "Form submission is already reported as problematic" });
       }
 
-      console.error(
+      logMessage.error(
         `[route] Internal error while serving request: /forms/${formId}/submission/${submissionName}/problem. Reason: ${JSON.stringify(
           error,
           Object.getOwnPropertyNames(error),

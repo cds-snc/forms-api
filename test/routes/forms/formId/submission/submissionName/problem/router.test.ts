@@ -2,12 +2,13 @@ import { vi, describe, beforeAll, it, expect } from "vitest";
 import request from "supertest";
 import express, { type Express } from "express";
 import { reportProblemWithFormSubmission } from "@src/lib/vault/reportProblemWithFormSubmission.js";
-import { problemApiRoute } from "@src/routes/forms/submission/submissionName/problem/router.js";
+import { problemApiRoute } from "@src/routes/forms/formId/submission/submissionName/problem/router.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
 } from "@src/lib/vault/dataStructures/exceptions.js";
 import { notifySupportAboutFormSubmissionProblem } from "@src/lib/support/notifySupportAboutFormSubmissionProblem.js";
+import { logMessage } from "@src/lib/logger.js";
 
 vi.mock("@lib/vault/reportProblemWithFormSubmission");
 const reportProblemWithFormSubmissionMock = vi.mocked(
@@ -115,14 +116,14 @@ describe("/forms/:formId/submission/:submissionName/problem", () => {
       reportProblemWithFormSubmissionMock.mockRejectedValueOnce(
         new Error("custom error"),
       );
-      const consoleErrorLogSpy = vi.spyOn(console, "error");
+      const logMessageSpy = vi.spyOn(logMessage, "error");
 
       const response = await request(server)
         .post("/")
         .send(buildReportProblemOperationPayload());
 
       expect(response.status).toBe(500);
-      expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+      expect(logMessageSpy).toHaveBeenCalledWith(
         expect.stringContaining(
           "[route] Internal error while serving request: /forms/undefined/submission/undefined/problem. Reason:",
         ),
@@ -133,14 +134,14 @@ describe("/forms/:formId/submission/:submissionName/problem", () => {
       notifySupportAboutFormSubmissionProblemMock.mockRejectedValueOnce(
         new Error("custom error"),
       );
-      const consoleErrorLogSpy = vi.spyOn(console, "error");
+      const logMessageSpy = vi.spyOn(logMessage, "error");
 
       const response = await request(server)
         .post("/")
         .send(buildReportProblemOperationPayload());
 
       expect(response.status).toBe(500);
-      expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+      expect(logMessageSpy).toHaveBeenCalledWith(
         expect.stringContaining(
           "[route] Internal error while serving request: /forms/undefined/submission/undefined/problem. Reason:",
         ),

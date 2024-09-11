@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { createFreshdeskTicket } from "@src/lib/support/freshdeskApiClient.js";
 import { EnvironmentMode } from "@src/config.js";
+import { logMessage } from "@src/lib/logger.js";
 
 vi.mock("@src/lib/support/freshdeskApiClient");
 const createFreshdeskTicketMock = vi.mocked(createFreshdeskTicket);
@@ -54,7 +55,7 @@ Here is my problem<br/>
 
   it("throw an error if the createTicket function has an internal failure", async () => {
     createFreshdeskTicketMock.mockRejectedValueOnce(new Error("custom error"));
-    const consoleErrorLogSpy = vi.spyOn(console, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
       notifySupportAboutFormSubmissionProblem(
@@ -67,7 +68,7 @@ Here is my problem<br/>
       ),
     ).rejects.toThrowError("custom error");
 
-    expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+    expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining(
         "[support] Failed to notify support about form submission problem. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / Contact email: test@test.com. Reason:",
       ),

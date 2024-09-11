@@ -2,6 +2,7 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
+import { logMessage } from "@src/lib/logger.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -145,13 +146,13 @@ describe("getNewFormSubmissions should", () => {
 
   it("throw an error if DynamoDB has an internal failure", async () => {
     dynamoDbMock.on(QueryCommand).rejectsOnce("custom error");
-    const consoleErrorLogSpy = vi.spyOn(console, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(
       getNewFormSubmissions("clzamy5qv0000115huc4bh90m", 100),
     ).rejects.toThrowError("custom error");
 
-    expect(consoleErrorLogSpy).toHaveBeenCalledWith(
+    expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining(
         "[dynamodb] Failed to retrieve new form submissions. FormId: clzamy5qv0000115huc4bh90m. Reason:",
       ),

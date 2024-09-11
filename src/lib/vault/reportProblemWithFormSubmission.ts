@@ -6,6 +6,7 @@ import {
 } from "@lib/vault/dataStructures/exceptions.js";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission.js";
+import { logMessage } from "@lib/logger.js";
 
 export async function reportProblemWithFormSubmission(
   formId: string,
@@ -43,7 +44,7 @@ export async function reportProblemWithFormSubmission(
       }),
     );
   } catch (error) {
-    console.error(
+    logMessage.error(
       `[dynamodb] Failed to report problem with form submission. FormId: ${formId} / SubmissionName: ${submissionName}. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),
