@@ -228,10 +228,13 @@ Selection (1): `);
       console.info(decryptedSubmission);
       const submission = JSON.parse(decryptedSubmission);
 
-      console.info(
-        `Confirming submission for ${name}: ${await confirmSubmission(submission, name, accessToken, formId)}`,
+      const result = await confirmSubmission(
+        submission,
+        name,
+        accessToken,
+        formId,
       );
-      // await confirmSubmission(submission, name, accessToken, formId);
+      console.info(`Confirming submission for ${name}: ${result}`);
     }
     const confirmTimeEnd = Date.now();
     console.info(
