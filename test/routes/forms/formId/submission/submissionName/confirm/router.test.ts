@@ -2,7 +2,7 @@ import { vi, describe, beforeAll, it, expect } from "vitest";
 import request from "supertest";
 import express, { type Express } from "express";
 import { confirmFormSubmission } from "@src/lib/vault/confirmFormSubmission.js";
-import { confirmApiRoute } from "@src/routes/forms/submission/submissionName/confirm/router.js";
+import { confirmApiRoute } from "@src/routes/forms/formId/submission/submissionName/confirm/router.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,

@@ -99,7 +99,7 @@ describe("authenticationMiddleware should", () => {
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockResponse.status).toHaveBeenCalledWith(401);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: "Token expired",
+      error: "Access token has expired",
     });
     expect(getIntrospectionCacheMock).toHaveBeenCalledWith("abc");
     expect(setIntrospectionCacheMock).not.toHaveBeenCalled();

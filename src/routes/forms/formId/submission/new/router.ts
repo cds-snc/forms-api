@@ -1,3 +1,4 @@
+import { logMessage } from "@src/lib/logger.js";
 import { getNewFormSubmissions } from "@src/lib/vault/getNewFormSubmissions.js";
 import { type Request, type Response, Router } from "express";
 
@@ -18,7 +19,7 @@ newApiRoute.get("/", async (request: Request, response: Response) => {
 
     return response.json(newFormSubmissions);
   } catch (error) {
-    console.error(
+    logMessage.error(
       `[route] Internal error while serving request: /forms/${formId}/submission/new. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),

@@ -1,5 +1,6 @@
 import { createFreshdeskTicket } from "@lib/support/freshdeskApiClient.js";
 import { EnvironmentMode } from "@src/config.js";
+import { logMessage } from "@lib/logger.js";
 
 export async function notifySupportAboutFormSubmissionProblem(
   formId: string,
@@ -25,7 +26,7 @@ export async function notifySupportAboutFormSubmissionProblem(
       preferredLanguage: preferredLanguage,
     });
   } catch (error) {
-    console.error(
+    logMessage.error(
       `[support] Failed to notify support about form submission problem. FormId: ${formId} / SubmissionName: ${submissionName} / Contact email: ${contactEmail}. Reason: ${JSON.stringify(
         error,
         Object.getOwnPropertyNames(error),

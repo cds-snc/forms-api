@@ -120,6 +120,35 @@ const decryptSubmission = (
   ]).toString("utf-8");
 };
 
+const confirmSubmission = async (
+  submission: {
+    createdAt: number;
+    status: string;
+    confirmationCode: string;
+    answers: Record<string, unknown>;
+  },
+  submissionName: string,
+  accessToken: string,
+  formId: string,
+) => {
+  return axios
+    .put(
+      `${process.env.GCFORMS_API_URL}/forms/${formId}/submission/${submissionName}/confirm/${submission.confirmationCode}`,
+      // Put expects data as a second argument
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+        },
+      },
+    )
+    .then((res) => res.data)
+    .catch((e) => {
+      console.error(e.response.data);
+    });
+};
+
 const main = async () => {
   try {
     const identityProvider = process.env.IDENTITY_PROVIDER;
@@ -142,6 +171,20 @@ Selection (1): `);
     const formId = await getValue("Form ID to retrieve responses for: ");
     const accessToken = await getAccessToken();
 
+    const formTemplate = await axios
+      .get(`${process.env.GCFORMS_API_URL}/forms/${formId}/template`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+        },
+      })
+      .then((res) => res.data)
+      .catch((e) => {
+        console.error(e.response.data);
+      });
+
+    console.info("Form Template:", formTemplate);
+
     const namesToRetrieve: { name: string; createdAt: number }[] = await axios
       .get(`${process.env.GCFORMS_API_URL}/forms/${formId}/submission/new`, {
         headers: {
@@ -153,9 +196,9 @@ Selection (1): `);
       .catch((e) => {
         console.error(e.response.data);
       });
-    console.info("Retrieving responses");
+
     const retrieveTimeStart = Date.now();
-    const encryptedSubmissions = await Promise.all(
+    const submissions = await Promise.all(
       namesToRetrieve.map(async (submission) => {
         const response = await retrieveSubmission(
           formId,
@@ -164,33 +207,38 @@ Selection (1): `);
         );
         return response;
       }),
-    );
+    ).then((results) => {
+      return new Map(
+        results.map((result, index) => [namesToRetrieve[index].name, result]),
+      );
+    });
 
     const retrieveTimeEnd = Date.now();
     console.info(
       `Retrieving responses took ${retrieveTimeEnd - retrieveTimeStart}ms`,
     );
-    console.info("Decrypting responses.");
     const privateKey = crypto.createPrivateKey({ key: gcformsPrivate.key });
-    const decryptTimeStart = Date.now();
-    const decryptedSubmissions = encryptedSubmissions.map(
-      (encryptedSubmission) => {
-        return decryptSubmission(encryptedSubmission, privateKey);
-      },
-    );
+    const confirmTimeStart = Date.now();
+    for (const [name, encryptedSubmission] of submissions.entries()) {
+      const decryptedSubmission = decryptSubmission(
+        encryptedSubmission,
+        privateKey,
+      );
+      console.info(`Decrypted submission for ${name}:`);
+      console.info(decryptedSubmission);
+      const submission = JSON.parse(decryptedSubmission);
 
-    const decryptTimeEnd = Date.now();
-    console.info(
-      `Decrypting responses took ${decryptTimeEnd - decryptTimeStart}ms`,
-    );
-
-    console.info("Decrypted responses:");
-    for (const submission of decryptedSubmissions) {
-      console.info(submission);
+      const result = await confirmSubmission(
+        submission,
+        name,
+        accessToken,
+        formId,
+      );
+      console.info(`Confirming submission for ${name}: ${result}`);
     }
-
+    const confirmTimeEnd = Date.now();
     console.info(
-      `Time taken to download and decrypt: ${decryptTimeEnd - retrieveTimeStart}ms`,
+      `Decrypting and confirming responses took ${confirmTimeEnd - confirmTimeStart}ms`,
     );
   } catch (e) {
     console.error(e);

@@ -31,7 +31,7 @@ export async function authenticationMiddleware(
   }
 
   if (introspectionResult.exp < Date.now() / 1000) {
-    return response.status(401).json({ message: "Token expired" });
+    return response.status(401).json({ error: "Access token has expired" });
   }
 
   await setIntrospectionCache(accessToken, introspectionResult);
