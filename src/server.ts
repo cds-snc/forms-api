@@ -9,5 +9,7 @@ const server: Express = express();
 server.use("/", router);
 
 server.listen(SERVER_PORT, () => {
-  logMessage.info(`>>> API server listening on port ${SERVER_PORT} <<<`);
+  logMessage.info(
+    `[express-server] API server listening on port ${SERVER_PORT}`,
+  );
 });

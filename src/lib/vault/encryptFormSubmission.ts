@@ -7,10 +7,17 @@ import {
   publicEncrypt,
 } from "node:crypto";
 
+export interface EncryptedFormSubmission {
+  encryptedResponses: string;
+  encryptedKey: string;
+  encryptedNonce: string;
+  encryptedAuthTag: string;
+}
+
 export const encryptFormSubmission = async (
   serviceAccountId: string,
   submission: FormSubmission,
-) => {
+): Promise<EncryptedFormSubmission> => {
   const serviceAccountPublicKey = await getPublicKey(serviceAccountId);
 
   // Encrypt the submission with the public key
@@ -22,7 +29,7 @@ export const encryptFormSubmission = async (
   const encryptedResponses = Buffer.concat([
     cipher.update(Buffer.from(JSON.stringify(submission))),
     cipher.final(),
-  ]);
+  ]).toString("base64");
   const authTag = cipher.getAuthTag();
   const publicKey = createPublicKey({ key: serviceAccountPublicKey });
   const encryptedKey = publicEncrypt(publicKey, encryptionKey).toString(

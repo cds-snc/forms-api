@@ -23,11 +23,15 @@ export class RedisConnector {
     });
     this.client
       .on("error", (err: Error) =>
-        logMessage.error(`Redis client error: ${err.message}`),
+        logMessage.error(
+          `[redis-connector] Redis client error: ${err.message}`,
+        ),
       )
-      .on("ready", () => logMessage.debug("Redis client ready!"))
+      .on("ready", () =>
+        logMessage.debug("[redis-connector]  Redis client ready!"),
+      )
       .on("reconnecting", () =>
-        logMessage.debug("Redis client reconnecting..."),
+        logMessage.debug("[redis-connector] Redis client reconnecting..."),
       );
   }
 
