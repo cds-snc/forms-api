@@ -9,6 +9,7 @@ import type { Schema } from "express-validator";
 import { requestValidatorMiddleware } from "@src/middleware/requestValidator/middleware.js";
 import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config.js";
 import { logMessage } from "@src/lib/logger.js";
+import { logEvent } from "@src/lib/auditLogs.js";
 
 export const problemApiRoute = Router({
   mergeParams: true,
@@ -41,6 +42,7 @@ problemApiRoute.post(
   async (request: Request, response: Response) => {
     const formId = request.params.formId;
     const submissionName = request.params.submissionName;
+    const username = request.username;
 
     const contactEmail = request.body.contactEmail as string;
     const description = request.body.description as string;
@@ -63,7 +65,11 @@ problemApiRoute.post(
           "[local] Will not notify support about submission problem.",
         );
       }
-
+      logEvent(
+        username,
+        { type: "Response", id: submissionName },
+        "IdentifyProblemResponse",
+      );
       return response.sendStatus(200);
     } catch (error) {
       if (error instanceof FormSubmissionNotFoundException) {

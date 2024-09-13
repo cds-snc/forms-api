@@ -8,16 +8,18 @@ export enum AuditLogEvent {
   DownloadResponse = "DownloadResponse",
   ConfirmResponse = "ConfirmResponse",
   IdentifyProblemResponse = "IdentifyProblemResponse",
-  ListResponses = "ListResponses",
-  DeleteResponses = "DeleteResponses",
-  RetrieveResponses = "RetrieveResponses",
-  // Application events
+  RetrieveNewResponses = "RetrieveResponses",
+  // Application Events
   AccessDenied = "AccessDenied",
+  // Template Events
+  RetrieveTemplate = "RetrieveTemplate",
 }
 export type AuditLogEventStrings = keyof typeof AuditLogEvent;
 
 export enum AuditSubjectType {
   ServiceAccount = "ServiceAccount",
+  Form = "Form",
+  Response = "Response",
 }
 
 let queueUrlRef: string | null = null;
@@ -26,13 +28,12 @@ const getQueueUrl = async () => {
   if (!queueUrlRef) {
     const data = await AwsServicesConnector.getInstance().sqsClient.send(
       new GetQueueUrlCommand({
-        QueueName: "audit_log_queue",
+        QueueName: "api_audit_log_queue",
       }),
     );
     queueUrlRef = data.QueueUrl ?? null;
     logMessage.debug(`Audit Log Queue URL initialized: ${queueUrlRef}`);
   }
-  logMessage.debug(`Audit Log Queue URL retrieved: ${queueUrlRef}`);
   return queueUrlRef;
 };
 

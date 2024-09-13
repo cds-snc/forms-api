@@ -4,6 +4,7 @@ import { encryptFormSubmission } from "@src/lib/vault/encryptFormSubmission.js";
 import { logMessage } from "@src/lib/logger.js";
 import { confirmApiRoute } from "@routes/forms/formId/submission/submissionName/confirm/router.js";
 import { problemApiRoute } from "@routes/forms/formId/submission/submissionName/problem/router.js";
+import { logEvent } from "@src/lib/auditLogs.js";
 
 export const submissionNameApiRoute = Router({
   mergeParams: true,
@@ -17,6 +18,7 @@ submissionNameApiRoute.get(
   async (request: Request, response: Response) => {
     const formId = request.params.formId;
     const submissionName = request.params.submissionName;
+    const username = request.username;
 
     try {
       const formSubmission = await getFormSubmission(formId, submissionName);
@@ -37,6 +39,12 @@ submissionNameApiRoute.get(
       const encryptedSubmission = await encryptFormSubmission(
         serviceAccountId,
         formSubmission,
+      );
+
+      logEvent(
+        username,
+        { type: "Response", id: submissionName },
+        "DownloadResponse",
       );
 
       return response.json(encryptedSubmission);
