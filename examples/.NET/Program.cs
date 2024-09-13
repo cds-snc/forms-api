@@ -18,7 +18,7 @@ namespace dotnet
         Console.WriteLine(@"
 I want to:
 (1) Generate and display an access token
-(2) Retrieve a form submission
+(2) Retrieve, decrypt and confirm form submissions
 Selection (1):
 ");
 
