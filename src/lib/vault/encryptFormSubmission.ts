@@ -22,7 +22,7 @@ export const encryptFormSubmission = async (
 
   // Encrypt the submission with the public key
   const encryptionKey = randomBytes(32);
-  const iv = randomBytes(16);
+  const iv = randomBytes(12);
 
   const cipher = createCipheriv("aes-256-gcm", encryptionKey, iv);
 
@@ -30,13 +30,23 @@ export const encryptFormSubmission = async (
     cipher.update(Buffer.from(JSON.stringify(submission))),
     cipher.final(),
   ]).toString("base64");
+
   const authTag = cipher.getAuthTag();
+
   const publicKey = createPublicKey({ key: serviceAccountPublicKey });
-  const encryptedKey = publicEncrypt(publicKey, encryptionKey).toString(
+
+  const publicEncryptKey = {
+    key: publicKey,
+    oaepHash: "sha256",
+  };
+
+  const encryptedKey = publicEncrypt(publicEncryptKey, encryptionKey).toString(
     "base64",
   );
-  const encryptedNonce = publicEncrypt(publicKey, iv).toString("base64");
-  const encryptedAuthTag = publicEncrypt(publicKey, authTag).toString("base64");
+  const encryptedNonce = publicEncrypt(publicEncryptKey, iv).toString("base64");
+  const encryptedAuthTag = publicEncrypt(publicEncryptKey, authTag).toString(
+    "base64",
+  );
 
   return {
     encryptedResponses,

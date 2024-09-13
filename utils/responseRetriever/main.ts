@@ -93,17 +93,23 @@ const decryptSubmission = (
   }: EncryptedSubmission,
   privateKey: crypto.KeyObject,
 ) => {
+  const privateDecryptKey = {
+    key: privateKey,
+    oaepHash: "sha256",
+  };
+
   const decryptedKey = crypto.privateDecrypt(
-    privateKey,
+    privateDecryptKey,
     Buffer.from(encryptedKey, "base64"),
   );
 
   const decryptedNonce = crypto.privateDecrypt(
-    privateKey,
+    privateDecryptKey,
     Buffer.from(encryptedNonce, "base64"),
   );
+
   const authTag = crypto.privateDecrypt(
-    privateKey,
+    privateDecryptKey,
     Buffer.from(encryptedAuthTag, "base64"),
   );
 
@@ -159,7 +165,7 @@ const main = async () => {
 
     const menuSelection = await getValue(`I want to:
 (1) Retrieve a form submission
-(2) Generate and dispaly an Access Token
+(2) Generate and display an Access Token
 Selection (1): `);
 
     if (menuSelection === "2") {
