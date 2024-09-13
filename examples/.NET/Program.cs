@@ -63,13 +63,13 @@ Selection (1):
 
                 Console.WriteLine("\nRetrieving, decrypting and confirming form submissions...");
 
-                foreach (NewFormSubmission submission in newFormSubmissions)
+                foreach (NewFormSubmission newFormSubmission in newFormSubmissions)
                 {
-                  Console.WriteLine($"\nProcessing {submission.name}...\n");
+                  Console.WriteLine($"\nProcessing {newFormSubmission.name}...\n");
 
                   Console.WriteLine("Retrieving encrypted submission...");
 
-                  EncryptedFormSubmission encryptedSubmission = await apiClient.GetFormSubmission(formId, submission.name);
+                  EncryptedFormSubmission encryptedSubmission = await apiClient.GetFormSubmission(formId, newFormSubmission.name);
 
                   Console.WriteLine("\nEncrypted submission:");
                   Console.WriteLine(encryptedSubmission.encryptedResponses);
@@ -85,7 +85,9 @@ Selection (1):
 
                   Console.WriteLine("\nConfirming submission...");
 
-                  await apiClient.ConfirmFormSubmission(formId, submission.name, formSubmission.confirmationCode);
+                  await apiClient.ConfirmFormSubmission(formId, newFormSubmission.name, formSubmission.confirmationCode);
+
+                  Console.WriteLine("\nSubmission confirmed");
 
                   Console.WriteLine("\n=> Press any key to continue processing form submissions or Ctrl-C to exit");
                   Console.ReadKey();
