@@ -4,7 +4,7 @@
 
 - Download and install .NET version 8.0
   - (with Microsoft installer) https://dotnet.microsoft.com/en-us/download
-  - (with Brew) `brew install --cask dotnet`
+  - (with Brew) `brew install --cask dotnet-sdk`
 
 To make sure .NET is properly installed, try to run the following command `dotnet --version`.
 
