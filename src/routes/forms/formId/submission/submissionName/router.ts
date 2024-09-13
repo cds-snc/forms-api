@@ -36,7 +36,7 @@ submissionNameApiRoute.get(
         );
       }
 
-      const encryptedSubmission = await encryptFormSubmission(
+      const encryptedFormSubmission = await encryptFormSubmission(
         serviceAccountId,
         formSubmission,
       );
@@ -47,7 +47,7 @@ submissionNameApiRoute.get(
         "DownloadResponse",
       );
 
-      return response.json(encryptedSubmission);
+      return response.json(encryptedFormSubmission);
     } catch (error) {
       logMessage.error(
         `[route] Internal error while serving request: /forms/${formId}/submission/${submissionName}. Reason: ${JSON.stringify(
