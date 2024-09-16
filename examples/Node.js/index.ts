@@ -5,9 +5,9 @@ import { generateAccessToken } from "./accessTokenGenerator.js";
 import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
 
-const IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca";
-const PROJECT_IDENTIFIER = "284778202772022819";
-const GCFORMS_API_URL = "https://api.forms-formulaires.alpha.canada.ca";
+const IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz";
+const PROJECT_IDENTIFIER = "275372254274006635";
+const GCFORMS_API_URL = "https://api.forms-staging.cdssandbox.xyz";
 
 async function main() {
   try {
