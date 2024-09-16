@@ -26,9 +26,9 @@ export async function authenticationMiddleware(
     return response.sendStatus(403);
   }
 
-  if (introspectionResult.username !== formId) {
+  if (introspectionResult.serviceUserId !== formId) {
     logEvent(
-      introspectionResult.username,
+      introspectionResult.serviceUserId,
       { type: "Form", id: formId },
       "AccessDenied",
       "User does not have access to this form",
@@ -38,7 +38,7 @@ export async function authenticationMiddleware(
 
   if (introspectionResult.exp < Date.now() / 1000) {
     logEvent(
-      introspectionResult.username,
+      introspectionResult.serviceUserId,
       { type: "Form", id: formId },
       "AccessDenied",
       "Access token has expired",
@@ -48,7 +48,7 @@ export async function authenticationMiddleware(
 
   await setIntrospectionCache(accessToken, introspectionResult);
 
-  request.username = introspectionResult.username;
+  request.serviceUserId = introspectionResult.serviceUserId;
   request.serviceAccountId = introspectionResult.serviceAccountId;
 
   next();

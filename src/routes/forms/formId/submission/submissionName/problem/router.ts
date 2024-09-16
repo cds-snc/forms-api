@@ -42,7 +42,7 @@ problemApiRoute.post(
   async (request: Request, response: Response) => {
     const formId = request.params.formId;
     const submissionName = request.params.submissionName;
-    const username = request.username;
+    const serviceUserId = request.serviceUserId;
 
     const contactEmail = request.body.contactEmail as string;
     const description = request.body.description as string;
@@ -66,7 +66,7 @@ problemApiRoute.post(
         );
       }
       logEvent(
-        username,
+        serviceUserId,
         { type: "Response", id: submissionName },
         "IdentifyProblemResponse",
       );

@@ -18,12 +18,12 @@ confirmApiRoute.put(
     const formId = request.params.formId;
     const submissionName = request.params.submissionName;
     const confirmationCode = request.params.confirmationCode;
-    const username = request.username;
+    const serviceUserId = request.serviceUserId;
 
     try {
       await confirmFormSubmission(formId, submissionName, confirmationCode);
       logEvent(
-        username,
+        serviceUserId,
         { type: "Response", id: submissionName },
         "ConfirmResponse",
       );

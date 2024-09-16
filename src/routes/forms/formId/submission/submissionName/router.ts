@@ -18,7 +18,7 @@ submissionNameApiRoute.get(
   async (request: Request, response: Response) => {
     const formId = request.params.formId;
     const submissionName = request.params.submissionName;
-    const username = request.username;
+    const serviceUserId = request.serviceUserId;
 
     try {
       const formSubmission = await getFormSubmission(formId, submissionName);
@@ -42,7 +42,7 @@ submissionNameApiRoute.get(
       );
 
       logEvent(
-        username,
+        serviceUserId,
         { type: "Response", id: submissionName },
         "DownloadResponse",
       );

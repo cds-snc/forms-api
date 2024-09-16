@@ -66,7 +66,7 @@ describe("authenticationMiddleware should", () => {
 
   it("reject request when the form identifier passed in the URL is different than the one associated to the token", async () => {
     introspectTokenMock.mockResolvedValueOnce({
-      username: "invalid",
+      serviceUserId: "invalid",
       exp: 0,
       serviceAccountId: "111111111111",
     });
@@ -85,7 +85,7 @@ describe("authenticationMiddleware should", () => {
 
   it("reject request when the token is expired", async () => {
     introspectTokenMock.mockResolvedValueOnce({
-      username: "clzsn6tao000611j50dexeob0",
+      serviceUserId: "clzsn6tao000611j50dexeob0",
       exp: Date.now() / 1000 - 100000,
       serviceAccountId: "11111111111",
     });
@@ -107,7 +107,7 @@ describe("authenticationMiddleware should", () => {
 
   it("accept request when the token is valid, not expired and associated to the form identifier passed in the URL", async () => {
     const introspectionResult = {
-      username: "clzsn6tao000611j50dexeob0",
+      serviceUserId: "clzsn6tao000611j50dexeob0",
       exp: Date.now() / 1000 + 100000,
       serviceAccountId: "11111111111",
     };

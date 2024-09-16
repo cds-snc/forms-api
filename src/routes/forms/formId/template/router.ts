@@ -9,7 +9,7 @@ export const templateApiRoute = Router({
 
 templateApiRoute.get("/", async (request: Request, response: Response) => {
   const formId = request.params.formId;
-  const username = request.username;
+  const serviceUserId = request.serviceUserId;
 
   try {
     const formTemplate = await getFormTemplate(formId);
@@ -20,8 +20,8 @@ templateApiRoute.get("/", async (request: Request, response: Response) => {
         .json({ error: "Form template does not exist" });
     }
 
-    // The username is the form Id
-    logEvent(username, { type: "Form", id: formId }, "RetrieveTemplate");
+    // The serviceUserId is the form Id
+    logEvent(serviceUserId, { type: "Form", id: formId }, "RetrieveTemplate");
 
     return response.json(formTemplate.jsonConfig);
   } catch (error) {

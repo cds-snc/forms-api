@@ -11,7 +11,7 @@ const MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS: number = 100;
 
 newApiRoute.get("/", async (request: Request, response: Response) => {
   const formId = request.params.formId;
-  const username = request.username;
+  const serviceUserId = request.serviceUserId;
 
   try {
     const newFormSubmissions = await getNewFormSubmissions(
@@ -19,7 +19,11 @@ newApiRoute.get("/", async (request: Request, response: Response) => {
       MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS,
     );
 
-    logEvent(username, { type: "Form", id: formId }, "RetrieveNewResponses");
+    logEvent(
+      serviceUserId,
+      { type: "Form", id: formId },
+      "RetrieveNewResponses",
+    );
 
     return response.json(newFormSubmissions);
   } catch (error) {

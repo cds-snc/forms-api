@@ -5,7 +5,7 @@ import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config.js";
 import { logMessage } from "@src/lib/logger.js";
 
 export type IntrospectionResult = {
-  username: string;
+  serviceUserId: string;
   exp: number;
   serviceAccountId: string;
 };
@@ -55,7 +55,7 @@ export async function introspectToken(
     }
 
     return {
-      username: introspectionResponse.username as string,
+      serviceUserId: introspectionResponse.username as string,
       exp: introspectionResponse.exp as number,
       serviceAccountId: introspectionResponse.sub as string,
     };
