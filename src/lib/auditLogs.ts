@@ -37,8 +37,9 @@ const getQueueUrl = async () => {
   return queueUrlRef;
 };
 
-//Initialise the queueUrlRef on load
-getQueueUrl();
+//Initialise the queueUrlRef on load except when running tests
+// This mock should be refactored when we once we have a better way to mock the AWS SDK
+process.env.NODE_ENV !== "test" && getQueueUrl();
 
 export const logEvent = async (
   userId: string,
