@@ -14,6 +14,7 @@ process.env = {
 };
 
 vi.mock("axios");
+vi.mock("./src/lib/auditLogs");
 
 vi.mock("./src/lib/connectors/databaseConnector", () => ({
   DatabaseConnectorClient: {
