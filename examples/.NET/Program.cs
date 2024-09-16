@@ -5,9 +5,9 @@ namespace dotnet
 {
   class Program
   {
-    static readonly string IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca";
-    static readonly string PROJECT_IDENTIFIER = "284778202772022819";
-    static readonly string GCFORMS_API_URL = "https://api.forms-formulaires.alpha.canada.ca";
+    static readonly string IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz";
+    static readonly string PROJECT_IDENTIFIER = "275372254274006635";
+    static readonly string GCFORMS_API_URL = "https://api.forms-staging.cdssandbox.xyz";
 
     static async Task Main(string[] args)
     {
