@@ -30,7 +30,7 @@ describe("introspectionCache", () => {
     it("return the parsed introspection result if the cache is found", async () => {
       const accessToken = "testAccessToken";
       const introspectionResult: IntrospectionResult = {
-        username: "Frodo",
+        serviceUserId: "Frodo",
         exp: 1234567890,
         serviceAccountId: "11111111111111",
       };
@@ -55,7 +55,7 @@ describe("introspectionCache", () => {
     it("set the cache correctly in Redis", async () => {
       const accessToken = "testAccessToken";
       const introspectionResult: IntrospectionResult = {
-        username: "Frodo",
+        serviceUserId: "Frodo",
         exp: 1234567890,
         serviceAccountId: "11111111111111",
       };

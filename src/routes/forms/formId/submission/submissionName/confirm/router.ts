@@ -6,6 +6,7 @@ import {
 } from "@src/lib/vault/dataStructures/exceptions.js";
 import { type Request, type Response, Router } from "express";
 import { logMessage } from "@src/lib/logger.js";
+import { logEvent } from "@src/lib/auditLogs.js";
 
 export const confirmApiRoute = Router({
   mergeParams: true,
@@ -17,9 +18,15 @@ confirmApiRoute.put(
     const formId = request.params.formId;
     const submissionName = request.params.submissionName;
     const confirmationCode = request.params.confirmationCode;
+    const serviceUserId = request.serviceUserId;
 
     try {
       await confirmFormSubmission(formId, submissionName, confirmationCode);
+      logEvent(
+        serviceUserId,
+        { type: "Response", id: submissionName },
+        "ConfirmResponse",
+      );
       return response.sendStatus(200);
     } catch (error) {
       if (error instanceof FormSubmissionNotFoundException) {
