@@ -5,6 +5,8 @@ on:
     workflows:
       - "Staging - Deploy"
       - "Staging — Docker build and push"
+      - "Production - Deploy"
+      - "Production — Docker build and push"
     types:
       - completed
 

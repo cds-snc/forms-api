@@ -1,0 +1,74 @@
+name: Production - Deploy
+
+on:
+  workflow_run:
+    workflows: ["Production — Docker build and push"]
+    types:
+      - completed
+
+env:
+  AWS_ACCOUNT_ID: ${{ vars.PRODUCTION_AWS_ACCOUNT_ID }}
+  AWS_REGION: ca-central-1
+  CLUSTER_NAME: Forms
+  SERVICE_NAME: forms-api
+  TASK_DEFINITION_NAME: forms-api
+  REGISTRY: ${{ vars.PRODUCTION_AWS_ACCOUNT_ID }}.dkr.ecr.ca-central-1.amazonaws.com/forms/api
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-forms-api-service:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/forms-api-apply
+          role-session-name: ECSDeploy
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Download ECS task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition ${{ env.SERVICE_NAME }} \
+            --query taskDefinition > task-definition.json
+
+      - name: Update ECS task image
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@3c975f1cb22919a28755c6541b4ca2656a690f49 # v1.5.1
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ env.SERVICE_NAME }}
+          image: "${{ env.REGISTRY }}:${{ github.event.workflow_run.head_branch }}"
+
+      - name: Create the new ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@4482193dd766379c66473482bbc77299b053ec94 # v2.1.0
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          cluster: ${{ env.CLUSTER_NAME }}
+
+      - name: Deploy the new ECS task definition
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.CLUSTER_NAME }} \
+            --service ${{ env.SERVICE_NAME }} \
+            --task-definition ${{ env.TASK_DEFINITION_NAME }} \
+            --force-new-deployment > /dev/null 2>&1
+          aws ecs wait services-stable \
+            --cluster ${{ env.CLUSTER_NAME }} \
+            --services ${{ env.SERVICE_NAME }}
+
+      - name: Report deployment to Sentinel
+        if: always()
+        uses: cds-snc/sentinel-forward-data-action@main
+        with:
+          input_data: '{"product": "forms", "sha": "${{ github.event.workflow_run.head_branch }}", "version": "${{ github.event.workflow_run.head_branch }}", "repository": "${{ github.repository }}", "environment": "production", "status": "${{ job.status }}"}'
+          log_type: CDS_Product_Deployment_Data
+          log_analytics_workspace_id: ${{ secrets.LOG_ANALYTICS_WORKSPACE_ID }}
+          log_analytics_workspace_key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
