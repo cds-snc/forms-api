@@ -3,7 +3,7 @@ import type {
   EncryptedFormSubmission,
   FormTemplate,
   NewFormSubmission,
-} from "./dataStructures.js";
+} from "./types.js";
 
 export class GCFormsApiClient {
   private httpClient: AxiosInstance;

@@ -1,7 +1,7 @@
 {
   "name": "node",
   "version": "1.0.0",
-  "description": "GC Forms API client example in Typescript with Node.js",
+  "description": "GC Forms API client example in Node.js",
   "type": "module",
   "scripts": {
     "start": "npx tsc -p tsconfig.json && node build/index.js"
@@ -13,6 +13,7 @@
     "jose": "^5.9.2"
   },
   "devDependencies": {
+    "@types/node": "^22.1.0",
     "typescript": "^5.6.2"
   }
 }

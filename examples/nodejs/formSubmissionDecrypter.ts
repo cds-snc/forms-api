@@ -1,8 +1,5 @@
 import { privateDecrypt, createDecipheriv } from "node:crypto";
-import type {
-  EncryptedFormSubmission,
-  PrivateApiKey,
-} from "./dataStructures.js";
+import type { EncryptedFormSubmission, PrivateApiKey } from "./types.js";
 
 export function decryptFormSubmission(
   encryptedSubmission: EncryptedFormSubmission,

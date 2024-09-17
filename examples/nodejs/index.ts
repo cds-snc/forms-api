@@ -1,6 +1,6 @@
 import readline from "node:readline";
 import filesystem from "node:fs/promises";
-import type { FormSubmission, PrivateApiKey } from "./dataStructures.js";
+import type { FormSubmission, PrivateApiKey } from "./types.js";
 import { generateAccessToken } from "./accessTokenGenerator.js";
 import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
