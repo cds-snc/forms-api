@@ -10,6 +10,7 @@ export interface FormSubmission {
   status: FormSubmissionStatus;
   confirmationCode: string;
   answers: string;
+  checksum: string;
 }
 
 export interface NewFormSubmission {
@@ -25,6 +26,7 @@ export function formSubmissionFromDynamoDbResponse(
     status: response.Status as FormSubmissionStatus,
     confirmationCode: response.ConfirmationCode as string,
     answers: response.FormSubmission as string,
+    checksum: response.FormSubmissionHash as string,
   };
 }
 

@@ -126,6 +126,11 @@ const decryptSubmission = (
   ]).toString("utf-8");
 };
 
+const verifyIntegrity = (submission: string, hash: string) => {
+  const hashBuffer = crypto.createHash("md5").update(submission).digest("hex");
+  return hashBuffer.toString() === hash;
+};
+
 const confirmSubmission = async (
   submission: {
     createdAt: number;
@@ -233,6 +238,10 @@ Selection (1): `);
       console.info(`Decrypted submission for ${name}:`);
       console.info(decryptedSubmission);
       const submission = JSON.parse(decryptedSubmission);
+
+      console.info(
+        `Integrity check for ${name}: ${verifyIntegrity(submission.answers, submission.checksum)}`,
+      );
 
       const result = await confirmSubmission(
         submission,
