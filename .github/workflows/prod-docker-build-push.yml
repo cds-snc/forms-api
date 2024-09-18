@@ -12,7 +12,8 @@ env:
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
+  security-events: write
 
 jobs:
   push-production:
