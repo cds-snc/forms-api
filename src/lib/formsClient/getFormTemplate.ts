@@ -1,9 +1,6 @@
-import { DatabaseConnectorClient } from "@lib/connectors/databaseConnector.js";
-import { logMessage } from "@src/lib/logger.js";
-import {
-  type FormTemplate,
-  formTemplateFromPostgreSqlResult,
-} from "./dataStructures/formTemplate.js";
+import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
+import type { FormTemplate } from "@lib/formsClient/types/formTemplate.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export async function getFormTemplate(
   formId: string,
@@ -29,4 +26,12 @@ export async function getFormTemplate(
 
       throw error;
     });
+}
+
+function formTemplateFromPostgreSqlResult(
+  response: Record<string, unknown>,
+): FormTemplate {
+  return {
+    jsonConfig: response.jsonConfig as Record<string, unknown>,
+  };
 }

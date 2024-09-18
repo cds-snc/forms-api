@@ -1,11 +1,11 @@
-import { getPublicKey } from "./getPublicKey.js";
-import type { FormSubmission } from "./dataStructures/formSubmission.js";
 import {
   randomBytes,
   createCipheriv,
   createPublicKey,
   publicEncrypt,
 } from "node:crypto";
+import type { FormSubmission } from "@lib/vault/types/formSubmission.js";
+import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 
 export interface EncryptedFormSubmission {
   encryptedResponses: string;

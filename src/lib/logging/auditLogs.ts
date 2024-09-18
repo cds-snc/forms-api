@@ -1,7 +1,7 @@
 import { GetQueueUrlCommand, SendMessageCommand } from "@aws-sdk/client-sqs";
-import { AwsServicesConnector } from "./connectors/awsServicesConnector.js";
-import { logMessage } from "./logger.js";
 import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
+import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export enum AuditLogEvent {
   // Form Response Events

@@ -1,5 +1,8 @@
 import type { Request, Response } from "express";
 
-export function routeNotFoundMiddleware(_request: Request, response: Response) {
-  return response.sendStatus(404);
+export function routeNotFoundMiddleware(
+  _request: Request,
+  response: Response,
+): void {
+  response.sendStatus(404);
 }

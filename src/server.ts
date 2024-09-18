@@ -1,12 +1,12 @@
 import "dotenv/config";
 import express, { type Express } from "express";
 import { SERVER_PORT } from "@src/config.js";
-import { router } from "@src/router.js";
-import { logMessage } from "@src/lib/logger.js";
+import { buildRouter } from "@src/router.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 const server: Express = express();
 
-server.use("/", router);
+server.use("/", buildRouter());
 
 server.listen(SERVER_PORT, () => {
   logMessage.info(

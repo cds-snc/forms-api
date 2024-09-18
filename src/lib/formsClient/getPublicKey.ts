@@ -1,5 +1,5 @@
-import { DatabaseConnectorClient } from "@src/lib/connectors/databaseConnector.js";
-import { RedisConnector } from "@lib/connectors/redisConnector.js";
+import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
+import { RedisConnector } from "@lib/integration/redisConnector.js";
 
 const cachePublicKey = async (publicKey: string, serviceAccountId: string) => {
   const redisConnector = await RedisConnector.getInstance();

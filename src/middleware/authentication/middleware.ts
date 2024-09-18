@@ -1,21 +1,22 @@
 import type { NextFunction, Request, Response } from "express";
-import { introspectToken } from "@lib/idp/introspectToken.js";
 import {
   getIntrospectionCache,
   setIntrospectionCache,
 } from "@lib/idp/introspectionCache.js";
-import { logEvent } from "@src/lib/auditLogs.js";
+import { introspectToken } from "@lib/idp/introspectToken.js";
+import { logEvent } from "@lib/logging/auditLogs.js";
 
 export async function authenticationMiddleware(
   request: Request,
   response: Response,
   next: NextFunction,
-) {
+): Promise<void> {
   const accessToken = request.headers.authorization?.split(" ")[1];
   const formId = request.params.formId;
 
   if (!accessToken) {
-    return response.sendStatus(401);
+    response.sendStatus(401);
+    return;
   }
 
   const introspectionResult =
@@ -23,7 +24,8 @@ export async function authenticationMiddleware(
     (await introspectToken(accessToken));
 
   if (!introspectionResult) {
-    return response.sendStatus(403);
+    response.sendStatus(403);
+    return;
   }
 
   if (introspectionResult.serviceUserId !== formId) {
@@ -33,7 +35,9 @@ export async function authenticationMiddleware(
       "AccessDenied",
       "User does not have access to this form",
     );
-    return response.sendStatus(403);
+
+    response.sendStatus(403);
+    return;
   }
 
   if (introspectionResult.exp < Date.now() / 1000) {
@@ -43,7 +47,9 @@ export async function authenticationMiddleware(
       "AccessDenied",
       "Access token has expired",
     );
-    return response.status(401).json({ error: "Access token has expired" });
+
+    response.status(401).json({ error: "Access token has expired" });
+    return;
   }
 
   await setIntrospectionCache(accessToken, introspectionResult);

@@ -10,7 +10,11 @@ export function requestValidatorMiddleware(
   validationSchema: Schema,
   validationLocations?: Location[],
 ) {
-  return async (request: Request, response: Response, next: NextFunction) => {
+  return async (
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     /**
      * Because of an existing issue we have to run the next two lines of code instead of just the first one.
      * See https://github.com/express-validator/express-validator/issues/1298
@@ -20,9 +24,10 @@ export function requestValidatorMiddleware(
     const result = validationResult(request);
 
     if (result.isEmpty() === false) {
-      return response
+      response
         .status(400)
         .json({ error: "Invalid payload", details: result.array() });
+      return;
     }
 
     next();

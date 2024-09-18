@@ -1,8 +1,8 @@
 import pgp from "pg-promise";
-import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
 import { GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
-import { logMessage } from "@src/lib/logger.js";
 import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
+import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 const getConnectionString = async () => {
   try {

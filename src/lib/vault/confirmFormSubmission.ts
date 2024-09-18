@@ -1,13 +1,13 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
+import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "@lib/vault/dataStructures/exceptions.js";
-import { logMessage } from "@lib/logger.js";
+} from "@lib/vault/types/exceptions.js";
+import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
-import { FormSubmissionStatus } from "@lib/vault/dataStructures/formSubmission.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 const REMOVAL_DATE_DELAY_IN_DAYS = 30;
 

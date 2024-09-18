@@ -4,6 +4,6 @@ export function rateLimiterMiddleware(
   _request: Request,
   _response: Response,
   next: NextFunction,
-) {
+): void {
   next();
 }
