@@ -2,8 +2,8 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
-import { FormSubmissionStatus } from "@src/lib/vault/dataStructures/formSubmission.js";
-import { logMessage } from "@src/lib/logger.js";
+import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 

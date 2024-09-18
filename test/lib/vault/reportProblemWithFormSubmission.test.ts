@@ -9,9 +9,9 @@ import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFor
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@src/lib/vault/dataStructures/exceptions.js";
+} from "@lib/vault/types/exceptions.js";
+import { logMessage } from "@lib/logging/logger.js";
 import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
-import { logMessage } from "@src/lib/logger.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 

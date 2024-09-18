@@ -1,25 +1,29 @@
-import { vi, describe, it, expect } from "vitest";
-import type { NextFunction, Request, Response } from "express";
-import { globalErrorHandlerMiddleware } from "@src/middleware/globalErrorHandler/middleware.js";
-import { buildMockedResponse } from "test/mocks/express.js";
-import { logMessage } from "@src/lib/logger.js";
+import { vi, describe, it, expect, beforeEach } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
+import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler/middleware.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 describe("globalErrorHandlerMiddleware should", () => {
-  it("return HTTP code 500 and log error", () => {
-    const mockedRequest: Partial<Request> = {};
-    const mockedResponse: Partial<Response> = buildMockedResponse();
-    const mockedNext: NextFunction = vi.fn();
+  const requestMock = getMockReq();
+
+  const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
+
+  beforeEach(() => {
+    clearMockRes();
+  });
+
+  it("respond with error when called", () => {
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     globalErrorHandlerMiddleware(
       new Error("This is a custom error"),
-      mockedRequest as Request,
-      mockedResponse as Response,
-      mockedNext,
+      requestMock,
+      responseMock,
+      nextMock,
     );
 
-    expect(mockedNext).not.toHaveBeenCalled();
-    expect(mockedResponse.sendStatus).toHaveBeenCalledWith(500);
+    expect(nextMock).not.toHaveBeenCalled();
+    expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining('"stack":"Error: This is a custom error'),
     );

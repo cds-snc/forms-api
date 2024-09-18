@@ -14,11 +14,12 @@ process.env = {
 };
 
 vi.mock("axios");
-vi.mock("./src/lib/auditLogs", () => ({
+
+vi.mock("./src/lib/logging/auditLogs", () => ({
   logEvent: vi.fn(),
 }));
 
-vi.mock("./src/lib/connectors/databaseConnector", () => ({
+vi.mock("./src/lib/integration/databaseConnector", () => ({
   DatabaseConnectorClient: {
     oneOrNone: vi.fn(),
   },

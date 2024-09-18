@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { createFreshdeskTicket } from "@src/lib/support/freshdeskApiClient.js";
+import { createFreshdeskTicket } from "@lib/integration/freshdeskConnector.js";
 import axios from "axios";
 
 describe("createFreshdeskTicket should", () => {

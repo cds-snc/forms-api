@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
-import { getFormTemplate } from "@lib/forms/getFormTemplate.js";
-import { DatabaseConnectorClient } from "@src/lib/connectors/databaseConnector.js";
-import { logMessage } from "@src/lib/logger.js";
+import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
+import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 describe("getFormTemplate should", () => {
   beforeEach(() => {

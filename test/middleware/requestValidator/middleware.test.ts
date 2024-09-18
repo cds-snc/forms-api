@@ -1,6 +1,5 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
-import type { NextFunction, Request, Response } from "express";
-import { requestValidatorMiddleware } from "@middleware/requestValidator/middleware.js";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 import {
   checkSchema,
   type Schema,
@@ -10,40 +9,40 @@ import {
   type Result,
 } from "express-validator";
 import type { RunnableValidationChains } from "express-validator/lib/middlewares/schema.js";
-import { buildMockedResponse } from "test/mocks/express.js";
+import { requestValidatorMiddleware } from "@middleware/requestValidator/middleware.js";
 
 vi.mock("express-validator");
 const checkSchemaMock = vi.mocked(checkSchema);
 const validationResultMock = vi.mocked(validationResult);
-
-const mockRequest: Partial<Request> = {};
-const mockResponse: Response = buildMockedResponse();
-const mockNext: NextFunction = vi.fn();
 
 checkSchemaMock.mockReturnValue({
   run: vi.fn(),
 } as unknown as RunnableValidationChains<ValidationChain>);
 
 describe("requestValidatorMiddleware should", () => {
+  const requestMock = getMockReq();
+
+  const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
+
   beforeEach(() => {
-    vi.clearAllMocks();
+    clearMockRes();
   });
 
-  it("accept request when validation is successful", async () => {
+  it("pass to the next function when validation is successful", async () => {
     validationResultMock.mockReturnValueOnce({
       isEmpty: vi.fn().mockReturnValue(true),
     } as Partial<Result<ValidationError>> as Result<ValidationError>);
 
     await requestValidatorMiddleware({} as Schema)(
-      mockRequest as Request,
-      mockResponse,
-      mockNext,
+      requestMock,
+      responseMock,
+      nextMock,
     );
 
-    expect(mockNext).toHaveBeenCalled();
+    expect(nextMock).toHaveBeenCalledOnce();
   });
 
-  it("reject request when validation failed because errors were detected", async () => {
+  it("respond with error when validation failed because errors were detected", async () => {
     validationResultMock.mockReturnValueOnce({
       isEmpty: vi.fn().mockReturnValue(false),
       array: vi.fn().mockReturnValue([
@@ -58,14 +57,14 @@ describe("requestValidatorMiddleware should", () => {
     } as Partial<Result<ValidationError>> as Result<ValidationError>);
 
     await requestValidatorMiddleware({} as Schema)(
-      mockRequest as Request,
-      mockResponse,
-      mockNext,
+      requestMock,
+      responseMock,
+      nextMock,
     );
 
-    expect(mockNext).not.toHaveBeenCalled();
-    expect(mockResponse.status).toHaveBeenCalledWith(400);
-    expect(mockResponse.json).toHaveBeenCalledWith({
+    expect(nextMock).not.toHaveBeenCalled();
+    expect(responseMock.status).toHaveBeenCalledWith(400);
+    expect(responseMock.json).toHaveBeenCalledWith({
       error: "Invalid payload",
       details: [
         {

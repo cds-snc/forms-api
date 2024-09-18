@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { RedisConnector } from "@src/lib/connectors/redisConnector.js";
+import { RedisConnector } from "@lib/integration/redisConnector.js";
 import {
   getIntrospectionCache,
   setIntrospectionCache,
-} from "@src/lib/idp/introspectionCache.js";
+} from "@lib/idp/introspectionCache.js";
 import type { IntrospectionResult } from "@lib/idp/introspectToken.js";
 
-vi.mock("@src/lib/connectors/redisConnector");
+vi.mock("@lib/integration/redisConnector");
 const redisConnectorMock = vi.mocked(RedisConnector);
 
 describe("introspectionCache", () => {

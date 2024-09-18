@@ -1,18 +1,19 @@
-import { describe, it, expect } from "vitest";
-import type { Request, Response } from "express";
-import { routeNotFoundMiddleware } from "@src/middleware/routeNotFound/middleware.js";
-import { buildMockedResponse } from "test/mocks/express.js";
+import { describe, it, expect, beforeEach } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
+import { routeNotFoundMiddleware } from "@middleware/routeNotFound/middleware.js";
 
 describe("routeNotFoundMiddleware should", () => {
-  it("return HTTP code 404", () => {
-    const mockedRequest: Partial<Request> = {};
-    const mockedResponse: Partial<Response> = buildMockedResponse();
+  const requestMock = getMockReq();
 
-    routeNotFoundMiddleware(
-      mockedRequest as Request,
-      mockedResponse as Response,
-    );
+  const { res: responseMock, clearMockRes } = getMockRes();
 
-    expect(mockedResponse.sendStatus).toHaveBeenCalledWith(404);
+  beforeEach(() => {
+    clearMockRes();
+  });
+
+  it("respond with error when called", () => {
+    routeNotFoundMiddleware(requestMock, responseMock);
+
+    expect(responseMock.sendStatus).toHaveBeenCalledWith(404);
   });
 });

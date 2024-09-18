@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { type RedisClientType, createClient } from "redis";
-import { RedisConnector } from "@src/lib/connectors/redisConnector.js";
+import { RedisConnector } from "@lib/integration/redisConnector.js";
 
 vi.mock("redis", () => {
   const client = {
