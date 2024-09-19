@@ -3,9 +3,13 @@ import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
 import { retrieveNewSubmissionsOperation } from "@src/operations/retrieveNewSubmissions.js";
 import { logMessage } from "@lib/logging/logger.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
 vi.mock("@lib/vault/getNewFormSubmissions");
 const getNewFormSubmissionsMock = vi.mocked(getNewFormSubmissions);
+
+const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
 
 describe("retrieveNewSubmissionsOperation handler should", () => {
   const requestMock = getMockReq({
@@ -18,6 +22,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
 
   beforeEach(() => {
+    vi.clearAllMocks();
     clearMockRes();
   });
 
@@ -31,6 +36,15 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
     );
 
     expect(responseMock.json).toHaveBeenCalledWith([]);
+    expect(logEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "clzsn6tao000611j50dexeob0",
+      {
+        id: "clzsn6tao000611j50dexeob0",
+        type: "Form",
+      },
+      "RetrieveNewResponses",
+    );
   });
 
   it("respond with success when new form submission have been found", async () => {
@@ -53,6 +67,15 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
         name: "ABC",
       },
     ]);
+    expect(logEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "clzsn6tao000611j50dexeob0",
+      {
+        id: "clzsn6tao000611j50dexeob0",
+        type: "Form",
+      },
+      "RetrieveNewResponses",
+    );
   });
 
   it("respond with error when processing fails due to internal error", async () => {

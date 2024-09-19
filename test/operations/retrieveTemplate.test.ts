@@ -3,9 +3,13 @@ import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { retrieveTemplateOperation } from "@src/operations/retrieveTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
 vi.mock("@lib/formsClient/getFormTemplate");
 const getFormTemplateMock = vi.mocked(getFormTemplate);
+
+const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
 
 describe("retrieveTemplateOperation handler should", () => {
   const requestMock = getMockReq({
@@ -18,6 +22,7 @@ describe("retrieveTemplateOperation handler should", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
 
   beforeEach(() => {
+    vi.clearAllMocks();
     clearMockRes();
   });
 
@@ -47,6 +52,15 @@ describe("retrieveTemplateOperation handler should", () => {
         },
       ],
     });
+    expect(logEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "clzsn6tao000611j50dexeob0",
+      {
+        id: "clzsn6tao000611j50dexeob0",
+        type: "Form",
+      },
+      "RetrieveTemplate",
+    );
   });
 
   it("respond with error when form template does not exist", async () => {

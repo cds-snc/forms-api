@@ -6,6 +6,8 @@ import {
   setIntrospectionCache,
 } from "@lib/idp/introspectionCache.js";
 import { authenticationMiddleware } from "@middleware/authentication/middleware.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
 vi.mock("@lib/idp/introspectionCache");
 const getIntrospectionCacheMock = vi.mocked(getIntrospectionCache);
@@ -13,6 +15,8 @@ const setIntrospectionCacheMock = vi.mocked(setIntrospectionCache);
 
 vi.mock("@lib/idp/introspectToken");
 const introspectTokenMock = vi.mocked(introspectToken);
+
+const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
 
 describe("authenticationMiddleware should", () => {
   let requestMock = getMockReq();
@@ -86,6 +90,16 @@ describe("authenticationMiddleware should", () => {
     expect(responseMock.sendStatus).toHaveBeenCalledWith(403);
     expect(getIntrospectionCacheMock).toHaveBeenCalledWith("abc");
     expect(setIntrospectionCacheMock).not.toHaveBeenCalled();
+    expect(logEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "invalid",
+      {
+        id: "clzsn6tao000611j50dexeob0",
+        type: "Form",
+      },
+      "AccessDenied",
+      "User does not have access to this form",
+    );
   });
 
   it("respond with error when the token is expired", async () => {
@@ -104,5 +118,15 @@ describe("authenticationMiddleware should", () => {
     });
     expect(getIntrospectionCacheMock).toHaveBeenCalledWith("abc");
     expect(setIntrospectionCacheMock).not.toHaveBeenCalled();
+    expect(logEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "clzsn6tao000611j50dexeob0",
+      {
+        id: "clzsn6tao000611j50dexeob0",
+        type: "Form",
+      },
+      "AccessDenied",
+      "Access token has expired",
+    );
   });
 });

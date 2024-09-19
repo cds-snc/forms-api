@@ -8,9 +8,13 @@ import {
 } from "@lib/vault/types/exceptions.js";
 import { confirmSubmissionOperation } from "@src/operations/confirmSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
 vi.mock("@lib/vault/confirmFormSubmission");
 const confirmFormSubmissionMock = vi.mocked(confirmFormSubmission);
+
+const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
 
 describe("confirmSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -25,6 +29,7 @@ describe("confirmSubmissionOperation handler should", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
 
   beforeEach(() => {
+    vi.clearAllMocks();
     clearMockRes();
   });
 
@@ -38,6 +43,15 @@ describe("confirmSubmissionOperation handler should", () => {
     );
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
+    expect(logEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "clzsn6tao000611j50dexeob0",
+      {
+        id: "01-08-a571",
+        type: "Response",
+      },
+      "ConfirmResponse",
+    );
   });
 
   it("respond with error when form submission does not exist", async () => {

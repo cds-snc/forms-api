@@ -5,12 +5,16 @@ import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js"
 import { retrieveSubmissionOperation } from "@src/operations/retrieveSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
 vi.mock("@lib/vault/getFormSubmission");
 const getFormSubmissionMock = vi.mocked(getFormSubmission);
 
 vi.mock("@lib/encryption/encryptFormSubmission");
 const encryptFormSubmissionMock = vi.mocked(encryptFormSubmission);
+
+const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
 
 describe("retrieveSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -25,6 +29,7 @@ describe("retrieveSubmissionOperation handler should", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
 
   beforeEach(() => {
+    vi.clearAllMocks();
     clearMockRes();
   });
 
@@ -56,6 +61,15 @@ describe("retrieveSubmissionOperation handler should", () => {
       encryptedNonce: "encryptedNonce",
       encryptedResponses: "encryptedResponses",
     });
+    expect(logEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "clzsn6tao000611j50dexeob0",
+      {
+        id: "01-08-a571",
+        type: "Response",
+      },
+      "DownloadResponse",
+    );
   });
 
   it("respond with error when form submission does not exist", async () => {

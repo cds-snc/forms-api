@@ -8,6 +8,8 @@ import {
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { reportSubmissionOperation } from "@operations/reportSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
 vi.mock("@lib/vault/reportProblemWithFormSubmission");
 const reportProblemWithFormSubmissionMock = vi.mocked(
@@ -19,10 +21,13 @@ const notifySupportAboutFormSubmissionProblemMock = vi.mocked(
   notifySupportAboutFormSubmissionProblem,
 );
 
+const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+
 describe("reportSubmissionOperation", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
 
   beforeEach(() => {
+    vi.clearAllMocks();
     clearMockRes();
   });
 
@@ -105,6 +110,15 @@ describe("reportSubmissionOperation", () => {
       );
 
       expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
+      expect(logEventSpy).toHaveBeenNthCalledWith(
+        1,
+        "clzsn6tao000611j50dexeob0",
+        {
+          id: "01-08-a571",
+          type: "Response",
+        },
+        "IdentifyProblemResponse",
+      );
     });
 
     it("respond with error when form submission does not exist", async () => {
