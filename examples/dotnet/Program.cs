@@ -83,6 +83,12 @@ Selection (1):
 
                   FormSubmission formSubmission = JsonSerializer.Deserialize<FormSubmission>(decryptedFormSubmission);
 
+                  Console.WriteLine("\nVerifying submission integrity...");
+
+                  bool integrityVerificationResult = FormSubmissionIntegrityVerifier.VerifyIntegrity(formSubmission.answers, formSubmission.checksum);
+
+                  Console.WriteLine($"\nIntegrity verification result: {(integrityVerificationResult ? "OK" : "INVALID")}");
+
                   Console.WriteLine("\nConfirming submission...");
 
                   await apiClient.ConfirmFormSubmission(formId, newFormSubmission.name, formSubmission.confirmationCode);
@@ -130,4 +136,3 @@ Selection (1):
     }
   }
 }
-

@@ -23,5 +23,7 @@ namespace dotnet
   public struct FormSubmission
   {
     public required string confirmationCode { get; set; }
+    public required string answers { get; set; }
+    public required string checksum { get; set; }
   }
 }
