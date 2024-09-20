@@ -18,17 +18,17 @@ export interface EncryptedFormSubmission {
   encryptedAuthTag: string;
 }
 
+export enum FormSubmissionStatus {
+  New = "New",
+  Downloaded = "Downloaded",
+  Confirmed = "Confirmed",
+  Problem = "Problem",
+}
+
 export interface FormSubmission {
   createdAt: number;
   status: FormSubmissionStatus;
   confirmationCode: string;
   answers: string;
   checksum: string;
-}
-
-export enum FormSubmissionStatus {
-  New = "New",
-  Downloaded = "Downloaded",
-  Confirmed = "Confirmed",
-  Problem = "Problem",
 }
