@@ -21,7 +21,7 @@ const notifySupportAboutFormSubmissionProblemMock = vi.mocked(
   notifySupportAboutFormSubmissionProblem,
 );
 
-const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
 
 describe("reportSubmissionOperation", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -110,7 +110,7 @@ describe("reportSubmissionOperation", () => {
       );
 
       expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-      expect(logEventSpy).toHaveBeenNthCalledWith(
+      expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
         1,
         "clzsn6tao000611j50dexeob0",
         {

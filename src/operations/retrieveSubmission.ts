@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { publishAuditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 async function main(request: Request, response: Response): Promise<void> {
@@ -24,7 +24,7 @@ async function main(request: Request, response: Response): Promise<void> {
       formSubmission,
     );
 
-    logEvent(
+    publishAuditLog(
       serviceUserId,
       { type: "Response", id: submissionName },
       "DownloadResponse",

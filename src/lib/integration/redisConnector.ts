@@ -21,6 +21,7 @@ export class RedisConnector {
             : new Error("Failed to connect to Redis"),
       },
     });
+
     this.client
       .on("error", (err: Error) =>
         logMessage.error(
@@ -41,16 +42,16 @@ export class RedisConnector {
    * instance is first initialized, even if multiple concurrent calls are made.
    * @returns {Promise<RedisConnector>}
    */
-  public static async getInstance(): Promise<RedisConnector> {
+  public static getInstance(): Promise<RedisConnector> {
     if (RedisConnector.instance === undefined) {
       RedisConnector.instance = new RedisConnector();
       RedisConnector.connectionPromise =
         RedisConnector.instance.client.connect();
-      await RedisConnector.connectionPromise;
-    } else {
-      // Ensure all calls to getInstance() wait for the connection to be initialized before returnign the Redis Instance
-      await RedisConnector.connectionPromise;
     }
-    return RedisConnector.instance;
+
+    // Ensure all calls to getInstance() wait for the connection to be initialized before returning the Redis Instance
+    return RedisConnector.connectionPromise.then((_) => {
+      return RedisConnector.instance as RedisConnector;
+    });
   }
 }

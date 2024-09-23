@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
-import { retrieveTemplateOperation } from "@src/operations/retrieveTemplate.js";
+import { retrieveTemplateOperation } from "@operations/retrieveTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
@@ -9,7 +9,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/formsClient/getFormTemplate");
 const getFormTemplateMock = vi.mocked(getFormTemplate);
 
-const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
 
 describe("retrieveTemplateOperation handler should", () => {
   const requestMock = getMockReq({
@@ -52,7 +52,7 @@ describe("retrieveTemplateOperation handler should", () => {
         },
       ],
     });
-    expect(logEventSpy).toHaveBeenNthCalledWith(
+    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {

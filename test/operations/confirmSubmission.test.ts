@@ -6,7 +6,7 @@ import {
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@lib/vault/types/exceptions.js";
-import { confirmSubmissionOperation } from "@src/operations/confirmSubmission.js";
+import { confirmSubmissionOperation } from "@operations/confirmSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
@@ -14,7 +14,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/vault/confirmFormSubmission");
 const confirmFormSubmissionMock = vi.mocked(confirmFormSubmission);
 
-const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
 
 describe("confirmSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -43,7 +43,7 @@ describe("confirmSubmissionOperation handler should", () => {
     );
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-    expect(logEventSpy).toHaveBeenNthCalledWith(
+    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {

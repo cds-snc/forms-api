@@ -54,7 +54,7 @@ describe("getFormTemplate should", () => {
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       expect.stringContaining(
-        "[database] Failed to retrieve form template. FormId: clzamy5qv0000115huc4bh90m. Reason:",
+        "[formsClient] Failed to retrieve form template. FormId: clzamy5qv0000115huc4bh90m. Reason:",
       ),
     );
   });

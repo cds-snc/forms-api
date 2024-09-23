@@ -2,7 +2,7 @@ import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
 import type { FormTemplate } from "@lib/formsClient/types/formTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-export async function getFormTemplate(
+export function getFormTemplate(
   formId: string,
 ): Promise<FormTemplate | undefined> {
   return DatabaseConnectorClient.oneOrNone<Record<string, unknown>>(
@@ -18,7 +18,7 @@ export async function getFormTemplate(
     })
     .catch((error) => {
       logMessage.error(
-        `[database] Failed to retrieve form template. FormId: ${formId}. Reason: ${JSON.stringify(
+        `[formsClient] Failed to retrieve form template. FormId: ${formId}. Reason: ${JSON.stringify(
           error,
           Object.getOwnPropertyNames(error),
         )}`,

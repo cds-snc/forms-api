@@ -30,6 +30,7 @@ export class AwsServicesConnector {
         ...localstackConfig,
       }),
     );
+
     this.secretsClient = new SecretsManagerClient({
       ...globalConfig,
       ...localstackConfig,

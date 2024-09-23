@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { publishAuditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 const MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS: number = 100;
@@ -16,7 +16,7 @@ async function main(request: Request, response: Response): Promise<void> {
       MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS,
     );
 
-    logEvent(
+    publishAuditLog(
       serviceUserId,
       { type: "Form", id: formId },
       "RetrieveNewResponses",

@@ -1,7 +1,7 @@
 import { vi, describe, beforeEach, it, expect } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
-import { retrieveNewSubmissionsOperation } from "@src/operations/retrieveNewSubmissions.js";
+import { retrieveNewSubmissionsOperation } from "@operations/retrieveNewSubmissions.js";
 import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
@@ -9,7 +9,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/vault/getNewFormSubmissions");
 const getNewFormSubmissionsMock = vi.mocked(getNewFormSubmissions);
 
-const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
 
 describe("retrieveNewSubmissionsOperation handler should", () => {
   const requestMock = getMockReq({
@@ -36,7 +36,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
     );
 
     expect(responseMock.json).toHaveBeenCalledWith([]);
-    expect(logEventSpy).toHaveBeenNthCalledWith(
+    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {
@@ -67,7 +67,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
         name: "ABC",
       },
     ]);
-    expect(logEventSpy).toHaveBeenNthCalledWith(
+    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {

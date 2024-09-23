@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from "express";
 import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config.js";
 import type { Schema } from "express-validator";
-import { requestValidatorMiddleware } from "@src/middleware/requestValidator.js";
+import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
@@ -9,7 +9,7 @@ import {
 import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { publishAuditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 const validationSchema: Schema = {
@@ -59,7 +59,7 @@ async function main(request: Request, response: Response): Promise<void> {
       );
     }
 
-    logEvent(
+    publishAuditLog(
       serviceUserId,
       { type: "Response", id: submissionName },
       "IdentifyProblemResponse",
