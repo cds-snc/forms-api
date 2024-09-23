@@ -2,7 +2,7 @@ import { SignJWT } from "jose";
 import axios, { type AxiosError } from "axios";
 import { createPrivateKey } from "node:crypto";
 import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config.js";
-import { logMessage } from "@src/lib/logger.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export type IntrospectionResult = {
   serviceUserId: string;

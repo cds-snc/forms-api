@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
-import { createFreshdeskTicket } from "@src/lib/support/freshdeskApiClient.js";
+import { createFreshdeskTicket } from "@lib/integration/freshdeskConnector.js";
 import { EnvironmentMode } from "@src/config.js";
-import { logMessage } from "@src/lib/logger.js";
+import { logMessage } from "@lib/logging/logger.js";
 
-vi.mock("@src/lib/support/freshdeskApiClient");
+vi.mock("@lib/integration/freshdeskConnector");
 const createFreshdeskTicketMock = vi.mocked(createFreshdeskTicket);
 
 describe("notifySupportAboutFormSubmissionProblem should", () => {

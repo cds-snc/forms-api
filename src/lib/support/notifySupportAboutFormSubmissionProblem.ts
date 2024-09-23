@@ -1,6 +1,6 @@
-import { createFreshdeskTicket } from "@lib/support/freshdeskApiClient.js";
 import { EnvironmentMode } from "@src/config.js";
-import { logMessage } from "@lib/logger.js";
+import { createFreshdeskTicket } from "@lib/integration/freshdeskConnector.js";
+import { logMessage } from "@src/lib/logging/logger.js";
 
 export async function notifySupportAboutFormSubmissionProblem(
   formId: string,

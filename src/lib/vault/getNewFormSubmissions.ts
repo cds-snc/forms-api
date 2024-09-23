@@ -1,10 +1,7 @@
 import { QueryCommand, type QueryCommandOutput } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
-import {
-  newFormSubmissionFromDynamoDbResponse,
-  type NewFormSubmission,
-} from "@lib/vault/dataStructures/formSubmission.js";
-import { logMessage } from "@lib/logger.js";
+import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
+import type { NewFormSubmission } from "@lib/vault/types/formSubmission.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export async function getNewFormSubmissions(
   formId: string,
@@ -58,4 +55,13 @@ export async function getNewFormSubmissions(
 
     throw error;
   }
+}
+
+function newFormSubmissionFromDynamoDbResponse(
+  response: Record<string, unknown>,
+): NewFormSubmission {
+  return {
+    name: response.Name as string,
+    createdAt: response.CreatedAt as number,
+  };
 }

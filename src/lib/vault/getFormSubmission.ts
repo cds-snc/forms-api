@@ -1,10 +1,10 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
-import { AwsServicesConnector } from "@lib/connectors/awsServicesConnector.js";
-import {
-  formSubmissionFromDynamoDbResponse,
-  type FormSubmission,
-} from "@lib/vault/dataStructures/formSubmission.js";
-import { logMessage } from "@lib/logger.js";
+import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
+import type {
+  FormSubmission,
+  FormSubmissionStatus,
+} from "@lib/vault/types/formSubmission.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export async function getFormSubmission(
   formId: string,
@@ -39,4 +39,16 @@ export async function getFormSubmission(
 
     throw error;
   }
+}
+
+function formSubmissionFromDynamoDbResponse(
+  response: Record<string, unknown>,
+): FormSubmission {
+  return {
+    createdAt: response.CreatedAt as number,
+    status: response.Status as FormSubmissionStatus,
+    confirmationCode: response.ConfirmationCode as string,
+    answers: response.FormSubmission as string,
+    checksum: response.FormSubmissionHash as string,
+  };
 }

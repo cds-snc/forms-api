@@ -10,9 +10,8 @@
       "@src/*": ["src/*"],
       "@lib/*": ["src/lib/*"],
       "@middleware/*": ["src/middleware/*"],
-      "@routes/*": ["src/routes/*"]
+      "@operations/*": ["src/operations/*"]
     },
-    "typeRoots": ["@types", "./node_modules/@types"],
     "resolveJsonModule": true,
     "allowJs": true
   },
