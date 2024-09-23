@@ -4,7 +4,7 @@ import type { FormSubmission, PrivateApiKey } from "./types.js";
 import { generateAccessToken } from "./accessTokenGenerator.js";
 import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
-import { verifyIntegrity } from "./formIntegrityVerification.js";
+import { verifyIntegrity } from "./formSubmissionIntegrityVerifier.js";
 
 const IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz";
 const PROJECT_IDENTIFIER = "275372254274006635";
@@ -85,12 +85,13 @@ Selection (1):
 
             console.info("\nVerifying submission integrity...");
 
-            const verified = verifyIntegrity(
+            const integrityVerificationResult = verifyIntegrity(
               formSubmission.answers,
               formSubmission.checksum,
             );
+
             console.info(
-              `Submission Integrity: ${verified ? "OK" : "INVALID"}`,
+              `\nIntegrity verification result: ${integrityVerificationResult ? "OK" : "INVALID"}`,
             );
 
             console.info("\nConfirming submission...");
