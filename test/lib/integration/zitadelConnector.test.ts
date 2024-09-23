@@ -32,7 +32,8 @@ describe("introspectAccessToken should", () => {
   });
 
   it("throw an error if Zitadel post request fails", async () => {
-    vi.spyOn(axios, "post").mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    vi.spyOn(axios, "post").mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
@@ -40,9 +41,8 @@ describe("introspectAccessToken should", () => {
     ).rejects.toThrowError("custom error");
 
     expect(logMessageSpy).toHaveBeenCalledWith(
-      expect.stringContaining(
-        "[zitadel] Failed to introspect access token. Reason:",
-      ),
+      customError,
+      expect.stringContaining("[zitadel] Failed to introspect access token"),
     );
   });
 });

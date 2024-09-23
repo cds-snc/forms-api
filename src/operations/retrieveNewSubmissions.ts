@@ -25,10 +25,8 @@ async function main(request: Request, response: Response): Promise<void> {
     response.json(newFormSubmissions);
   } catch (error) {
     logMessage.error(
-      `[operation] Internal error while retrieving new submissions. Params: formId = ${formId}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[operation] Internal error while retrieving new submissions. Params: formId = ${formId}`,
     );
 
     response.sendStatus(500);

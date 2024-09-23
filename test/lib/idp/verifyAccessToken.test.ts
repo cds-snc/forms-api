@@ -92,9 +92,8 @@ describe("verifyAccessToken should", () => {
 
     it("throw an error if access token introspection has an internal failure", async () => {
       getValueFromCacheMock.mockResolvedValueOnce(undefined);
-      introspectAccessTokenMock.mockRejectedValueOnce(
-        new Error("custom error"),
-      );
+      const customError = new Error("custom error");
+      introspectAccessTokenMock.mockRejectedValueOnce(customError);
       const logMessageSpy = vi.spyOn(logMessage, "error");
 
       await expect(() =>
@@ -102,7 +101,8 @@ describe("verifyAccessToken should", () => {
       ).rejects.toThrowError("custom error");
 
       expect(logMessageSpy).toHaveBeenCalledWith(
-        expect.stringContaining("[idp] Failed to verify access token. Reason:"),
+        customError,
+        expect.stringContaining("[idp] Failed to verify access token"),
       );
     });
   });

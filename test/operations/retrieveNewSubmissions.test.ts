@@ -79,7 +79,8 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
   });
 
   it("respond with error when processing fails due to internal error", async () => {
-    getNewFormSubmissionsMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    getNewFormSubmissionsMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await retrieveNewSubmissionsOperation.handler(
@@ -90,8 +91,9 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[operation] Internal error while retrieving new submissions. Params: formId = clzsn6tao000611j50dexeob0. Reason:",
+        "[operation] Internal error while retrieving new submissions. Params: formId = clzsn6tao000611j50dexeob0",
       ),
     );
   });

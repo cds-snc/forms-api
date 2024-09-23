@@ -26,13 +26,7 @@ export function introspectAccessToken(
       introspectOpaqueToken(jwtSignedToken, accessToken),
     )
     .catch((error) => {
-      logMessage.error(
-        `[zitadel] Failed to introspect access token. Reason: ${JSON.stringify(
-          error,
-          Object.getOwnPropertyNames(error),
-        )}`,
-      );
-
+      logMessage.error(error, "[zitadel] Failed to introspect access token");
       throw error;
     });
 }

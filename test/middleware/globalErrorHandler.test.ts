@@ -13,10 +13,11 @@ describe("globalErrorHandlerMiddleware should", () => {
   });
 
   it("respond with error when called", () => {
+    const customError = new Error("custom error");
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     globalErrorHandlerMiddleware(
-      new Error("This is a custom error"),
+      customError,
       requestMock,
       responseMock,
       nextMock,
@@ -25,7 +26,8 @@ describe("globalErrorHandlerMiddleware should", () => {
     expect(nextMock).not.toHaveBeenCalled();
     expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
-      expect.stringContaining('"stack":"Error: This is a custom error'),
+      customError,
+      expect.stringContaining("Global unhandled error"),
     );
   });
 });

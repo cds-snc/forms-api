@@ -18,10 +18,8 @@ export function getFormTemplate(
     })
     .catch((error) => {
       logMessage.error(
-        `[formsClient] Failed to retrieve form template. FormId: ${formId}. Reason: ${JSON.stringify(
-          error,
-          Object.getOwnPropertyNames(error),
-        )}`,
+        error,
+        `[formsClient] Failed to retrieve form template. FormId: ${formId}`,
       );
 
       throw error;

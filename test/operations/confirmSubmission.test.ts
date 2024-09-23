@@ -106,7 +106,8 @@ describe("confirmSubmissionOperation handler should", () => {
   });
 
   it("respond with error when processing fails due to internal error", async () => {
-    confirmFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    confirmFormSubmissionMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await confirmSubmissionOperation.handler(
@@ -117,8 +118,9 @@ describe("confirmSubmissionOperation handler should", () => {
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[operation] Internal error while confirming submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571 ; confirmationCode = 620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
+        "[operation] Internal error while confirming submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571 ; confirmationCode = 620b203c-9836-4000-bf30-1c3bcc26b834",
       ),
     );
   });

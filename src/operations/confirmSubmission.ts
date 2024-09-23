@@ -40,10 +40,8 @@ async function main(request: Request, response: Response): Promise<void> {
         break;
       default: {
         logMessage.error(
-          `[operation] Internal error while confirming submission. Params: formId = ${formId} ; submissionName = ${submissionName} ; confirmationCode = ${confirmationCode}. Reason: ${JSON.stringify(
-            error,
-            Object.getOwnPropertyNames(error),
-          )}`,
+          error,
+          `[operation] Internal error while confirming submission. Params: formId = ${formId} ; submissionName = ${submissionName} ; confirmationCode = ${confirmationCode}`,
         );
 
         response.sendStatus(500);

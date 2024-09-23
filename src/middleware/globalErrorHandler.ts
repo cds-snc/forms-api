@@ -7,6 +7,6 @@ export function globalErrorHandlerMiddleware(
   response: Response,
   _next: NextFunction,
 ): void {
-  logMessage.error(JSON.stringify(error, Object.getOwnPropertyNames(error)));
+  logMessage.error(error, "Global unhandled error");
   response.sendStatus(500);
 }

@@ -145,7 +145,8 @@ describe("getNewFormSubmissions should", () => {
   });
 
   it("throw an error if DynamoDB has an internal failure", async () => {
-    dynamoDbMock.on(QueryCommand).rejectsOnce("custom error");
+    const customError = new Error("custom error");
+    dynamoDbMock.on(QueryCommand).rejectsOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(
@@ -153,8 +154,9 @@ describe("getNewFormSubmissions should", () => {
     ).rejects.toThrowError("custom error");
 
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[dynamodb] Failed to retrieve new form submissions. FormId: clzamy5qv0000115huc4bh90m. Reason:",
+        "[dynamodb] Failed to retrieve new form submissions. FormId: clzamy5qv0000115huc4bh90m",
       ),
     );
   });

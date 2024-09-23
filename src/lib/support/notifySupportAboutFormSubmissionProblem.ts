@@ -27,10 +27,8 @@ export async function notifySupportAboutFormSubmissionProblem(
     });
   } catch (error) {
     logMessage.error(
-      `[support] Failed to notify support about form submission problem. FormId: ${formId} / SubmissionName: ${submissionName} / Contact email: ${contactEmail}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[support] Failed to notify support about form submission problem. FormId: ${formId} / SubmissionName: ${submissionName} / Contact email: ${contactEmail}`,
     );
 
     throw error;

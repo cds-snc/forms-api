@@ -79,7 +79,8 @@ describe("retrieveTemplateOperation handler should", () => {
   });
 
   it("respond with error when processing fails due to internal error", async () => {
-    getFormTemplateMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    getFormTemplateMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await retrieveTemplateOperation.handler(
@@ -90,8 +91,9 @@ describe("retrieveTemplateOperation handler should", () => {
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0. Reason:",
+        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0",
       ),
     );
   });

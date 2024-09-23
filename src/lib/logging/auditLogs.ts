@@ -48,12 +48,7 @@ export const publishAuditLog = (
     )
     .then((_) => Promise.resolve())
     .catch((error) => {
-      logMessage.error(
-        `[logging] Failed to send audit log to AWS SQS. Reason: ${JSON.stringify(
-          error,
-          Object.getOwnPropertyNames(error),
-        )}`,
-      );
+      logMessage.error(error, "[logging] Failed to send audit log to AWS SQS");
 
       // Ensure the audit log is not lost by sending to console
       logMessage.warn(

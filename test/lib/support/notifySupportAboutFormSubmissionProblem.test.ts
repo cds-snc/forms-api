@@ -54,7 +54,8 @@ Here is my problem<br/>
   });
 
   it("throw an error if the createTicket function has an internal failure", async () => {
-    createFreshdeskTicketMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    createFreshdeskTicketMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
@@ -69,8 +70,9 @@ Here is my problem<br/>
     ).rejects.toThrowError("custom error");
 
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[support] Failed to notify support about form submission problem. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / Contact email: test@test.com. Reason:",
+        "[support] Failed to notify support about form submission problem. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / Contact email: test@test.com",
       ),
     );
   });

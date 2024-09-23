@@ -25,10 +25,8 @@ async function main(request: Request, response: Response): Promise<void> {
     response.json(formTemplate.jsonConfig);
   } catch (error) {
     logMessage.error(
-      `[operation] Internal error while retrieving template. Params: formId = ${formId}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[operation] Internal error while retrieving template. Params: formId = ${formId}`,
     );
 
     response.sendStatus(500);

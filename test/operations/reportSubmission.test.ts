@@ -156,9 +156,8 @@ describe("reportSubmissionOperation", () => {
     });
 
     it("respond with error when processing fails due to internal error caused by the reportProblemWithFormSubmission function", async () => {
-      reportProblemWithFormSubmissionMock.mockRejectedValueOnce(
-        new Error("custom error"),
-      );
+      const customError = new Error("custom error");
+      reportProblemWithFormSubmissionMock.mockRejectedValueOnce(customError);
       const logMessageSpy = vi.spyOn(logMessage, "error");
 
       await reportSubmissionOperation.handler(
@@ -169,15 +168,17 @@ describe("reportSubmissionOperation", () => {
 
       expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
       expect(logMessageSpy).toHaveBeenCalledWith(
+        customError,
         expect.stringContaining(
-          "[operation] Internal error while reporting problem with submission: Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571. Reason:",
+          "[operation] Internal error while reporting problem with submission: Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571",
         ),
       );
     });
 
     it("respond with error when processing fails due to internal error caused by the notifySupportAboutFormSubmissionProblem function", async () => {
+      const customError = new Error("custom error");
       notifySupportAboutFormSubmissionProblemMock.mockRejectedValueOnce(
-        new Error("custom error"),
+        customError,
       );
       const logMessageSpy = vi.spyOn(logMessage, "error");
 
@@ -189,8 +190,9 @@ describe("reportSubmissionOperation", () => {
 
       expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
       expect(logMessageSpy).toHaveBeenCalledWith(
+        customError,
         expect.stringContaining(
-          "[operation] Internal error while reporting problem with submission: Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571. Reason:",
+          "[operation] Internal error while reporting problem with submission: Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571",
         ),
       );
     });

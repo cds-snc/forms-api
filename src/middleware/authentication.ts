@@ -54,10 +54,8 @@ export async function authenticationMiddleware(
     next();
   } catch (error) {
     logMessage.error(
-      `[middleware] Internal error while authenticating user. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      "[middleware] Internal error while authenticating user",
     );
 
     response.sendStatus(500);

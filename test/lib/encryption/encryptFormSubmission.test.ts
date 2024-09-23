@@ -30,7 +30,8 @@ describe("encryptFormSubmission should", () => {
   });
 
   it("throw an error if public key failed to be retrieved", async () => {
-    getPublicKeyMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    getPublicKeyMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
@@ -44,9 +45,8 @@ describe("encryptFormSubmission should", () => {
     ).rejects.toThrowError("custom error");
 
     expect(logMessageSpy).toHaveBeenCalledWith(
-      expect.stringContaining(
-        "[encryption] Failed to encrypt form submission. Reason:",
-      ),
+      customError,
+      expect.stringContaining("[encryption] Failed to encrypt form submission"),
     );
   });
 });

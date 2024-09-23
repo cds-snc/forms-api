@@ -33,10 +33,8 @@ async function main(request: Request, response: Response): Promise<void> {
     response.json(encryptedFormSubmission);
   } catch (error) {
     logMessage.error(
-      `[operation] Internal error while retrieving submission. Params: formId = ${formId} ; submissionName = ${submissionName}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[operation] Internal error while retrieving submission. Params: formId = ${formId} ; submissionName = ${submissionName}`,
     );
 
     response.sendStatus(500);

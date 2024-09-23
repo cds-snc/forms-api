@@ -78,10 +78,8 @@ async function main(request: Request, response: Response): Promise<void> {
         break;
       default: {
         logMessage.error(
-          `[operation] Internal error while reporting problem with submission: Params: formId = ${formId} ; submissionName = ${submissionName}. Reason: ${JSON.stringify(
-            error,
-            Object.getOwnPropertyNames(error),
-          )}`,
+          error,
+          `[operation] Internal error while reporting problem with submission: Params: formId = ${formId} ; submissionName = ${submissionName}`,
         );
 
         response.sendStatus(500);

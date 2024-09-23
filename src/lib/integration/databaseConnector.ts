@@ -31,10 +31,8 @@ const getConnectionString = (): Promise<string> => {
     })
     .catch((error) => {
       logMessage.error(
-        `[database-connector] Failed to retrieve server-database-url. Reason: ${JSON.stringify(
-          error,
-          Object.getOwnPropertyNames(error),
-        )}`,
+        error,
+        "[database-connector] Failed to retrieve server-database-url",
       );
 
       throw error;

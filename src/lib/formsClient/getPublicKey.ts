@@ -26,10 +26,8 @@ export const getPublicKey = async (serviceAccountId: string) => {
     return publicKey;
   } catch (error) {
     logMessage.error(
-      `[formsClient] Failed to retrieve public key. ServiceAccountId: ${serviceAccountId}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[formsClient] Failed to retrieve public key. ServiceAccountId: ${serviceAccountId}`,
     );
 
     throw error;

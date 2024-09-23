@@ -41,8 +41,9 @@ describe("getPublicKey should", () => {
   });
 
   it("throw an error if database has an internal failure", async () => {
+    const customError = new Error("custom error");
     vi.spyOn(DatabaseConnectorClient, "oneOrNone").mockRejectedValueOnce(
-      new Error("custom error"),
+      customError,
     );
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
@@ -51,8 +52,9 @@ describe("getPublicKey should", () => {
     );
 
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[formsClient] Failed to retrieve public key. ServiceAccountId: 254354365464565461. Reason:",
+        "[formsClient] Failed to retrieve public key. ServiceAccountId: 254354365464565461",
       ),
     );
   });

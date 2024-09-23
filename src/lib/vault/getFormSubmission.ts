@@ -31,10 +31,8 @@ export async function getFormSubmission(
     return formSubmissionFromDynamoDbResponse(response.Item);
   } catch (error) {
     logMessage.error(
-      `[dynamodb] Failed to retrieve form submission. FormId: ${formId} / SubmissionName: ${submissionName}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[dynamodb] Failed to retrieve form submission. FormId: ${formId} / SubmissionName: ${submissionName}`,
     );
 
     throw error;

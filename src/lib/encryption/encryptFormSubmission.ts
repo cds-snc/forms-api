@@ -62,13 +62,7 @@ export const encryptFormSubmission = (
       };
     })
     .catch((error) => {
-      logMessage.error(
-        `[encryption] Failed to encrypt form submission. Reason: ${JSON.stringify(
-          error,
-          Object.getOwnPropertyNames(error),
-        )}`,
-      );
-
+      logMessage.error(error, "[encryption] Failed to encrypt form submission");
       throw error;
     });
 };

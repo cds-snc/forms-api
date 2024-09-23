@@ -50,13 +50,7 @@ export async function verifyAccessToken(
 
     return verifiedAccessToken;
   } catch (error) {
-    logMessage.error(
-      `[idp] Failed to verify access token. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
-    );
-
+    logMessage.error(error, "[idp] Failed to verify access token");
     throw error;
   }
 }
