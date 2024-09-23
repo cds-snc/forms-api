@@ -5,7 +5,7 @@ import {
   getIntrospectionCache,
   setIntrospectionCache,
 } from "@lib/idp/introspectionCache.js";
-import { authenticationMiddleware } from "@middleware/authentication/middleware.js";
+import { authenticationMiddleware } from "@middleware/authentication.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 

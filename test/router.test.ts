@@ -7,14 +7,14 @@ import express, {
 } from "express";
 import { buildRouter } from "@src/router.js";
 import type { ApiOperation } from "@operations/types/operation.js";
-import { authenticationMiddleware } from "@middleware/authentication/middleware.js";
+import { authenticationMiddleware } from "@middleware/authentication.js";
 
-vi.mock("@middleware/rateLimiter/middleware", () => ({
+vi.mock("@middleware/rateLimiter", () => ({
   rateLimiterMiddleware: (_: Request, __: Response, next: NextFunction) =>
     next(),
 }));
 
-vi.mock("@middleware/authentication/middleware");
+vi.mock("@middleware/authentication");
 const authenticationMiddlewareMock = vi.mocked(authenticationMiddleware);
 
 const apiOperationMock: ApiOperation = vi.hoisted(() => {

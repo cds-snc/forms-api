@@ -1,6 +1,6 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
-import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler/middleware.js";
+import { globalErrorHandlerMiddleware } from "@src/middleware/globalErrorHandler.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 describe("globalErrorHandlerMiddleware should", () => {

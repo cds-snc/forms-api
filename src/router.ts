@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { routeNotFoundMiddleware } from "@middleware/routeNotFound/middleware.js";
-import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler/middleware.js";
-import { authenticationMiddleware } from "@middleware/authentication/middleware.js";
-import { rateLimiterMiddleware } from "@middleware/rateLimiter/middleware.js";
+import { routeNotFoundMiddleware } from "@src/middleware/routeNotFound.js";
+import { globalErrorHandlerMiddleware } from "@src/middleware/globalErrorHandler.js";
+import { authenticationMiddleware } from "@middleware/authentication.js";
+import { rateLimiterMiddleware } from "@src/middleware/rateLimiter.js";
 import { checkServiceHealthOperation } from "@operations/checkServiceHealth.js";
 import { retrieveTemplateOperation } from "@operations/retrieveTemplate.js";
 import { retrieveNewSubmissionsOperation } from "@operations/retrieveNewSubmissions.js";

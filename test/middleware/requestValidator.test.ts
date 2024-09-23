@@ -9,7 +9,7 @@ import {
   type Result,
 } from "express-validator";
 import type { RunnableValidationChains } from "express-validator/lib/middlewares/schema.js";
-import { requestValidatorMiddleware } from "@middleware/requestValidator/middleware.js";
+import { requestValidatorMiddleware } from "@src/middleware/requestValidator.js";
 
 vi.mock("express-validator");
 const checkSchemaMock = vi.mocked(checkSchema);

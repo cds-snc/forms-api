@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from "express";
 import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config.js";
 import type { Schema } from "express-validator";
-import { requestValidatorMiddleware } from "@middleware/requestValidator/middleware.js";
+import { requestValidatorMiddleware } from "@src/middleware/requestValidator.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
