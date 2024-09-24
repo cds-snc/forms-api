@@ -12,7 +12,7 @@ const GCFORMS_API_URL = "https://api.forms-staging.cdssandbox.xyz";
 
 async function main() {
   try {
-    const privateApiKey = await loadPrivateKey();
+    const privateApiKey = await loadPrivateApiKey();
 
     const menuSelection = await requestUserInput(`
 I want to:
@@ -133,7 +133,7 @@ Selection (1):
   }
 }
 
-function loadPrivateKey(): Promise<PrivateApiKey> {
+function loadPrivateApiKey(): Promise<PrivateApiKey> {
   return filesystem
     .readdir(".")
     .then((files) => {

@@ -4,8 +4,6 @@ export interface PrivateApiKey {
   userId: string;
 }
 
-export type FormTemplate = Record<string, unknown>;
-
 export interface NewFormSubmission {
   name: string;
   createdAt: number;
