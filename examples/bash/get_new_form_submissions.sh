@@ -18,8 +18,4 @@ get_new_form_submissions() {
 read -p "Enter the form ID: " form_id
 read -p "Enter your access token: " access_token
 
-#
-# 1. Retrieve the new form submission names:
-# The name property of the response can then be used to retrieve the form submission
-#
 get_new_form_submissions "$form_id" "$access_token"

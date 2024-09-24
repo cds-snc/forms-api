@@ -21,4 +21,3 @@ read -p "Enter the form submission name: " submission_name
 read -p "Enter your access token: " access_token
 
 get_form_response "$form_id" "$access_token" "$submission_name"
-
