@@ -5,7 +5,7 @@ set -euo pipefail
 script_dir=$(dirname "$(realpath "$0")")
 source "$script_dir/.env.staging"
 
-# Retrieve the new form submission names
+# Retrieve the encrypted form submission
 get_form_response() {
   local form_id="$1"
   local access_token="$2"
