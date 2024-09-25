@@ -13,13 +13,16 @@ export function cacheValue(
   value: string,
   expiryDelayInSeconds?: number,
 ): Promise<void> {
-  return RedisConnector.getInstance()
-    .then((redisConnector) =>
-      redisConnector.client.set(key, value, {
-        ...(expiryDelayInSeconds && {
-          EX: expiryDelayInSeconds,
+  return (
+    RedisConnector.getInstance()
+      .then((redisConnector) =>
+        redisConnector.client.set(key, value, {
+          ...(expiryDelayInSeconds && {
+            EX: expiryDelayInSeconds,
+          }),
         }),
-      }),
-    )
-    .then((_) => Promise.resolve());
+      )
+      // Redis client `set` operation returns something that we don't need so we convert it to `void` by calling `Promise.resolve()`
+      .then(() => Promise.resolve())
+  );
 }

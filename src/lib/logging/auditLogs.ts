@@ -23,13 +23,13 @@ export enum AuditSubjectType {
   Response = "Response",
 }
 
-export const auditLog = (
+export const auditLog = async (
   userId: string,
   subject: { type: keyof typeof AuditSubjectType; id?: string },
   event: AuditLogEventStrings,
   description?: string,
 ): Promise<void> => {
-  const auditLog = JSON.stringify({
+  const auditLogAsJsonString = JSON.stringify({
     userId,
     event,
     timestamp: Date.now(),
@@ -37,22 +37,21 @@ export const auditLog = (
     description,
   });
 
-  return getApiAuditLogSqsQueueUrl()
-    .then((queueUrl) =>
-      AwsServicesConnector.getInstance().sqsClient.send(
-        new SendMessageCommand({
-          MessageBody: auditLog,
-          QueueUrl: queueUrl,
-        }),
-      ),
-    )
-    .then((_) => Promise.resolve())
-    .catch((error) => {
-      logMessage.error(error, "[logging] Failed to send audit log to AWS SQS");
+  try {
+    const queueUrl = await getApiAuditLogSqsQueueUrl();
 
-      // Ensure the audit log is not lost by sending to console
-      logMessage.warn(
-        `[logging] Audit log that failed to be sent: ${auditLog}`,
-      );
-    });
+    await AwsServicesConnector.getInstance().sqsClient.send(
+      new SendMessageCommand({
+        MessageBody: auditLogAsJsonString,
+        QueueUrl: queueUrl,
+      }),
+    );
+  } catch (error) {
+    logMessage.error(error, "[logging] Failed to send audit log to AWS SQS");
+
+    // Ensure the audit log is not lost by sending to console
+    logMessage.warn(
+      `[logging] Audit log that failed to be sent: ${auditLogAsJsonString}`,
+    );
+  }
 };

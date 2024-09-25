@@ -50,7 +50,7 @@ export class RedisConnector {
     }
 
     // Ensure all calls to getInstance() wait for the connection to be initialized before returning the Redis Instance
-    return RedisConnector.connectionPromise.then((_) => {
+    return RedisConnector.connectionPromise.then(() => {
       return RedisConnector.instance as RedisConnector;
     });
   }

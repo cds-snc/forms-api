@@ -5,38 +5,38 @@ import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-const getConnectionString = (): Promise<string> => {
-  if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
-    logMessage.debug("[database-connector] Using localstack connection string");
-
-    return Promise.resolve(
-      "postgres://localstack_postgres:chummy@localhost:4510/forms",
-    );
-  }
-
-  return AwsServicesConnector.getInstance()
-    .secretsClient.send(
-      new GetSecretValueCommand({
-        SecretId: "server-database-url",
-      }),
-    )
-    .then((response) => {
-      if (response.SecretString === undefined) {
-        throw new Error(
-          "[database-connector] Database Connection URL not found in SecretsManager",
-        );
-      }
-
-      return response.SecretString;
-    })
-    .catch((error) => {
-      logMessage.error(
-        error,
-        "[database-connector] Failed to retrieve server-database-url",
+const getConnectionString = async (): Promise<string> => {
+  try {
+    if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
+      logMessage.debug(
+        "[database-connector] Using localstack connection string",
       );
 
-      throw error;
-    });
+      return "postgres://localstack_postgres:chummy@localhost:4510/forms";
+    }
+
+    const response =
+      await AwsServicesConnector.getInstance().secretsClient.send(
+        new GetSecretValueCommand({
+          SecretId: "server-database-url",
+        }),
+      );
+
+    if (response.SecretString === undefined) {
+      throw new Error(
+        "[database-connector] Database Connection URL not found in SecretsManager",
+      );
+    }
+
+    return response.SecretString;
+  } catch (error) {
+    logMessage.error(
+      error,
+      "[database-connector] Failed to retrieve server-database-url",
+    );
+
+    throw error;
+  }
 };
 
 const createDatabaseConnector = (): Promise<

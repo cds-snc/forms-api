@@ -12,11 +12,11 @@ export type FreshdeskTicketPayload = {
   preferredLanguage: "en" | "fr";
 };
 
-export function createFreshdeskTicket(
+export async function createFreshdeskTicket(
   payload: FreshdeskTicketPayload,
 ): Promise<void> {
-  return axios
-    .post(
+  try {
+    await axios.post(
       `${FRESHDESK_API_URL}/v2/tickets`,
       {
         name: payload.name,
@@ -42,10 +42,9 @@ export function createFreshdeskTicket(
         },
         timeout: 5000,
       },
-    )
-    .then((_) => Promise.resolve())
-    .catch((error) => {
-      logMessage.error(error, "Failed to create Freshdesk ticket");
-      throw error;
-    });
+    );
+  } catch (error) {
+    logMessage.error(error, "Failed to create Freshdesk ticket");
+    throw error;
+  }
 }
