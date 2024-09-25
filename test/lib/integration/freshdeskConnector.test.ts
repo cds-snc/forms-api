@@ -7,7 +7,7 @@ describe("createFreshdeskTicket should", () => {
     vi.clearAllMocks();
   });
 
-  it("call Axios Post function with valid payload format", async () => {
+  it("call Axios post function with valid payload format", async () => {
     await expect(
       createFreshdeskTicket({
         name: "test",
@@ -20,15 +20,9 @@ describe("createFreshdeskTicket should", () => {
       }),
     ).resolves.not.toThrow();
 
-    expect(axios).toHaveBeenCalledWith({
-      url: "https://cds-snc.freshdesk.com/api/v2/tickets",
-      method: "POST",
-      timeout: 5000,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Basic dGVzdDpY",
-      },
-      data: {
+    expect(axios.post).toHaveBeenCalledWith(
+      "https://cds-snc.freshdesk.com/api/v2/tickets",
+      {
         name: "test",
         email: "test@test.com",
         type: "test",
@@ -44,6 +38,13 @@ describe("createFreshdeskTicket should", () => {
         product_id: 61000000642,
         group_id: 61000172262,
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Basic dGVzdDpY",
+        },
+        timeout: 5000,
+      },
+    );
   });
 });

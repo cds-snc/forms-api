@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 const MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS: number = 100;
@@ -16,7 +16,7 @@ async function main(request: Request, response: Response): Promise<void> {
       MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS,
     );
 
-    logEvent(
+    auditLog(
       serviceUserId,
       { type: "Form", id: formId },
       "RetrieveNewResponses",
@@ -25,10 +25,8 @@ async function main(request: Request, response: Response): Promise<void> {
     response.json(newFormSubmissions);
   } catch (error) {
     logMessage.error(
-      `[operation] Internal error while retrieving new submissions. Params: formId = ${formId}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[operation] Internal error while retrieving new submissions. Params: formId = ${formId}`,
     );
 
     response.sendStatus(500);

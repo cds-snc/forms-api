@@ -5,7 +5,7 @@ process.env = {
   ENVIRONMENT_MODE: "production",
   FRESHDESK_API_KEY: "test",
   REDIS_URL: "test",
-  ZITADEL_DOMAIN: "test",
+  ZITADEL_DOMAIN: "http://test",
   ZITADEL_APPLICATION_KEY: JSON.stringify({
     keyId: "test",
     clientId: "test",
@@ -13,10 +13,8 @@ process.env = {
   }),
 };
 
-vi.mock("axios");
-
 vi.mock("./src/lib/logging/auditLogs", () => ({
-  logEvent: vi.fn(),
+  auditLog: vi.fn(),
 }));
 
 vi.mock("./src/lib/integration/databaseConnector", () => ({
@@ -30,6 +28,16 @@ vi.mock("node:crypto", async (importOriginal) => {
 
   return {
     ...original,
+    createPublicKey: vi.fn(),
     createPrivateKey: vi.fn(),
+    publicEncrypt: vi.fn(),
+  };
+});
+
+vi.mock("axios", () => {
+  return {
+    default: {
+      post: vi.fn().mockResolvedValue({}),
+    },
   };
 });

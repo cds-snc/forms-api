@@ -110,7 +110,8 @@ describe("confirmFormSubmission should", () => {
   });
 
   it("throw an error if DynamoDB has an internal failure", async () => {
-    dynamoDbMock.on(GetCommand).rejectsOnce("custom error");
+    const customError = new Error("custom error");
+    dynamoDbMock.on(GetCommand).rejectsOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
@@ -122,8 +123,9 @@ describe("confirmFormSubmission should", () => {
     ).rejects.toThrowError("custom error");
 
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[dynamodb] Failed to confirm form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / ConfirmationCode: 620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
+        "[dynamodb] Failed to confirm form submission. FormId: clzamy5qv0000115huc4bh90m / SubmissionName: 01-08-a571 / ConfirmationCode: 620b203c-9836-4000-bf30-1c3bcc26b834",
       ),
     );
   });

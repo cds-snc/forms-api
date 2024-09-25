@@ -43,8 +43,9 @@ describe("getFormTemplate should", () => {
   });
 
   it("throw an error if database has an internal failure", async () => {
+    const customError = new Error("custom error");
     vi.spyOn(DatabaseConnectorClient, "oneOrNone").mockRejectedValueOnce(
-      new Error("custom error"),
+      customError,
     );
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
@@ -53,8 +54,9 @@ describe("getFormTemplate should", () => {
     ).rejects.toThrowError("custom error");
 
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[database] Failed to retrieve form template. FormId: clzamy5qv0000115huc4bh90m. Reason:",
+        "[formsClient] Failed to retrieve form template. FormId: clzamy5qv0000115huc4bh90m",
       ),
     );
   });

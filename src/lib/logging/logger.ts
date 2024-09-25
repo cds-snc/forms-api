@@ -1,5 +1,5 @@
 import pino from "pino";
-import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
+import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 
 export const logMessage = pino.default({
   level: ENVIRONMENT_MODE === EnvironmentMode.Local ? "debug" : "info",

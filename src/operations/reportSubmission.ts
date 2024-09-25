@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from "express";
-import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config.js";
+import { ENVIRONMENT_MODE, EnvironmentMode } from "@config";
 import type { Schema } from "express-validator";
-import { requestValidatorMiddleware } from "@src/middleware/requestValidator.js";
+import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
@@ -9,7 +9,7 @@ import {
 import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 const validationSchema: Schema = {
@@ -59,7 +59,7 @@ async function main(request: Request, response: Response): Promise<void> {
       );
     }
 
-    logEvent(
+    auditLog(
       serviceUserId,
       { type: "Response", id: submissionName },
       "IdentifyProblemResponse",
@@ -78,10 +78,8 @@ async function main(request: Request, response: Response): Promise<void> {
         break;
       default: {
         logMessage.error(
-          `[operation] Internal error while reporting problem with submission: Params: formId = ${formId} ; submissionName = ${submissionName}. Reason: ${JSON.stringify(
-            error,
-            Object.getOwnPropertyNames(error),
-          )}`,
+          error,
+          `[operation] Internal error while reporting problem with submission: Params: formId = ${formId} ; submissionName = ${submissionName}`,
         );
 
         response.sendStatus(500);

@@ -1,61 +1,63 @@
 import type { NextFunction, Request, Response } from "express";
-import {
-  getIntrospectionCache,
-  setIntrospectionCache,
-} from "@lib/idp/introspectionCache.js";
-import { introspectToken } from "@lib/idp/introspectToken.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { verifyAccessToken } from "@lib/idp/verifyAccessToken.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export async function authenticationMiddleware(
   request: Request,
   response: Response,
   next: NextFunction,
 ): Promise<void> {
-  const accessToken = request.headers.authorization?.split(" ")[1];
-  const formId = request.params.formId;
+  try {
+    const accessToken = request.headers.authorization?.split(" ")[1];
+    const formId = request.params.formId;
 
-  if (!accessToken) {
-    response.sendStatus(401);
-    return;
-  }
+    if (!accessToken) {
+      response.sendStatus(401);
+      return;
+    }
 
-  const introspectionResult =
-    (await getIntrospectionCache(accessToken)) ??
-    (await introspectToken(accessToken));
+    const verifiedAccessToken = await verifyAccessToken(accessToken);
 
-  if (!introspectionResult) {
-    response.sendStatus(403);
-    return;
-  }
+    if (verifiedAccessToken === undefined) {
+      response.sendStatus(403);
+      return;
+    }
 
-  if (introspectionResult.serviceUserId !== formId) {
-    logEvent(
-      introspectionResult.serviceUserId,
-      { type: "Form", id: formId },
-      "AccessDenied",
-      "User does not have access to this form",
+    if (verifiedAccessToken.serviceUserId !== formId) {
+      auditLog(
+        verifiedAccessToken.serviceUserId,
+        { type: "Form", id: formId },
+        "AccessDenied",
+        "User does not have access to this form",
+      );
+
+      response.sendStatus(403);
+      return;
+    }
+
+    if (verifiedAccessToken.expirationEpochTime < Date.now() / 1000) {
+      auditLog(
+        verifiedAccessToken.serviceUserId,
+        { type: "Form", id: formId },
+        "AccessDenied",
+        "Access token has expired",
+      );
+
+      response.status(401).json({ error: "Access token has expired" });
+      return;
+    }
+
+    request.serviceUserId = verifiedAccessToken.serviceUserId;
+    request.serviceAccountId = verifiedAccessToken.serviceAccountId;
+
+    next();
+  } catch (error) {
+    logMessage.error(
+      error,
+      "[middleware] Internal error while authenticating user",
     );
 
-    response.sendStatus(403);
-    return;
+    response.sendStatus(500);
   }
-
-  if (introspectionResult.exp < Date.now() / 1000) {
-    logEvent(
-      introspectionResult.serviceUserId,
-      { type: "Form", id: formId },
-      "AccessDenied",
-      "Access token has expired",
-    );
-
-    response.status(401).json({ error: "Access token has expired" });
-    return;
-  }
-
-  await setIntrospectionCache(accessToken, introspectionResult);
-
-  request.serviceUserId = introspectionResult.serviceUserId;
-  request.serviceAccountId = introspectionResult.serviceAccountId;
-
-  next();
 }

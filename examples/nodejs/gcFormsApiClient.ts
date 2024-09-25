@@ -59,9 +59,7 @@ export class GCFormsApiClient {
       .put<void>(
         `/forms/${formId}/submission/${submissionName}/confirm/${confirmationCode}`,
       )
-      .then((_) => {
-        // success
-      })
+      .then(() => Promise.resolve())
       .catch((error) => {
         throw new Error("Failed to confirm form submission", { cause: error });
       });

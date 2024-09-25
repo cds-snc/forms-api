@@ -1,16 +1,17 @@
-import pgp from "pg-promise";
+import pgp, { type IDatabase } from "pg-promise";
+import type { IClient } from "pg-promise/typescript/pg-subset.js";
 import { GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
-import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
+import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-const getConnectionString = async () => {
+const getConnectionString = async (): Promise<string> => {
   try {
-    // If we're in local mode, return the localstack connection string for the Postgres database
     if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
       logMessage.debug(
         "[database-connector] Using localstack connection string",
       );
+
       return "postgres://localstack_postgres:chummy@localhost:4510/forms";
     }
 
@@ -30,21 +31,25 @@ const getConnectionString = async () => {
     return response.SecretString;
   } catch (error) {
     logMessage.error(
-      `[database-connector] Failed to retrieve server-database-url. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      "[database-connector] Failed to retrieve server-database-url",
     );
 
     throw error;
   }
 };
 
-const createDatabaseConnector = async () => {
+const createDatabaseConnector = (): Promise<
+  IDatabase<Record<string, unknown>, IClient>
+> => {
   logMessage.debug("[database-connector] Creating new database connector");
 
-  const connectionString = await getConnectionString();
-  return pgp()(connectionString);
+  return getConnectionString().then((connectionString) =>
+    pgp()(connectionString),
+  );
 };
 
-export const DatabaseConnectorClient = await createDatabaseConnector();
+export const DatabaseConnectorClient: IDatabase<
+  Record<string, unknown>,
+  IClient
+> = await createDatabaseConnector();

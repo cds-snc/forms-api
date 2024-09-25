@@ -4,7 +4,7 @@ import { RedisConnector } from "@lib/integration/redisConnector.js";
 
 vi.mock("redis", () => {
   const client = {
-    connect: vi.fn(),
+    connect: vi.fn().mockResolvedValue({}),
     quit: vi.fn(),
     on: vi.fn().mockReturnThis(),
   };
@@ -24,15 +24,10 @@ describe("RedisConnector should", () => {
     vi.clearAllMocks();
   });
 
-  it("create a Redis client instance", async () => {
-    const instance = await RedisConnector.getInstance();
-    expect(instance).toBeInstanceOf(RedisConnector);
-    expect(redisClientMock.connect).toHaveBeenCalledOnce();
-  });
+  it("create a Redis client instance once", async () => {
+    await RedisConnector.getInstance();
+    await RedisConnector.getInstance();
 
-  it("not call connect after creation", async () => {
-    const instance = await RedisConnector.getInstance();
-    expect(instance).toBeInstanceOf(RedisConnector);
-    expect(redisClientMock.connect).toHaveBeenCalledTimes(0);
+    expect(redisClientMock.connect).toHaveBeenCalledOnce();
   });
 });

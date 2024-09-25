@@ -6,6 +6,7 @@ import {
 } from "node:crypto";
 import type { FormSubmission } from "@lib/vault/types/formSubmission.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export interface EncryptedFormSubmission {
   encryptedResponses: string;
@@ -18,40 +19,49 @@ export const encryptFormSubmission = async (
   serviceAccountId: string,
   submission: FormSubmission,
 ): Promise<EncryptedFormSubmission> => {
-  const serviceAccountPublicKey = await getPublicKey(serviceAccountId);
+  try {
+    const serviceAccountPublicKey = await getPublicKey(serviceAccountId);
 
-  // Encrypt the submission with the public key
-  const encryptionKey = randomBytes(32);
-  const iv = randomBytes(12);
+    const encryptionKey = randomBytes(32);
+    const iv = randomBytes(12);
 
-  const cipher = createCipheriv("aes-256-gcm", encryptionKey, iv);
+    const cipher = createCipheriv("aes-256-gcm", encryptionKey, iv);
 
-  const encryptedResponses = Buffer.concat([
-    cipher.update(Buffer.from(JSON.stringify(submission))),
-    cipher.final(),
-  ]).toString("base64");
+    const encryptedResponses = Buffer.concat([
+      cipher.update(Buffer.from(JSON.stringify(submission))),
+      cipher.final(),
+    ]).toString("base64");
 
-  const authTag = cipher.getAuthTag();
+    const authTag = cipher.getAuthTag();
 
-  const publicKey = createPublicKey({ key: serviceAccountPublicKey });
+    const publicKey = createPublicKey({ key: serviceAccountPublicKey });
 
-  const publicEncryptKey = {
-    key: publicKey,
-    oaepHash: "sha256",
-  };
+    const publicEncryptKey = {
+      key: publicKey,
+      oaepHash: "sha256",
+    };
 
-  const encryptedKey = publicEncrypt(publicEncryptKey, encryptionKey).toString(
-    "base64",
-  );
-  const encryptedNonce = publicEncrypt(publicEncryptKey, iv).toString("base64");
-  const encryptedAuthTag = publicEncrypt(publicEncryptKey, authTag).toString(
-    "base64",
-  );
+    const encryptedKey = publicEncrypt(
+      publicEncryptKey,
+      encryptionKey,
+    ).toString("base64");
 
-  return {
-    encryptedResponses,
-    encryptedKey,
-    encryptedNonce,
-    encryptedAuthTag,
-  };
+    const encryptedNonce = publicEncrypt(publicEncryptKey, iv).toString(
+      "base64",
+    );
+
+    const encryptedAuthTag = publicEncrypt(publicEncryptKey, authTag).toString(
+      "base64",
+    );
+
+    return {
+      encryptedResponses,
+      encryptedKey,
+      encryptedNonce,
+      encryptedAuthTag,
+    };
+  } catch (error) {
+    logMessage.error(error, "[encryption] Failed to encrypt form submission");
+    throw error;
+  }
 };

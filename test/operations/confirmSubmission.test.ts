@@ -6,7 +6,7 @@ import {
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@lib/vault/types/exceptions.js";
-import { confirmSubmissionOperation } from "@src/operations/confirmSubmission.js";
+import { confirmSubmissionOperation } from "@operations/confirmSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
@@ -14,7 +14,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/vault/confirmFormSubmission");
 const confirmFormSubmissionMock = vi.mocked(confirmFormSubmission);
 
-const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("confirmSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -43,7 +43,7 @@ describe("confirmSubmissionOperation handler should", () => {
     );
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-    expect(logEventSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {
@@ -106,7 +106,8 @@ describe("confirmSubmissionOperation handler should", () => {
   });
 
   it("respond with error when processing fails due to internal error", async () => {
-    confirmFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    confirmFormSubmissionMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await confirmSubmissionOperation.handler(
@@ -117,8 +118,9 @@ describe("confirmSubmissionOperation handler should", () => {
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[operation] Internal error while confirming submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571 ; confirmationCode = 620b203c-9836-4000-bf30-1c3bcc26b834. Reason:",
+        "[operation] Internal error while confirming submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571 ; confirmationCode = 620b203c-9836-4000-bf30-1c3bcc26b834",
       ),
     );
   });

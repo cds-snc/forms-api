@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
-import { retrieveTemplateOperation } from "@src/operations/retrieveTemplate.js";
+import { retrieveTemplateOperation } from "@operations/retrieveTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
@@ -9,7 +9,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/formsClient/getFormTemplate");
 const getFormTemplateMock = vi.mocked(getFormTemplate);
 
-const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("retrieveTemplateOperation handler should", () => {
   const requestMock = getMockReq({
@@ -52,7 +52,7 @@ describe("retrieveTemplateOperation handler should", () => {
         },
       ],
     });
-    expect(logEventSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {
@@ -79,7 +79,8 @@ describe("retrieveTemplateOperation handler should", () => {
   });
 
   it("respond with error when processing fails due to internal error", async () => {
-    getFormTemplateMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    getFormTemplateMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await retrieveTemplateOperation.handler(
@@ -90,8 +91,9 @@ describe("retrieveTemplateOperation handler should", () => {
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0. Reason:",
+        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0",
       ),
     );
   });

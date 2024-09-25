@@ -1,6 +1,6 @@
-import { GetQueueUrlCommand, SendMessageCommand } from "@aws-sdk/client-sqs";
-import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
+import { SendMessageCommand } from "@aws-sdk/client-sqs";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
+import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 export enum AuditLogEvent {
@@ -14,6 +14,7 @@ export enum AuditLogEvent {
   // Template Events
   RetrieveTemplate = "RetrieveTemplate",
 }
+
 export type AuditLogEventStrings = keyof typeof AuditLogEvent;
 
 export enum AuditSubjectType {
@@ -22,59 +23,35 @@ export enum AuditSubjectType {
   Response = "Response",
 }
 
-let queueUrlRef: string | null = null;
-
-const getQueueUrl = async () => {
-  if (!queueUrlRef) {
-    const data = await AwsServicesConnector.getInstance().sqsClient.send(
-      new GetQueueUrlCommand({
-        QueueName: "api_audit_log_queue",
-      }),
-    );
-    queueUrlRef = data.QueueUrl ?? null;
-    logMessage.debug(`Audit Log Queue URL initialized: ${queueUrlRef}`);
-  }
-  return queueUrlRef;
-};
-
-//Initialise the queueUrlRef on load except when running tests
-// This mock should be refactored when we once we have a better way to mock the AWS SDK
-process.env.NODE_ENV !== "test" && getQueueUrl();
-
-export const logEvent = async (
+export const auditLog = async (
   userId: string,
   subject: { type: keyof typeof AuditSubjectType; id?: string },
   event: AuditLogEventStrings,
   description?: string,
 ): Promise<void> => {
-  const auditLog = JSON.stringify({
+  const auditLogAsJsonString = JSON.stringify({
     userId,
     event,
     timestamp: Date.now(),
     subject,
     description,
   });
+
   try {
-    const queueUrl = await getQueueUrl();
-    if (!queueUrl) {
-      throw new Error("Audit Log Queue not connected");
-    }
+    const queueUrl = await getApiAuditLogSqsQueueUrl();
+
     await AwsServicesConnector.getInstance().sqsClient.send(
       new SendMessageCommand({
-        MessageBody: auditLog,
+        MessageBody: auditLogAsJsonString,
         QueueUrl: queueUrl,
       }),
     );
-  } catch (e) {
-    // Only log the error in Production environment.
-    // Development may be running without LocalStack setup
-    if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
-      return logMessage.info(`AuditLog:${auditLog}`);
-    }
+  } catch (error) {
+    logMessage.error(error, "[logging] Failed to send audit log to AWS SQS");
 
-    logMessage.error("ERROR with Audit Logging");
-    logMessage.error(e as Error);
-    // Ensure the audit event is not lost by sending to console
-    logMessage.warn(`AuditLog:${auditLog}`);
+    // Ensure the audit log is not lost by sending to console
+    logMessage.warn(
+      `[logging] Audit log that failed to be sent: ${auditLogAsJsonString}`,
+    );
   }
 };

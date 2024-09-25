@@ -2,7 +2,7 @@ import { vi, describe, beforeEach, it, expect } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js";
-import { retrieveSubmissionOperation } from "@src/operations/retrieveSubmission.js";
+import { retrieveSubmissionOperation } from "@operations/retrieveSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
@@ -14,7 +14,7 @@ const getFormSubmissionMock = vi.mocked(getFormSubmission);
 vi.mock("@lib/encryption/encryptFormSubmission");
 const encryptFormSubmissionMock = vi.mocked(encryptFormSubmission);
 
-const logEventSpy = vi.spyOn(auditLogsModule, "logEvent");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("retrieveSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -61,7 +61,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       encryptedNonce: "encryptedNonce",
       encryptedResponses: "encryptedResponses",
     });
-    expect(logEventSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {
@@ -90,7 +90,8 @@ describe("retrieveSubmissionOperation handler should", () => {
   });
 
   it("respond with error when processing fails due to internal error", async () => {
-    getFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
+    const customError = new Error("custom error");
+    getFormSubmissionMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await retrieveSubmissionOperation.handler(
@@ -101,8 +102,9 @@ describe("retrieveSubmissionOperation handler should", () => {
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
     expect(logMessageSpy).toHaveBeenCalledWith(
+      customError,
       expect.stringContaining(
-        "[operation] Internal error while retrieving submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571. Reason:",
+        "[operation] Internal error while retrieving submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571",
       ),
     );
   });

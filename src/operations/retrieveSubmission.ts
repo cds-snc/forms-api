@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 async function main(request: Request, response: Response): Promise<void> {
@@ -24,7 +24,7 @@ async function main(request: Request, response: Response): Promise<void> {
       formSubmission,
     );
 
-    logEvent(
+    auditLog(
       serviceUserId,
       { type: "Response", id: submissionName },
       "DownloadResponse",
@@ -33,10 +33,8 @@ async function main(request: Request, response: Response): Promise<void> {
     response.json(encryptedFormSubmission);
   } catch (error) {
     logMessage.error(
-      `[operation] Internal error while retrieving submission. Params: formId = ${formId} ; submissionName = ${submissionName}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[operation] Internal error while retrieving submission. Params: formId = ${formId} ; submissionName = ${submissionName}`,
     );
 
     response.sendStatus(500);

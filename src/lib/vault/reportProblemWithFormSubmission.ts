@@ -45,10 +45,8 @@ export async function reportProblemWithFormSubmission(
     );
   } catch (error) {
     logMessage.error(
-      `[dynamodb] Failed to report problem with form submission. FormId: ${formId} / SubmissionName: ${submissionName}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[dynamodb] Failed to report problem with form submission. FormId: ${formId} / SubmissionName: ${submissionName}`,
     );
 
     throw error;

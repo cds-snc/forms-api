@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { logEvent } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 async function main(request: Request, response: Response): Promise<void> {
@@ -16,15 +16,13 @@ async function main(request: Request, response: Response): Promise<void> {
       return;
     }
 
-    logEvent(serviceUserId, { type: "Form", id: formId }, "RetrieveTemplate");
+    auditLog(serviceUserId, { type: "Form", id: formId }, "RetrieveTemplate");
 
     response.json(formTemplate.jsonConfig);
   } catch (error) {
     logMessage.error(
-      `[operation] Internal error while retrieving template. Params: formId = ${formId}. Reason: ${JSON.stringify(
-        error,
-        Object.getOwnPropertyNames(error),
-      )}`,
+      error,
+      `[operation] Internal error while retrieving template. Params: formId = ${formId}`,
     );
 
     response.sendStatus(500);
