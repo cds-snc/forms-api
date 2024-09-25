@@ -7,7 +7,7 @@
     "target": "ESNext",
     "baseUrl": "./",
     "paths": {
-      "@src/*": ["src/*"],
+      "@config": ["src/config.ts"],
       "@lib/*": ["src/lib/*"],
       "@middleware/*": ["src/middleware/*"],
       "@operations/*": ["src/operations/*"]

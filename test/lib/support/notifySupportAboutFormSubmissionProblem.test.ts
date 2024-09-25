@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { createFreshdeskTicket } from "@lib/integration/freshdeskConnector.js";
-import { EnvironmentMode } from "@src/config.js";
+import { EnvironmentMode } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
 
 vi.mock("@lib/integration/freshdeskConnector");

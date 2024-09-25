@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express, { type Express } from "express";
-import { SERVER_PORT } from "@src/config.js";
-import { buildRouter } from "@src/router.js";
+import { SERVER_PORT } from "@config";
+import { buildRouter } from "./router.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { RedisConnector } from "@lib/integration/redisConnector.js";
 import { logMessage } from "@lib/logging/logger.js";

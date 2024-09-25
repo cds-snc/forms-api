@@ -1,7 +1,7 @@
 import pgp, { type IDatabase } from "pg-promise";
 import type { IClient } from "pg-promise/typescript/pg-subset.js";
 import { GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
-import { EnvironmentMode, ENVIRONMENT_MODE } from "@src/config.js";
+import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 

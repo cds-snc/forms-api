@@ -5,7 +5,7 @@ import express, {
   type Request,
   type NextFunction,
 } from "express";
-import { buildRouter } from "@src/router.js";
+import { buildRouter } from "../src/router.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 import { authenticationMiddleware } from "@middleware/authentication.js";
 

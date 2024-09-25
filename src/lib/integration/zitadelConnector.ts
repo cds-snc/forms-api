@@ -1,7 +1,7 @@
 import { SignJWT } from "jose";
 import axios from "axios";
 import { createPrivateKey } from "node:crypto";
-import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@src/config.js";
+import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
 
 export type AccessTokenIntrospectionResult = {

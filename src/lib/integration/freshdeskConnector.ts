@@ -1,6 +1,6 @@
 import axios from "axios";
-import { FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@src/config.js";
-import { logMessage } from "../logging/logger.js";
+import { FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@config";
+import { logMessage } from "@lib/logging/logger.js";
 
 export type FreshdeskTicketPayload = {
   name: string;

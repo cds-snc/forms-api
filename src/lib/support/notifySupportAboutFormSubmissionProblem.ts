@@ -1,4 +1,4 @@
-import { EnvironmentMode } from "@src/config.js";
+import { EnvironmentMode } from "@config";
 import { createFreshdeskTicket } from "@lib/integration/freshdeskConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 

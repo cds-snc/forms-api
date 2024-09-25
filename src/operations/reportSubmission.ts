@@ -1,5 +1,5 @@
 import express, { type Request, type Response } from "express";
-import { ENVIRONMENT_MODE, EnvironmentMode } from "@src/config.js";
+import { ENVIRONMENT_MODE, EnvironmentMode } from "@config";
 import type { Schema } from "express-validator";
 import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
 import {

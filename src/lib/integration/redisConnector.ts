@@ -1,5 +1,5 @@
 import { type RedisClientType, createClient } from "redis";
-import { REDIS_URL } from "@src/config.js";
+import { REDIS_URL } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
 
 export class RedisConnector {
