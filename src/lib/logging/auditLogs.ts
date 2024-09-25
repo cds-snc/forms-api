@@ -23,7 +23,7 @@ export enum AuditSubjectType {
   Response = "Response",
 }
 
-export const publishAuditLog = (
+export const auditLog = (
   userId: string,
   subject: { type: keyof typeof AuditSubjectType; id?: string },
   event: AuditLogEventStrings,

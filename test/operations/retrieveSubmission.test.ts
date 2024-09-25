@@ -14,7 +14,7 @@ const getFormSubmissionMock = vi.mocked(getFormSubmission);
 vi.mock("@lib/encryption/encryptFormSubmission");
 const encryptFormSubmissionMock = vi.mocked(encryptFormSubmission);
 
-const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("retrieveSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -61,7 +61,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       encryptedNonce: "encryptedNonce",
       encryptedResponses: "encryptedResponses",
     });
-    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {

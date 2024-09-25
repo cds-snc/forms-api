@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { verifyAccessToken } from "@lib/idp/verifyAccessToken.js";
-import { publishAuditLog } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 export async function authenticationMiddleware(
@@ -25,7 +25,7 @@ export async function authenticationMiddleware(
     }
 
     if (verifiedAccessToken.serviceUserId !== formId) {
-      publishAuditLog(
+      auditLog(
         verifiedAccessToken.serviceUserId,
         { type: "Form", id: formId },
         "AccessDenied",
@@ -37,7 +37,7 @@ export async function authenticationMiddleware(
     }
 
     if (verifiedAccessToken.expirationEpochTime < Date.now() / 1000) {
-      publishAuditLog(
+      auditLog(
         verifiedAccessToken.serviceUserId,
         { type: "Form", id: formId },
         "AccessDenied",

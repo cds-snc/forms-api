@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { publishAuditLog } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 async function main(request: Request, response: Response): Promise<void> {
@@ -16,11 +16,7 @@ async function main(request: Request, response: Response): Promise<void> {
       return;
     }
 
-    publishAuditLog(
-      serviceUserId,
-      { type: "Form", id: formId },
-      "RetrieveTemplate",
-    );
+    auditLog(serviceUserId, { type: "Form", id: formId }, "RetrieveTemplate");
 
     response.json(formTemplate.jsonConfig);
   } catch (error) {

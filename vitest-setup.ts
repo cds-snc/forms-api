@@ -14,7 +14,7 @@ process.env = {
 };
 
 vi.mock("./src/lib/logging/auditLogs", () => ({
-  publishAuditLog: vi.fn(),
+  auditLog: vi.fn(),
 }));
 
 vi.mock("./src/lib/integration/databaseConnector", () => ({

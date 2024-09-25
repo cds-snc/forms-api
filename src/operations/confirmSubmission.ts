@@ -6,7 +6,7 @@ import {
 } from "@lib/vault/types/exceptions.js";
 import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { publishAuditLog } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 async function main(request: Request, response: Response): Promise<void> {
@@ -18,7 +18,7 @@ async function main(request: Request, response: Response): Promise<void> {
   try {
     await confirmFormSubmission(formId, submissionName, confirmationCode);
 
-    publishAuditLog(
+    auditLog(
       serviceUserId,
       { type: "Response", id: submissionName },
       "ConfirmResponse",

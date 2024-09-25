@@ -11,7 +11,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/idp/verifyAccessToken");
 const verifyAccessTokenMock = vi.mocked(verifyAccessToken);
 
-const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("authenticationMiddleware should", () => {
   let requestMock = getMockReq();
@@ -75,7 +75,7 @@ describe("authenticationMiddleware should", () => {
 
     expect(nextMock).not.toHaveBeenCalled();
     expect(responseMock.sendStatus).toHaveBeenCalledWith(403);
-    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeoa1",
       {
@@ -102,7 +102,7 @@ describe("authenticationMiddleware should", () => {
     expect(responseMock.json).toHaveBeenCalledWith({
       error: "Access token has expired",
     });
-    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {

@@ -9,7 +9,7 @@ import {
 import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { publishAuditLog } from "@lib/logging/auditLogs.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 const validationSchema: Schema = {
@@ -59,7 +59,7 @@ async function main(request: Request, response: Response): Promise<void> {
       );
     }
 
-    publishAuditLog(
+    auditLog(
       serviceUserId,
       { type: "Response", id: submissionName },
       "IdentifyProblemResponse",

@@ -9,7 +9,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/formsClient/getFormTemplate");
 const getFormTemplateMock = vi.mocked(getFormTemplate);
 
-const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("retrieveTemplateOperation handler should", () => {
   const requestMock = getMockReq({
@@ -52,7 +52,7 @@ describe("retrieveTemplateOperation handler should", () => {
         },
       ],
     });
-    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {

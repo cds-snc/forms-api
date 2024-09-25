@@ -14,7 +14,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/vault/confirmFormSubmission");
 const confirmFormSubmissionMock = vi.mocked(confirmFormSubmission);
 
-const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("confirmSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -43,7 +43,7 @@ describe("confirmSubmissionOperation handler should", () => {
     );
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {

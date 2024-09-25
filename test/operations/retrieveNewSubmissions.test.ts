@@ -9,7 +9,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 vi.mock("@lib/vault/getNewFormSubmissions");
 const getNewFormSubmissionsMock = vi.mocked(getNewFormSubmissions);
 
-const publishAuditLogSpy = vi.spyOn(auditLogsModule, "publishAuditLog");
+const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("retrieveNewSubmissionsOperation handler should", () => {
   const requestMock = getMockReq({
@@ -36,7 +36,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
     );
 
     expect(responseMock.json).toHaveBeenCalledWith([]);
-    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {
@@ -67,7 +67,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
         name: "ABC",
       },
     ]);
-    expect(publishAuditLogSpy).toHaveBeenNthCalledWith(
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
       1,
       "clzsn6tao000611j50dexeob0",
       {
