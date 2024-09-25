@@ -24,5 +24,6 @@ The scripts are meant to be run in order to give you an idea of how the request 
 ./get_form_submission.sh > form_response.json
 ./decrypt_form_submission.sh
 ```
-5. `validate_form_submission.sh`: checks that the form submission has not been altered during transit.  The response and checksum are part of the decrypted form response.
+5. `validate_form_submission.sh`: checks that the form submission has not been altered during transit.  The 'answers' and 'checksum' values are part of the decrypted form response.
 6. `confirm_form_submission.sh`: confirms receipt of a form submission.  The confirmation code is included with the decrypted form response.
+7. `get_form_template.sh`: optionally, retrieve the form template used by GC Forms to build and display the form to users.
