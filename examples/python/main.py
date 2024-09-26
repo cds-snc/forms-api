@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from access_token_generator import AccessTokenGenerator
-from data_structures import PrivateApiKey, FormSubmission
+from data_structures import PrivateApiKey, FormSubmission, FormSubmissionProblem
 from gc_forms_api_client import GCFormsApiClient
 from form_submission_decrypter import FormSubmissionDecrypter
 from form_submission_integrity_verifier import FormSubmissionVerifier
@@ -19,6 +19,7 @@ def main() -> None:
 I want to:
 (1) Generate and display an access token
 (2) Retrieve, decrypt and confirm form submissions
+(3) Report a problem with a form submission
 Selection (1):
 """)
 
@@ -96,6 +97,32 @@ Selection (1):
                 )
         else:
             print("\nCould not find any new form submission!")
+    elif menu_selection == "3":
+        form_id = input("\nForm ID associated to the submission you want to report:\n")
+
+        submission_name = input("\nSubmission name:\n")
+
+        contact_email = input("\nContact email address:\n")
+
+        description = input("\nProblem description (10 characters minimum):\n")
+
+        preferred_language = input("\nPreferred communication language (either 'en' or 'fr'):\n")
+
+        print("\nGenerating access token...")
+
+        access_token = AccessTokenGenerator.generate(
+            IDENTITY_PROVIDER_URL, PROJECT_IDENTIFIER, private_api_key
+        )
+
+        api_client = GCFormsApiClient(GCFORMS_API_URL, access_token)
+
+        print("\nReporting form submission...")
+
+        problem = FormSubmissionProblem(contact_email, description, preferred_language)
+
+        api_client.report_problem_with_form_submission(form_id, submission_name, problem)
+
+        print("\nSubmission has been reported")
     else:
         print("\nGenerating access token...")
 

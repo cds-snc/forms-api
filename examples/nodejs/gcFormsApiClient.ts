@@ -1,5 +1,9 @@
 import axios, { type AxiosInstance } from "axios";
-import type { EncryptedFormSubmission, NewFormSubmission } from "./types.js";
+import type {
+  EncryptedFormSubmission,
+  FormSubmissionProblem,
+  NewFormSubmission,
+} from "./types.js";
 
 export class GCFormsApiClient {
   private httpClient: AxiosInstance;
@@ -58,6 +62,29 @@ export class GCFormsApiClient {
       .then(() => Promise.resolve())
       .catch((error) => {
         throw new Error("Failed to confirm form submission", { cause: error });
+      });
+  }
+
+  public reportProblemWithFormSubmission(
+    formId: string,
+    submissionName: string,
+    problem: FormSubmissionProblem,
+  ): Promise<void> {
+    return this.httpClient
+      .post<void>(
+        `/forms/${formId}/submission/${submissionName}/problem`,
+        problem,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      )
+      .then(() => Promise.resolve())
+      .catch((error) => {
+        throw new Error("Failed to report problem with form submission", {
+          cause: error,
+        });
       });
   }
 }
