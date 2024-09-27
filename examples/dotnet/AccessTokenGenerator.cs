@@ -29,7 +29,7 @@ namespace dotnet
             new Claim("iss", privateApiKey.userId),
             new Claim("sub", privateApiKey.userId),
             new Claim("aud", identityProviderUrl),
-            new Claim("exp", ((DateTimeOffset)DateTime.UtcNow.AddHours(1)).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer)
+            new Claim("exp", ((DateTimeOffset)DateTime.UtcNow.AddMinutes(1)).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer)
           ],
           signingCredentials: signingCredentials
         );

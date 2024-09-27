@@ -29,7 +29,7 @@ class AccessTokenGenerator:
                 "iss": private_api_key.user_id,
                 "sub": private_api_key.user_id,
                 "aud": identity_provider_url,
-                "exp": current_time + 3600,
+                "exp": current_time + 60,
             }
 
             jwt_signed_token = jwt.encode(

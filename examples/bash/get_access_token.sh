@@ -27,7 +27,7 @@ build_jwt() {
     \"sub\": \"$user_id\",
     \"aud\": \"$idp_url\",
     \"iat\": $(date +%s),
-    \"exp\": $(($(date +%s) + 1800))
+    \"exp\": $(($(date +%s) + 60))
   }"
 
   # Base64 encode the header and payload and concatenate them to create the unsigned token
