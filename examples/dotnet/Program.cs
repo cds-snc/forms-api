@@ -19,6 +19,7 @@ namespace dotnet
 I want to:
 (1) Generate and display an access token
 (2) Retrieve, decrypt and confirm form submissions
+(3) Report a problem with a form submission
 Selection (1):
 ");
 
@@ -104,6 +105,48 @@ Selection (1):
               {
                 Console.WriteLine($"\nCould not find any new form submission!");
               }
+            }
+            break;
+          case "3":
+            {
+              Console.WriteLine("\nForm ID associated to the submission you want to report:");
+
+              string formId = Console.ReadLine();
+
+              Console.WriteLine("\nSubmission name:");
+
+              string submissionName = Console.ReadLine();
+
+              Console.WriteLine("\nContact email address:");
+
+              string contactEmail = Console.ReadLine();
+
+              Console.WriteLine("\nProblem description (10 characters minimum):");
+
+              string description = Console.ReadLine();
+
+              Console.WriteLine("\nPreferred communication language (either 'en' or 'fr'):");
+
+              string preferredLanguage = Console.ReadLine();
+
+              Console.WriteLine("\nGenerating access token...");
+
+              string accessToken = await AccessTokenGenerator.Generate(IDENTITY_PROVIDER_URL, PROJECT_IDENTIFIER, privateApiKey);
+
+              GCFormsApiClient apiClient = new(GCFORMS_API_URL, accessToken);
+
+              Console.WriteLine("\nReporting form submission...");
+
+              FormSubmissionProblem problem = new()
+              {
+                contactEmail = contactEmail,
+                description = description,
+                preferredLanguage = preferredLanguage
+              };
+
+              await apiClient.ReportProblemWithFormSubmission(formId, submissionName, problem);
+
+              Console.WriteLine($"\nSubmission has been reported");
             }
             break;
         }

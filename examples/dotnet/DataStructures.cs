@@ -58,4 +58,13 @@ namespace dotnet
 
     public required string checksum { get; set; }
   }
+
+  public struct FormSubmissionProblem
+  {
+    public required string contactEmail { get; set; }
+
+    public required string description { get; set; }
+
+    public required string preferredLanguage { get; set; }
+  }
 }

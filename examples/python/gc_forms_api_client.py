@@ -1,6 +1,10 @@
 import httpx
 from typing import List
-from data_structures import NewFormSubmission, EncryptedFormSubmission
+from data_structures import (
+    NewFormSubmission,
+    EncryptedFormSubmission,
+    FormSubmissionProblem,
+)
 
 
 class GCFormsApiClient:
@@ -51,3 +55,17 @@ class GCFormsApiClient:
             response.raise_for_status()
         except Exception as exception:
             raise Exception("Failed to confirm form submission") from exception
+
+    def report_problem_with_form_submission(
+        self, form_id: str, submission_name: str, problem: FormSubmissionProblem
+    ) -> None:
+        try:
+            response = self.httpClient.post(
+                f"/forms/{form_id}/submission/{submission_name}/problem",
+                json=problem.to_json(),
+            )
+            response.raise_for_status()
+        except Exception as exception:
+            raise Exception(
+                "Failed to report problem with form submission"
+            ) from exception

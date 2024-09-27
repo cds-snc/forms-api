@@ -1,20 +1,20 @@
-export interface PrivateApiKey {
+export type PrivateApiKey = {
   keyId: string;
   key: string;
   userId: string;
-}
+};
 
-export interface NewFormSubmission {
+export type NewFormSubmission = {
   name: string;
   createdAt: number;
-}
+};
 
-export interface EncryptedFormSubmission {
+export type EncryptedFormSubmission = {
   encryptedResponses: string;
   encryptedKey: string;
   encryptedNonce: string;
   encryptedAuthTag: string;
-}
+};
 
 export enum FormSubmissionStatus {
   New = "New",
@@ -23,10 +23,16 @@ export enum FormSubmissionStatus {
   Problem = "Problem",
 }
 
-export interface FormSubmission {
+export type FormSubmission = {
   createdAt: number;
   status: FormSubmissionStatus;
   confirmationCode: string;
   answers: string;
   checksum: string;
-}
+};
+
+export type FormSubmissionProblem = {
+  contactEmail: string;
+  description: string;
+  preferredLanguage: string;
+};

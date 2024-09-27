@@ -27,3 +27,5 @@ The scripts are meant to be run in order to give you an idea of how the request 
 5. `validate_form_submission.sh`: checks that the form submission has not been altered during transit.  The 'answers' and 'checksum' values are part of the decrypted form response.
 6. `confirm_form_submission.sh`: confirms receipt of a form submission.  The confirmation code is included with the decrypted form response.
 7. `get_form_template.sh`: optionally, retrieve the form template used by GC Forms to build and display the form to users.
+
+To report a problem with a form submission you have downloaded you can use `report_problem_with_form_submission.sh`.

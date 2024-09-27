@@ -71,3 +71,17 @@ class FormSubmission:
             answers=json_object["answers"],
             checksum=json_object["checksum"],
         )
+
+
+@dataclass
+class FormSubmissionProblem:
+    contact_email: str
+    description: str
+    preferred_language: str
+
+    def to_json(self) -> dict:
+        return {
+            "contactEmail": self.contact_email,
+            "description": self.description,
+            "preferredLanguage": self.preferred_language,
+        }

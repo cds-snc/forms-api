@@ -1,6 +1,10 @@
 import readline from "node:readline";
 import filesystem from "node:fs/promises";
-import type { FormSubmission, PrivateApiKey } from "./types.js";
+import type {
+  FormSubmission,
+  FormSubmissionProblem,
+  PrivateApiKey,
+} from "./types.js";
 import { generateAccessToken } from "./accessTokenGenerator.js";
 import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
@@ -18,6 +22,7 @@ async function main() {
 I want to:
 (1) Generate and display an access token
 (2) Retrieve, decrypt and confirm form submissions
+(3) Report a problem with a form submission
 Selection (1):
 `);
 
@@ -113,7 +118,52 @@ Selection (1):
         }
         break;
       }
+      case "3": {
+        const formId = await requestUserInput(
+          "\nForm ID associated to the submission you want to report:\n",
+        );
 
+        const submissionName = await requestUserInput("\nSubmission name:\n");
+
+        const contactEmail = await requestUserInput(
+          "\nContact email address:\n",
+        );
+
+        const description = await requestUserInput(
+          "\nProblem description (10 characters minimum):\n",
+        );
+
+        const preferredLanguage = await requestUserInput(
+          "\nPreferred communication language (either 'en' or 'fr'):\n",
+        );
+
+        console.info("\nGenerating access token...");
+
+        const accessToken = await generateAccessToken(
+          IDENTITY_PROVIDER_URL,
+          PROJECT_IDENTIFIER,
+          privateApiKey,
+        );
+
+        const apiClient = new GCFormsApiClient(GCFORMS_API_URL, accessToken);
+
+        console.info("\nReporting form submission...");
+
+        const problem: FormSubmissionProblem = {
+          contactEmail,
+          description,
+          preferredLanguage,
+        };
+
+        await apiClient.reportProblemWithFormSubmission(
+          formId,
+          submissionName,
+          problem,
+        );
+
+        console.info("\nSubmission has been reported");
+        break;
+      }
       default: {
         console.info("\nGenerating access token...");
 

@@ -1,5 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 
 namespace dotnet
 {
@@ -88,6 +90,25 @@ namespace dotnet
       catch (Exception exception)
       {
         throw new Exception("Failed to confirm form submission", exception);
+      }
+    }
+
+    public async Task ReportProblemWithFormSubmission(string formId, string submissionName, FormSubmissionProblem problem)
+    {
+      try
+      {
+        HttpResponseMessage response = await this
+          .httpClient
+          .PostAsync(
+            $"/forms/{formId}/submission/{submissionName}/problem",
+            new StringContent(JsonSerializer.Serialize(problem), Encoding.UTF8, "application/json")
+          );
+
+        response.EnsureSuccessStatusCode();
+      }
+      catch (Exception exception)
+      {
+        throw new Exception("Failed to report problem with form submission", exception);
       }
     }
   }
