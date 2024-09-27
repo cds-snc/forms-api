@@ -10,11 +10,22 @@
     },
     "ghcr.io/devcontainers/features/node:1": {
       "version": "22.5.1"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12",
+      "installTools": false
     }
   },
   "customizations": {
     "vscode": {
-      "extensions": ["github.copilot", "github.vscode-github-actions"]
+      "extensions": [
+        "github.copilot",
+        "github.vscode-github-actions",
+        "biomejs.biome",
+        "vitest.explorer",
+        "ms-python.python",
+        "ms-python.black-formatter"
+      ]
     }
   },
   "appPort": [3001],
