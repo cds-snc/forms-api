@@ -40,7 +40,7 @@ const getAccessToken = async () => {
     .setIssuer(serviceUserId)
     .setSubject(serviceUserId)
     .setAudience(process.env.IDENTITY_PROVIDER ?? "")
-    .setExpirationTime("1h")
+    .setExpirationTime("1 minute")
     .sign(privateKey);
 
   return axios

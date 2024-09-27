@@ -8,3 +8,4 @@ build/
 *private_api_key.json
 bin/
 obj/
+__pycache__/

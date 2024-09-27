@@ -28,6 +28,7 @@ Selection (1):
           default:
             {
               Console.WriteLine("\nGenerating access token...");
+
               string accessToken = await AccessTokenGenerator.Generate(IDENTITY_PROVIDER_URL, PROJECT_IDENTIFIER, privateApiKey);
 
               Console.WriteLine("\nGenerated access token:");

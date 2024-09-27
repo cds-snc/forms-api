@@ -1,9 +1,5 @@
 import axios, { type AxiosInstance } from "axios";
-import type {
-  EncryptedFormSubmission,
-  FormTemplate,
-  NewFormSubmission,
-} from "./types.js";
+import type { EncryptedFormSubmission, NewFormSubmission } from "./types.js";
 
 export class GCFormsApiClient {
   private httpClient: AxiosInstance;
@@ -16,9 +12,9 @@ export class GCFormsApiClient {
     });
   }
 
-  public getFormTemplate(formId: string): Promise<FormTemplate> {
+  public getFormTemplate(formId: string): Promise<Record<string, unknown>> {
     return this.httpClient
-      .get<FormTemplate>(`/forms/${formId}/template`)
+      .get<Record<string, unknown>>(`/forms/${formId}/template`)
       .then((response) => response.data)
       .catch((error) => {
         throw new Error("Failed to retrieve form template", { cause: error });

@@ -16,7 +16,7 @@ export function generateAccessToken(
     .setIssuer(privateApiKey.userId)
     .setSubject(privateApiKey.userId)
     .setAudience(identityProviderUrl)
-    .setExpirationTime("1h");
+    .setExpirationTime("1 minute");
 
   return jsonWebTokenSigner
     .sign(privateKey)
