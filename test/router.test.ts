@@ -157,7 +157,24 @@ describe("router should", () => {
       ":submissionName format is not valid (testing %s)",
       async (submissionName: string) => {
         const response = await request(server).get(
-          `/forms/${submissionName}/submission/05-09-5e1a`,
+          `/forms/cm05mxdua0003moy60gc0cp8n/submission/${submissionName}`,
+        );
+        expect(response.status).toBe(404);
+      },
+    );
+
+    it.each([
+      "invalid",
+      "42394-cd01-421a-96bf-2c972f012",
+      "4239462c-cd-42-96bf-2c97a552f012",
+      "4239462c-cd01-421a-2c97a552f012",
+      "4239462c-cd01-421a-96bf-2c97a552f01",
+      "4239462-cd01-421a-96bf-2c97a552f012",
+    ])(
+      ":confirmationCode format is not valid (testing %s)",
+      async (confirmationCode: string) => {
+        const response = await request(server).put(
+          `/forms/cm05mxdua0003moy60gc0cp8n/submission/05-09-5e1a/confirm/${confirmationCode}`,
         );
         expect(response.status).toBe(404);
       },
