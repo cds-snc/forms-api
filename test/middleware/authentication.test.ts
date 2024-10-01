@@ -113,4 +113,14 @@ describe("authenticationMiddleware should", () => {
       "Access token has expired",
     );
   });
+
+  it("pass error to next function when processing fails due to internal error", async () => {
+    verifyAccessTokenMock.mockRejectedValueOnce(new Error("custom error"));
+
+    await authenticationMiddleware(requestMock, responseMock, nextMock);
+
+    expect(nextMock).toHaveBeenCalledWith(
+      new Error("[middleware] Internal error while authenticating user"),
+    );
+  });
 });

@@ -77,4 +77,20 @@ describe("requestValidatorMiddleware should", () => {
       ],
     });
   });
+
+  it("pass error to next function when processing fails due to internal error", async () => {
+    validationResultMock.mockReturnValueOnce({
+      array: vi.fn().mockReturnValue(new Error("custom error")),
+    } as Partial<Result<ValidationError>> as Result<ValidationError>);
+
+    await requestValidatorMiddleware({} as Schema)(
+      requestMock,
+      responseMock,
+      nextMock,
+    );
+
+    expect(nextMock).toHaveBeenCalledWith(
+      new Error("[middleware] Internal error while validating request"),
+    );
+  });
 });
