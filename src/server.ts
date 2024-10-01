@@ -11,9 +11,7 @@ const server: Express = express();
 server.use("/", buildRouter());
 
 server.listen(SERVER_PORT, () => {
-  /**
-   * Load some resources in advance to speed up the API execution later on
-   */
+  // Load some resources in advance to speed up the API execution later on
   getApiAuditLogSqsQueueUrl();
   RedisConnector.getInstance();
 

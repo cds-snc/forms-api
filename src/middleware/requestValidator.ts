@@ -15,21 +15,29 @@ export function requestValidatorMiddleware(
     response: Response,
     next: NextFunction,
   ): Promise<void> => {
-    /**
-     * Because of an existing issue we have to run the next two lines of code instead of just the first one.
-     * See https://github.com/express-validator/express-validator/issues/1298
-     */
-    await checkSchema(validationSchema, validationLocations).run(request);
+    try {
+      /**
+       * Because of an existing issue we have to run the next two lines of code instead of just the first one.
+       * See https://github.com/express-validator/express-validator/issues/1298
+       */
+      await checkSchema(validationSchema, validationLocations).run(request);
 
-    const result = validationResult(request);
+      const result = validationResult(request);
 
-    if (result.isEmpty() === false) {
-      response
-        .status(400)
-        .json({ error: "Invalid payload", details: result.array() });
-      return;
+      if (result.isEmpty() === false) {
+        response
+          .status(400)
+          .json({ error: "Invalid payload", details: result.array() });
+        return;
+      }
+
+      next();
+    } catch (error) {
+      next(
+        new Error("[middleware] Internal error while validating request", {
+          cause: error,
+        }),
+      );
     }
-
-    next();
   };
 }

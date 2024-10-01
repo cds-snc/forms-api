@@ -1,15 +1,18 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@lib/vault/types/exceptions.js";
 import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
-import { logMessage } from "@lib/logging/logger.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
-async function main(request: Request, response: Response): Promise<void> {
+async function main(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+): Promise<void> {
   const formId = request.params.formId;
   const submissionName = request.params.submissionName;
   const confirmationCode = request.params.confirmationCode;
@@ -39,12 +42,12 @@ async function main(request: Request, response: Response): Promise<void> {
         response.status(400).json({ error: "Confirmation code is incorrect" });
         break;
       default: {
-        logMessage.error(
-          error,
-          `[operation] Internal error while confirming submission. Params: formId = ${formId} ; submissionName = ${submissionName} ; confirmationCode = ${confirmationCode}`,
+        next(
+          new Error(
+            `[operation] Internal error while confirming submission. Params: formId = ${formId} ; submissionName = ${submissionName} ; confirmationCode = ${confirmationCode}`,
+            { cause: error },
+          ),
         );
-
-        response.sendStatus(500);
         break;
       }
     }
