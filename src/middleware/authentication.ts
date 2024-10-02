@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { verifyAccessToken } from "@lib/idp/verifyAccessToken.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
-import { logMessage } from "@lib/logging/logger.js";
 
 export async function authenticationMiddleware(
   request: Request,
@@ -53,11 +52,10 @@ export async function authenticationMiddleware(
 
     next();
   } catch (error) {
-    logMessage.error(
-      error,
-      "[middleware] Internal error while authenticating user",
+    next(
+      new Error("[middleware] Internal error while authenticating user", {
+        cause: error,
+      }),
     );
-
-    response.sendStatus(500);
   }
 }

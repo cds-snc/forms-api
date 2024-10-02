@@ -7,7 +7,6 @@ import {
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@lib/vault/types/exceptions.js";
 import { confirmSubmissionOperation } from "@operations/confirmSubmission.js";
-import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
@@ -105,10 +104,8 @@ describe("confirmSubmissionOperation handler should", () => {
     });
   });
 
-  it("respond with error when processing fails due to internal error", async () => {
-    const customError = new Error("custom error");
-    confirmFormSubmissionMock.mockRejectedValueOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+  it("pass error to next function when processing fails due to internal error", async () => {
+    confirmFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
 
     await confirmSubmissionOperation.handler(
       requestMock,
@@ -116,10 +113,8 @@ describe("confirmSubmissionOperation handler should", () => {
       nextMock,
     );
 
-    expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
-    expect(logMessageSpy).toHaveBeenCalledWith(
-      customError,
-      expect.stringContaining(
+    expect(nextMock).toHaveBeenCalledWith(
+      new Error(
         "[operation] Internal error while confirming submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571 ; confirmationCode = 620b203c-9836-4000-bf30-1c3bcc26b834",
       ),
     );

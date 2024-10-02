@@ -1,10 +1,13 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
-import { logMessage } from "@lib/logging/logger.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
-async function main(request: Request, response: Response): Promise<void> {
+async function main(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+): Promise<void> {
   const formId = request.params.formId;
   const serviceUserId = request.serviceUserId;
 
@@ -20,12 +23,12 @@ async function main(request: Request, response: Response): Promise<void> {
 
     response.json(formTemplate.jsonConfig);
   } catch (error) {
-    logMessage.error(
-      error,
-      `[operation] Internal error while retrieving template. Params: formId = ${formId}`,
+    next(
+      new Error(
+        `[operation] Internal error while retrieving template. Params: formId = ${formId}`,
+        { cause: error },
+      ),
     );
-
-    response.sendStatus(500);
   }
 }
 

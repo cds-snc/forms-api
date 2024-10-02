@@ -2,7 +2,6 @@ import { vi, describe, beforeEach, it, expect } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
 import { retrieveNewSubmissionsOperation } from "@operations/retrieveNewSubmissions.js";
-import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
@@ -78,10 +77,8 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
     );
   });
 
-  it("respond with error when processing fails due to internal error", async () => {
-    const customError = new Error("custom error");
-    getNewFormSubmissionsMock.mockRejectedValueOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+  it("pass error to next function when processing fails due to internal error", async () => {
+    getNewFormSubmissionsMock.mockRejectedValueOnce(new Error("custom error"));
 
     await retrieveNewSubmissionsOperation.handler(
       requestMock,
@@ -89,10 +86,8 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       nextMock,
     );
 
-    expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
-    expect(logMessageSpy).toHaveBeenCalledWith(
-      customError,
-      expect.stringContaining(
+    expect(nextMock).toHaveBeenCalledWith(
+      new Error(
         "[operation] Internal error while retrieving new submissions. Params: formId = clzsn6tao000611j50dexeob0",
       ),
     );

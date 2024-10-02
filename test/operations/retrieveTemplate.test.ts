@@ -2,7 +2,6 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { retrieveTemplateOperation } from "@operations/retrieveTemplate.js";
-import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
@@ -78,10 +77,8 @@ describe("retrieveTemplateOperation handler should", () => {
     });
   });
 
-  it("respond with error when processing fails due to internal error", async () => {
-    const customError = new Error("custom error");
-    getFormTemplateMock.mockRejectedValueOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+  it("pass error to next function when processing fails due to internal error", async () => {
+    getFormTemplateMock.mockRejectedValueOnce(new Error("custom error"));
 
     await retrieveTemplateOperation.handler(
       requestMock,
@@ -89,10 +86,8 @@ describe("retrieveTemplateOperation handler should", () => {
       nextMock,
     );
 
-    expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
-    expect(logMessageSpy).toHaveBeenCalledWith(
-      customError,
-      expect.stringContaining(
+    expect(nextMock).toHaveBeenCalledWith(
+      new Error(
         "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0",
       ),
     );

@@ -7,7 +7,6 @@ import {
 } from "@lib/vault/types/exceptions.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { reportSubmissionOperation } from "@operations/reportSubmission.js";
-import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
@@ -155,10 +154,10 @@ describe("reportSubmissionOperation", () => {
       });
     });
 
-    it("respond with error when processing fails due to internal error caused by the reportProblemWithFormSubmission function", async () => {
-      const customError = new Error("custom error");
-      reportProblemWithFormSubmissionMock.mockRejectedValueOnce(customError);
-      const logMessageSpy = vi.spyOn(logMessage, "error");
+    it("pass error to next function when processing fails due to internal error caused by the reportProblemWithFormSubmission function", async () => {
+      reportProblemWithFormSubmissionMock.mockRejectedValueOnce(
+        new Error("custom error"),
+      );
 
       await reportSubmissionOperation.handler(
         requestMock,
@@ -166,21 +165,17 @@ describe("reportSubmissionOperation", () => {
         nextMock,
       );
 
-      expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
-      expect(logMessageSpy).toHaveBeenCalledWith(
-        customError,
-        expect.stringContaining(
+      expect(nextMock).toHaveBeenCalledWith(
+        new Error(
           "[operation] Internal error while reporting problem with submission: Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571",
         ),
       );
     });
 
-    it("respond with error when processing fails due to internal error caused by the notifySupportAboutFormSubmissionProblem function", async () => {
-      const customError = new Error("custom error");
+    it("pass error to next function when processing fails due to internal error caused by the notifySupportAboutFormSubmissionProblem function", async () => {
       notifySupportAboutFormSubmissionProblemMock.mockRejectedValueOnce(
-        customError,
+        new Error("custom error"),
       );
-      const logMessageSpy = vi.spyOn(logMessage, "error");
 
       await reportSubmissionOperation.handler(
         requestMock,
@@ -188,10 +183,8 @@ describe("reportSubmissionOperation", () => {
         nextMock,
       );
 
-      expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
-      expect(logMessageSpy).toHaveBeenCalledWith(
-        customError,
-        expect.stringContaining(
+      expect(nextMock).toHaveBeenCalledWith(
+        new Error(
           "[operation] Internal error while reporting problem with submission: Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571",
         ),
       );

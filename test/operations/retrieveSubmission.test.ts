@@ -3,7 +3,6 @@ import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js";
 import { retrieveSubmissionOperation } from "@operations/retrieveSubmission.js";
-import { logMessage } from "@lib/logging/logger.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
@@ -89,10 +88,8 @@ describe("retrieveSubmissionOperation handler should", () => {
     );
   });
 
-  it("respond with error when processing fails due to internal error", async () => {
-    const customError = new Error("custom error");
-    getFormSubmissionMock.mockRejectedValueOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+  it("pass error to next function when processing fails due to internal error", async () => {
+    getFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
 
     await retrieveSubmissionOperation.handler(
       requestMock,
@@ -100,10 +97,8 @@ describe("retrieveSubmissionOperation handler should", () => {
       nextMock,
     );
 
-    expect(responseMock.sendStatus).toHaveBeenCalledWith(500);
-    expect(logMessageSpy).toHaveBeenCalledWith(
-      customError,
-      expect.stringContaining(
+    expect(nextMock).toHaveBeenCalledWith(
+      new Error(
         "[operation] Internal error while retrieving submission. Params: formId = clzsn6tao000611j50dexeob0 ; submissionName = 01-08-a571",
       ),
     );

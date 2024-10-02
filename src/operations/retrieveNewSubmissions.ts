@@ -1,12 +1,15 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
-import { logMessage } from "@lib/logging/logger.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
 const MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS: number = 100;
 
-async function main(request: Request, response: Response): Promise<void> {
+async function main(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+): Promise<void> {
   const formId = request.params.formId;
   const serviceUserId = request.serviceUserId;
 
@@ -24,12 +27,12 @@ async function main(request: Request, response: Response): Promise<void> {
 
     response.json(newFormSubmissions);
   } catch (error) {
-    logMessage.error(
-      error,
-      `[operation] Internal error while retrieving new submissions. Params: formId = ${formId}`,
+    next(
+      new Error(
+        `[operation] Internal error while retrieving new submissions. Params: formId = ${formId}`,
+        { cause: error },
+      ),
     );
-
-    response.sendStatus(500);
   }
 }
 

@@ -1,4 +1,8 @@
-import express, { type Request, type Response } from "express";
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from "express";
 import { ENVIRONMENT_MODE, EnvironmentMode } from "@config";
 import type { Schema } from "express-validator";
 import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
@@ -32,7 +36,11 @@ const validationSchema: Schema = {
   },
 };
 
-async function main(request: Request, response: Response): Promise<void> {
+async function main(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+): Promise<void> {
   const formId = request.params.formId;
   const submissionName = request.params.submissionName;
   const serviceUserId = request.serviceUserId;
@@ -77,12 +85,12 @@ async function main(request: Request, response: Response): Promise<void> {
           .json({ info: "Form submission is already reported as problematic" });
         break;
       default: {
-        logMessage.error(
-          error,
-          `[operation] Internal error while reporting problem with submission: Params: formId = ${formId} ; submissionName = ${submissionName}`,
+        next(
+          new Error(
+            `[operation] Internal error while reporting problem with submission: Params: formId = ${formId} ; submissionName = ${submissionName}`,
+            { cause: error },
+          ),
         );
-
-        response.sendStatus(500);
         break;
       }
     }
