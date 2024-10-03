@@ -3,10 +3,9 @@
   "files": {
     "ignore": [
       "**/build/**",
+      "node_modules/**",
       "package.json",
-      "pnpm-lock.yaml",
-      "utilTokenGeneration.mjs",
-      "node_modules/**"
+      "pnpm-lock.yaml"
     ]
   },
   "organizeImports": {
