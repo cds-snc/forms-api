@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@types/node':
         specifier: ^22.7.4
-        version: 22.7.4
+        version: 22.7.5
       axios:
         specifier: ^1.7.7
         version: 1.7.7
@@ -19,7 +19,7 @@ importers:
         version: 16.4.5
       jose:
         specifier: ^5.9.3
-        version: 5.9.3
+        version: 5.9.4
       pino:
         specifier: ^9.4.0
         version: 9.4.0
@@ -28,7 +28,7 @@ importers:
         version: 4.19.1
       typescript:
         specifier: ^5.6.2
-        version: 5.6.2
+        version: 5.6.3
     devDependencies:
       pino-pretty:
         specifier: ^11.2.2
@@ -180,8 +180,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@types/node@22.7.4':
-    resolution: {integrity: sha512-y+NPi1rFzDs1NdQHHToqeiX2TIS79SWEAw9GYhkkx8bD0ChpfqC+n2j5OXOCpzfojBEBt6DnEnnG9MY0zk1XLg==}
+  '@types/node@22.7.5':
+    resolution: {integrity: sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==}
 
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -256,8 +256,8 @@ packages:
       debug:
         optional: true
 
-  form-data@4.0.0:
-    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
+  form-data@4.0.1:
+    resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
     engines: {node: '>= 6'}
 
   fsevents@2.3.3:
@@ -274,8 +274,8 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
-  jose@5.9.3:
-    resolution: {integrity: sha512-egLIoYSpcd+QUF+UHgobt5YzI2Pkw/H39ou9suW687MY6PmCwPmkNV/4TNjn1p2tX5xO3j0d0sq5hiYE24bSlg==}
+  jose@5.9.4:
+    resolution: {integrity: sha512-WBBl6au1qg6OHj67yCffCgFR3BADJBXN8MdRvCgJDuMv3driV2nHr7jdGvaKX9IolosAsn+M0XRArqLXUhyJHQ==}
 
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -372,8 +372,8 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  typescript@5.6.2:
-    resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -457,7 +457,7 @@ snapshots:
   '@esbuild/win32-x64@0.23.1':
     optional: true
 
-  '@types/node@22.7.4':
+  '@types/node@22.7.5':
     dependencies:
       undici-types: 6.19.8
 
@@ -472,7 +472,7 @@ snapshots:
   axios@1.7.7:
     dependencies:
       follow-redirects: 1.15.9
-      form-data: 4.0.0
+      form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -539,7 +539,7 @@ snapshots:
 
   follow-redirects@1.15.9: {}
 
-  form-data@4.0.0:
+  form-data@4.0.1:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -556,7 +556,7 @@ snapshots:
 
   ieee754@1.2.1: {}
 
-  jose@5.9.3: {}
+  jose@5.9.4: {}
 
   joycon@3.1.1: {}
 
@@ -666,7 +666,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  typescript@5.6.2: {}
+  typescript@5.6.3: {}
 
   undici-types@6.19.8: {}
 
