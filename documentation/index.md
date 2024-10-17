@@ -1,3 +1,5 @@
+theme: jekyll-theme-minimal
+
 # GC Forms API Documentation
 (Version 1 - Pilot/trial - Limited to prototyping partners only)
 
