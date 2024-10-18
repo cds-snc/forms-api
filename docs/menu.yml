@@ -1,0 +1,19 @@
+en:
+  landing:
+    name: "Home"
+    url: "/"
+  getting-started:
+    name: "Getting started"
+    url: "/getting-started/"
+  authentication:
+    name: "Authentication"
+    url: "/authentication/"
+  making-requests:
+    name: "Making requests"
+    url: "/making-requests/"
+  monitoring:
+    name: "Monitoring"
+    url: "/monitoring/"
+  contact:
+    name: "Getting support"
+    url: "/getting-support/"
