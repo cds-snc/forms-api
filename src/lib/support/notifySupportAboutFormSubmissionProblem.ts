@@ -43,6 +43,8 @@ function tagFromEnvironmentMode(environmentMode: EnvironmentMode): string {
       return "Forms_Staging";
     case EnvironmentMode.Production:
       return "Forms_Production";
+    default:
+      throw new Error(`Unsupported environment mode: ${environmentMode}`);
   }
 }
 
