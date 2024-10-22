@@ -1,26 +1,12 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { type RedisClientType, createClient } from "redis";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as redisModule from "redis";
 import { RedisConnector } from "@lib/integration/redisConnector.js";
 
-vi.mock("redis", () => {
-  const client = {
-    connect: vi.fn().mockResolvedValue({}),
-    quit: vi.fn(),
-    on: vi.fn().mockReturnThis(),
-  };
-  return {
-    createClient: vi.fn(() => client),
-  };
-});
+const redisCreateClientSpy = vi.spyOn(redisModule, "createClient");
 
 describe("RedisConnector should", () => {
-  let redisClientMock: RedisClientType;
-
   beforeEach(() => {
-    redisClientMock = createClient();
-  });
-
-  afterEach(() => {
     vi.clearAllMocks();
   });
 
@@ -28,6 +14,6 @@ describe("RedisConnector should", () => {
     await RedisConnector.getInstance();
     await RedisConnector.getInstance();
 
-    expect(redisClientMock.connect).toHaveBeenCalledOnce();
+    expect(redisCreateClientSpy).toHaveBeenCalledOnce();
   });
 });
