@@ -1,4 +1,3 @@
-<h2>Table des matières</h2>
 {% assign mydocs = site.pages | where:"lang","fr" | where:"layout","page" | group_by: 'category' | sort: 'name' %}
 {% for cat in mydocs %}
 <h3>{{ cat.name | capitalize }}</h3>
