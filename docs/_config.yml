@@ -2,7 +2,6 @@ remote_theme: pages-themes/minimal@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 
-
 title: GC Forms API Documentation
 description: This documentation is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system. 
 theme: jekyll-theme-minimal
@@ -27,12 +26,12 @@ subtitle: How to retrieve form submissions from an API endpoint
 # When working locally use jekyll serve --baseurl '' so that you can view everything at localhost:4000
 # See http://jekyllrb.com/docs/github-pages/ for more info
 #baseurl: ''
-baseurl: '/api-documentation'
+baseurl: '/forms-api'
 
 # Author/Organization info to be displayed in the templates
 author:
-  name: Canadian Digital Service
-  url: https://digital.canada.ca
+  name: GC Forms
+  url: https://articles.alpha.canada.ca/forms-formulaires/
 
 # Point the logo URL at a file in your repo or hosted elsewhere by your organization
 logourl:
@@ -46,7 +45,7 @@ repos:
   url: https://github.com/cds-snc/forms-api
 
 # Style Variables
-brand_color: "#FFCC3D"
+brand_color: "#26374A"
 
 # Offline caching
 offline_cache: false
