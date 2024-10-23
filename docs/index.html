@@ -3,6 +3,6 @@ layout: default
 lang: en
 trans_url: /accueil
 ---
-
+{% include navigation.html %}
 {% capture index %}{% include index.md %}{% endcapture %}
 {{ index | markdownify }}
