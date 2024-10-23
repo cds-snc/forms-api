@@ -11,7 +11,7 @@ en:
 fr:
   homepage-tag-line: "Documentation technique"
   cds-snc: "Formulaires GC"
-  cds-snc-url: "https://articles.alpha.canada.ca/forms-formulaires/fr"
+  cds-snc-url: "https://articles.alpha.canada.ca/forms-formulaires/fr/"
   built-by: "Cette documentation a été conçue pour les développeurs qui utilisent"
   contribute: "Contribuer à cette documentation"
   repo: "Référentiel"
