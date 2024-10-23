@@ -1,6 +1,3 @@
-# GC Forms API Documentation
-(Version 1 - Pilot/trial - Limited to prototyping partners only)
-
 ## Welcome 
 
 Welcome to the first iteration of the GC Forms application programming interface (API) and its technical documentation. This lite version of documentation is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system. 
