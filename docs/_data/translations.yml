@@ -1,5 +1,5 @@
 en:
-  homepage-tag-line: ""
+  homepage-tag-line: "GC Forms API"
   cds-snc: "Canadian Digital Service"
   cds-snc-url: "https://digital.canada.ca"
   hosting: "Hosted on"
@@ -10,7 +10,7 @@ en:
   homepage-slug: "/home/"
   site-name: "GC Forms - API Documentation"
 fr:
-  homepage-tag-line: ""
+  homepage-tag-line: "API Formulaires GC"
   cds-snc: "Service numérique canadien"
   cds-snc-url: "https://numerique.canada.ca"
   hosting: "Hébergé dans"
