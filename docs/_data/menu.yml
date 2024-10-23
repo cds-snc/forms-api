@@ -1,7 +1,7 @@
 en:
   home:
     name: "Home"
-    url: "/home/"
+    url: "/"
   getting-started:
     name: "Getting started"
     url: "/getting-started/"
@@ -21,7 +21,7 @@ en:
 fr:
   accueil:
     name: "Accueil"
-    url: "/accueil/"
+    url: "/fr"
   getting-started:
     name: "Pour commencer"
     url: "/pour-commencer/"
