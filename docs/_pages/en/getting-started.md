@@ -1,1 +1,1 @@
-Page 2
+GETTING STARTED
