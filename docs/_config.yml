@@ -1,7 +1,4 @@
 # Base configuration
-remote_theme: pages-themes/minimal@v0.2.0
-plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 markdown: kramdown
 highlighter: rouge
@@ -11,21 +8,29 @@ collections:
     output: true
     permalink: /:path/
 
+# Theme
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+
 # Title
-title: GC Forms API Documentation
-description: This documentation is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system. 
+name: GC Forms API Documentation
+subtitle: This documentation is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system. 
 
 # When using this template with a project page set the baseurl to '/project-name'
 # For user/organization pages set this to an empty string
 # When working locally use jekyll serve --baseurl '' so that you can view everything at localhost:4000
 # See http://jekyllrb.com/docs/github-pages/ for more info
 #baseurl: ''
-baseurl: '/forms-api/docs'
+baseurl: '/forms-api'
 
 # Author/Organization info to be displayed in the templates
 author:
   name: GC Forms
   url: https://articles.alpha.canada.ca/forms-formulaires/
+author2:
+  name: Canadian Digital Service
+  url: https://digital.canada.ca
 
 # Point the logo URL at a file in your repo or hosted elsewhere by your organization
 logourl:
