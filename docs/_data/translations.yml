@@ -1,5 +1,5 @@
 en:
-  homepage-tag-line: "Technical documentation"
+  homepage-tag-line: ""
   cds-snc: "GC Forms"
   cds-snc-url: "https://articles.alpha.canada.ca/forms-formulaires/"
   built-by: "This documentation was built for developers using"
@@ -7,9 +7,9 @@ en:
   repo: "Repository"
   language: "Français"
   homepage-slug: "/home/"
-  site-name: "API Documentation - GC Forms"
+  site-name: "GC Forms API"
 fr:
-  homepage-tag-line: "Documentation technique"
+  homepage-tag-line: ""
   cds-snc: "Formulaires GC"
   cds-snc-url: "https://articles.alpha.canada.ca/forms-formulaires/fr/"
   built-by: "Cette documentation a été conçue pour les développeurs qui utilisent"
@@ -17,4 +17,4 @@ fr:
   repo: "Référentiel"
   language: "English"
   homepage-slug: "/accueil/"
-  site-name: "Documentation API - Formulaires GC"
+  site-name: "API Formulaires GC"
