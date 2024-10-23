@@ -2,7 +2,7 @@
     <h2>{{site.data.translations[page.lang].repo}}</h2>
     <ul class="repo-list group">
       <li class="list-icon">
-        <img src="https://raw.githubusercontent.com/cds-snc/forms-api/docs/assets/img/octocat.png" width="25px" alt="">
+        <img src="/assets/img/octocat.png" width="25px" alt="">
       </li>
       {% for repo in site.data.repos[page.lang] %}
         <li>
@@ -13,4 +13,5 @@
         </li>
       {% endfor %}
     </ul>
+    <p>{{site.data.translations[page.lang].learn-more}} <a href="{{ site.baseurl }}{{site.data.translations[page.lang].code-and-repo-slug}}">{{site.data.translations[page.lang].code-and-repo}}</a>.</p>
   </section>
