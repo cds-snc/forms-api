@@ -6,9 +6,9 @@ from gc_forms_api_client import GCFormsApiClient
 from form_submission_decrypter import FormSubmissionDecrypter
 from form_submission_integrity_verifier import FormSubmissionVerifier
 
-IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz"
-PROJECT_IDENTIFIER = "275372254274006635"
-GCFORMS_API_URL = "https://api.forms-staging.cdssandbox.xyz"
+IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca"
+PROJECT_IDENTIFIER = "284778202772022819"
+GCFORMS_API_URL = "https://api.forms-formulaires.alpha.canada.ca"
 
 
 def main() -> None:
