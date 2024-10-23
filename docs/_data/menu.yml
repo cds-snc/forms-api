@@ -1,5 +1,5 @@
 en:
-  landing:
+  home:
     name: "Home"
     url: "/home"
   getting-started:
@@ -19,7 +19,7 @@ en:
     url: "/getting-support/"
 
 fr:
-  landing:
+  accueil:
     name: "Accueil"
     url: "/accueil"
   getting-started:
