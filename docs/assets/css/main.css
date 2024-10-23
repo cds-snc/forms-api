@@ -35,7 +35,7 @@ Typography
 */
 
 body {
-    font-family: "Arial", sans-serif;
+    font-family: "Avenir Next", Arial, sans-serif;
     font-weight: 400;
     font-style: normal;
     line-height: 1.466666667;
@@ -46,13 +46,13 @@ h3,
 h4,
 h5,
 strong {
-    font-family: "Arial";
+    font-family: "Avenir Next Demi", "Avenir Next", Arial, sans-serif;
     font-weight: 600;
 }
 
 .site-title {
     font-size: 1.625em;
-    font-family: "Arial";
+    font-family: "Avenir Next", Arial, sans-serif;
     font-weight: normal;
     color: vc;
     margin: 0;
