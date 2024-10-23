@@ -14,7 +14,7 @@ plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 
 # Title
-name: GC Forms API Documentation
+name: GC Forms API
 subtitle: This documentation is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system. 
 
 # When using this template with a project page set the baseurl to '/project-name'
