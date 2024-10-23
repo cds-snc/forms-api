@@ -6,7 +6,7 @@ en:
   contribute: "Contribute to this documentation"
   repo: "Repository"
   language: "Français"
-  homepage-slug: "/"
+  homepage-slug: "/home/"
   site-name: "GC Forms data retrieval API"
 fr:
   homepage-tag-line: "Documentation technique"
