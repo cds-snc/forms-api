@@ -1,10 +1,8 @@
 remote_theme: pages-themes/minimal@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
-
 title: GC Forms API Documentation
 description: This documentation is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system. 
-theme: jekyll-theme-minimal
 
 
 # Base configuration
