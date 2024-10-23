@@ -1,7 +1,7 @@
 en:
   landing:
     name: "Home"
-    url: "/"
+    url: "/home"
   getting-started:
     name: "Getting started"
     url: "/getting-started/"
@@ -17,3 +17,23 @@ en:
   contact:
     name: "Getting support"
     url: "/getting-support/"
+
+fr:
+  landing:
+    name: "Accueil"
+    url: "/accueil"
+  getting-started:
+    name: "Pour commencer"
+    url: "/pour-commencer/"
+  authentication:
+    name: "Authentification"
+    url: "/authentification/"
+  making-requests:
+    name: "Faire des requêtes"
+    url: "/faire-des-requetes/"
+  monitoring:
+    name: "Surveiller"
+    url: "/surveiller/"
+  contact:
+    name: "Obtenir du soutien"
+    url: "/obtenir-du-soutien/"
