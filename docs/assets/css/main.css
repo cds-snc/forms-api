@@ -12,8 +12,6 @@ Normalize the box model
 ==================================
 */
 
-<link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
-
 *,
 *:before,
 *:after {
@@ -35,6 +33,7 @@ html, body {
 Typography
 ==================================
 */
+<link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
 
 body {
     font-family: "Noto Sans", sans-serif;
