@@ -32,9 +32,6 @@ author2:
   name: Canadian Digital Service
   url: https://digital.canada.ca
 
-# Point the logo URL at a file in your repo or hosted elsewhere by your organization
-logourl:
-
 # Repo list
 # List repos that you would like to appear on the homepage here
 repos:
