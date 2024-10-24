@@ -1,0 +1,13 @@
+<ul class="sub-menu">
+  {% for childPage in sitePage.childPages %} {% for childrenPage in
+  site[page.lang] %} {% if childrenPage.title == childPage or sitePage.trans_url
+  == childPage %}
+  <li
+    class="sub-link {% if childrenPage.url == page.url %}sidebar-nav-active{% endif %}"
+  >
+    <a href="{{ site.baseurl }}{{ childrenPage.url }}"
+      >{{ childrenPage.title }}</a
+    >
+  </li>
+  {% endif %} {% endfor %} {% endfor %}
+</ul>
