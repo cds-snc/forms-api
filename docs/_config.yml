@@ -1,7 +1,16 @@
 # Base configuration
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 markdown: kramdown
+lsi: false
+safe: true
+source: [your repo's top level directory]
+incremental: false
 highlighter: rouge
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
 
 collections:
   pages:
