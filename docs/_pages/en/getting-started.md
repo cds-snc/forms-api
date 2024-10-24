@@ -6,11 +6,11 @@ permalink: "/getting-started/"
 trans_url: "/pour-commencer/"
 ---
 
-## Overview
+### Overview
 
 The purpose of the GC Forms API is to allow you to securely and reliably retrieve form submissions directly from an API endpoint. Our hope is that this will eventually alleviate the level of effort associated with the retrieval of data and the tedious confirmation flows for high volumes of form submissions. So, rather than having to manually download and sign off on the removal of responses to confirm their retrieval from the database, the API will automate the workflow with systems that talk to each other and exchange data. 
 
-## What you will need
+### What you will need
 
 - A [GC Forms staging account](https://forms-staging.cdssandbox.xyz/) (used for temporary testing only)
 - A form set to deliver responses via “Download” in Settings 
@@ -22,7 +22,7 @@ The purpose of the GC Forms API is to allow you to securely and reliably retriev
 ^ No infrastructure development capabilities available? 
 ^ This first version of the API might not be ready for you just yet. Consider choosing an alternative no-code delivery option to get responses by email or download them from GC Forms instead.
 
-## Getting the API key 
+### Getting the API key 
 
 **To create an API key for this initial integration testing:**
 1. Sign in to [GC Forms staging](https://forms-staging.cdssandbox.xyz/) (used for temporary testing only).
