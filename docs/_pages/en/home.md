@@ -1,12 +1,10 @@
 ---
 layout: page
-title:  "Home"
+title:  "Welcome"
 lang: en
 permalink: "/home/"
 trans_url: "/accueil/"
 ---
-
-### Welcome
 
 Welcome to the first iteration of the GC Forms application programming interface (API) and its technical documentation. This version of the documentation is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system.
 
