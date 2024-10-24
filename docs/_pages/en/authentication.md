@@ -22,7 +22,7 @@ Authentication is done through an opaque token, with basic authorization handled
 
 The API requires authentication with a Government of Canada email, an associated **formID**, a JWT signed with a **Private key** and verified using a **Public key** with the IDP. This token contains a claim to specify the form ID from which it is associated.
 
-### Integration examples
+## Integration examples
 
 Once you’ve created a form, you can submit mock form submissions to simulate an active form and be able to test the integration. 
 
@@ -32,7 +32,7 @@ Use these examples as a reference to generate access tokens in your preferred pr
 - [Python](https://github.com/cds-snc/forms-api/blob/main/examples/python/access_token_generator.py)
 - [Bash /Curl](https://github.com/cds-snc/forms-api/blob/main/examples/bash/get_access_token.sh)
 
-### Authorization header
+## Authorization header
 
 Use this header for each API request to verify it’s you:
 
