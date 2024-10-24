@@ -6,6 +6,17 @@
       {% for menu in site.data.menu[page.lang] %}
           <li><a href="{{ site.baseurl }}{{ menu[1].url }}">{{ menu[1].name }}</a></li>
       {% endfor %}
+            {% if sitePage.title == item.menuItem or  sitePage.trans_url == item.menuItem %}
+              <li {% if sitePage.url == page.url %}class="sidebar-nav-active"{% endif %}>
+                <a href="{{ site.baseurl }}{{ sitePage.url }}">{{ sitePage.title }}</a>
+                {% if sitePage.childPages %}
+                  {% include submenu.html %}
+                {% endif %}
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
     </ul>
   </nav>
 </aside>
