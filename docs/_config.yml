@@ -46,7 +46,7 @@ subtitle: This documentation is for developers who want to use the GC Forms API 
 # When working locally use jekyll serve --baseurl '' so that you can view everything at localhost:4000
 # See http://jekyllrb.com/docs/github-pages/ for more info
 #baseurl: ''
-baseurl: '/forms-api/'
+baseurl: '/forms-api'
 
 # Author/Organization info to be displayed in the templates
 author:
