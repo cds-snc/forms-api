@@ -5,5 +5,3 @@ lang: fr
 permalink: "/surveiller/"
 trans_url: "/monitoring/"
 ---
-
-Surveiller
