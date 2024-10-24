@@ -30,6 +30,7 @@
     "jose": "^5.9.3",
     "pg-promise": "^11.9.1",
     "pino": "^9.4.0",
+    "rate-limiter-flexible": "^5.0.4",
     "redis": "^4.7.0"
   },
   "devDependencies": {

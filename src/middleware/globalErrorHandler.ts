@@ -1,12 +1,18 @@
 import type { Request, Response, NextFunction } from "express";
 import { logMessage } from "@lib/logging/logger.js";
+import { refundConsumedToken } from "@lib/rateLimiting/tokenBucketLimiter.js";
 
-export function globalErrorHandlerMiddleware(
+export async function globalErrorHandlerMiddleware(
   error: Error,
-  _request: Request,
+  request: Request,
   response: Response,
   _next: NextFunction,
-): void {
+): Promise<void> {
   logMessage.error(error, "Global unhandled error");
+
+  if (request.tokenConsumedOnFormId !== undefined) {
+    await refundConsumedToken(request.tokenConsumedOnFormId);
+  }
+
   response.sendStatus(500);
 }
