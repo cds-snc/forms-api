@@ -33,14 +33,13 @@ author2:
   url: https://digital.canada.ca
 
 # Point the logo URL at a file in your repo or hosted elsewhere by your organization
-logourl:
-logoalt:
+logourl: https://github.com/cds-snc/platform-forms-client/blob/5c5ec154759b03b815184c04062585748e84d562/components/serverComponents/icons/SiteLogo.tsx#L4
+logoalt: GC Forms logo
 
 # Repo list
 # List repos that you would like to appear on the homepage here
 repos:
 - name: forms-api
-  description: GC Forms API
   url: https://github.com/cds-snc/forms-api
 
 # Style Variables
