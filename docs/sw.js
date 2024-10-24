@@ -6,12 +6,12 @@ importScripts( '{{ site.baseurl }}/cache-polyfill.js' );
 
 var filesToCache = [
   // root
-  '{{ site.baseurl }}/docs/',
-  '{{ site.baseurl }}/docs/index.html',
+  '{{ site.baseurl }}/',
+  '{{ site.baseurl }}/index.html',
   // css
-  '{{ site.baseurl }}/docs/assets/css/main.css',
-  '{{ site.baseurl }}/docs/assets/css/normalize.css',
-  '{{ site.baseurl }}/docs/assets/css/syntax.css',
+  '{{ site.baseurl }}/assets/css/main.css',
+  '{{ site.baseurl }}/assets/css/normalize.css',
+  '{{ site.baseurl }}/assets/css/syntax.css',
   // images
   '{{ site.baseurl }}/assets/img/octocat.png',
   // pages
