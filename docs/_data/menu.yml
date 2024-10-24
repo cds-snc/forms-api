@@ -1,39 +1,39 @@
 en:
   home:
     name: "Home"
-    url: "/home/"
+    url: "home/"
   getting-started:
     name: "Getting started"
-    url: "/getting-started/"
+    url: "getting-started/"
   authentication:
     name: "Authentication"
-    url: "/authentication/"
+    url: "authentication/"
   making-requests:
     name: "Making requests"
-    url: "/making-requests/"
+    url: "making-requests/"
   monitoring:
     name: "Monitoring"
-    url: "/monitoring/"
+    url: "monitoring/"
   contact:
     name: "Getting support"
-    url: "/getting-support/"
+    url: "getting-support/"
 
 fr:
   accueil:
     name: "Accueil"
-    url: "/accueil/"
+    url: "accueil/"
   getting-started:
     name: "Pour commencer"
-    url: "/pour-commencer/"
+    url: "pour-commencer/"
   authentication:
     name: "Authentification"
-    url: "/authentification/"
+    url: "authentification/"
   making-requests:
     name: "Faire des requêtes"
-    url: "/faire-des-requetes/"
+    url: "faire-des-requetes/"
   monitoring:
     name: "Surveiller"
     url: "/surveiller/"
   contact:
     name: "Obtenir du soutien"
-    url: "/obtenir-du-soutien/"
+    url: "obtenir-du-soutien/"
