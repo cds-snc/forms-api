@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title:  "Getting started"
 lang: en
 permalink: "/getting-started/"
