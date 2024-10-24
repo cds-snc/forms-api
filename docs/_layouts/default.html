@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ page.lang }}">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       {% if page.title == null %}
         {{ site.name }}
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/syntax.css">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/custom.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
       <script src="{{ site.baseurl }}/assets/js/respond.min.js"></script>
@@ -45,6 +47,22 @@
         </div>
       </header>
 
+      </head>
+<body>
+  <div class='group'>
+    <header role="banner">
+      <div class='fip-wrapper'>
+        <div class='wrap' id="fip">
+          <div class="flexer">
+            <a href="https://www.canada.ca/{{ page.lang }}.html"
+                class="fip-logo gl-FIP"
+                aria-label="{{ site.data.translations[page.lang]["canada-website"] }}">
+              <object type="image/svg+xml" tabindex="-1" role="img"
+                data="{{ site.baseurl }}/assets/img/goc-header-logo.svg"
+                aria-label="{{ site.data.translations[page.lang]["canada-symbol"] }}"
+                class="goc-logo"></object>
+            </a>
+
       <div class="wrap content">
 
         {% include sidebar.html %}
@@ -54,6 +72,14 @@
         </section>
 
       </div><!-- /.wrap content -->
+
+
+                    <div>
+          <object type="image/svg+xml" tabindex="-1" role="img"
+            data="{{ site.baseurl }}/assets/img/goc-footer-logo.svg"
+            aria-label="{{ site.data.translations[page.lang]["canada-symbol"] }}"
+            class="canada-logo"></object>
+        </div>
 
       <footer role="contentinfo">
         <div class="wrap">
