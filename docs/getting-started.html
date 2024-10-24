@@ -1,0 +1,8 @@
+---
+layout: default
+lang: en
+trans_url: /pour-commencer
+---
+{% include navigation.html %}
+{% capture index %}{% include getting-started.md %}{% endcapture %}
+{{ index | markdownify }}
