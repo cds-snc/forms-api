@@ -8,7 +8,7 @@ en:
   repo: "Repository"
   language: "Français"
   homepage-slug: "/home/"
-  site-name: "GC Forms - Data retrieval API"
+  site-name: "GC Forms — Data retrieval API"
 fr:
   homepage-tag-line: ""
   cds-snc: "Formulaires GC"
@@ -19,4 +19,4 @@ fr:
   repo: "Référentiel"
   language: "English"
   homepage-slug: "/accueil/"
-  site-name: "API pour récupération de données de Formulaires GC"
+  site-name: "API pour la récupération de données — Formulaires GC"
