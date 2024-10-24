@@ -2,8 +2,8 @@
 layout: page
 title:  "Home"
 lang: en
-permalink: "home/"
-trans_url: "accueil/"
+permalink: "/home/"
+trans_url: "/accueil/"
 ---
 
 # Welcome
