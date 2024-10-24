@@ -2,8 +2,8 @@
 layout: page
 title:  "Getting started"
 lang: en
-permalink: "getting-started/"
-trans_url: "pour-commencer/"
+permalink: "/getting-started/"
+trans_url: "/pour-commencer/"
 ---
 
 ### Overview
