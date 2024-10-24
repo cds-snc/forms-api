@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang }}">
+<html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       {% if page.title == null %}
         {{ site.name }}
@@ -16,14 +15,11 @@
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/normalize.css">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/syntax.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/custom.css">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
       <script src="{{ site.baseurl }}/assets/js/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <!-- Common Google Analytics [UA] setup for CDS GitHub Pages websites -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-102484926-22"></script>
     <script>
@@ -47,22 +43,6 @@
         </div>
       </header>
 
-      </head>
-<body>
-  <div class='group'>
-    <header role="banner">
-      <div class='fip-wrapper'>
-        <div class='wrap' id="fip">
-          <div class="flexer">
-            <a href="https://www.canada.ca/{{ page.lang }}.html"
-                class="fip-logo gl-FIP"
-                aria-label="{{ site.data.translations[page.lang]["canada-website"] }}">
-              <object type="image/svg+xml" tabindex="-1" role="img"
-                data="{{ site.baseurl }}/assets/img/goc-header-logo.svg"
-                aria-label="{{ site.data.translations[page.lang]["canada-symbol"] }}"
-                class="goc-logo"></object>
-            </a>
-
       <div class="wrap content">
 
         {% include sidebar.html %}
@@ -73,18 +53,11 @@
 
       </div><!-- /.wrap content -->
 
-
-                    <div>
-          <object type="image/svg+xml" tabindex="-1" role="img"
-            data="{{ site.baseurl }}/assets/img/goc-footer-logo.svg"
-            aria-label="{{ site.data.translations[page.lang]["canada-symbol"] }}"
-            class="canada-logo"></object>
-        </div>
-
       <footer role="contentinfo">
         <div class="wrap">
           <p>{{site.data.translations[page.lang].built-by}} <a href="{{ site.data.translations[page.lang].cds-snc-url }}">{{ site.data.translations[page.lang].cds-snc}}</a>.</p>
-          <p><a href="https://github.com/cds-snc/forms-api">{{site.data.translations[page.lang].contribute}}.</a></p>
+          <p><a href="https://github.com/cds-snc/pspc-documentation">{{site.data.translations[page.lang].contribute}}.</a></p>
+          <p>{{site.data.translations[page.lang].hosting}} <a href="http://pages.github.com/">GitHub Pages</a>.</p>
         </div><!--/.wrap -->
       </footer>
     </div> <!-- /.container -->
