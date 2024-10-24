@@ -1,9 +1,7 @@
 ---
 layout: page
-title:  "Accueil"
+title:  "Bienvenue"
 lang: fr
 permalink: "/accueil/"
 trans_url: "/home/"
 ---
-
-### Bienvenue
