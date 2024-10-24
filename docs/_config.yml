@@ -12,6 +12,10 @@ kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
 
+GitHub Pages: 
+- github-pages v232 
+- jekyll v3.10.0 
+
 collections:
   pages:
     output: true
@@ -35,6 +39,7 @@ plugins:
 - jekyll-titles-from-headings
 - jekyll-relative-links
 - jekyll-seo-tag
+- kramdown-parser-gfm 
 
 # Title
 name: GC Forms API
