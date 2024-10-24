@@ -6,4 +6,4 @@ permalink: "/accueil/"
 trans_url: "/home/"
 ---
 
-# Accueil
+### Bienvenue
