@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title:  "Making requests"
 lang: en
 permalink: "/making-requests/"
