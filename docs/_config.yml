@@ -12,10 +12,6 @@ kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
 
-GitHub Pages: 
-- github-pages v232 
-- jekyll v3.10.0 
-
 collections:
   pages:
     output: true
