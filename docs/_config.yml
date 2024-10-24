@@ -32,14 +32,19 @@ author2:
   name: Canadian Digital Service
   url: https://digital.canada.ca
 
+# Point the logo URL at a file in your repo or hosted elsewhere by your organization
+logourl:
+logoalt:
+
 # Repo list
 # List repos that you would like to appear on the homepage here
 repos:
-- name: forms-api
-  url: https://github.com/cds-snc/forms-api
+- name:
+  description:
+  url:
 
 # Style Variables
-brand_color: "#26374A"
+brand_color: "#4b4085ff"
 
 # Offline caching
 offline_cache: false
