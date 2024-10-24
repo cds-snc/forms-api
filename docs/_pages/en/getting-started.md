@@ -31,5 +31,4 @@ The purpose of the GC Forms API is to allow you to securely and reliably retriev
 4. Click “Generate Key”.
 5. Download JSON file that includes the private API key.
 
-^ **IMPORTANT!**
-^ You must keep this API key secure as it is used to authenticate API requests and could be used to access protected data. Use encrypted email if you must share it with a developer team member to set up the integration.
+> **IMPORTANT**  You must keep this API key secure as it is used to authenticate API requests and could be used to access protected data. Use encrypted email if you must share it with a developer team member to set up the integration.
