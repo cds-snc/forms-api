@@ -1,4 +1,10 @@
-## Making requests
+---
+layout: page
+title:  "Making requests"
+lang: en
+permalink: "/making-requests/"
+trans_url: "/faire-des-requetes/"
+---
 
 The GC Forms API allows you to retrieve form submissions as files in JSON file format. You can get up to 100 form submissions in a batch, and these are available for up to 30 days after submission, given our current data retention periods. Form submissions are encrypted with a public key and can be decrypted by you locally.
 
@@ -32,9 +38,9 @@ We’ve developed some examples that you can reference or run the program for, t
 - [Python](https://github.com/cds-snc/forms-api/tree/main/examples/python)
 - [Bash /Curl](https://github.com/cds-snc/forms-api/tree/main/examples/bash)
 
-### Retrieving **new** form submissions
+## Retrieving **new** form submissions
 
-#### HTTP request
+### HTTP request
 
 This URL path returns a list of submissions that includes the 100 oldest form submissions marked with a “New” status: 
 
@@ -42,7 +48,7 @@ This URL path returns a list of submissions that includes the 100 oldest form su
 
 _Note: The status of these form submissions will not change to “Downloaded”._
 
-#### Response status
+### Response status
 
 | Status code | Example message | Meaning / how to fix |
 | ----------- | --------------- | -------------------- |
