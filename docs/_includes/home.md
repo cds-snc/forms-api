@@ -9,8 +9,8 @@ Our goal is to guide you through setting up an initial integration and securely 
 The purpose of the GC Forms API is to allow you to securely and reliably retrieve form submissions directly from an API endpoint. Our hope is that this will eventually alleviate the level of effort associated with the retrieval of data and the tedious confirmation flows for high volumes of form submissions. So, rather than having to manually download and sign off on the removal of responses to confirm their retrieval from the database, the API will automate the workflow with systems that talk to each other and exchange data. 
 
 The documentation includes what you need to know about:
-  - [Getting started](./getting-started)
-  - [Authentication](./authentication)
-  - [Making requests](./making-requests)
-  - [Monitoring](./monitoring)
-  - [Getting support](./getting-support)
+  - [Getting started](/getting-started/)
+  - [Authentication](/authentication/)
+  - [Making requests](/making-requests/)
+  - [Monitoring](/monitoring/)
+  - [Getting support](/getting-support/)
