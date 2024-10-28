@@ -63,7 +63,7 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 <tr>
   <td> 200 </td>
   <td>
-  ```json
+  ```
 [
   {
     "name": "05-09-09f4",
