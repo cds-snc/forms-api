@@ -12,11 +12,11 @@ These are common errors that apply globally and are the same for every URL path.
 
 | Status code              | Example message | Meaning or how to fix |
 | :---------------- | :------ | :---- |
-| 401       |   Unauthorized   | No access token was provided. |
-| 401         |   Access token has expired   | Access token has expired |
-| 403   |  Forbidden   | Could not validate access token OR "Form ID" in request is not allowed to be accessed with the provided access token. |
-| 404 |  Not found   | Invalid request URL. |
-| 500 |  Internal server error   | Internal error while serving request. |
+| 401       |   <code>Unauthorized</code>   | No access token was provided. |
+| 401         |   <code>Access token has expired</code>   | Access token has expired |
+| 403   |  <code>Forbidden</code>   | Could not validate access token OR "Form ID" in request is not allowed to be accessed with the provided access token. |
+| 404 |  <code>Not found</code>   | Invalid request URL. |
+| 500 |  <code>Internal server error</code>   | Internal error while serving request. |
 
 
 ### Refreshing API keys
