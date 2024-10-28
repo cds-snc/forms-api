@@ -11,8 +11,9 @@ trans_url: "/authentification/"
 **Now: _Staging_** currently available for prototyping purposes (temporarily)
 ```https://api.forms-staging.cdssandbox.xyz/```
 
-**Later: _Production_** coming soon, not yet avialable for real live forms (eventually)
-```[https://api.forms-staging.cdssandbox.xyz/](https://api.forms-formulaires.alpha.canada.ca/)```
+>[!Note]
+> **Later: _Production_** coming soon, not yet avialable for real live forms (eventually)
+> ```[https://api.forms-staging.cdssandbox.xyz/](https://api.forms-formulaires.alpha.canada.ca/)```
 
 _Note: You may need to use a cloud provider such as Microsoft Azure or Amazon Web Services (AWS), to be able to access the endpoint._
 
