@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "Welcome"
+title:  "Home"
 lang: en
 permalink: "/home/"
 trans_url: "/accueil/"
