@@ -1,1 +1,0 @@
-  - Confirming form submissions
