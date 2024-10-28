@@ -14,22 +14,23 @@ childPages:
 
 The GC Forms API allows you to retrieve form submissions as files in JSON file format. You can get up to 100 form submissions in a batch, and these are available for up to 30 days after submission, given our current data retention periods. Form submissions are encrypted with a public key and can be decrypted by you locally.
 
-> **Query parameters**
-> The API requests for GC Forms submission data are possible using query parameters such as:
-> - **{formID}**
+### Query parameters
+
+The API requests for GC Forms submission data are possible using query parameters such as:
+ - **{formID}**
   25-character alphanumeric string found at the end of the URL for the form or at the start of the 
   file name of the API key. 
   For example: ```clzvj8fzb00226o90r2b7l1gt```.
-> - **{SubmissionName}**
+ - **{SubmissionName}**
   11-character alphanumeric including dashes, sometimes also called the SubmissionID in the GC Forms 
   app. 
   For example: ```e02-08-d732```.
-> - **{ConfirmationCode}**
+ - **{ConfirmationCode}**
   36-character alphanumeric string that includes dashes, sometimes also called the Receipt code in the 
   GC Forms app. 
   For example: ```620b203c-9836-4000-bf30-1c3bcc26b834```. 
 
-**Examples**
+### Integration examples
 
 We’ve developed some examples that you can reference or run the program for, that we hope will help make integration easier. Here are the programming languages currently available:
 
