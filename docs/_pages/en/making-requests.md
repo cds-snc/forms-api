@@ -57,8 +57,7 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 <tr>
   <td><code>200</code></td>
   <td>
-<code>
-  [
+<code>[
   {
     "name": "05-09-09f4",
     "createdAt": 1725553403512
@@ -71,8 +70,7 @@ _Note: The status of these form submissions will not change to “Downloaded”.
     "name": "05-09-75dc",
     "createdAt": 1725553404972
   }
-]
-</code>
+]</code>
   </td> 
   <td> 
   List of new submission names successfully retrieved.
@@ -101,12 +99,12 @@ _Note: Retrieval is only possible for 1 submission, with 1 download per request.
 <tr>
   <td><code>200</code></td>
   <td>
-```{
+<code>{
   "encryptedResponses": "IOWyM7bpo+wVCXpFkU13JeO0HcxFHTIwLX17ol+jUWdvhicIG+fJj",
   "encryptedKey": "IOWyM7bpELZg4kPBOPVe7jeHcxFHTIwLX17ol+jUw6KGictIG+fJj",
   "encryptedNonce": "GVyPXC/6UTteJ3uf8d6doBNbppHzKjEXDxwE2DXQbD30/vIxlsY",
   "encryptedAuthTag": "VRMt87LgedVo+wVCXpFkU13JeO0guDGHb48XVpvWdvhs3bv/D"
-}```  
+}</code>
   </td> 
   <td> 
   Encrypted data of the submission successfully retrieved.
@@ -115,9 +113,9 @@ _Note: Retrieval is only possible for 1 submission, with 1 download per request.
 <tr>
   <td><code>404</code></td>
   <td>
-```{
+<code>{
   "error": "Form submission does not exist"
-}```  
+}</code>  
   </td> 
   <td> 
   "Form ID" and/or "Submission name" are incorrect or cannot be found.
@@ -149,15 +147,15 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
 </tr>  
 <tr>
   <td><code>200</code></td>
-  <td> ```OK``` </td> 
+  <td><code>OK</code></td> 
   <td> Submission has been successfully confirmed</td>
 </tr>
 <tr>
   <td><code>200</code></td>
   <td>
-```{
+<code>{
   "info": "Form submission is already confirmed"
-}```  
+}</code> 
   </td> 
   <td> 
   Submission has already been successfully confirmed.
@@ -166,9 +164,9 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
 <tr>
   <td><code>400</code></td>
   <td>
-```{
+<code>{
   "error": "Confirmation code is incorrect"
-}```  
+}</code>
   </td> 
   <td> 
   Provided confirmation code is not the one associated with the submission to be confirmed.
@@ -177,9 +175,9 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
 <tr>
   <td><code>404</code></td>
   <td>
-```{
+<code>{
   "error": "Form submission does not exist"
-}```  
+}</code>
   </td> 
   <td> 
   "Form ID" and/or "Submission name" are incorrect or cannot be found.
@@ -220,17 +218,17 @@ _Note: This will be directed to our support team._
 </tr>  
 <tr>
   <td><code>200</code></td>
-  <td> ```OK``` </td> 
+  <td><code>OK</code></td> 
   <td> Submission has been successfully reported as having a problem</td>
 </tr>
 <tr>
   <td><code>200</code></td>
   <td>
-```
+<code>
 {
   "info": "Form submission is already confirmed"
 }
-```  
+</code>
   </td> 
   <td> 
   Submission has already been successfully reported as having a problem.
@@ -239,7 +237,7 @@ _Note: This will be directed to our support team._
 <tr>
   <td><code>400</code></td>
   <td>
-```{
+<code>{
   "error": "Invalid payload",
   "details": [
     {
@@ -257,7 +255,7 @@ _Note: This will be directed to our support team._
       "location": "body"
     }
   ]
-}```  
+}</code>
   </td> 
   <td> 
   Details about why the provided payload is invalid.
@@ -266,9 +264,9 @@ _Note: This will be directed to our support team._
 <tr>
   <td><code>400</code></td>
   <td>
-```{
+<code>{
   "error": "Form submission does not exist"
-}```  
+}</code> 
   </td> 
   <td> 
   “Form ID” and/or “Submission name” are incorrect or could not be found.
