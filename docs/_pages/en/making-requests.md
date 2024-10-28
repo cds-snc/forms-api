@@ -56,10 +56,10 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 
 ### Response status
 
-| Status code | Example message | Meaning / how to fix |
-| ----------- | --------------- | -------------------- |
-| 200 | [
- ``` {
+| Status code              | Example message | Meaning or how to fix |
+| :---------------- | :------ | :---- |
+| 200       |   ```[
+  {
     "name": "05-09-09f4",
     "createdAt": 1725553403512
   },
@@ -71,6 +71,4 @@ _Note: The status of these form submissions will not change to “Downloaded”.
     "name": "05-09-75dc",
     "createdAt": 1725553404972
   }
-]
-```
- | List of new submission names successfully retrieved. 
+]``` | List of new submission names successfully retrieved. |
