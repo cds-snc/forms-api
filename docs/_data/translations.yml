@@ -1,5 +1,5 @@
 en:
-  homepage-tag-line: "Version 1: Limited Pilot"
+  homepage-tag-line: "Version 1: Pilot project"
   cds-snc: "GC Forms"
   cds-snc-url: "https://articles.alpha.canada.ca/forms-formulaires/"
   hosting: "Hosted on"
@@ -10,7 +10,7 @@ en:
   homepage-slug: "/home/"
   site-name: "GC Forms — Data retrieval API"
 fr:
-  homepage-tag-line: ""
+  homepage-tag-line: "Version 1: Projet pilote"
   cds-snc: "Formulaires GC"
   cds-snc-url: "https://articles.alpha.canada.ca/forms-formulaires/fr/"
   hosting: "Hébergé dans"
