@@ -8,7 +8,8 @@ trans_url: "/authentification/"
 
 ### Base URL
 
-**Now: _Staging_** currently available for prototyping purposes (temporarily)
+**Now: _Staging_**
+Currently available for prototyping purposes (temporarily)
 ```https://api.forms-staging.cdssandbox.xyz/```
 
 >[!Note]
