@@ -58,7 +58,7 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 
 | Status code              | Example message | Meaning or how to fix |
 | :---------------- | :------ | :---- |
-| 200       |   ```[
+| 200       |   ```json[
   {
     "name": "05-09-09f4",
     "createdAt": 1725553403512
