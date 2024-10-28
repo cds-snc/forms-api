@@ -58,7 +58,7 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 
 <table>
 <tr>
-  <td> **Status code** </td> <td> **Example message** </td> <td> **Meaning or how to fix** </td>
+  <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
 </tr>  
 <tr>
   <td> 200 </td>
