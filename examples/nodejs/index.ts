@@ -28,10 +28,6 @@ Selection (1):
 
     switch (menuSelection) {
       case "2": {
-        const formId = await requestUserInput(
-          "\nForm ID to retrieve responses for:\n",
-        );
-
         console.info("\nGenerating access token...");
 
         const accessToken = await generateAccessToken(
@@ -40,18 +36,21 @@ Selection (1):
           privateApiKey,
         );
 
-        const apiClient = new GCFormsApiClient(GCFORMS_API_URL, accessToken);
+        const apiClient = new GCFormsApiClient(
+          privateApiKey.formId,
+          GCFORMS_API_URL,
+          accessToken,
+        );
 
         console.info("\nRetrieving form template...\n");
 
-        const formTemplate = await apiClient.getFormTemplate(formId);
+        const formTemplate = await apiClient.getFormTemplate();
 
         console.info(formTemplate);
 
         console.info("\nRetrieving new form submissions...");
 
-        const newFormSubmissions =
-          await apiClient.getNewFormSubmissions(formId);
+        const newFormSubmissions = await apiClient.getNewFormSubmissions();
 
         if (newFormSubmissions.length > 0) {
           console.info("\nNew form submissions:");
@@ -67,7 +66,6 @@ Selection (1):
             console.info("Retrieving encrypted submission...");
 
             const encryptedSubmission = await apiClient.getFormSubmission(
-              formId,
               newFormSubmission.name,
             );
 
@@ -102,7 +100,6 @@ Selection (1):
             console.info("\nConfirming submission...");
 
             await apiClient.confirmFormSubmission(
-              formId,
               newFormSubmission.name,
               formSubmission.confirmationCode,
             );
@@ -119,10 +116,6 @@ Selection (1):
         break;
       }
       case "3": {
-        const formId = await requestUserInput(
-          "\nForm ID associated to the submission you want to report:\n",
-        );
-
         const submissionName = await requestUserInput("\nSubmission name:\n");
 
         const contactEmail = await requestUserInput(
@@ -145,7 +138,11 @@ Selection (1):
           privateApiKey,
         );
 
-        const apiClient = new GCFormsApiClient(GCFORMS_API_URL, accessToken);
+        const apiClient = new GCFormsApiClient(
+          privateApiKey.formId,
+          GCFORMS_API_URL,
+          accessToken,
+        );
 
         console.info("\nReporting form submission...");
 
@@ -156,7 +153,6 @@ Selection (1):
         };
 
         await apiClient.reportProblemWithFormSubmission(
-          formId,
           submissionName,
           problem,
         );

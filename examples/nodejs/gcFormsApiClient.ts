@@ -6,9 +6,11 @@ import type {
 } from "./types.js";
 
 export class GCFormsApiClient {
+  private formId: string;
   private httpClient: AxiosInstance;
 
-  public constructor(apiUrl: string, accessToken: string) {
+  public constructor(formId: string, apiUrl: string, accessToken: string) {
+    this.formId = formId;
     this.httpClient = axios.create({
       baseURL: apiUrl,
       timeout: 3000,
@@ -16,18 +18,18 @@ export class GCFormsApiClient {
     });
   }
 
-  public getFormTemplate(formId: string): Promise<Record<string, unknown>> {
+  public getFormTemplate(): Promise<Record<string, unknown>> {
     return this.httpClient
-      .get<Record<string, unknown>>(`/forms/${formId}/template`)
+      .get<Record<string, unknown>>(`/forms/${this.formId}/template`)
       .then((response) => response.data)
       .catch((error) => {
         throw new Error("Failed to retrieve form template", { cause: error });
       });
   }
 
-  public getNewFormSubmissions(formId: string): Promise<NewFormSubmission[]> {
+  public getNewFormSubmissions(): Promise<NewFormSubmission[]> {
     return this.httpClient
-      .get<NewFormSubmission[]>(`/forms/${formId}/submission/new`)
+      .get<NewFormSubmission[]>(`/forms/${this.formId}/submission/new`)
       .then((response) => response.data)
       .catch((error) => {
         throw new Error("Failed to retrieve new form submissions", {
@@ -37,12 +39,11 @@ export class GCFormsApiClient {
   }
 
   public getFormSubmission(
-    formId: string,
     submissionName: string,
   ): Promise<EncryptedFormSubmission> {
     return this.httpClient
       .get<EncryptedFormSubmission>(
-        `/forms/${formId}/submission/${submissionName}`,
+        `/forms/${this.formId}/submission/${submissionName}`,
       )
       .then((response) => response.data)
       .catch((error) => {
@@ -51,13 +52,12 @@ export class GCFormsApiClient {
   }
 
   public confirmFormSubmission(
-    formId: string,
     submissionName: string,
     confirmationCode: string,
   ): Promise<void> {
     return this.httpClient
       .put<void>(
-        `/forms/${formId}/submission/${submissionName}/confirm/${confirmationCode}`,
+        `/forms/${this.formId}/submission/${submissionName}/confirm/${confirmationCode}`,
       )
       .then(() => Promise.resolve())
       .catch((error) => {
@@ -66,13 +66,12 @@ export class GCFormsApiClient {
   }
 
   public reportProblemWithFormSubmission(
-    formId: string,
     submissionName: string,
     problem: FormSubmissionProblem,
   ): Promise<void> {
     return this.httpClient
       .post<void>(
-        `/forms/${formId}/submission/${submissionName}/problem`,
+        `/forms/${this.formId}/submission/${submissionName}/problem`,
         problem,
         {
           headers: {

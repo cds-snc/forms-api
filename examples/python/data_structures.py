@@ -7,6 +7,7 @@ class PrivateApiKey:
     key_id: str
     key: str
     user_id: str
+    form_id: str
 
     @staticmethod
     def from_json(json_object: dict) -> "PrivateApiKey":
@@ -14,6 +15,7 @@ class PrivateApiKey:
             key_id=json_object["keyId"],
             key=json_object["key"],
             user_id=json_object["userId"],
+            form_id=json_object["formId"],
         )
 
 
