@@ -11,6 +11,21 @@ en:
   making-requests:
     name: "Making requests"
     url: "/making-requests/"
+  retrieving-new-form-submissions:
+    name: "Retrieving new form submissions"
+    url: "/retrieving-new-form-submissions/"
+  retrieving-specific-form-submissions:
+    name: "Retrieving specific form submissions"
+    url: "/retrieving-specific-form-submissions/"
+  confirming-form-submissions.md:
+    name: "Confirming form submissions"
+    url: "/confirming-form-submissions/"
+  reporting-a-problem-with-a-form-submission:
+    name: "Reporting a problem with a form submission"
+    url: "/reporting-a-problem-with-a-form-submission/"
+  getting-form-questions:
+    name: "Getting form questions"
+    url: "/getting-form-questions/"
   monitoring:
     name: "Monitoring"
     url: "/monitoring/"
@@ -31,6 +46,21 @@ fr:
   making-requests:
     name: "Faire des requêtes"
     url: "/faire-des-requetes/"
+  retrieving-new-form-submissions:
+    name: "Retrieving new form submissions [FR]"
+    url: "/retrieving-new-form-submissions/"
+  retrieving-specific-form-submissions:
+    name: "Retrieving specific form submissions [FR]"
+    url: "/retrieving-specific-form-submissions/"
+  confirming-form-submissions.md:
+    name: "Confirming form submissions [FR]"
+    url: "/confirming-form-submissions/"
+  reporting-a-problem-with-a-form-submission:
+    name: "Reporting a problem with a form submission [FR]"
+    url: "/reporting-a-problem-with-a-form-submission/"
+  getting-form-questions:
+    name: "Getting form questions [FR]"
+    url: "/getting-form-questions/"
   monitoring:
     name: "Surveiller"
     url: "/surveiller/"
