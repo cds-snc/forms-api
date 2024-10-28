@@ -9,6 +9,7 @@ trans_url: "/monitoring/"
 ### Common errors
 
 These are common errors that apply globally and are the same for every URL path.
+/
 
 | Status code              | Example message | Meaning or how to fix |
 | :---------------- | :------ | :---- |
@@ -22,6 +23,7 @@ These are common errors that apply globally and are the same for every URL path.
 ### Refreshing API keys
 
 Refreshing an API key may become necessary if a key is compromised. Keys can be revoked and regenerated, simply requiring a change in the parameters being queried in the request.
+/
 
 ### Requesting a rate limit increase
 
