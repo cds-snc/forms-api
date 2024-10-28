@@ -45,7 +45,9 @@ We’ve developed some examples that you can reference or run the program for, t
 
 This URL path returns a list of submissions that includes the 100 oldest form submissions marked with a “New” status: 
 
-```GET  /forms/{formID}/submission/new```
+```
+GET  /forms/{formID}/submission/new
+```
 
 _Note: The status of these form submissions will not change to “Downloaded”._
 
@@ -87,7 +89,9 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 
 This URL path returns one form submission per request based on the respective submission name: 
 
-```GET /forms/{formID}/submission/{submissionName}```
+```
+GET /forms/{formID}/submission/{submissionName}
+```
 
 _Note: Retrieval is only possible for 1 submission, with 1 download per request. The status of these form submissions will not change to “Downloaded”. To change the status of the form submissions, make a request to confirm form submissions once they are properly received._
 
@@ -136,7 +140,9 @@ The confirmation step helps ensure the form submissions are exploitable and rend
 
 This URL path confirms form submissions were successfully retrieved from the system, thus removing them:
 
-```PUT  /forms/{formID}/submission/{submissionName}/confirm/{confirmationCode}```
+```
+PUT  /forms/{formID}/submission/{submissionName}/confirm/{confirmationCode}
+```
 
 _Note: Confirmation is only possible for one submission at a time, with one confirmation code per request. The status of that submission will be modified from “New” to “Confirmed”. This is similar to the two-step “Download” and “Sign off on removal” process in the application._
 
@@ -192,7 +198,9 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
 
 This URL path identifies a form submission as having a problem if something unexpected occurs:
 
-```POST  /forms/{formID}/submission/{submissionName}/problem```
+```
+POST  /forms/{formID}/submission/{submissionName}/problem
+```
 
 _Note: Reporting a problem is only possible for one submission at a time. You can report a problem with form submissions that are “New” or “Confirmed” as long as they have not been removed from the system. This will change the status to “Problem” and block the submission’s removal from the system until the problem is resolved._
 
