@@ -26,4 +26,4 @@ trans_url: "/pour-commencer/"
   4. Click “Generate Key”.
   5. Download JSON file that includes the private API key.
 
-> :warning: **IMPORTANT:** You must keep this API key secure as it is used to authenticate API requests and could be used to access protected data. Use encrypted email if you must share it with a developer team member to set up the integration.
+!!! :warning: **IMPORTANT:** You must keep this API key secure as it is used to authenticate API requests and could be used to access protected data. Use encrypted email if you must share it with a developer team member to set up the integration.
