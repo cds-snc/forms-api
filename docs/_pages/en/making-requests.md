@@ -57,7 +57,8 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 <tr>
   <td><code>200</code></td>
   <td>
-```[
+<code>
+  [
   {
     "name": "05-09-09f4",
     "createdAt": 1725553403512
@@ -70,7 +71,8 @@ _Note: The status of these form submissions will not change to “Downloaded”.
     "name": "05-09-75dc",
     "createdAt": 1725553404972
   }
-]```  
+]
+</code>
   </td> 
   <td> 
   List of new submission names successfully retrieved.
