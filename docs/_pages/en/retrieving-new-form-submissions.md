@@ -1,1 +1,0 @@
-  - Retrieving new form submissions
