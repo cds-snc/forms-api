@@ -80,11 +80,8 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 ]
     ```  
   </td> 
-</tr>
-<tr>
   <td> 
   List of new submission names successfully retrieved.
   </td>
 </tr>
-  
 </table>
