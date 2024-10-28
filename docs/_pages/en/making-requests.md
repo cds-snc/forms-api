@@ -1,15 +1,15 @@
 ---
 layout: page
-title:  "Making requests"
+title: "Making requests"
 lang: en
 permalink: "/making-requests/"
 trans_url: "/faire-des-requetes/"
 childPages: 
- - Retrieving new form submissions
- - Retrieving specific form submissions
- - Confirming form submissions
- - Reporting a problem with a form submission
- - Getting form questions
+  - Retrieving new form submissions
+  - Retrieving specific form submissions
+  - Confirming form submissions
+  - Reporting a problem with a form submission
+  - Getting form questions
 ---
 
 The GC Forms API allows you to retrieve form submissions as files in JSON file format. You can get up to 100 form submissions in a batch, and these are available for up to 30 days after submission, given our current data retention periods. Form submissions are encrypted with a public key and can be decrypted by you locally.
