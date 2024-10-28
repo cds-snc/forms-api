@@ -14,24 +14,20 @@ childPages:
 
 The GC Forms API allows you to retrieve form submissions as files in JSON file format. You can get up to 100 form submissions in a batch, and these are available for up to 30 days after submission, given our current data retention periods. Form submissions are encrypted with a public key and can be decrypted by you locally.
 
-<table>
-  <tr>
-**Query parameters**
-The API requests for GC Forms submission data are possible using query parameters such as:
-- **{formID}**
+> **Query parameters**
+> The API requests for GC Forms submission data are possible using query parameters such as:
+> - **{formID}**
   25-character alphanumeric string found at the end of the URL for the form or at the start of the 
   file name of the API key. 
   For example: ```clzvj8fzb00226o90r2b7l1gt```.
-- **{SubmissionName}**
+> - **{SubmissionName}**
   11-character alphanumeric including dashes, sometimes also called the SubmissionID in the GC Forms 
   app. 
   For example: ```e02-08-d732```.
-- **{ConfirmationCode}**
+> - **{ConfirmationCode}**
   36-character alphanumeric string that includes dashes, sometimes also called the Receipt code in the 
   GC Forms app. 
   For example: ```620b203c-9836-4000-bf30-1c3bcc26b834```. 
-  </tr>
-</table>
 
 **Examples**
 
@@ -59,7 +55,7 @@ _Note: The status of these form submissions will not change to “Downloaded”.
   <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
 </tr>  
 <tr>
-  <td> 200 </td>
+  <td><code>200</code></td>
   <td>
 ```[
   {
@@ -101,7 +97,7 @@ _Note: Retrieval is only possible for 1 submission, with 1 download per request.
   <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
 </tr>  
 <tr>
-  <td> 200 </td>
+  <td><code>200</code></td>
   <td>
 ```{
   "encryptedResponses": "IOWyM7bpo+wVCXpFkU13JeO0HcxFHTIwLX17ol+jUWdvhicIG+fJj",
@@ -115,7 +111,7 @@ _Note: Retrieval is only possible for 1 submission, with 1 download per request.
   </td>
 </tr>
 <tr>
-  <td> 404 </td>
+  <td><code>404</code></td>
   <td>
 ```{
   "error": "Form submission does not exist"
@@ -150,12 +146,12 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
   <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
 </tr>  
 <tr>
-  <td> 200 </td>
+  <td><code>200</code></td>
   <td> ```OK``` </td> 
   <td> Submission has been successfully confirmed</td>
 </tr>
 <tr>
-  <td> 200 </td>
+  <td><code>200</code></td>
   <td>
 ```{
   "info": "Form submission is already confirmed"
@@ -166,7 +162,7 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
   </td>
 </tr>
 <tr>
-  <td> 400 </td>
+  <td><code>400</code></td>
   <td>
 ```{
   "error": "Confirmation code is incorrect"
@@ -177,7 +173,7 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
   </td>
 </tr>
 <tr>
-  <td> 404 </td>
+  <td><code>404</code></td>
   <td>
 ```{
   "error": "Form submission does not exist"
@@ -221,12 +217,12 @@ _Note: This will be directed to our support team._
   <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
 </tr>  
 <tr>
-  <td> 200 </td>
+  <td><code>200</code></td>
   <td> ```OK``` </td> 
   <td> Submission has been successfully reported as having a problem</td>
 </tr>
 <tr>
-  <td> 200 </td>
+  <td><code>200</code></td>
   <td>
 ```
 {
@@ -239,7 +235,7 @@ _Note: This will be directed to our support team._
   </td>
 </tr>
 <tr>
-  <td> 400 </td>
+  <td><code>400</code></td>
   <td>
 ```{
   "error": "Invalid payload",
@@ -266,7 +262,7 @@ _Note: This will be directed to our support team._
   </td>
 </tr>
 <tr>
-  <td> 404 </td>
+  <td><code>400</code></td>
   <td>
 ```{
   "error": "Form submission does not exist"
