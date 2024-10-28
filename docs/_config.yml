@@ -24,7 +24,7 @@ collections:
     permalink: /:path/
   
 # Theme
-theme: jekyll-theme-gcweb
+remote_theme: pages-themes/minimal@v0.2.0
 
 #Plugins
 plugins:
