@@ -1,6 +1,12 @@
+# Site settings
+title: GC Forms API
+repository: cds-snc/forms-api
+description: >-
+ This documentation site is for developers who want to use the GC Forms API to retrieve form submission data programmatically into their department’s web application or back-office system. 
+
 # Base configuration
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-markdown: kramdown
+markdown: kramdown, GFM
 lsi: false
 safe: true
 source: [your repo's top level directory]
@@ -25,6 +31,7 @@ plugins:
 - jekyll-coffeescript
 - jekyll-commonmark-ghpages
 - jekyll-default-layout
+- jekyll-gfm-admonitions
 - jekyll-gist
 - jekyll-github-metadata
 - jekyll-optional-front-matter
