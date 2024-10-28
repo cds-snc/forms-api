@@ -16,13 +16,12 @@ collections:
   pages:
     output: true
     permalink: /:path/
-    
+  
 # Theme
 remote_theme: pages-themes/minimal@v0.2.0
 
 #Plugins
 plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
 - jekyll-coffeescript
 - jekyll-commonmark-ghpages
 - jekyll-default-layout
@@ -31,6 +30,7 @@ plugins:
 - jekyll-optional-front-matter
 - jekyll-paginate
 - jekyll-readme-index
+- jekyll-remote-theme
 - jekyll-relative-links
 - jekyll-titles-from-headings
 - jekyll-relative-links
