@@ -1,8 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { RedisConnector } from "@lib/integration/redisConnector.js";
-import { getValueFromCache, cacheValue } from "@lib/utils/cache.js";
+import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
+import {
+  getValueFromRedis,
+  setValueInRedis,
+} from "@lib/integration/redis/redisClientAdapter.js";
 
-vi.mock("@lib/integration/redisConnector");
+vi.mock("@lib/integration/redis/redisConnector");
 const redisConnectorMock = vi.mocked(RedisConnector);
 
 // biome-ignore lint/suspicious/noExplicitAny: we need to assign the Redis client and allow mock resolved values
@@ -13,40 +16,40 @@ const redisClient: any = {
 
 redisConnectorMock.getInstance.mockResolvedValue({ client: redisClient });
 
-describe("cache", () => {
+describe("redisClientAdapter", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  describe("getValueFromCache should", () => {
-    it("return value from cache if the provided key exist", async () => {
-      redisClient.get.mockResolvedValue("key");
+  describe("getValueFromRedis should", () => {
+    it("return value from Redis if the provided key exist", async () => {
+      redisClient.get.mockResolvedValueOnce("key");
 
-      const result = await getValueFromCache("key");
+      const result = await getValueFromRedis("key");
 
       expect(result).toEqual("key");
       expect(redisClient.get).toHaveBeenCalledWith("key");
     });
 
     it("return undefined if the provided key does not exist", async () => {
-      redisClient.get.mockResolvedValue(null);
+      redisClient.get.mockResolvedValueOnce(null);
 
-      const result = await getValueFromCache("key");
+      const result = await getValueFromRedis("key");
 
       expect(result).toBeUndefined();
       expect(redisClient.get).toHaveBeenCalledWith("key");
     });
   });
 
-  describe("cacheValue should", () => {
-    it("set the cache correctly", async () => {
-      await cacheValue("key", "value");
+  describe("setValueInRedis should", () => {
+    it("correctly set the value in Redis", async () => {
+      await setValueInRedis("key", "value");
 
       expect(redisClient.set).toHaveBeenCalledWith("key", "value", {});
     });
 
-    it("set the cache correctly with expiry date if provided", async () => {
-      await cacheValue("key", "value", 10);
+    it("correctly set the value in Redis with expiry date if provided", async () => {
+      await setValueInRedis("key", "value", 10);
 
       expect(redisClient.set).toHaveBeenCalledWith("key", "value", { EX: 10 });
     });

@@ -1,14 +1,14 @@
 import { vi, describe, it, expect } from "vitest";
 import { getTokenBucketAssociatedToForm } from "@lib/rateLimiting/tokenBucketProvider.js";
-import { getValueFromCache } from "@lib/utils/cache.js";
+import { getValueFromRedis } from "@lib/integration/redis/redisClientAdapter.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-vi.mock("@lib/utils/cache");
-const getValueFromCacheMock = vi.mocked(getValueFromCache);
+vi.mock("@lib/integration/redis/redisClientAdapter");
+const getValueFromRedisMock = vi.mocked(getValueFromRedis);
 
 describe("tokenBucketProvider should", () => {
   it("return high capacity token bucket if form has high API rate limits", async () => {
-    getValueFromCacheMock.mockResolvedValueOnce("high");
+    getValueFromRedisMock.mockResolvedValueOnce("high");
 
     const tokenBucket = await getTokenBucketAssociatedToForm(
       "clzsn6tao000611j50dexeob0",
@@ -22,7 +22,7 @@ describe("tokenBucketProvider should", () => {
   });
 
   it("return low capacity token bucket if form does not have high API rate limits", async () => {
-    getValueFromCacheMock.mockResolvedValueOnce(undefined);
+    getValueFromRedisMock.mockResolvedValueOnce(undefined);
 
     const tokenBucket = await getTokenBucketAssociatedToForm(
       "clzsn6tao000611j50dexeob0",
@@ -37,7 +37,7 @@ describe("tokenBucketProvider should", () => {
 
   it("return low capacity token bucket if we fail to determine what API rate limits the form has access to", async () => {
     const customError = new Error("custom error");
-    getValueFromCacheMock.mockRejectedValueOnce(customError);
+    getValueFromRedisMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "warn");
 
     const tokenBucket = await getTokenBucketAssociatedToForm(

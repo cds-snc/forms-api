@@ -3,12 +3,12 @@ import {
   RateLimiterMemory,
   RateLimiterRedis,
 } from "rate-limiter-flexible";
-import { RedisConnector } from "@lib/integration/redisConnector.js";
+import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 import {
   highRateLimiterConfiguration,
   lowRateLimiterConfiguration,
 } from "@config";
-import { getValueFromCache } from "@lib/utils/cache.js";
+import { getValueFromRedis } from "@lib/integration/redis/redisClientAdapter.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 const REDIS_RATE_LIMIT_KEY_PREFIX: string = "rate-limit";
@@ -55,7 +55,7 @@ const highCapacityTokenBucket = new RateLimiterRedis({
 export function getTokenBucketAssociatedToForm(
   formId: string,
 ): Promise<RateLimiterAbstract> {
-  return getValueFromCache(`${REDIS_RATE_LIMIT_KEY_PREFIX}:${formId}`)
+  return getValueFromRedis(`${REDIS_RATE_LIMIT_KEY_PREFIX}:${formId}`)
     .then((value) => {
       switch (value) {
         case "high":

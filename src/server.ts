@@ -3,7 +3,7 @@ import express, { type Express } from "express";
 import { SERVER_PORT } from "@config";
 import { buildRouter } from "./router.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
-import { RedisConnector } from "@lib/integration/redisConnector.js";
+import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 const server: Express = express();

@@ -1,5 +1,8 @@
 import { introspectAccessToken } from "@lib/integration/zitadelConnector.js";
-import { cacheValue, getValueFromCache } from "@lib/utils/cache.js";
+import {
+  setValueInRedis,
+  getValueFromRedis,
+} from "@lib/integration/redis/redisClientAdapter.js";
 import { createHash } from "node:crypto";
 import { logMessage } from "@lib/logging/logger.js";
 
@@ -60,7 +63,7 @@ function getVerifiedAccessTokenFromCache(
 ): Promise<VerifiedAccessToken | undefined> {
   const key = getVerifiedAccessTokenCacheKey(accessToken);
 
-  return getValueFromCache(key).then((value) => {
+  return getValueFromRedis(key).then((value) => {
     return value ? (JSON.parse(value) as VerifiedAccessToken) : undefined;
   });
 }
@@ -71,7 +74,7 @@ function cacheVerifiedAccessToken(
 ): Promise<void> {
   const key = getVerifiedAccessTokenCacheKey(accessToken);
 
-  return cacheValue(
+  return setValueInRedis(
     key,
     JSON.stringify(introspectionResult),
     CACHE_EXPIRY_DELAY_IN_SECONDS,
