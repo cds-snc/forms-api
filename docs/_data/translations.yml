@@ -7,7 +7,7 @@ en:
   contribute: "Contribute to the project"
   repo: "Repository"
   language: "Français"
-  homepage-slug: "/home/"
+  homepage-slug: "/home"
   site-name: "GC Forms — Data retrieval API"
 fr:
   homepage-tag-line: "Version 1: Pilote limité"
@@ -18,5 +18,5 @@ fr:
   contribute: "Contribuer au projet"
   repo: "Référentiel"
   language: "English"
-  homepage-slug: "/accueil/"
+  homepage-slug: "/accueil"
   site-name: "API pour la récupération de données — Formulaires GC"
