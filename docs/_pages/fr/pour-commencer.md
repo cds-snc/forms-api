@@ -6,3 +6,4 @@ permalink: "/pour-commencer/"
 trans_url: "/getting-started/"
 ---
 
+_la version française sera publiée d’ici peu_
