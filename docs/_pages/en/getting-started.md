@@ -18,6 +18,4 @@ The purpose of this API is to allow you to securely and reliably retrieve form s
   - A target system where you plan on receiving form submission data
   - Infrastructure development resources who can craft HTTP requests and use Azure or AWS to reach the API. _No infrastructure development capabilities available? This first version of the API might not be ready for you just yet.
   - An API key (provided by our [Support team](https://forms-formulaires.alpha.canada.ca/en/support) by encrypted email for this first version). In the request include your name and email, the form ID, and the email address of the developer who will set up the API integration.
-
-> #### IMPORTANT
-> **You must keep this API key secure as it is used to authenticate API requests and could be used to access protected data. Use encrypted email if you must share it with a developer team member to set up the integration.**
+> **IMPORTANT: You must keep this API key secure as it is used to authenticate API requests and could be used to access protected data. Use encrypted email if you must share it with a developer team member to set up the integration.**
