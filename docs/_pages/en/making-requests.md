@@ -39,6 +39,8 @@ We’ve developed some examples that you can reference or run the program for, t
 - [Python](https://github.com/cds-snc/forms-api/tree/main/examples/python)
 - [Bash /Curl](https://github.com/cds-snc/forms-api/tree/main/examples/bash)
 
+Work with your development team to test out a draft form and ensure the API integration is receiving responses, able to decrypt, check the hash, and confrim the responses or report a problem. Once that process is complete, you are ready to publish your form with this data delivery method.
+
 ### Retrieving **new** form submissions
 
 ##### HTTP request
