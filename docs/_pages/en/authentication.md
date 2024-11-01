@@ -38,7 +38,7 @@ Use these examples as a reference to generate access tokens in your preferred pr
 Use this header for each API request to verify it’s you:
 
 <code>
-curl \
-  --request GET "$FORMS_URL" \
-  --header "Authorization: Bearer $ACCESS_TOKEN"
+<br> curl \
+<br>   --request GET "$FORMS_URL" \
+<br>   --header "Authorization: Bearer $ACCESS_TOKEN"
 </code>
