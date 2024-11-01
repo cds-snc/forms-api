@@ -10,27 +10,26 @@ export async function rateLimiterMiddleware(
   try {
     const formId = request.params.formId;
 
-    const tokenConsumptionResult = await consumeTokenIfAvailable(formId);
+    const consumeTokenResult = await consumeTokenIfAvailable(formId);
 
     response.header({
-      "X-RateLimit-Limit": tokenConsumptionResult.bucketStatus.bucketCapacity,
-      "X-RateLimit-Remaining":
-        tokenConsumptionResult.bucketStatus.remainingTokens,
+      "X-RateLimit-Limit": consumeTokenResult.bucketStatus.bucketCapacity,
+      "X-RateLimit-Remaining": consumeTokenResult.bucketStatus.remainingTokens,
       "X-RateLimit-Reset": new Date(
         Date.now() +
-          tokenConsumptionResult.bucketStatus.numberOfMillisecondsBeforeRefill,
+          consumeTokenResult.bucketStatus.numberOfMillisecondsBeforeRefill,
       ),
     });
 
-    if (tokenConsumptionResult.wasAbleToConsumeToken === false) {
+    if (consumeTokenResult.wasAbleToConsumeToken === false) {
       response.header({
         "Retry-After":
-          tokenConsumptionResult.bucketStatus.numberOfMillisecondsBeforeRefill /
+          consumeTokenResult.bucketStatus.numberOfMillisecondsBeforeRefill /
           1000,
       });
 
       logMessage.info(
-        `[rate-limiter] Form ${formId} consumed all ${tokenConsumptionResult.bucketStatus.bucketCapacity} tokens. Bucket will be refilled in ${tokenConsumptionResult.bucketStatus.numberOfMillisecondsBeforeRefill / 1000} seconds`,
+        `[rate-limiter] Form ${formId} consumed all ${consumeTokenResult.bucketStatus.bucketCapacity} tokens. Bucket will be refilled in ${consumeTokenResult.bucketStatus.numberOfMillisecondsBeforeRefill / 1000} seconds`,
       );
 
       response.sendStatus(429);

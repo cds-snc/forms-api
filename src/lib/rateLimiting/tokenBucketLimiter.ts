@@ -1,4 +1,4 @@
-import { getTokenBucketAssociatedToForm } from "@lib/rateLimiting/tokenBucketProvider.js";
+import { getTokenBucketRateLimiterAssociatedToForm } from "@lib/rateLimiting/tokenBucketProvider.js";
 import type { RateLimiterRes } from "rate-limiter-flexible";
 import { logMessage } from "@lib/logging/logger.js";
 
@@ -8,15 +8,15 @@ export type BucketStatus = {
   numberOfMillisecondsBeforeRefill: number;
 };
 
-export type TokenConsumptionResult = {
+export type ConsumeTokenResult = {
   wasAbleToConsumeToken: boolean;
   bucketStatus: BucketStatus;
 };
 
 export async function consumeTokenIfAvailable(
   formId: string,
-): Promise<TokenConsumptionResult> {
-  const tokenBucket = await getTokenBucketAssociatedToForm(formId);
+): Promise<ConsumeTokenResult> {
+  const tokenBucket = await getTokenBucketRateLimiterAssociatedToForm(formId);
 
   try {
     const consumptionResult = await tokenBucket.consume(formId);
@@ -39,7 +39,7 @@ export async function consumeTokenIfAvailable(
 
 export async function refundConsumedToken(formId: string): Promise<void> {
   try {
-    const tokenBucket = await getTokenBucketAssociatedToForm(formId);
+    const tokenBucket = await getTokenBucketRateLimiterAssociatedToForm(formId);
     await tokenBucket.reward(formId);
   } catch (error) {
     logMessage.warn(

@@ -3,12 +3,12 @@ import {
   consumeTokenIfAvailable,
   refundConsumedToken,
 } from "@lib/rateLimiting/tokenBucketLimiter.js";
-import { getTokenBucketAssociatedToForm } from "@lib/rateLimiting/tokenBucketProvider.js";
+import { getTokenBucketRateLimiterAssociatedToForm } from "@lib/rateLimiting/tokenBucketProvider.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 vi.mock("@lib/rateLimiting/tokenBucketProvider");
-const getTokenBucketAssociatedToFormMock = vi.mocked(
-  getTokenBucketAssociatedToForm,
+const getTokenBucketRateLimiterAssociatedToFormMock = vi.mocked(
+  getTokenBucketRateLimiterAssociatedToForm,
 );
 
 describe("tokenBucketLimiter", () => {
@@ -18,7 +18,7 @@ describe("tokenBucketLimiter", () => {
 
   describe("consumeTokenIfAvailable should", () => {
     it("return confirmation that a token was consumed if some were available", async () => {
-      getTokenBucketAssociatedToFormMock.mockResolvedValueOnce({
+      getTokenBucketRateLimiterAssociatedToFormMock.mockResolvedValueOnce({
         points: 10,
         consume: vi.fn().mockResolvedValueOnce({
           remainingPoints: 5,
@@ -28,11 +28,11 @@ describe("tokenBucketLimiter", () => {
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } as any);
 
-      const tokenConsumptionResult = await consumeTokenIfAvailable(
+      const consumeTokenResult = await consumeTokenIfAvailable(
         "clzsn6tao000611j50dexeob0",
       );
 
-      expect(tokenConsumptionResult).toEqual({
+      expect(consumeTokenResult).toEqual({
         wasAbleToConsumeToken: true,
         bucketStatus: {
           bucketCapacity: 10,
@@ -43,7 +43,7 @@ describe("tokenBucketLimiter", () => {
     });
 
     it("return confirmation that no token was consumed because none were available", async () => {
-      getTokenBucketAssociatedToFormMock.mockResolvedValueOnce({
+      getTokenBucketRateLimiterAssociatedToFormMock.mockResolvedValueOnce({
         points: 10,
         consume: vi.fn().mockRejectedValueOnce({
           remainingPoints: 5,
@@ -53,11 +53,11 @@ describe("tokenBucketLimiter", () => {
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } as any);
 
-      const tokenConsumptionResult = await consumeTokenIfAvailable(
+      const consumeTokenResult = await consumeTokenIfAvailable(
         "clzsn6tao000611j50dexeob0",
       );
 
-      expect(tokenConsumptionResult).toEqual({
+      expect(consumeTokenResult).toEqual({
         wasAbleToConsumeToken: false,
         bucketStatus: {
           bucketCapacity: 10,
@@ -70,7 +70,7 @@ describe("tokenBucketLimiter", () => {
 
   describe("refundConsumedToken should", () => {
     it("successfully refund a token if everything goes well", async () => {
-      getTokenBucketAssociatedToFormMock.mockResolvedValueOnce({
+      getTokenBucketRateLimiterAssociatedToFormMock.mockResolvedValueOnce({
         points: 10,
         consume: vi.fn().mockResolvedValueOnce({
           remainingPoints: 5,
@@ -87,7 +87,9 @@ describe("tokenBucketLimiter", () => {
 
     it("log a warning the token refund process failed because of an internal error", async () => {
       const customError = new Error("custom error");
-      getTokenBucketAssociatedToFormMock.mockRejectedValueOnce(customError);
+      getTokenBucketRateLimiterAssociatedToFormMock.mockRejectedValueOnce(
+        customError,
+      );
       const logMessageSpy = vi.spyOn(logMessage, "warn");
 
       await refundConsumedToken("clzsn6tao000611j50dexeob0");

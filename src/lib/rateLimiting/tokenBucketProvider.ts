@@ -13,20 +13,9 @@ import { logMessage } from "@lib/logging/logger.js";
 
 const REDIS_RATE_LIMIT_KEY_PREFIX: string = "rate-limit";
 
-export enum TokenBucketCapacity {
-  Low = 0,
-  High = 1,
-}
-
 const redisClient = await RedisConnector.getInstance().then(
   (instance) => instance.client,
 );
-
-const inMemoryBackupTokenBucket = new RateLimiterMemory({
-  keyPrefix: "backup-token-bucket",
-  points: lowRateLimiterConfiguration.capacity,
-  duration: lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
-});
 
 const lowCapacityTokenBucket = new RateLimiterRedis({
   keyPrefix: "low-capacity-token-bucket",
@@ -37,7 +26,10 @@ const lowCapacityTokenBucket = new RateLimiterRedis({
   inMemoryBlockOnConsumed: lowRateLimiterConfiguration.capacity,
   inMemoryBlockDuration:
     lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
-  insuranceLimiter: inMemoryBackupTokenBucket,
+  insuranceLimiter: new RateLimiterMemory({
+    points: lowRateLimiterConfiguration.capacity,
+    duration: lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
+  }),
 });
 
 const highCapacityTokenBucket = new RateLimiterRedis({
@@ -49,36 +41,30 @@ const highCapacityTokenBucket = new RateLimiterRedis({
   inMemoryBlockOnConsumed: highRateLimiterConfiguration.capacity,
   inMemoryBlockDuration:
     highRateLimiterConfiguration.numberOfSecondsBeforeRefill,
-  insuranceLimiter: inMemoryBackupTokenBucket,
+  insuranceLimiter: new RateLimiterMemory({
+    points: highRateLimiterConfiguration.capacity,
+    duration: highRateLimiterConfiguration.numberOfSecondsBeforeRefill,
+  }),
 });
 
-export function getTokenBucketAssociatedToForm(
+export function getTokenBucketRateLimiterAssociatedToForm(
   formId: string,
 ): Promise<RateLimiterAbstract> {
   return getValueFromRedis(`${REDIS_RATE_LIMIT_KEY_PREFIX}:${formId}`)
     .then((value) => {
       switch (value) {
         case "high":
-          return getTokenBucket(TokenBucketCapacity.High);
+          return highCapacityTokenBucket;
         default:
-          return getTokenBucket(TokenBucketCapacity.Low);
+          return lowCapacityTokenBucket;
       }
     })
     .catch((error) => {
       logMessage.warn(
         error,
-        `[token-bucket-provider] Failed to retrieve token bucket capacity for form ${formId}`,
+        `[token-bucket-provider] Failed to retrieve token bucket capacity for form ${formId}. Will use low capacity bucket by default`,
       );
 
-      return getTokenBucket(TokenBucketCapacity.Low);
-    });
-}
-
-function getTokenBucket(capacity: TokenBucketCapacity): RateLimiterAbstract {
-  switch (capacity) {
-    case TokenBucketCapacity.High:
-      return highCapacityTokenBucket;
-    default:
       return lowCapacityTokenBucket;
-  }
+    });
 }
