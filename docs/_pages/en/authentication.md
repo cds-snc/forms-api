@@ -8,9 +8,9 @@ trans_url: "/authentification/"
 
 ### Base URL
 
-<code>
+<code><strong>
 https://api.forms-formulaires.alpha.canada.ca/
-</code>
+</strong></code>
 
 
 > _Note: You may need to use a cloud provider such as Microsoft Azure or Amazon Web Services (AWS), to be able to access the endpoint._
