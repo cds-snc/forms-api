@@ -1,5 +1,56 @@
 # Changelog
 
+## [1.2.0](https://github.com/cds-snc/forms-api/compare/v1.1.0...v1.2.0) (2024-11-01)
+
+
+### Features
+
+* add API client example in Python ([#74](https://github.com/cds-snc/forms-api/issues/74)) ([37be258](https://github.com/cds-snc/forms-api/commit/37be258901322be67289755c3ef8db427179f71c))
+* add Bash script API examples ([#73](https://github.com/cds-snc/forms-api/issues/73)) ([67e0fc2](https://github.com/cds-snc/forms-api/commit/67e0fc24f60983993f6abe1279b2133297afcb85))
+* add report problem integration example ([#76](https://github.com/cds-snc/forms-api/issues/76)) ([7843642](https://github.com/cds-snc/forms-api/commit/78436427dcc5459aaf8b9e6a7ba250de712392ff))
+* added integrity verification step in .NET example ([#69](https://github.com/cds-snc/forms-api/issues/69)) ([a6ba8bd](https://github.com/cds-snc/forms-api/commit/a6ba8bdcb486413ab9d02673ad57909c23421565))
+* API integration examples use formId from API private key file ([#96](https://github.com/cds-snc/forms-api/issues/96)) ([f5e3b70](https://github.com/cds-snc/forms-api/commit/f5e3b7078b8bc53ed9d757a254e78e66dad99f6b))
+
+
+### Bug Fixes
+
+* add Python to the devcontainer ([#77](https://github.com/cds-snc/forms-api/issues/77)) ([3095fe8](https://github.com/cds-snc/forms-api/commit/3095fe8fbc57db1cba3a315f2578b2516a9f01ce))
+* allow SBOM to be written to repo security events ([#67](https://github.com/cds-snc/forms-api/issues/67)) ([dda65d1](https://github.com/cds-snc/forms-api/commit/dda65d16f0fc8a05a3892da94299937afa70c15e))
+* **deps:** update all minor dependencies ([#30](https://github.com/cds-snc/forms-api/issues/30)) ([bfbade3](https://github.com/cds-snc/forms-api/commit/bfbade31e96e1e3fba07254f87409836c7665999))
+* **deps:** update all patch dependencies ([#94](https://github.com/cds-snc/forms-api/issues/94)) ([d5d26fc](https://github.com/cds-snc/forms-api/commit/d5d26fc6cd8df3f80cd48cf4666f56d522167a94))
+* submission name validation test + new confirmation code test ([#78](https://github.com/cds-snc/forms-api/issues/78)) ([e24fa31](https://github.com/cds-snc/forms-api/commit/e24fa31b39d0f062828ab3ead2dc0188362c2754))
+* use CDS Trivy vulnerability database ([#87](https://github.com/cds-snc/forms-api/issues/87)) ([6ee7634](https://github.com/cds-snc/forms-api/commit/6ee76342e44b7a91dbdd5892e48de787685afd68))
+
+
+### Miscellaneous Chores
+
+* bump most packages to latest version ([#82](https://github.com/cds-snc/forms-api/issues/82)) ([6ccb7a0](https://github.com/cds-snc/forms-api/commit/6ccb7a09c804b2c86363406f6dd119b0176956fb))
+* bump packages for modules outside of API code to latest version ([#83](https://github.com/cds-snc/forms-api/issues/83)) ([b144360](https://github.com/cds-snc/forms-api/commit/b1443600c0a4feabcd516109bbff11c568b0b4d2))
+* **deps:** lock file maintenance ([#27](https://github.com/cds-snc/forms-api/issues/27)) ([5d5517d](https://github.com/cds-snc/forms-api/commit/5d5517d4ce30e9e036cf09dabd1009704682f8f5))
+* **deps:** lock file maintenance ([#85](https://github.com/cds-snc/forms-api/issues/85)) ([c10d9ad](https://github.com/cds-snc/forms-api/commit/c10d9adc4d8c9d051247a9d84d881e5b7170a948))
+* **deps:** lock file maintenance ([#95](https://github.com/cds-snc/forms-api/issues/95)) ([618f99f](https://github.com/cds-snc/forms-api/commit/618f99fe88e010cbfecad9def28c50b7aec54482))
+* **deps:** update all non-major github action dependencies ([#71](https://github.com/cds-snc/forms-api/issues/71)) ([d5bd683](https://github.com/cds-snc/forms-api/commit/d5bd683ee216d4091278e6c73356b565ce4c903a))
+* **deps:** update all non-major github action dependencies ([#80](https://github.com/cds-snc/forms-api/issues/80)) ([42cf4c8](https://github.com/cds-snc/forms-api/commit/42cf4c833e50495078893b5522710cb2454fc34a))
+* **deps:** update all non-major github action dependencies ([#84](https://github.com/cds-snc/forms-api/issues/84)) ([31e1416](https://github.com/cds-snc/forms-api/commit/31e1416015e0fd1813f2363463d3ee52b9a42247))
+* **deps:** update aws-actions/amazon-ecr-login digest to 02faf1a ([#93](https://github.com/cds-snc/forms-api/issues/93)) ([4b18059](https://github.com/cds-snc/forms-api/commit/4b18059e7cf77a4fb3e03e55898ba12c0b64ebab))
+* **deps:** update aws-actions/amazon-ecr-login digest to 6f9c6fa ([#88](https://github.com/cds-snc/forms-api/issues/88)) ([b4f856d](https://github.com/cds-snc/forms-api/commit/b4f856dcea7c0148487a6d24920d1052afa797ed))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 37eec4b ([#70](https://github.com/cds-snc/forms-api/issues/70)) ([405fb63](https://github.com/cds-snc/forms-api/commit/405fb634af7c5aa7ad01eb8591f7c89f36b211cb))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 3d780df ([#79](https://github.com/cds-snc/forms-api/issues/79)) ([c945765](https://github.com/cds-snc/forms-api/commit/c945765b5eb304be8290ddc37851f2824a0d9a37))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to b3fd61a ([#89](https://github.com/cds-snc/forms-api/issues/89)) ([fd739f8](https://github.com/cds-snc/forms-api/commit/fd739f80fe817f0a07c7675c82b8a4d11cc12fce))
+* **deps:** update pnpm to v9.12.1 ([#59](https://github.com/cds-snc/forms-api/issues/59)) ([a1942ca](https://github.com/cds-snc/forms-api/commit/a1942ca54dc472e5e6829454ecee05ec61854946))
+* synced file(s) with cds-snc/site-reliability-engineering ([#75](https://github.com/cds-snc/forms-api/issues/75)) ([271b5c2](https://github.com/cds-snc/forms-api/commit/271b5c229ae3f11ce7a65f315b34e8d38f99735f))
+* synced file(s) with cds-snc/site-reliability-engineering ([#86](https://github.com/cds-snc/forms-api/issues/86)) ([244f0bc](https://github.com/cds-snc/forms-api/commit/244f0bcf79e85f8f561a6865f0a391a28ab3acc2))
+* synced local '.github/workflows/ossf-scorecard.yml' with remote 'tools/sre_file_sync/ossf-scorecard.yml' ([271b5c2](https://github.com/cds-snc/forms-api/commit/271b5c229ae3f11ce7a65f315b34e8d38f99735f))
+* update Biome to version 1.9.4 ([#90](https://github.com/cds-snc/forms-api/issues/90)) ([3206e0b](https://github.com/cds-snc/forms-api/commit/3206e0b0d0922f7779bd3239b5e6e9511049e925))
+* update example code variables to production environment ([#92](https://github.com/cds-snc/forms-api/issues/92)) ([2df2550](https://github.com/cds-snc/forms-api/commit/2df2550beee883c87339165895bdbe7796213924))
+
+
+### Code Refactoring
+
+* leverage express global error handler for everything that returns a HTTP code 500 ([#81](https://github.com/cds-snc/forms-api/issues/81)) ([a98b0c8](https://github.com/cds-snc/forms-api/commit/a98b0c80c142feb3bc0dfd7d3cf6e7de239ca7c2))
+* rework project structure and routing logic ([#65](https://github.com/cds-snc/forms-api/issues/65)) ([180a22c](https://github.com/cds-snc/forms-api/commit/180a22c4fb2b5eed8c895379c38a0a92e7d9f396))
+* various code improvements + add missing tests ([#72](https://github.com/cds-snc/forms-api/issues/72)) ([695aa0e](https://github.com/cds-snc/forms-api/commit/695aa0ec7aefaded2a2fdec6b89aa392a52b2052))
+
 ## [1.1.0](https://github.com/cds-snc/forms-api/compare/v1.0.0...v1.1.0) (2024-09-18)
 
 
