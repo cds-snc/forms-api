@@ -7,10 +7,12 @@ namespace dotnet
 {
   public class GCFormsApiClient
   {
+    private readonly string formId;
     private readonly HttpClient httpClient;
 
-    public GCFormsApiClient(string apiUrl, string accessToken)
+    public GCFormsApiClient(string formId, string apiUrl, string accessToken)
     {
+      this.formId = formId;
       this.httpClient = new HttpClient()
       {
         BaseAddress = new Uri(apiUrl),
@@ -23,13 +25,13 @@ namespace dotnet
       this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
     }
 
-    public Task<object> GetFormTemplate(string formId)
+    public Task<object> GetFormTemplate()
     {
       try
       {
         return this
           .httpClient
-          .GetAsync($"/forms/{formId}/template")
+          .GetAsync($"/forms/{this.formId}/template")
           .Result
           .EnsureSuccessStatusCode()
           .Content
@@ -41,13 +43,13 @@ namespace dotnet
       }
     }
 
-    public Task<List<NewFormSubmission>> GetNewFormSubmissions(string formId)
+    public Task<List<NewFormSubmission>> GetNewFormSubmissions()
     {
       try
       {
         return this
           .httpClient
-          .GetAsync($"/forms/{formId}/submission/new")
+          .GetAsync($"/forms/{this.formId}/submission/new")
           .Result
           .EnsureSuccessStatusCode()
           .Content
@@ -59,13 +61,13 @@ namespace dotnet
       }
     }
 
-    public Task<EncryptedFormSubmission> GetFormSubmission(string formId, string submissionName)
+    public Task<EncryptedFormSubmission> GetFormSubmission(string submissionName)
     {
       try
       {
         return this
           .httpClient
-          .GetAsync($"/forms/{formId}/submission/{submissionName}")
+          .GetAsync($"/forms/{this.formId}/submission/{submissionName}")
           .Result
           .EnsureSuccessStatusCode()
           .Content
@@ -77,13 +79,13 @@ namespace dotnet
       }
     }
 
-    public async Task ConfirmFormSubmission(string formId, string submissionName, string confirmationCode)
+    public async Task ConfirmFormSubmission(string submissionName, string confirmationCode)
     {
       try
       {
         HttpResponseMessage response = await this
           .httpClient
-          .PutAsync($"/forms/{formId}/submission/{submissionName}/confirm/{confirmationCode}", null);
+          .PutAsync($"/forms/{this.formId}/submission/{submissionName}/confirm/{confirmationCode}", null);
 
         response.EnsureSuccessStatusCode();
       }
@@ -93,14 +95,14 @@ namespace dotnet
       }
     }
 
-    public async Task ReportProblemWithFormSubmission(string formId, string submissionName, FormSubmissionProblem problem)
+    public async Task ReportProblemWithFormSubmission(string submissionName, FormSubmissionProblem problem)
     {
       try
       {
         HttpResponseMessage response = await this
           .httpClient
           .PostAsync(
-            $"/forms/{formId}/submission/{submissionName}/problem",
+            $"/forms/{this.formId}/submission/{submissionName}/problem",
             new StringContent(JsonSerializer.Serialize(problem), Encoding.UTF8, "application/json")
           );
 
