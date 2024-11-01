@@ -47,11 +47,11 @@ Work with your development team to test out a draft form and ensure the API inte
 
 This URL path returns a list of submissions that includes the 100 oldest form submissions marked with a “New” status: 
 
-```
+<code>
 GET  /forms/{formID}/submission/new
-```
+</code>
 
-_Note: The status of these form submissions will not change to “Downloaded”._
+> _Note: The status of these form submissions will not change to “Downloaded”._
 
 ##### Response status
 
@@ -91,11 +91,11 @@ _Note: The status of these form submissions will not change to “Downloaded”.
 
 This URL path returns one form submission per request based on the respective submission name: 
 
-```
+<code>
 GET /forms/{formID}/submission/{submissionName}
-```
+</code>
 
-_Note: Retrieval is only possible for 1 submission, with 1 download per request. The status of these form submissions will not change to “Downloaded”. To change the status of the form submissions, make a request to confirm form submissions once they are properly received._
+> _Note: Retrieval is only possible for 1 submission, with 1 download per request. The status of these form submissions will not change to “Downloaded”. To change the status of the form submissions, make a request to confirm form submissions once they are properly received._
 
 ##### Response status
 
@@ -142,11 +142,11 @@ The confirmation step helps ensure the form submissions are exploitable and rend
 
 This URL path confirms form submissions were successfully retrieved from the system, thus removing them:
 
-```
+<code>
 PUT  /forms/{formID}/submission/{submissionName}/confirm/{confirmationCode}
-```
+</code>
 
-_Note: Confirmation is only possible for one submission at a time, with one confirmation code per request. The status of that submission will be modified from “New” to “Confirmed”. This is similar to the two-step “Download” and “Sign off on removal” process in the application._
+> _Note: Confirmation is only possible for one submission at a time, with one confirmation code per request. The status of that submission will be modified from “New” to “Confirmed”. This is similar to the two-step “Download” and “Sign off on removal” process in the application._
 
 ##### Response status
 
@@ -200,25 +200,25 @@ _Note: Confirmation is only possible for one submission at a time, with one conf
 
 This URL path identifies a form submission as having a problem if something unexpected occurs:
 
-```
+<code>
 POST  /forms/{formID}/submission/{submissionName}/problem
-```
+</code>
 
-_Note: Reporting a problem is only possible for one submission at a time. You can report a problem with form submissions that are “New” or “Confirmed” as long as they have not been removed from the system. This will change the status to “Problem” and block the submission’s removal from the system until the problem is resolved._
+> _Note: Reporting a problem is only possible for one submission at a time. You can report a problem with form submissions that are “New” or “Confirmed” as long as they have not been removed from the system. This will change the status to “Problem” and block the submission’s removal from the system until the problem is resolved._
 
 ##### Example payload for reporting a problem
 
 To report a problem include a message formatted like the one below in the HTTP POST request body:
 
-```
+<code>
 {
   “contactEmail”: “something@somethingelse.com”,
   “description”: “Here is my problem”,
   “preferredLanguage”: “en” (either “en” or “fr”)
 }
-```
+</code>
 
-_Note: This will be directed to our support team._
+> _Note: This will be directed to our support team._
 
 
 ##### Response status
