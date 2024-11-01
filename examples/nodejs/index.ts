@@ -10,9 +10,9 @@ import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
 import { verifyIntegrity } from "./formSubmissionIntegrityVerifier.js";
 
-const IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz";
-const PROJECT_IDENTIFIER = "275372254274006635";
-const GCFORMS_API_URL = "https://api.forms-staging.cdssandbox.xyz";
+const IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca";
+const PROJECT_IDENTIFIER = "284778202772022819";
+const GCFORMS_API_URL = "https://api.forms-formulaires.alpha.canada.ca";
 
 async function main() {
   try {
