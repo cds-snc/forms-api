@@ -17,6 +17,15 @@ const redisClient = await RedisConnector.getInstance().then(
   (instance) => instance.client,
 );
 
+/**
+ * From the official documentation:
+ * `inMemoryBlockOnConsumed`: Can be used against DDoS attacks. In-memory blocking works in current process memory and for consume method only.
+ *                            It blocks a key in memory for msBeforeNext milliseconds from the last consume result, if inMemoryBlockDuration is
+ *                            not set. This helps to avoid extra requests. inMemoryBlockOnConsumed value is supposed to be equal or more than
+ *                            points option. Sometimes it is not necessary to increment counter on store, if all points are consumed already.
+ * `insuranceLimiter`: Instance of RateLimiterAbstract extended object to store limits, when database comes up with any error.
+ */
+
 const lowCapacityTokenBucket = new RateLimiterRedis({
   keyPrefix: "low-capacity-token-bucket",
   storeClient: redisClient,
@@ -24,8 +33,6 @@ const lowCapacityTokenBucket = new RateLimiterRedis({
   points: lowRateLimiterConfiguration.capacity,
   duration: lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   inMemoryBlockOnConsumed: lowRateLimiterConfiguration.capacity,
-  inMemoryBlockDuration:
-    lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   insuranceLimiter: new RateLimiterMemory({
     points: lowRateLimiterConfiguration.capacity,
     duration: lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
@@ -39,8 +46,6 @@ const highCapacityTokenBucket = new RateLimiterRedis({
   points: highRateLimiterConfiguration.capacity,
   duration: highRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   inMemoryBlockOnConsumed: highRateLimiterConfiguration.capacity,
-  inMemoryBlockDuration:
-    highRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   insuranceLimiter: new RateLimiterMemory({
     points: highRateLimiterConfiguration.capacity,
     duration: highRateLimiterConfiguration.numberOfSecondsBeforeRefill,
