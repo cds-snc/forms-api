@@ -34,6 +34,7 @@ const lowCapacityTokenBucket = new RateLimiterRedis({
   duration: lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   inMemoryBlockOnConsumed: lowRateLimiterConfiguration.capacity,
   insuranceLimiter: new RateLimiterMemory({
+    keyPrefix: "backup-low-capacity-token-bucket",
     points: lowRateLimiterConfiguration.capacity,
     duration: lowRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   }),
@@ -47,6 +48,7 @@ const highCapacityTokenBucket = new RateLimiterRedis({
   duration: highRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   inMemoryBlockOnConsumed: highRateLimiterConfiguration.capacity,
   insuranceLimiter: new RateLimiterMemory({
+    keyPrefix: "backup-high-capacity-token-bucket",
     points: highRateLimiterConfiguration.capacity,
     duration: highRateLimiterConfiguration.numberOfSecondsBeforeRefill,
   }),
