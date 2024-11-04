@@ -1,6 +1,5 @@
 import { getTokenBucketRateLimiterAssociatedToForm } from "@lib/rateLimiting/tokenBucketProvider.js";
 import type { RateLimiterRes } from "rate-limiter-flexible";
-import { logMessage } from "@lib/logging/logger.js";
 
 export type BucketStatus = {
   bucketCapacity: number;
@@ -38,15 +37,8 @@ export async function consumeTokenIfAvailable(
 }
 
 export async function refundConsumedToken(formId: string): Promise<void> {
-  try {
-    const tokenBucket = await getTokenBucketRateLimiterAssociatedToForm(formId);
-    await tokenBucket.reward(formId);
-  } catch (error) {
-    logMessage.warn(
-      error,
-      `[token-bucket-limiter] Failed to refund consumed token for form ${formId}`,
-    );
-  }
+  const tokenBucket = await getTokenBucketRateLimiterAssociatedToForm(formId);
+  await tokenBucket.reward(formId);
 }
 
 function buildBucketStatus(
