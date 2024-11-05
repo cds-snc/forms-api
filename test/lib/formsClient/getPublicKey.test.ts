@@ -1,12 +1,15 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
-import { getValueFromCache, cacheValue } from "@lib/utils/cache.js";
+import {
+  getValueFromRedis,
+  setValueInRedis,
+} from "@lib/integration/redis/redisClientAdapter.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-vi.mock("@lib/utils/cache");
-const getValueFromCacheMock = vi.mocked(getValueFromCache);
-const cacheValueMock = vi.mocked(cacheValue);
+vi.mock("@lib/integration/redis/redisClientAdapter");
+const getValueFromRedisMock = vi.mocked(getValueFromRedis);
+const setValueInRedisMock = vi.mocked(setValueInRedis);
 
 describe("getPublicKey should", () => {
   beforeEach(() => {
@@ -15,7 +18,7 @@ describe("getPublicKey should", () => {
 
   describe("return a public key if there is one associated to the service account id", () => {
     it("when it does exist in cache", async () => {
-      getValueFromCacheMock.mockResolvedValueOnce(
+      getValueFromRedisMock.mockResolvedValueOnce(
         "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
       );
 
@@ -32,7 +35,7 @@ describe("getPublicKey should", () => {
       const publicKey = await getPublicKey("254354365464565461");
 
       expect(publicKey).toEqual("RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=");
-      expect(cacheValueMock).toHaveBeenCalledWith(
+      expect(setValueInRedisMock).toHaveBeenCalledWith(
         "api:publicKey:254354365464565461",
         "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
         300,

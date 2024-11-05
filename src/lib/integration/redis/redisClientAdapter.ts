@@ -1,6 +1,6 @@
-import { RedisConnector } from "@lib/integration/redisConnector.js";
+import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 
-export function getValueFromCache(key: string): Promise<string | undefined> {
+export function getValueFromRedis(key: string): Promise<string | undefined> {
   return RedisConnector.getInstance()
     .then((redisConnector) => redisConnector.client.get(key))
     .then((value) => {
@@ -8,7 +8,7 @@ export function getValueFromCache(key: string): Promise<string | undefined> {
     });
 }
 
-export function cacheValue(
+export function setValueInRedis(
   key: string,
   value: string,
   expiryDelayInSeconds?: number,

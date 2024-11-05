@@ -19,8 +19,8 @@ describe("authenticationMiddleware should", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
 
   beforeEach(() => {
-    vi.clearAllMocks();
     clearMockRes();
+    vi.clearAllMocks();
 
     requestMock = getMockReq({
       headers: {
@@ -42,6 +42,8 @@ describe("authenticationMiddleware should", () => {
 
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
+    expect(requestMock.serviceUserId).toEqual("clzsn6tao000611j50dexeob0");
+    expect(requestMock.serviceAccountId).toEqual("11111111111");
     expect(nextMock).toHaveBeenCalledOnce();
   });
 

@@ -54,9 +54,12 @@ export function buildRouter(): Router {
     .use("/template", templateRoute)
     .use("/submission", submissionRoute);
 
-  const formsRoute = Router()
-    .use(rateLimiterMiddleware)
-    .use("/:formId(c[a-z0-9]{24})", authenticationMiddleware, formIdRoute);
+  const formsRoute = Router().use(
+    "/:formId(c[a-z0-9]{24})",
+    authenticationMiddleware,
+    rateLimiterMiddleware,
+    formIdRoute,
+  );
 
   const statusRoute = Router().get(
     "/",
