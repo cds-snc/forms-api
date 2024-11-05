@@ -45,9 +45,9 @@ describe("tokenBucketLimiter", () => {
       getTokenBucketRateLimiterAssociatedToFormMock.mockResolvedValueOnce({
         points: 10,
         consume: vi.fn().mockRejectedValueOnce({
-          remainingPoints: 5,
+          remainingPoints: 0,
           msBeforeNext: 2000,
-          consumedPoints: 5,
+          consumedPoints: 10,
         }),
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } as any);
@@ -61,7 +61,7 @@ describe("tokenBucketLimiter", () => {
         bucketStatus: {
           bucketCapacity: 10,
           numberOfMillisecondsBeforeRefill: 2000,
-          remainingTokens: 5,
+          remainingTokens: 0,
         },
       });
     });
