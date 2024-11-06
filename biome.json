@@ -5,7 +5,8 @@
       "**/build/**",
       "node_modules/**",
       "package.json",
-      "pnpm-lock.yaml"
+      "pnpm-lock.yaml",
+      "docs/**"
     ]
   },
   "organizeImports": {
