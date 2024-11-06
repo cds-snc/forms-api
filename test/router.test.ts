@@ -125,6 +125,8 @@ describe("router should", () => {
           case HttpMethod.Put:
             responseStatus = (await request(server).put(path)).status;
             break;
+          default:
+            throw new Error(`Unsupported HTTP method: ${httpMethod}`);
         }
 
         expect(authenticationMiddlewareMock).toHaveBeenCalledTimes(

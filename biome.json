@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
     "ignore": [
       "**/build/**",
@@ -16,10 +16,14 @@
     "rules": {
       "all": true,
       "correctness": {
-        "noNodejsModules": "off"
+        "noNodejsModules": "off",
+        "noUndeclaredDependencies": "off"
       },
       "style": {
         "useNamingConvention": "info"
+      },
+      "suspicious": {
+        "noConsole": "info"
       }
     }
   },

@@ -6,43 +6,44 @@ from gc_forms_api_client import GCFormsApiClient
 from form_submission_decrypter import FormSubmissionDecrypter
 from form_submission_integrity_verifier import FormSubmissionVerifier
 
-IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz"
-PROJECT_IDENTIFIER = "275372254274006635"
-GCFORMS_API_URL = "https://api.forms-staging.cdssandbox.xyz"
+IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca"
+PROJECT_IDENTIFIER = "284778202772022819"
+GCFORMS_API_URL = "https://api.forms-formulaires.alpha.canada.ca"
 
 
 def main() -> None:
     private_api_key = load_private_api_key()
 
     menu_selection = input(
-    """
+        """
 I want to:
 (1) Generate and display an access token
 (2) Retrieve, decrypt and confirm form submissions
 (3) Report a problem with a form submission
 Selection (1):
-""")
+"""
+    )
 
     if menu_selection == "2":
-        form_id = input("\nForm ID to retrieve responses for:\n")
-
         print("\nGenerating access token...")
 
         access_token = AccessTokenGenerator.generate(
             IDENTITY_PROVIDER_URL, PROJECT_IDENTIFIER, private_api_key
         )
 
-        api_client = GCFormsApiClient(GCFORMS_API_URL, access_token)
+        api_client = GCFormsApiClient(
+            private_api_key.form_id, GCFORMS_API_URL, access_token
+        )
 
         print("\nRetrieving form template...\n")
 
-        form_template = api_client.get_form_template(form_id)
+        form_template = api_client.get_form_template()
 
         print(form_template)
 
         print("\nRetrieving new form submissions...")
 
-        new_form_submissions = api_client.get_new_form_submissions(form_id)
+        new_form_submissions = api_client.get_new_form_submissions()
 
         if len(new_form_submissions) > 0:
             print("\nNew form submissions:")
@@ -57,7 +58,7 @@ Selection (1):
                 print("Retrieving encrypted submission...")
 
                 encrypted_submission = api_client.get_form_submission(
-                    form_id, new_form_submission.name
+                    new_form_submission.name
                 )
 
                 print("\nEncrypted submission:")
@@ -78,8 +79,8 @@ Selection (1):
 
                 print("\nVerifying submission integrity...")
 
-                integrity_verification_result = (
-                    FormSubmissionVerifier.verify_integrity(form_submission.answers, form_submission.checksum)
+                integrity_verification_result = FormSubmissionVerifier.verify_integrity(
+                    form_submission.answers, form_submission.checksum
                 )
 
                 print(
@@ -88,7 +89,9 @@ Selection (1):
 
                 print("\nConfirming submission...")
 
-                api_client.confirm_form_submission(form_id, new_form_submission.name, form_submission.confirmation_code)
+                api_client.confirm_form_submission(
+                    new_form_submission.name, form_submission.confirmation_code
+                )
 
                 print("\nSubmission confirmed")
 
@@ -98,15 +101,15 @@ Selection (1):
         else:
             print("\nCould not find any new form submission!")
     elif menu_selection == "3":
-        form_id = input("\nForm ID associated to the submission you want to report:\n")
-
         submission_name = input("\nSubmission name:\n")
 
         contact_email = input("\nContact email address:\n")
 
         description = input("\nProblem description (10 characters minimum):\n")
 
-        preferred_language = input("\nPreferred communication language (either 'en' or 'fr'):\n")
+        preferred_language = input(
+            "\nPreferred communication language (either 'en' or 'fr'):\n"
+        )
 
         print("\nGenerating access token...")
 
@@ -114,13 +117,15 @@ Selection (1):
             IDENTITY_PROVIDER_URL, PROJECT_IDENTIFIER, private_api_key
         )
 
-        api_client = GCFormsApiClient(GCFORMS_API_URL, access_token)
+        api_client = GCFormsApiClient(
+            private_api_key.form_id, GCFORMS_API_URL, access_token
+        )
 
         print("\nReporting form submission...")
 
         problem = FormSubmissionProblem(contact_email, description, preferred_language)
 
-        api_client.report_problem_with_form_submission(form_id, submission_name, problem)
+        api_client.report_problem_with_form_submission(submission_name, problem)
 
         print("\nSubmission has been reported")
     else:

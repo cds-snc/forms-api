@@ -1,12 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { verifyAccessToken } from "@lib/idp/verifyAccessToken.js";
 import { introspectAccessToken } from "@lib/integration/zitadelConnector.js";
-import { getValueFromCache, cacheValue } from "@lib/utils/cache.js";
+import {
+  getValueFromRedis,
+  setValueInRedis,
+} from "@lib/integration/redis/redisClientAdapter.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-vi.mock("@lib/utils/cache");
-const getValueFromCacheMock = vi.mocked(getValueFromCache);
-const cacheValueMock = vi.mocked(cacheValue);
+vi.mock("@lib/integration/redis/redisClientAdapter");
+const getValueFromRedisMock = vi.mocked(getValueFromRedis);
+const setValueInRedisMock = vi.mocked(setValueInRedis);
 
 vi.mock("@lib/integration/zitadelConnector");
 const introspectAccessTokenMock = vi.mocked(introspectAccessToken);
@@ -18,7 +21,7 @@ describe("verifyAccessToken should", () => {
 
   describe("properly leverage caching when returning verified access token", () => {
     it("when it does exist in cache", async () => {
-      getValueFromCacheMock.mockResolvedValueOnce(
+      getValueFromRedisMock.mockResolvedValueOnce(
         JSON.stringify({
           expirationEpochTime: 1000,
           serviceAccountId: "11111111111",
@@ -38,7 +41,7 @@ describe("verifyAccessToken should", () => {
     });
 
     it("when it does not exist in cache", async () => {
-      getValueFromCacheMock.mockResolvedValueOnce(undefined);
+      getValueFromRedisMock.mockResolvedValueOnce(undefined);
       introspectAccessTokenMock.mockResolvedValueOnce({
         active: true,
         exp: 10,
@@ -55,7 +58,7 @@ describe("verifyAccessToken should", () => {
         serviceAccountId: "sub",
         serviceUserId: "username",
       });
-      expect(cacheValueMock).toHaveBeenCalledWith(
+      expect(setValueInRedisMock).toHaveBeenCalledWith(
         "api:auth:4Wqjx84ka16rQpVZ16lnZdKVXScKTRsvfKm6lSqHGgs=",
         '{"expirationEpochTime":10,"serviceAccountId":"sub","serviceUserId":"username"}',
         300,
@@ -65,7 +68,7 @@ describe("verifyAccessToken should", () => {
 
   describe("handle access token introspection result", () => {
     it("when token is not active", async () => {
-      getValueFromCacheMock.mockResolvedValueOnce(undefined);
+      getValueFromRedisMock.mockResolvedValueOnce(undefined);
       introspectAccessTokenMock.mockResolvedValueOnce({
         active: false,
       });
@@ -78,7 +81,7 @@ describe("verifyAccessToken should", () => {
     });
 
     it("when token is active but missing additional properties", async () => {
-      getValueFromCacheMock.mockResolvedValueOnce(undefined);
+      getValueFromRedisMock.mockResolvedValueOnce(undefined);
       introspectAccessTokenMock.mockResolvedValueOnce({
         active: true,
       });
@@ -91,7 +94,7 @@ describe("verifyAccessToken should", () => {
     });
 
     it("throw an error if access token introspection has an internal failure", async () => {
-      getValueFromCacheMock.mockResolvedValueOnce(undefined);
+      getValueFromRedisMock.mockResolvedValueOnce(undefined);
       const customError = new Error("custom error");
       introspectAccessTokenMock.mockRejectedValueOnce(customError);
       const logMessageSpy = vi.spyOn(logMessage, "error");

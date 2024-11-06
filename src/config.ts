@@ -4,6 +4,11 @@ export enum EnvironmentMode {
   Production = "production",
 }
 
+export type TokenBucketConfiguration = {
+  capacity: number;
+  numberOfSecondsBeforeRefill: number;
+};
+
 // AWS SDK
 
 export const AWS_REGION: string = "ca-central-1";
@@ -29,6 +34,18 @@ export const FRESHDESK_API_KEY: string =
 export const LOCALSTACK_ENDPOINT: string | undefined = loadOptionalEnvVar(
   "LOCALSTACK_ENDPOINT",
 );
+
+// Rate limiting
+
+export const lowRateLimiterConfiguration: TokenBucketConfiguration = {
+  capacity: 500,
+  numberOfSecondsBeforeRefill: 60,
+};
+
+export const highRateLimiterConfiguration: TokenBucketConfiguration = {
+  capacity: 1000,
+  numberOfSecondsBeforeRefill: 60,
+};
 
 // Redis
 

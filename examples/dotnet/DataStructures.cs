@@ -10,6 +10,8 @@ namespace dotnet
     public required string key { get; set; }
 
     public required string userId { get; set; }
+
+    public required string formId { get; set; }
   }
 
   public struct NewFormSubmission

@@ -2,6 +2,7 @@ export type PrivateApiKey = {
   keyId: string;
   key: string;
   userId: string;
+  formId: string;
 };
 
 export type NewFormSubmission = {

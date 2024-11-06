@@ -5,9 +5,9 @@ namespace dotnet
 {
   class Program
   {
-    static readonly string IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz";
-    static readonly string PROJECT_IDENTIFIER = "275372254274006635";
-    static readonly string GCFORMS_API_URL = "https://api.forms-staging.cdssandbox.xyz";
+    static readonly string IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca";
+    static readonly string PROJECT_IDENTIFIER = "284778202772022819";
+    static readonly string GCFORMS_API_URL = "https://api.forms-formulaires.alpha.canada.ca";
 
     static async Task Main(string[] args)
     {
@@ -38,25 +38,21 @@ Selection (1):
             break;
           case "2":
             {
-              Console.WriteLine("\nForm ID to retrieve responses for:");
-
-              string formId = Console.ReadLine();
-
               Console.WriteLine("\nGenerating access token...");
 
               string accessToken = await AccessTokenGenerator.Generate(IDENTITY_PROVIDER_URL, PROJECT_IDENTIFIER, privateApiKey);
 
-              GCFormsApiClient apiClient = new(GCFORMS_API_URL, accessToken);
+              GCFormsApiClient apiClient = new(privateApiKey.formId, GCFORMS_API_URL, accessToken);
 
               Console.WriteLine("\nRetrieving form template...\n");
 
-              object formTemplate = await apiClient.GetFormTemplate(formId);
+              object formTemplate = await apiClient.GetFormTemplate();
 
               Console.WriteLine(formTemplate);
 
               Console.WriteLine("\nRetrieving new form submissions...");
 
-              List<NewFormSubmission> newFormSubmissions = await apiClient.GetNewFormSubmissions(formId);
+              List<NewFormSubmission> newFormSubmissions = await apiClient.GetNewFormSubmissions();
 
               if (newFormSubmissions.Count > 0)
               {
@@ -71,7 +67,7 @@ Selection (1):
 
                   Console.WriteLine("Retrieving encrypted submission...");
 
-                  EncryptedFormSubmission encryptedSubmission = await apiClient.GetFormSubmission(formId, newFormSubmission.name);
+                  EncryptedFormSubmission encryptedSubmission = await apiClient.GetFormSubmission(newFormSubmission.name);
 
                   Console.WriteLine("\nEncrypted submission:");
                   Console.WriteLine(encryptedSubmission.encryptedResponses);
@@ -93,7 +89,7 @@ Selection (1):
 
                   Console.WriteLine("\nConfirming submission...");
 
-                  await apiClient.ConfirmFormSubmission(formId, newFormSubmission.name, formSubmission.confirmationCode);
+                  await apiClient.ConfirmFormSubmission(newFormSubmission.name, formSubmission.confirmationCode);
 
                   Console.WriteLine("\nSubmission confirmed");
 
@@ -109,10 +105,6 @@ Selection (1):
             break;
           case "3":
             {
-              Console.WriteLine("\nForm ID associated to the submission you want to report:");
-
-              string formId = Console.ReadLine();
-
               Console.WriteLine("\nSubmission name:");
 
               string submissionName = Console.ReadLine();
@@ -133,7 +125,7 @@ Selection (1):
 
               string accessToken = await AccessTokenGenerator.Generate(IDENTITY_PROVIDER_URL, PROJECT_IDENTIFIER, privateApiKey);
 
-              GCFormsApiClient apiClient = new(GCFORMS_API_URL, accessToken);
+              GCFormsApiClient apiClient = new(privateApiKey.formId, GCFORMS_API_URL, accessToken);
 
               Console.WriteLine("\nReporting form submission...");
 
@@ -144,7 +136,7 @@ Selection (1):
                 preferredLanguage = preferredLanguage
               };
 
-              await apiClient.ReportProblemWithFormSubmission(formId, submissionName, problem);
+              await apiClient.ReportProblemWithFormSubmission(submissionName, problem);
 
               Console.WriteLine($"\nSubmission has been reported");
             }
