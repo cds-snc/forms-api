@@ -3,6 +3,8 @@ import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
 
+import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
+
 export enum AuditLogEvent {
   // Form Response Events
   DownloadResponse = "DownloadResponse",
@@ -13,6 +15,9 @@ export enum AuditLogEvent {
   AccessDenied = "AccessDenied",
   // Template Events
   RetrieveTemplate = "RetrieveTemplate",
+  // Auth Events
+  VerifiedAccessToken = "VerifiedAccessToken",
+  InvalidAccessToken = "InvalidAccessToken",
 }
 
 export type AuditLogEventStrings = keyof typeof AuditLogEvent;
@@ -42,10 +47,15 @@ export const auditLog = async (
 
     await AwsServicesConnector.getInstance().sqsClient.send(
       new SendMessageCommand({
+        // biome-ignore lint/style/useNamingConvention: AWS SDK Controlled
         MessageBody: auditLogAsJsonString,
+        // biome-ignore lint/style/useNamingConvention: AWS SDK Controlled
         QueueUrl: queueUrl,
       }),
     );
+    if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
+      logMessage.debug(`[Audit-Log] ${auditLogAsJsonString}`);
+    }
   } catch (error) {
     logMessage.error(error, "[logging] Failed to send audit log to AWS SQS");
 
