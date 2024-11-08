@@ -3,7 +3,7 @@ layout: page
 title: "Making requests"
 lang: en
 permalink: "/making-requests/"
-trans_url: "/faire-des-requetes/"
+trans_url: "/effectuer-des-demandes/"
 childPages: 
   - Retrieving new form submissions
   - Retrieving specific form submissions
