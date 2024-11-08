@@ -29,8 +29,8 @@ fr:
     name: "Authentification"
     url: "/authentification/"
   making-requests:
-    name: "Faire des requêtes"
-    url: "/faire-des-requetes/"
+    name: "Effectuer des demandes"
+    url: "/effectuer-des-demandes/"
   monitoring:
     name: "Surveiller"
     url: "/surveiller/"
