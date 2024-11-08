@@ -285,3 +285,85 @@ To report a problem include a message formatted like the one below in the HTTP P
 </tr>
 </table>
 
+### Getting form questions
+
+##### HTTP request
+
+This URL path retrieves the questions that were asked in JSON format so they can more easily be associated with the answer data retrieved:
+
+<code>
+GET  /forms/{formID}/template
+</code>
+
+> _Note: The questions will be in a data structure that is JSON format when retrieved. This helps if you’ll be transforming the data and need to match the answers to the questions._
+
+##### Response status
+
+<table>
+<tr>
+  <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
+</tr>  
+<tr>
+  <td><code>200</code></td>
+  <td>
+<code>
+  {
+  "layout": [
+    1
+  ],
+  "titleEn": "Test Form",
+  "titleFr": "Formulaire de test",
+  "elements": [
+    {
+      "id": 1,
+      "type": "textField",
+      "properties": {
+        "choices": [
+          {
+            "en": "",
+            "fr": ""
+          }
+        ],
+        "titleEn": "This is a question",
+        "titleFr": "C'est une question",
+        "validation": {
+          "required": false
+        },
+        "subElements": [],
+        "descriptionEn": "",
+        "descriptionFr": "",
+        "placeholderEn": "",
+        "placeholderFr": ""
+      }
+    }
+  ],
+  "confirmation": {
+    "descriptionEn": "Confirmed",
+    "descriptionFr": "Confirmation",
+    "referrerUrlEn": "",
+    "referrerUrlFr": ""
+  },
+  "introduction": {
+    "descriptionEn": "Description",
+    "descriptionFr": "Description"
+  },
+  "privacyPolicy": {
+    "descriptionEn": "Private",
+    "descriptionFr": "Privé"
+  }
+}
+</code></code></td> 
+  <td> Form template data successfully retrieved.</td>
+</tr>
+<tr>
+  <td><code>404</code></td>
+  <td>
+<code>
+{
+    "error": "Form template does not exist"
+}
+</code>
+  </td> 
+  <td> 
+  “Form ID” is incorrect or could not be found.
+  </td>
