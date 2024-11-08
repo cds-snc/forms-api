@@ -1,9 +1,9 @@
 ---
 layout: page
-title:  "Faire des requêtes"
+title:  "Effectuer des demandes"
 lang: fr
-permalink: "/faire-des-requetes/"
+permalink: "/effectuer-des-demandes/"
 trans_url: "/making-requests/"
 ---
 
-_la version française sera publiée d’ici peu_
+
