@@ -352,7 +352,7 @@ GET  /forms/{formID}/template
     "descriptionFr": "Privé"
   }
 }
-</code></code></td> 
+</code></td> 
   <td> Form template data successfully retrieved.</td>
 </tr>
 <tr>
