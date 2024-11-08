@@ -16,7 +16,6 @@ These are common errors that apply globally and are the same for every URL path.
 | <code>401</code>        |   <code>Access token has expired</code>   | Access token has expired |
 | <code>403</code>   |  <code>Forbidden</code>   | Could not validate access token OR "Form ID" in request is not allowed to be accessed with the provided access token. |
 | <code>404</code> |  <code>Not found</code>   | Invalid request URL. |
-| <code>429</code> |  <code>Too many requests</code>   | The limit is 500 requests per 60 seconds. Wait and try again or request a higher limit. |
 | <code>500</code> |  <code>Internal server error</code>   | Internal error while serving request. |
 
 #### Reporting errors and feedback
@@ -31,6 +30,8 @@ The limit for API requests from one form is **500 requests per minute**. Should 
 | Status code              | Example message | Meaning or how to fix |
 | :---------------- | :------ | :---- |
 | <code>429</code> |  <code>Too many requests</code>   | The default limit is 500 requests per 60 seconds. Wait and try again or request a higher limit. |
+
+You can see the **current limit of requests** in <code>X-RateLimit-Limit</code>, the number of **remaining requests** in <code>X-RateLimit-Remaining</code>, and the moment **when the limit will reset** in <code>X-RateLimit-Reset</code>.
 
 In the future, we anticipate the API call limits may be tied to different use cases or types of usage and will try to determine appropriate limits for API requests per minute. 
 
