@@ -28,7 +28,11 @@ API throttling allows us to manage high API traffic and helps maintain the syste
 
 The limit for API requests from one form is **500 requests per minute**. Should you happen to exceed the limit, you will get a <code>RateLimitError</code>. You may either wait and try again, or request a higher limit for your form. If you require an API request rate increase, [contact Support](https://forms-formulaires.alpha.canada.ca/en/support).
 
-You can see the **current limit of requests** in <code>X-RateLimit-Limit</code>, the number of **remaining requests** in <code>X-RateLimit-Remaining</code>, and the moment **when the limit will reset** in <code>X-RateLimit-Reset</code>.
+You can see additional information in the headers included as part of the API response: 
+- <code>X-RateLimit-Limit</code>: the current limit of API requests for your form per 60 seconds
+- <code>X-RateLimit-Remaining</code>: the number of remaining API requests within this 60 second
+- <code>X-RateLimit-Reset</code>: the moment at which the limit will reset to the full limit amount
+- <code>Retry-After</code>: the time in seconds to wait before sending another request to the API
 
 In the future, we anticipate the API call limits may be tied to different use cases or types of usage and will try to determine appropriate limits for API requests per minute. 
 
