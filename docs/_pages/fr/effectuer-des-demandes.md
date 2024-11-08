@@ -282,4 +282,88 @@ Pour signaler un problème, incluez un message au format similaire à celui ci-d
 </tr>
 </table>
 
+### Obtenir les questions du formulaire
+
+##### Demande HTTP
+
+Ce chemin d’URL récupère les questions qui ont été posées au format JSON afin qu’elles puissent être plus facilement associées aux réponses récupérées :
+
+<code>
+GET  /forms/{formID}/template
+</code>
+
+> _Remarque : Les questions seront dans une structure de données au format JSON lorsqu’elles seront récupérées. Cela est utile si vous transformez les données et que vous devez faire correspondre les réponses aux questions._
+
+##### Statut de la réponse
+
+<table>
+<tr>
+  <td><b>Code du statut</b></td> <td><b>Exemple de message</b></td> <td><b>Signification / comment corriger</b></td>
+</tr>  
+<tr>
+  <td><code>200</code></td>
+  <td>
+<code>
+  {
+  "layout": [
+    1
+  ],
+  "titleEn": "Test Form",
+  "titleFr": "Formulaire de test",
+  "elements": [
+    {
+      "id": 1,
+      "type": "textField",
+      "properties": {
+        "choices": [
+          {
+            "en": "",
+            "fr": ""
+          }
+        ],
+        "titleEn": "This is a question",
+        "titleFr": "C'est une question",
+        "validation": {
+          "required": false
+        },
+        "subElements": [],
+        "descriptionEn": "",
+        "descriptionFr": "",
+        "placeholderEn": "",
+        "placeholderFr": ""
+      }
+    }
+  ],
+  "confirmation": {
+    "descriptionEn": "Confirmed",
+    "descriptionFr": "Confirmation",
+    "referrerUrlEn": "",
+    "referrerUrlFr": ""
+  },
+  "introduction": {
+    "descriptionEn": "Description",
+    "descriptionFr": "Description"
+  },
+  "privacyPolicy": {
+    "descriptionEn": "Private",
+    "descriptionFr": "Privé"
+  }
+}
+</code></td> 
+  <td>Les données relatives au modèle de formulaire ont bien été récupérées.
+
+</td>
+</tr>
+<tr>
+  <td><code>404</code></td>
+  <td>
+<code>
+{
+    "error": "Form template does not exist"
+}
+</code>
+  </td> 
+  <td> 
+  Le renseignement “Form ID” est incorrect ou n’a pas pu être trouvé.
+  </td>
 
