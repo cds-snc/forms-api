@@ -17,7 +17,7 @@ These are common errors that apply globally and are the same for every URL path.
 | <code>403</code>   |  <code>Forbidden</code>   | Could not validate access token OR "Form ID" in request is not allowed to be accessed with the provided access token. |
 | <code>404</code> |  <code>Not found</code>   | Invalid request URL. |
 | <code>429</code> |  <code>Too many requests</code>   | The limit is 500 requests per 60 seconds. Wait and try again or request a higher limit. |
-| <code>500</code> |  <code>Too many requests</code>   | Internal error while serving request. |
+| <code>500</code> |  <code>Internal server error</code>   | Internal error while serving request. |
 
 #### Reporting errors and feedback
 We expect there may be some additional features needed to get the data to target systems successfully. If you encounter an error, please submit a [technical support ticket](https://forms-formulaires.alpha.canada.ca/en/support) and we'll work with you to resolve the issue. Don't hesitate to include any feedback on the implementation so far — what works and what doesn't. Your feedback helps shape the product directly by informing our decisions on what issues are most important.
