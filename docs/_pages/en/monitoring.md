@@ -16,7 +16,7 @@ These are common errors that apply globally and are the same for every URL path.
 | <code>401</code>        |   <code>Access token has expired</code>   | Access token has expired |
 | <code>403</code>   |  <code>Forbidden</code>   | Could not validate access token OR "Form ID" in request is not allowed to be accessed with the provided access token. |
 | <code>404</code> |  <code>Not found</code>   | Invalid request URL. |
-| <code>429</code> |  <code>Too many requests</code>   | The limit is 500 requests per 60 seconds. Wait and try again. |
+| <code>429</code> |  <code>Too many requests</code>   | The limit is 500 requests per 60 seconds. Wait and try again or request a higher limit. |
 | <code>500</code> |  <code>Too many requests</code>   | Internal error while serving request. |
 
 #### Reporting errors and feedback
