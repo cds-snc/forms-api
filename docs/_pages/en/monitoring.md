@@ -27,6 +27,7 @@ We expect there may be some additional features needed to get the data to target
 The limit for API requests from one form is **500 requests per minute**. Should you happen to exceed the limit, you will get a <code>RateLimitError</code>. 
 
 | Status code              | Example message | Meaning or how to fix |
+| :---------------- | :------ | :---- |
 | <code>429</code> |  <code>Too many requests</code>   | The default limit is 500 requests per 60 seconds. Wait and try again or request a higher limit. |
 
 ### Requesting a rate limit increase
