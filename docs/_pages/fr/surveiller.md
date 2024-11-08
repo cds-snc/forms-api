@@ -26,7 +26,7 @@ Nous nous attendons à ce que des fonctionnalités supplémentaires soient néce
 
 Les limitations en matière de requêtes API nous permet de gérer le trafic élevé et de maintenir la stabilité du système. Cela permettra d’éviter les situations de surcharge où trop de demandes sont traitées simultanément. 
 
-La limite des demandes d'API à partir d'un formulaire est de **500 demandes par minute**. Si vous dépassez cette limite, vous obtiendrez une erreur <code>429 RateLimitError</code>. Vous pouvez soit attendre et réessayer, ou demander une limite plus élevée.
+La limite des demandes d'API à partir d'un formulaire est de **500 demandes par minute**. Si vous dépassez cette limite, vous obtiendrez une erreur <code>429 RateLimitError</code>. Vous pouvez soit attendre et réessayer, ou demander une limite plus élevée pour votre formulaire.
 
 Vous pouvez voir la **limite actuelle de demandes** dans <code>X-RateLimit-Limit</code>, le nombre de **demandes restantes** dans <code>X-RateLimit-Remaining</code>, et le **moment de réinitialisation de la limite** dans <code>X-RateLimit-Reset</code>.
 
