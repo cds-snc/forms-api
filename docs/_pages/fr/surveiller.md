@@ -31,6 +31,8 @@ La limite des demandes d'API à partir d'un formulaire est de **500 demandes par
 | :---------------- | :------ | :---- |
 | <code>429</code> |  <code>Too many requests</code>   | La limite par défaut est de 500 demandes par 60 secondes. Attendez et réessayez ou demandez une limite plus élevée. |
 
+Vous pouvez voir la **limite actuelle de demandes** dans <code>X-RateLimit-Limit</code>, le nombre de **demandes restantes** dans <code>X-RateLimit-Remaining</code>, et le moment de réinitialisation de la limite dans <code>X-RateLimit-Reset</code>.
+
 À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer les limites appropriées par minute pour les demandes d’API.
 
 Dans l'intervalle, si vous avez besoin d'une augmentation du nombre de requêtes API, [contactez l'équipe de soutien](https://forms-formulaires.alpha.canada.ca/fr/support).
