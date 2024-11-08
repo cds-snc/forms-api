@@ -12,7 +12,7 @@ Le but de cette API est de récupérer des soumissions de formulaires de manièr
 
 ### Ce dont vous aurez besoin
   - Un [compte Formulaires GC](https://articles.alpha.canada.ca/forms-formulaires/fr)
-  - A draft form (Unclassified or Protected A)
+  - Un formulaire d'ébauche (Non-classifié ou Protégé A)
   - Un formulaire configuré pour envoyer des réponses par l'intermédiaire de l'option « Télécharger » dans les paramètres. 
   - Quelques réponses « fictives » soumises dans le formulaire
   - Un système cible dans lequel vous prévoyez de recevoir des données de soumission de formulaire
