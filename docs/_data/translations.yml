@@ -14,7 +14,7 @@ fr:
   cds-snc: "Formulaires GC"
   cds-snc-url: "https://articles.alpha.canada.ca/forms-formulaires/fr/"
   hosting: "Hébergé dans"
-  built-by: "Cette documentation s'adresse aux développeurs d'API qui récupèrent des soumissions de formulaire à partir de"
+  built-by: "Cette documentation s'adresse aux développeur·euse·s d'API qui récupèrent des soumissions de formulaire à partir de"
   contribute: "Contribuer au projet"
   repo: "Référentiel"
   language: "English"
