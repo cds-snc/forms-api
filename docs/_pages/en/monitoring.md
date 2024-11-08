@@ -26,7 +26,7 @@ We expect there may be some additional features needed to get the data to target
 
 API throttling allows us to manage high API traffic and helps maintain the system’s stability. This helps avoid overloading situations where too many requests are processed simultaneously. 
 
-The limit for API requests from one form is **500 requests per minute**. Should you happen to exceed the limit, you will get a <code>RateLimitError</code>. 
+The limit for API requests from one form is **500 requests per minute**. Should you happen to exceed the limit, you will get a <code>RateLimitError</code>. You may either wait and try again, or request a higher limit for your form.
 
 You can see the **current limit of requests** in <code>X-RateLimit-Limit</code>, the number of **remaining requests** in <code>X-RateLimit-Remaining</code>, and the moment **when the limit will reset** in <code>X-RateLimit-Reset</code>.
 
