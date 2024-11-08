@@ -28,7 +28,11 @@ Les limitations en matière de requêtes API nous permet de gérer le trafic él
 
 La limite des demandes d'API à partir d'un formulaire est de **500 demandes par minute**. Si vous dépassez cette limite, vous obtiendrez une erreur <code>429 RateLimitError</code>. Vous pouvez soit attendre et réessayer, ou demander une limite plus élevée pour votre formulaire. Si vous avez besoin d'une augmentation du nombre de requêtes API, [contactez l'équipe de soutien](https://forms-formulaires.alpha.canada.ca/fr/support).
 
-Vous pouvez voir la **limite actuelle de demandes** dans <code>X-RateLimit-Limit</code>, le nombre de **demandes restantes** dans <code>X-RateLimit-Remaining</code>, et le **moment de réinitialisation de la limite** dans <code>X-RateLimit-Reset</code>.
+Vous pouvez obtenir des informations supplémentaires dans les en-têtes inclus dans la réponse de l'API :
+- <code>X-RateLimit-Limit</code> : la limite actuelle de demandes API pour votre formulaire par 60 secondes
+- <code>X-RateLimit-Remaining</code> : le nombre de demandes d'API restantes dans cet intervalle de 60 secondes
+- <code>X-RateLimit-Reset</code> : le moment où la limite sera réinitialisée au montant total de la limite
+- <code>Retry-After</code> : le temps en secondes à attendre avant d'envoyer une autre demande à l'API
 
 À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer les limites appropriées par minute pour les demandes d’API.
 
