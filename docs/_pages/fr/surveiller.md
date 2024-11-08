@@ -16,7 +16,6 @@ Il s’agit d’erreurs courantes qui s’appliquent généralement et sont les 
 | <code>401</code>        |   <code>Access token has expired</code>   | Le jeton d’accès a expiré. |
 | <code>403</code>   |  <code>Forbidden</code>   | Le jeton d’accès n’a pas pu être validé OU le renseignement “Form ID” est inaccessible avec le jeton d’accès fourni. |
 | <code>404</code> |  <code>Not found</code>   | L’URL de requête n’est pas valide. |
-| <code>429</code> |  <code>Too many requests</code>   | La limite est de 500 demandes par 60 secondes. Attendez et réessayez ou demandez une limite plus élevée. |
 | <code>500</code> |  <code>Internal server error</code>   | Une erreur interne est survenue durant le traitement de la requête. |
 
 #### Signalement d'erreurs et retours d'information
@@ -24,11 +23,17 @@ Nous nous attendons à ce que des fonctionnalités supplémentaires soient néce
 
 ### Limite du débit de l'API
 
+Les limitations en matière de requêtes API nous permet de gérer le trafic élevé et de maintenir la stabilité du système. Cela permettra d’éviter les situations de surcharge où trop de demandes sont traitées simultanément. 
+
 La limite des demandes d'API à partir d'un formulaire est de **500 demandes par minute**. Si vous dépassez cette limite, vous obtiendrez une erreur <code>429 RateLimitError</code>. 
 
-### Demande d’augmentation de limite
+| Code du statut             | Exemple de message | Signification / comment corriger |
+| :---------------- | :------ | :---- |
+| <code>429</code> |  <code>Too many requests</code>   | La limite par défaut est de 500 demandes par 60 secondes. Attendez et réessayez ou demandez une limite plus élevée. |
 
-Les limitations en matière de requêtes API nous permet de gérer le trafic élevé et de maintenir la stabilité du système. Cela permettra d’éviter les situations de surcharge où trop de demandes sont traitées simultanément. À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer les limites appropriées par minute pour les demandes d’API. Dans l'intervalle, si vous avez besoin d'une augmentation du nombre de requêtes API, [contactez l'équipe de soutien] (https://forms-formulaires.alpha.canada.ca/fr/support).
+À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer les limites appropriées par minute pour les demandes d’API.
+
+Dans l'intervalle, si vous avez besoin d'une augmentation du nombre de requêtes API, [contactez l'équipe de soutien](https://forms-formulaires.alpha.canada.ca/fr/support).
 
 ### Actualisation des clés API
 
