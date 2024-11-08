@@ -30,7 +30,7 @@ The limit for API requests from one form is **500 requests per minute**. Should 
 
 You can see additional information in the headers included as part of the API response: 
 - <code>X-RateLimit-Limit</code>: the current limit of API requests for your form per 60 seconds
-- <code>X-RateLimit-Remaining</code>: the number of remaining API requests within this 60 second
+- <code>X-RateLimit-Remaining</code>: the number of remaining API requests within this 60 second interval
 - <code>X-RateLimit-Reset</code>: the moment at which the limit will reset to the full limit amount
 - <code>Retry-After</code>: the time in seconds to wait before sending another request to the API
 
