@@ -55,7 +55,7 @@ export async function verifyAccessToken(accessToken: string, formId: string) {
     await cacheVerifiedAccessToken(accessToken, introspectedAccessToken);
     return introspectedAccessToken;
   } catch (error) {
-    logMessage.error(error, "[idp] Failed to verify access token");
+    logMessage.warn(error, "[idp] Failed to verify access token");
     throw error;
   }
 }
@@ -117,7 +117,9 @@ async function generateIntrospectedAccessToken(
       "[idp] Introspection result is missing required properties",
     );
 
-    throw new AccessTokenInvalidError();
+    throw new Error(
+      `[idp] Introspection result is missing required properties.  Payload: ${JSON.stringify(introspectedToken)}`,
+    );
   }
   return {
     expirationEpochTime: introspectedToken.exp,
@@ -133,7 +135,7 @@ function validateIntrospectedToken(token: VerifiedAccessToken, formId: string) {
     auditLog(
       serviceUserId,
       { type: "ServiceAccount", id: serviceAccountId },
-      "AccessDenied",
+      "InvalidAccessToken",
       "Access token has expired",
     );
     throw new AccessTokenExpiredError();
