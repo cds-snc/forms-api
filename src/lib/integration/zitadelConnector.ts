@@ -18,7 +18,7 @@ const privateKey = createPrivateKey({
   key: JSON.parse(ZITADEL_APPLICATION_KEY).key,
 });
 
-class ZitadelConnectionError extends Error {
+export class ZitadelConnectionError extends Error {
   constructor() {
     super("Failed to connect to Zitadel");
     this.name = "ZitadelConnectionError";
