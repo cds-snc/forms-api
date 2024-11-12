@@ -3,6 +3,7 @@ import {
   verifyAccessToken,
   AccessTokenExpiredError,
   AccessTokenInvalidError,
+  AccessControlError,
 } from "@lib/idp/verifyAccessToken.js";
 
 export async function authenticationMiddleware(
@@ -28,12 +29,13 @@ export async function authenticationMiddleware(
 
     next();
   } catch (error) {
-    switch (error) {
+    switch (true) {
       case error instanceof AccessTokenExpiredError: {
         response.status(401).json({ error: "Access token has expired" });
         return;
       }
-      case error instanceof AccessTokenInvalidError: {
+      case error instanceof AccessTokenInvalidError:
+      case error instanceof AccessControlError: {
         response.sendStatus(403);
         return;
       }
