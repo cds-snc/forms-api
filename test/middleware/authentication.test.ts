@@ -10,13 +10,9 @@ import {
   AccessTokenExpiredError,
   AccessControlError,
 } from "@lib/idp/verifyAccessToken.js";
-// biome-ignore lint/style/noNamespaceImport: <explanation>
-import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
 vi.mock("@lib/idp/verifyAccessToken");
 const verifyAccessTokenMock = vi.mocked(verifyAccessToken);
-
-const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("authenticationMiddleware should", () => {
   let requestMock = getMockReq();

@@ -173,8 +173,6 @@ describe("verifyAccessToken should", () => {
         }),
       );
 
-      const expiredAccessTokenError = new AccessControlError();
-
       await expect(() =>
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
