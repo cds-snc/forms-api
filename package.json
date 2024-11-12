@@ -9,9 +9,9 @@
     "start": "node build/server.js",
     "dev": "tsx watch --ignore \"./utils/**/*\" --ignore \"./test/**/*\" --ignore \"./build/**/*\" src/server.ts",
     "test": "vitest run",
-    "lint": "biome lint --write .",
+    "lint": "biome lint --write --diagnostic-level=warn .",
     "lint:github": "biome ci --reporter=github .",
-    "lint:check": "biome lint --error-on-warnings .",
+    "lint:check": "biome lint --error-on-warnings --diagnostic-level=warn .",
     "format": "biome format --write .",
     "format:check": "biome format ."
   },
