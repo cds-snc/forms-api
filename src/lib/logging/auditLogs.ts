@@ -8,7 +8,8 @@ export enum AuditLogEvent {
   DownloadResponse = "DownloadResponse",
   ConfirmResponse = "ConfirmResponse",
   IdentifyProblemResponse = "IdentifyProblemResponse",
-  RetrieveNewResponses = "RetrieveResponses",
+  RetrieveNewResponses = "RetrieveNewResponses",
+  RateLimitExceeded = "RateLimitExceeded",
   // Application Events
   AccessDenied = "AccessDenied",
   // Template Events
