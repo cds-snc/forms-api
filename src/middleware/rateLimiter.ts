@@ -32,8 +32,12 @@ export async function rateLimiterMiddleware(
       logMessage.info(
         `[rate-limiter] Form ${formId} consumed all ${consumeTokenResult.bucketStatus.bucketCapacity} tokens. Bucket will be refilled in ${consumeTokenResult.bucketStatus.numberOfMillisecondsBeforeRefill / 1000} seconds`,
       );
-      
-      auditLog(request.serviceUserId, { type: "Form", id: formId }, "RateLimitExceeded");
+
+      auditLog(
+        request.serviceUserId,
+        { type: "Form", id: formId },
+        "RateLimitExceeded",
+      );
 
       response.sendStatus(429);
       return;
