@@ -129,6 +129,14 @@ async function generateIntrospectedAccessToken(
       `[idp] Introspection result is missing required properties.  Payload: ${JSON.stringify(introspectedToken)}`,
     );
   }
+
+  auditLog(
+    introspectedToken.username,
+    { type: "ServiceAccount", id: introspectedToken.sub },
+    "IntrospectedAccessToken",
+    "Access token has been introspected by the IDP",
+  );
+
   return {
     expirationEpochTime: introspectedToken.exp,
     serviceAccountId: introspectedToken.sub,
@@ -158,11 +166,4 @@ function validateIntrospectedToken(token: VerifiedAccessToken, formId: string) {
     );
     throw new AccessControlError();
   }
-
-  auditLog(
-    serviceUserId,
-    { type: "ServiceAccount", id: serviceAccountId },
-    "VerifiedAccessToken",
-    "Access token has been verified by the IDP",
-  );
 }

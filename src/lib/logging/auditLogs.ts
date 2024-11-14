@@ -16,7 +16,7 @@ export enum AuditLogEvent {
   // Template Events
   RetrieveTemplate = "RetrieveTemplate",
   // Auth Events
-  VerifiedAccessToken = "VerifiedAccessToken",
+  IntrospectedAccessToken = "IntrospectedAccessToken",
   InvalidAccessToken = "InvalidAccessToken",
 }
 
