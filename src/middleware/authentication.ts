@@ -1,6 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
-import { verifyAccessToken } from "@lib/idp/verifyAccessToken.js";
-import { auditLog } from "@lib/logging/auditLogs.js";
+import {
+  verifyAccessToken,
+  AccessTokenExpiredError,
+  AccessTokenInvalidError,
+  AccessControlError,
+} from "@lib/idp/verifyAccessToken.js";
 
 export async function authenticationMiddleware(
   request: Request,
@@ -12,50 +16,35 @@ export async function authenticationMiddleware(
     const formId = request.params.formId;
 
     if (!accessToken) {
-      response.sendStatus(401);
+      // Authorization header is missing
+      response
+        .sendStatus(401)
+        .json({ error: "Authorization header is missing" });
       return;
     }
-
-    const verifiedAccessToken = await verifyAccessToken(accessToken);
-
-    if (verifiedAccessToken === undefined) {
-      response.sendStatus(403);
-      return;
-    }
-
-    if (verifiedAccessToken.serviceUserId !== formId) {
-      auditLog(
-        verifiedAccessToken.serviceUserId,
-        { type: "Form", id: formId },
-        "AccessDenied",
-        "User does not have access to this form",
-      );
-
-      response.sendStatus(403);
-      return;
-    }
-
-    if (verifiedAccessToken.expirationEpochTime < Date.now() / 1000) {
-      auditLog(
-        verifiedAccessToken.serviceUserId,
-        { type: "Form", id: formId },
-        "AccessDenied",
-        "Access token has expired",
-      );
-
-      response.status(401).json({ error: "Access token has expired" });
-      return;
-    }
+    const verifiedAccessToken = await verifyAccessToken(accessToken, formId);
 
     request.serviceUserId = verifiedAccessToken.serviceUserId;
     request.serviceAccountId = verifiedAccessToken.serviceAccountId;
 
     next();
   } catch (error) {
-    next(
-      new Error("[middleware] Internal error while authenticating user", {
-        cause: error,
-      }),
-    );
+    switch (true) {
+      case error instanceof AccessTokenExpiredError: {
+        response.status(401).json({ error: "Access token has expired" });
+        return;
+      }
+      case error instanceof AccessTokenInvalidError:
+      case error instanceof AccessControlError: {
+        response.sendStatus(403);
+        return;
+      }
+      default:
+        next(
+          new Error("[middleware] Internal error while authenticating user", {
+            cause: error,
+          }),
+        );
+    }
   }
 }
