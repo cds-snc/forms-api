@@ -40,19 +40,27 @@ export class AccessControlError extends Error {
 export async function verifyAccessToken(accessToken: string, formId: string) {
   try {
     // Get token from cache, it if doesn't exist introspect from IDP
-    const introspectedAccessToken = await getIntrospectedAccessTokenFromCache(
-      accessToken,
-    ).then((cachedToken) => {
-      if (cachedToken !== undefined) {
-        return cachedToken;
-      }
-      return generateIntrospectedAccessToken(accessToken, formId);
-    });
+    const { introspectedAccessToken, cached } =
+      await getIntrospectedAccessTokenFromCache(accessToken).then(
+        async (cachedToken) => {
+          if (cachedToken !== undefined) {
+            return { introspectedAccessToken: cachedToken, cached: true };
+          }
+          const introspectedAccessToken = await generateIntrospectedAccessToken(
+            accessToken,
+            formId,
+          );
+          return { introspectedAccessToken, cached: false };
+        },
+      );
 
     // Checks for expiry and access control
     validateIntrospectedToken(introspectedAccessToken, formId);
 
-    await cacheVerifiedAccessToken(accessToken, introspectedAccessToken);
+    // If the token was not cached, cache the valid token
+    if (!cached) {
+      await cacheVerifiedAccessToken(accessToken, introspectedAccessToken);
+    }
     return introspectedAccessToken;
   } catch (error) {
     logMessage.warn(error, "[idp] Failed to verify access token");
