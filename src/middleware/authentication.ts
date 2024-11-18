@@ -16,12 +16,10 @@ export async function authenticationMiddleware(
     const formId = request.params.formId;
 
     if (!accessToken) {
-      // Authorization header is missing
-      response
-        .sendStatus(401)
-        .json({ error: "Authorization header is missing" });
+      response.status(401).json({ error: "Authorization header is missing" });
       return;
     }
+
     const verifiedAccessToken = await verifyAccessToken(accessToken, formId);
 
     request.serviceUserId = verifiedAccessToken.serviceUserId;
