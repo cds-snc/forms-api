@@ -54,7 +54,10 @@ describe("authenticationMiddleware should", () => {
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
     expect(nextMock).not.toHaveBeenCalled();
-    expect(responseMock.sendStatus).toHaveBeenCalledWith(401);
+    expect(responseMock.status).toHaveBeenCalledWith(401);
+    expect(responseMock.json).toHaveBeenCalledWith({
+      error: "Authorization header is missing",
+    });
   });
 
   it("respond with error when the authorization header value is invalid", async () => {
