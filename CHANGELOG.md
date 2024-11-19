@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.3.0](https://github.com/cds-snc/forms-api/compare/v1.2.0...v1.3.0) (2024-11-18)
+
+
+### Features
+
+* token bucket rate limiting ([#91](https://github.com/cds-snc/forms-api/issues/91)) ([201b6c4](https://github.com/cds-snc/forms-api/commit/201b6c4bc6291f688cc4d300b3c346337cef98d1))
+
+
+### Bug Fixes
+
+* Add rate limiting audit log ([#109](https://github.com/cds-snc/forms-api/issues/109)) ([39469ec](https://github.com/cds-snc/forms-api/commit/39469ec580d917cc0bb431f4eb732db610bb0320))
+* authentication middleware tries to send JSON message as part of the response after the HTTP response has completed ([#111](https://github.com/cds-snc/forms-api/issues/111)) ([3dc6056](https://github.com/cds-snc/forms-api/commit/3dc605655145f04f572e0009f69fc82ad75d279e))
+* **deps:** update all minor dependencies ([#107](https://github.com/cds-snc/forms-api/issues/107)) ([5129297](https://github.com/cds-snc/forms-api/commit/512929773e0b81092fd4192901fb100e93b91c50))
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#100](https://github.com/cds-snc/forms-api/issues/100)) ([2a76214](https://github.com/cds-snc/forms-api/commit/2a76214eb68852c619e8cd329aaf3b4c99e91afc))
+* **deps:** lock file maintenance ([#108](https://github.com/cds-snc/forms-api/issues/108)) ([397cb65](https://github.com/cds-snc/forms-api/commit/397cb65d36fca94b79d8effccbcd6ba0baa022fc))
+* **deps:** lock file maintenance ([#110](https://github.com/cds-snc/forms-api/issues/110)) ([f2f8750](https://github.com/cds-snc/forms-api/commit/f2f8750b90787921d148968d6d8ffb57beb55be8))
+* **deps:** update all non-major github action dependencies ([#106](https://github.com/cds-snc/forms-api/issues/106)) ([e314724](https://github.com/cds-snc/forms-api/commit/e3147244ca65967bef624736089a2646638db271))
+* **deps:** update all non-major github action dependencies ([#97](https://github.com/cds-snc/forms-api/issues/97)) ([30c3c6c](https://github.com/cds-snc/forms-api/commit/30c3c6c2d677ca113ba66522d1fd52719479db56))
+* **deps:** update node.js to v22.10.0 ([#98](https://github.com/cds-snc/forms-api/issues/98)) ([7d070fa](https://github.com/cds-snc/forms-api/commit/7d070fa3f7ec9c107527cbe0eec3aa1a8b6438a2))
+* **deps:** update pnpm to v9.12.3 ([#99](https://github.com/cds-snc/forms-api/issues/99)) ([84fda56](https://github.com/cds-snc/forms-api/commit/84fda56cf47f61249fecfe847d368a2bbf4fd581))
+
+
+### Code Refactoring
+
+* Authentication code and audit logs refactor ([#103](https://github.com/cds-snc/forms-api/issues/103)) ([d2ec486](https://github.com/cds-snc/forms-api/commit/d2ec48684fee00d46134370496df9f1518fb130c))
+
 ## [1.2.0](https://github.com/cds-snc/forms-api/compare/v1.1.0...v1.2.0) (2024-11-01)
 
 
