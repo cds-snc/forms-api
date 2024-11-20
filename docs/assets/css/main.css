@@ -70,7 +70,6 @@ h2 {
 
 h4 {
     font-size: 1em;
-    text-transform: uppercase;
 }
 
 .page-title {
@@ -122,32 +121,32 @@ a {
 a,
 a:link,
 a:visited {
-    color: #0072ce;
-    border-bottom: 1px dotted #0072ce;
+    color: #9d8cf2ff;
+    border-bottom: 1px dotted #9d8cf2ff;
     text-decoration: none;
 }
 
 a:hover {
     border-bottom: 1px solid #7eb8dd;
-    color: #7eb8dd;
+    color: #9d8cf2ff;
     text-decoration: none;
 }
 
 a:active {
     border-bottom: 1px solid #002d72;
-    color: #002d72;
+    color: #4b4085ff;
     text-decoration: none;
 }
 
 a:focus {
     border-bottom: 1px solid #0072ce;
-    color: #0072ce;
+    color: #4b4085ff;
     outline: thin dotted;
     text-decoration: none;
 }
 
 a.title-link {
-    color: #75787B;
+    color: #9d8cf2ff;
     border-bottom: none;
 }
 
@@ -188,7 +187,7 @@ Navigation
 .sidebar-nav a:link,
 .sidebar-nav a:visited {
   border-bottom: none;
-  color: #75787b;
+  color: #1E293B;
 }
 .sidebar-nav li:hover,
 .sidebar-nav a:focus,
@@ -339,7 +338,7 @@ Style
 */
 
 .intro {
-    color: #75787B;
+    color: #1E293B;
 }
 
 li h4 {
@@ -377,7 +376,7 @@ ul.posts {
 }
 
 .post-date {
-    color: #75787B;
+    color: #64748B;
 }
 
 /*
@@ -484,7 +483,7 @@ Desktop Styles
         height: 4.0625em;
         max-height: 4.0625em;
         background-color: #E7E7E6;
-        border-left: 1px solid #BABBBD;
+        border-left: 1px solid #64748B;
         width: 30%;
     }
 
@@ -498,8 +497,8 @@ Desktop Styles
     }
 
     .repo-list a:hover {
-        color: #4D5F87;
-        background-color: #CDE3F1;
+        color: #64748B;
+        background-color: #cec5f8ff;
     }
 
     .repo-list li:first-child {
