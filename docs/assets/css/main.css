@@ -146,19 +146,19 @@ a:focus {
 }
 
 a.title-link {
-    color: #9d8cf2ff;
+    color: ##4b408ff;
     border-bottom: none;
 }
 
 a.title-link:hover,
 a.title-link:active,
 a.title-link:focus {
-    color: #9d8cf2ff;
+    color: #6366F1;
     border-bottom: none;
 }
 
 a.skip-link {
-    color: #0072ce;
+    color: #26374A;
     border-bottom: none;
     padding: .25em;
 }
@@ -166,7 +166,7 @@ a.skip-link {
 a.skip-link:hover,
 a.skip-link:active,
 a.skip-link:focus {
-    background-color: #0072ce;
+    background-color: #26374A;
     color: #fff;
     border-bottom: none;
 }
@@ -187,13 +187,13 @@ Navigation
 .sidebar-nav a:link,
 .sidebar-nav a:visited {
   border-bottom: none;
-  color: #1E293B;
+  color: #26374A;
 }
 .sidebar-nav li:hover,
 .sidebar-nav a:focus,
 .sidebar-nav li:active,
 .sidebar-nav .sidebar-nav-active {
-  color: #75787b;
+  color: #26374A;
   border-left: 4px solid {{ site.brand_color }};
   background-color: transparent;
   border-bottom: 1px solid #babbbd;
