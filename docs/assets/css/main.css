@@ -134,7 +134,7 @@ a:hover {
 
 a:active {
     border-bottom: 1px solid #002d72;
-    color: #4b4085ff;
+    color: #002d72;
     text-decoration: none;
 }
 
@@ -153,7 +153,7 @@ a.title-link {
 a.title-link:hover,
 a.title-link:active,
 a.title-link:focus {
-    color: #7eb8dd;
+    color: #9d8cf2ff;
     border-bottom: none;
 }
 
