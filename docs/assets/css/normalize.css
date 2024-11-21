@@ -121,14 +121,14 @@ a {
 a,
 a:link,
 a:visited {
-    color: #9d8cf2ff;
-    border-bottom: 1px dotted #9d8cf2ff;
+    color: #4b4085ff;
+    border-bottom: 1px dotted #4b4085ff;
     text-decoration: none;
 }
 
 a:hover {
     border-bottom: 1px solid #7eb8dd;
-    color: #9d8cf2ff;
+    color: #4b4085ff;
     text-decoration: none;
 }
 
@@ -153,7 +153,7 @@ a.title-link {
 a.title-link:hover,
 a.title-link:active,
 a.title-link:focus {
-    color: #9d8cf2ff;
+    color: #4b4085ff;
     border-bottom: none;
 }
 
@@ -498,7 +498,7 @@ Desktop Styles
 
     .repo-list a:hover {
         color: #64748B;
-        background-color: #cec5f8ff;
+        background-color: #4b4085ff;
     }
 
     .repo-list li:first-child {
