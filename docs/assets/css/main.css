@@ -121,25 +121,25 @@ a {
 a,
 a:link,
 a:visited {
-    color: #64748B !important;
-    border-bottom: 1px dotted #64748B;
+    color: #4b4085ff !important;
+    border-bottom: 1px dotted #4b4085ff;
     text-decoration: none;
 }
 
 a:hover {
-    border-bottom: 1px solid #4b4085ff;
-    color: #4b4085ff;
+    border-bottom: 1px solid #6366F1;
+    color: #6366F1;
     text-decoration: none;
 }
 
 a:active {
-    border-bottom: 1px solid #002d72;
-    color: #002d72;
+    border-bottom: 1px solid #6366F1;
+    color: #6366F1;
     text-decoration: none;
 }
 
 a:focus {
-    border-bottom: 1px solid #0072ce;
+    border-bottom: 1px solid #6366F1;
     color: #000000;
     outline: thin dotted;
     text-decoration: none;
