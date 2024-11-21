@@ -127,7 +127,7 @@ a:visited {
 }
 
 a:hover {
-    border-bottom: 1px solid #7eb8dd;
+    border-bottom: 1px solid #4b4085ff;
     color: #4b4085ff;
     text-decoration: none;
 }
