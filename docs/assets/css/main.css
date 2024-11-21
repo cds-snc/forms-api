@@ -121,7 +121,7 @@ a {
 a,
 a:link,
 a:visited {
-    color: #64748B;
+    color: #64748B !important;
     border-bottom: 1px dotted #64748B;
     text-decoration: none;
 }
@@ -538,5 +538,3 @@ Mobile Styles
     }
 
 }
-
-!important
