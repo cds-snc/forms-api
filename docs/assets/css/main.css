@@ -121,8 +121,8 @@ a {
 a,
 a:link,
 a:visited {
-    color: #4b4085ff;
-    border-bottom: 1px dotted #4b4085ff;
+    color: #64748B;
+    border-bottom: 1px dotted #64748B;
     text-decoration: none;
 }
 
@@ -140,7 +140,7 @@ a:active {
 
 a:focus {
     border-bottom: 1px solid #0072ce;
-    color: #4b4085ff;
+    color: #000000;
     outline: thin dotted;
     text-decoration: none;
 }
