@@ -37,7 +37,7 @@ jobs:
 
       - name: Login to Staging Amazon ECR
         id: login-ecr-staging
-        uses: aws-actions/amazon-ecr-login@82e0fc39d1cb50e0db083a0a18ae1b775ef44892
+        uses: aws-actions/amazon-ecr-login@b430a9ae4b069c6327bd09bbcf041b67644ea84f
 
       - name: Tag Images for Staging
         env:
