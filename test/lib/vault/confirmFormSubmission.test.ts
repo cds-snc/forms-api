@@ -45,13 +45,11 @@ describe("confirmFormSubmission should", () => {
     expect(dynamoDbMock.commandCalls(UpdateCommand).length).toEqual(1);
     expect(dynamoDbMock.commandCalls(UpdateCommand)[0].args[0].input).toEqual({
       ExpressionAttributeNames: {
-        "#status": "Status",
         "#statusCreatedAtKey": "Status#CreatedAt",
       },
       ExpressionAttributeValues: {
         ":confirmTimestamp": 1519129853500,
         ":removalDate": 1521721853500,
-        ":status": "Confirmed",
         ":statusCreatedAtValue": "Confirmed#1519129853500",
       },
       Key: {
@@ -60,7 +58,7 @@ describe("confirmFormSubmission should", () => {
       },
       TableName: "Vault",
       UpdateExpression:
-        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
+        "SET #statusCreatedAtKey = :statusCreatedAtValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
     });
   });
 
