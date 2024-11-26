@@ -4,6 +4,7 @@ import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -27,9 +28,7 @@ describe("getFormSubmission should", () => {
 
   it("return a form submission if DynamoDB was able to find it", async () => {
     dynamoDbMock.on(GetCommand).resolvesOnce({
-      Item: {
-        Status: "New",
-      },
+      Item: buildMockedVaultItem("New"),
     });
 
     const formSubmission = await getFormSubmission(
