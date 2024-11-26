@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.1](https://github.com/cds-snc/forms-api/compare/v1.3.0...v1.3.1) (2024-11-26)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#115](https://github.com/cds-snc/forms-api/issues/115)) ([ca13d75](https://github.com/cds-snc/forms-api/commit/ca13d7545d64bfc471ce9d3f079b4efdd32912e4))
+* **deps:** update all minor dependencies ([#114](https://github.com/cds-snc/forms-api/issues/114)) ([a359b9b](https://github.com/cds-snc/forms-api/commit/a359b9be47291fb48488d761ec7a37afbd95eb19))
+* **deps:** update aws-actions/amazon-ecr-login digest to b430a9a ([#113](https://github.com/cds-snc/forms-api/issues/113)) ([bb16429](https://github.com/cds-snc/forms-api/commit/bb16429171468e274f03d5c23e1d979f87b18230))
+
 ## [1.3.0](https://github.com/cds-snc/forms-api/compare/v1.2.0...v1.3.0) (2024-11-18)
 
 
