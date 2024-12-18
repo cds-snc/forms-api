@@ -26,7 +26,7 @@ We expect there may be some additional features needed to get the data to target
 
 API throttling allows us to manage high API traffic and helps maintain the system’s stability. This helps avoid overloading situations where too many requests are processed simultaneously. 
 
-The limit for API requests from one form is **500 requests per minute**. Should you happen to exceed the limit, you will get a <code>RateLimitError</code>. You may either wait and try again, or request a higher limit for your form. If you require an API request rate increase, [contact Support](https://forms-formulaires.alpha.canada.ca/en/support).
+The limit for API requests from one form is **500 requests per minute** by default. Should you happen to exceed the limit, you will get a <code>RateLimitError</code>. You may either wait and try again, or request a higher limit for your form. If you require an API request rate increase, please [contact Support](https://forms-formulaires.alpha.canada.ca/en/support) and we'll be able to increase the limit to 1000 requests per minute for a period of time.
 
 You can see additional information in the headers included as part of the API response: 
 - <code>X-RateLimit-Limit</code>: the current limit of API requests for your form per 60 seconds
@@ -34,8 +34,8 @@ You can see additional information in the headers included as part of the API re
 - <code>X-RateLimit-Reset</code>: the moment at which the limit will reset to the full limit amount
 - <code>Retry-After</code>: the time in seconds to wait before sending another request to the API
 
-In the future, we anticipate the API call limits may be tied to different use cases or types of usage and will try to determine appropriate limits for API requests per minute. 
+In the future, we anticipate the API call limits may be tied to different use cases or types of usage and will try to determine more appropriate limits for API requests per minute. 
 
 ### Refreshing API keys
 
-Refreshing an API key may become necessary if a key is compromised. Keys can be revoked and regenerated, simply requiring a change in the parameters being queried in the request.
+Refreshing an API key may become necessary if a key is compromised. Keys can be revoked and recreated, simply requiring a change in the parameters being queried in the request.
