@@ -16,6 +16,6 @@ Le but de cette API est de récupérer des soumissions de formulaires de manièr
   - Un formulaire configuré pour « Recevoir les réponses via l'API » dans les paramètres. 
   - Quelques réponses « fictives » soumises dans le formulaire
   - Un système cible dans lequel vous prévoyez de recevoir des données de soumission de formulaire
-  - Des ressources de développement d’infrastructure capables de créer des demandes HTTP et d’utiliser Azure ou AWS pour atteindre l’API. _Vous ne disposez d’aucune capacité de développement d’infrastructure? Cette version de l’API pourrait ne pas être tout à fait prête pour vous._
+  - Des ressources de développement d’infrastructure capables de créer des demandes HTTP pour atteindre l’API. _Vous ne disposez d’aucune capacité de développement d’infrastructure? Cette première version de l’API pourrait ne pas être tout à fait prête pour vous._
   - Une clé API (que vous créez dans la section Paramètres)
 > **IMPORTANT: Vous devez protéger cette clé API, car elle sert à authentifier les demandes API et pourrait être utilisée pour accéder à des données protégées. Si vous devez communiquer la clé à un·e membre d’une équipe de développement pour configurer l’intégration, utilisez un courriel chiffré.**

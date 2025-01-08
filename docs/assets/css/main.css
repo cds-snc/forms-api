@@ -53,8 +53,8 @@ strong {
 .site-title {
     font-size: 1.625em;
     font-family: "Avenir Next", Arial, sans-serif;
-    font-weight: normal;
-    color: #919395;
+    font-weight: bold;
+    color: #000000;
     margin: 0;
     line-height: 1.2941176470588236;
     display: inline-block;
@@ -70,7 +70,6 @@ h2 {
 
 h4 {
     font-size: 1em;
-    text-transform: uppercase;
 }
 
 .page-title {
@@ -122,44 +121,44 @@ a {
 a,
 a:link,
 a:visited {
-    color: #0072ce;
-    border-bottom: 1px dotted #0072ce;
+    color: #4b4085ff !important;
+    border-bottom: 1px dotted #4b4085ff;
     text-decoration: none;
 }
 
 a:hover {
-    border-bottom: 1px solid #7eb8dd;
-    color: #7eb8dd;
+    border-bottom: 1px solid #6366F1;
+    color: #6366F1;
     text-decoration: none;
 }
 
 a:active {
-    border-bottom: 1px solid #002d72;
-    color: #002d72;
+    border-bottom: 1px solid #6366F1;
+    color: #6366F1;
     text-decoration: none;
 }
 
 a:focus {
-    border-bottom: 1px solid #0072ce;
-    color: #0072ce;
+    border-bottom: 1px solid #6366F1;
+    color: #000000;
     outline: thin dotted;
     text-decoration: none;
 }
 
 a.title-link {
-    color: #75787B;
+    color: ##000000;
     border-bottom: none;
 }
 
 a.title-link:hover,
 a.title-link:active,
 a.title-link:focus {
-    color: #7eb8dd;
+    color: #6366F1;
     border-bottom: none;
 }
 
 a.skip-link {
-    color: #0072ce;
+    color: #26374A;
     border-bottom: none;
     padding: .25em;
 }
@@ -167,7 +166,7 @@ a.skip-link {
 a.skip-link:hover,
 a.skip-link:active,
 a.skip-link:focus {
-    background-color: #0072ce;
+    background-color: #26374A;
     color: #fff;
     border-bottom: none;
 }
@@ -188,13 +187,13 @@ Navigation
 .sidebar-nav a:link,
 .sidebar-nav a:visited {
   border-bottom: none;
-  color: #75787b;
+  color: #26374A;
 }
 .sidebar-nav li:hover,
 .sidebar-nav a:focus,
 .sidebar-nav li:active,
 .sidebar-nav .sidebar-nav-active {
-  color: #75787b;
+  color: #26374A;
   border-left: 4px solid {{ site.brand_color }};
   background-color: transparent;
   border-bottom: 1px solid #babbbd;
@@ -339,7 +338,7 @@ Style
 */
 
 .intro {
-    color: #75787B;
+    color: #1E293B;
 }
 
 li h4 {
@@ -377,7 +376,7 @@ ul.posts {
 }
 
 .post-date {
-    color: #75787B;
+    color: #64748B;
 }
 
 /*
@@ -484,7 +483,7 @@ Desktop Styles
         height: 4.0625em;
         max-height: 4.0625em;
         background-color: #E7E7E6;
-        border-left: 1px solid #BABBBD;
+        border-left: 1px solid #64748B;
         width: 30%;
     }
 
@@ -498,8 +497,8 @@ Desktop Styles
     }
 
     .repo-list a:hover {
-        color: #4D5F87;
-        background-color: #CDE3F1;
+        color: #64748B;
+        background-color: #4b4085ff;
     }
 
     .repo-list li:first-child {

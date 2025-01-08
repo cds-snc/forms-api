@@ -26,7 +26,7 @@ Nous nous attendons à ce que des fonctionnalités supplémentaires soient néce
 
 Les limitations en matière de requêtes API nous permet de gérer le trafic élevé et de maintenir la stabilité du système. Cela permettra d’éviter les situations de surcharge où trop de demandes sont traitées simultanément. 
 
-La limite des demandes d'API à partir d'un formulaire est de **500 demandes par minute**. Si vous dépassez cette limite, vous obtiendrez une erreur <code>429 RateLimitError</code>. Vous pouvez soit attendre et réessayer, ou demander une limite plus élevée pour votre formulaire. Si vous avez besoin d'une augmentation du nombre de requêtes API, [contactez l'équipe de soutien](https://forms-formulaires.alpha.canada.ca/fr/support).
+La limite des demandes d'API à partir d'un formulaire est de **500 demandes par minute** par défaut. Si vous dépassez cette limite, vous obtiendrez une erreur <code>429 RateLimitError</code>. Vous pouvez soit attendre et réessayer, ou demander une limite plus élevée pour votre formulaire. Si vous avez besoin d'une augmentation du nombre de requêtes API, veuillez [contactez l'équipe de soutien](https://forms-formulaires.alpha.canada.ca/fr/support) et nous pourrons augmenter la limite à 1000 demandes par minute pendant certaine période de temps.
 
 Vous pouvez obtenir des informations supplémentaires dans les en-têtes inclus dans la réponse de l'API :
 - <code>X-RateLimit-Limit</code> : la limite actuelle de demandes API pour votre formulaire par 60 secondes
@@ -34,10 +34,8 @@ Vous pouvez obtenir des informations supplémentaires dans les en-têtes inclus 
 - <code>X-RateLimit-Reset</code> : le moment où la limite sera réinitialisée au montant total de la limite
 - <code>Retry-After</code> : le temps en secondes à attendre avant d'envoyer une autre demande à l'API
 
-À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer les limites appropriées par minute pour les demandes d’API.
+À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer des limites plus appropriées par minute pour les demandes d’API.
 
 ### Actualisation des clés API
 
 L’actualisation d’une clé API peut devenir nécessaire si une clé est compromise. Les clés peuvent être supprimées et recréées, ce qui nécessite simplement une modification des paramètres demandés dans la demande.
-
-
