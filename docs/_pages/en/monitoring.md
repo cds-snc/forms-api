@@ -38,4 +38,5 @@ In the future, we anticipate the API call limits may be tied to different use ca
 
 ### Refreshing API keys
 
-Refreshing an API key may become necessary if a key is compromised. Keys can be revoked and recreated, simply requiring a change in the parameters being queried in the request.
+Refreshing an API key may become necessary if a key is compromised. Keys can be deleted and recreated, simply requiring a change in the parameters being queried in the request.
+

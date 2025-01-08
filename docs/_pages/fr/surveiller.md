@@ -38,6 +38,4 @@ Vous pouvez obtenir des informations supplémentaires dans les en-têtes inclus 
 
 ### Actualisation des clés API
 
-L’actualisation d’une clé API peut devenir nécessaire si une clé est compromise. Les clés peuvent être révoquées et recrées, ce qui nécessite simplement une modification des paramètres demandés dans la demande.
-
-
+L’actualisation d’une clé API peut devenir nécessaire si une clé est compromise. Les clés peuvent être supprimées et recréées, ce qui nécessite simplement une modification des paramètres demandés dans la demande.
