@@ -8,7 +8,7 @@ import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
-async function main(
+async function v1(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -54,7 +54,9 @@ async function main(
   }
 }
 
-export const confirmSubmissionOperation: ApiOperation = {
-  middleware: [],
-  handler: main,
+export const confirmSubmissionOperation: Record<string, ApiOperation> = {
+  v1: {
+    middleware: [],
+    handler: v1,
+  },
 };

@@ -4,7 +4,7 @@ import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js"
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 
-async function main(
+async function v1(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -44,7 +44,9 @@ async function main(
   }
 }
 
-export const retrieveSubmissionOperation: ApiOperation = {
-  middleware: [],
-  handler: main,
+export const retrieveSubmissionOperation: Record<string, ApiOperation> = {
+  v1: {
+    middleware: [],
+    handler: v1,
+  },
 };

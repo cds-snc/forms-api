@@ -36,7 +36,7 @@ const validationSchema: Schema = {
   },
 };
 
-async function main(
+async function v1(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -97,10 +97,12 @@ async function main(
   }
 }
 
-export const reportSubmissionOperation: ApiOperation = {
-  middleware: [
-    express.json(),
-    requestValidatorMiddleware(validationSchema, ["body"]),
-  ],
-  handler: main,
+export const reportSubmissionOperation: Record<string, ApiOperation> = {
+  v1: {
+    middleware: [
+      express.json(),
+      requestValidatorMiddleware(validationSchema, ["body"]),
+    ],
+    handler: v1,
+  },
 };

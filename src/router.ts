@@ -9,6 +9,8 @@ import { retrieveNewSubmissionsOperation } from "@operations/retrieveNewSubmissi
 import { retrieveSubmissionOperation } from "@operations/retrieveSubmission.js";
 import { confirmSubmissionOperation } from "@operations/confirmSubmission.js";
 import { reportSubmissionOperation } from "@operations/reportSubmission.js";
+import { versionMiddleware } from "@middleware/version.js";
+
 import type {
   ApiOperation,
   OperationHandler,
@@ -20,28 +22,36 @@ const INHERIT_PARAMS = { mergeParams: true };
 export function buildRouter(): Router {
   const templateRoute = Router(INHERIT_PARAMS).get(
     "/",
-    operationHandler(retrieveTemplateOperation),
+    versionMiddleware(1),
+    operationHandler(retrieveTemplateOperation.v1),
   );
 
   const newRoute = Router(INHERIT_PARAMS).get(
     "/",
-    operationHandler(retrieveNewSubmissionsOperation),
+    versionMiddleware(1),
+    operationHandler(retrieveNewSubmissionsOperation.v1),
   );
 
   const confirmRoute = Router(INHERIT_PARAMS).put(
     "/:confirmationCode([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12})",
-    operationHandler(confirmSubmissionOperation),
+    versionMiddleware(1),
+    operationHandler(confirmSubmissionOperation.v1),
   );
 
   const problemRoute = Router(INHERIT_PARAMS).post(
     "/",
-    operationHandler(reportSubmissionOperation),
+    versionMiddleware(1),
+    operationHandler(reportSubmissionOperation.v1),
   );
 
   const submissionNameRoute = Router(INHERIT_PARAMS)
     .use("/confirm", confirmRoute)
     .use("/problem", problemRoute)
-    .get("/", operationHandler(retrieveSubmissionOperation));
+    .get(
+      "/",
+      versionMiddleware(1),
+      operationHandler(retrieveSubmissionOperation.v1),
+    );
 
   const submissionRoute = Router(INHERIT_PARAMS)
     .use("/new", newRoute)
@@ -54,7 +64,7 @@ export function buildRouter(): Router {
     .use("/template", templateRoute)
     .use("/submission", submissionRoute);
 
-  const formsRoute = Router().use(
+  const formsRoute = Router(INHERIT_PARAMS).use(
     "/:formId(c[a-z0-9]{24})",
     authenticationMiddleware,
     rateLimiterMiddleware,
@@ -67,7 +77,7 @@ export function buildRouter(): Router {
   );
 
   const router = Router()
-    .use("/forms", formsRoute)
+    .use("/:version(v[0-9]{1,2})?/forms", formsRoute)
     .use("/status", statusRoute)
     // 404: Catches all unmatched routes
     .use(routeNotFoundMiddleware)
