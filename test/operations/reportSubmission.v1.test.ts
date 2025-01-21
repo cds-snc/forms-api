@@ -6,7 +6,7 @@ import {
   FormSubmissionNotFoundException,
 } from "@lib/vault/types/exceptions.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
-import { reportSubmissionOperation } from "@operations/reportSubmission.js";
+import { reportSubmissionOperationV1 } from "@operations/reportSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
@@ -40,7 +40,7 @@ describe("reportSubmissionOperation", () => {
         },
       });
 
-      for (const middleware of reportSubmissionOperation.middleware) {
+      for (const middleware of reportSubmissionOperationV1.middleware) {
         await middleware(requestMock, responseMock, nextMock);
       }
 
@@ -67,7 +67,7 @@ describe("reportSubmissionOperation", () => {
           },
         });
 
-        for (const middleware of reportSubmissionOperation.middleware) {
+        for (const middleware of reportSubmissionOperationV1.middleware) {
           await middleware(requestMock, responseMock, nextMock);
         }
 
@@ -102,7 +102,7 @@ describe("reportSubmissionOperation", () => {
       reportProblemWithFormSubmissionMock.mockResolvedValueOnce();
       notifySupportAboutFormSubmissionProblemMock.mockResolvedValueOnce();
 
-      await reportSubmissionOperation.handler(
+      await reportSubmissionOperationV1.handler(
         requestMock,
         responseMock,
         nextMock,
@@ -125,7 +125,7 @@ describe("reportSubmissionOperation", () => {
         new FormSubmissionNotFoundException(),
       );
 
-      await reportSubmissionOperation.handler(
+      await reportSubmissionOperationV1.handler(
         requestMock,
         responseMock,
         nextMock,
@@ -142,7 +142,7 @@ describe("reportSubmissionOperation", () => {
         new FormSubmissionAlreadyReportedAsProblematicException(),
       );
 
-      await reportSubmissionOperation.handler(
+      await reportSubmissionOperationV1.handler(
         requestMock,
         responseMock,
         nextMock,
@@ -159,7 +159,7 @@ describe("reportSubmissionOperation", () => {
         new Error("custom error"),
       );
 
-      await reportSubmissionOperation.handler(
+      await reportSubmissionOperationV1.handler(
         requestMock,
         responseMock,
         nextMock,
@@ -177,7 +177,7 @@ describe("reportSubmissionOperation", () => {
         new Error("custom error"),
       );
 
-      await reportSubmissionOperation.handler(
+      await reportSubmissionOperationV1.handler(
         requestMock,
         responseMock,
         nextMock,

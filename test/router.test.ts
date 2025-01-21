@@ -26,24 +26,24 @@ const apiOperationMock: ApiOperation = vi.hoisted(() => {
   };
 });
 
-vi.mock("@operations/retrieveTemplate", () => ({
-  retrieveTemplateOperation: apiOperationMock,
+vi.mock("@operations/retrieveTemplate.v1", () => ({
+  retrieveTemplateOperationV1: apiOperationMock,
 }));
 
-vi.mock("@operations/retrieveNewSubmissions", () => ({
-  retrieveNewSubmissionsOperation: apiOperationMock,
+vi.mock("@operations/retrieveNewSubmissions.v1", () => ({
+  retrieveNewSubmissionsOperationV1: apiOperationMock,
 }));
 
-vi.mock("@operations/retrieveSubmission", () => ({
-  retrieveSubmissionOperation: apiOperationMock,
+vi.mock("@operations/retrieveSubmission.v1", () => ({
+  retrieveSubmissionOperationV1: apiOperationMock,
 }));
 
-vi.mock("@operations/confirmSubmission", () => ({
-  confirmSubmissionOperation: apiOperationMock,
+vi.mock("@operations/confirmSubmission.v1", () => ({
+  confirmSubmissionOperationV1: apiOperationMock,
 }));
 
-vi.mock("@operations/reportSubmission", () => ({
-  reportSubmissionOperation: apiOperationMock,
+vi.mock("@operations/reportSubmission.v1", () => ({
+  reportSubmissionOperationV1: apiOperationMock,
 }));
 
 vi.mock("@operations/checkServiceHealth", () => ({
