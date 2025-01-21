@@ -97,12 +97,10 @@ async function v1(
   }
 }
 
-export const reportSubmissionOperation: Record<string, ApiOperation> = {
-  v1: {
-    middleware: [
-      express.json(),
-      requestValidatorMiddleware(validationSchema, ["body"]),
-    ],
-    handler: v1,
-  },
+export const reportSubmissionOperationV1: ApiOperation = {
+  middleware: [
+    express.json(),
+    requestValidatorMiddleware(validationSchema, ["body"]),
+  ],
+  handler: v1,
 };

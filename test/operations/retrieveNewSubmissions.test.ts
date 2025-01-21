@@ -1,7 +1,7 @@
 import { vi, describe, beforeEach, it, expect } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
-import { retrieveNewSubmissionsOperation } from "@operations/retrieveNewSubmissions.js";
+import { retrieveNewSubmissionsOperation } from "@operations/retrieveNewSubmissions.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 

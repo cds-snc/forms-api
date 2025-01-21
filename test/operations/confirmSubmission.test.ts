@@ -6,7 +6,7 @@ import {
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@lib/vault/types/exceptions.js";
-import { confirmSubmissionOperation } from "@operations/confirmSubmission.js";
+import { confirmSubmissionOperation } from "@operations/confirmSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 

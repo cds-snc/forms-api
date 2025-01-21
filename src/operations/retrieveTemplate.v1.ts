@@ -32,9 +32,7 @@ async function v1(
   }
 }
 
-export const retrieveTemplateOperation: Record<string, ApiOperation> = {
-  v1: {
-    middleware: [],
-    handler: v1,
-  },
+export const retrieveTemplateOperationV1: ApiOperation = {
+  middleware: [],
+  handler: v1,
 };

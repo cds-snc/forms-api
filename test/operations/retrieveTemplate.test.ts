@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
-import { retrieveTemplateOperation } from "@operations/retrieveTemplate.js";
+import { retrieveTemplateOperation } from "@operations/retrieveTemplate.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 

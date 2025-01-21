@@ -36,9 +36,7 @@ async function v1(
   }
 }
 
-export const retrieveNewSubmissionsOperation: Record<string, ApiOperation> = {
-  v1: {
-    middleware: [],
-    handler: v1,
-  },
+export const retrieveNewSubmissionsOperationV1: ApiOperation = {
+  middleware: [],
+  handler: v1,
 };

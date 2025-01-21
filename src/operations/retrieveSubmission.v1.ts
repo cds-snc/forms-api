@@ -44,9 +44,7 @@ async function v1(
   }
 }
 
-export const retrieveSubmissionOperation: Record<string, ApiOperation> = {
-  v1: {
-    middleware: [],
-    handler: v1,
-  },
+export const retrieveSubmissionOperationV1: ApiOperation = {
+  middleware: [],
+  handler: v1,
 };

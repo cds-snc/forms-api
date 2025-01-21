@@ -6,7 +6,7 @@ import {
   FormSubmissionNotFoundException,
 } from "@lib/vault/types/exceptions.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
-import { reportSubmissionOperation } from "@operations/reportSubmission.js";
+import { reportSubmissionOperation } from "@operations/reportSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
