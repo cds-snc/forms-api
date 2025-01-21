@@ -2,7 +2,7 @@ import { vi, describe, beforeEach, it, expect } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js";
-import { retrieveSubmissionOperation } from "@operations/retrieveSubmission.v1.js";
+import { retrieveSubmissionOperationV1 } from "@operations/retrieveSubmission.v1.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
@@ -48,7 +48,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       encryptedAuthTag: "encryptedAuthTag",
     });
 
-    await retrieveSubmissionOperation.handler(
+    await retrieveSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -74,7 +74,7 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("respond with error when form submission does not exist", async () => {
     getFormSubmissionMock.mockResolvedValueOnce(undefined);
 
-    await retrieveSubmissionOperation.handler(
+    await retrieveSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -91,7 +91,7 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("pass error to next function when processing fails due to internal error", async () => {
     getFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
 
-    await retrieveSubmissionOperation.handler(
+    await retrieveSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,

@@ -1,7 +1,7 @@
 import { vi, describe, beforeEach, it, expect } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
-import { retrieveNewSubmissionsOperation } from "@operations/retrieveNewSubmissions.v1.js";
+import { retrieveNewSubmissionsOperationV1 } from "@operations/retrieveNewSubmissions.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
@@ -28,7 +28,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
   it("respond with success when no new form submission has been found", async () => {
     getNewFormSubmissionsMock.mockResolvedValueOnce([]);
 
-    await retrieveNewSubmissionsOperation.handler(
+    await retrieveNewSubmissionsOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -54,7 +54,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       },
     ]);
 
-    await retrieveNewSubmissionsOperation.handler(
+    await retrieveNewSubmissionsOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -80,7 +80,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
   it("pass error to next function when processing fails due to internal error", async () => {
     getNewFormSubmissionsMock.mockRejectedValueOnce(new Error("custom error"));
 
-    await retrieveNewSubmissionsOperation.handler(
+    await retrieveNewSubmissionsOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
