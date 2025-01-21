@@ -27,23 +27,23 @@ const apiOperationMock: ApiOperation = vi.hoisted(() => {
 });
 
 vi.mock("@operations/retrieveTemplate.v1", () => ({
-  retrieveTemplateOperation: apiOperationMock,
+  retrieveTemplateOperationV1: apiOperationMock,
 }));
 
 vi.mock("@operations/retrieveNewSubmissions.v1", () => ({
-  retrieveNewSubmissionsOperation: apiOperationMock,
+  retrieveNewSubmissionsOperationV1: apiOperationMock,
 }));
 
 vi.mock("@operations/retrieveSubmission.v1", () => ({
-  retrieveSubmissionOperation: apiOperationMock,
+  retrieveSubmissionOperationV1: apiOperationMock,
 }));
 
 vi.mock("@operations/confirmSubmission.v1", () => ({
-  confirmSubmissionOperation: apiOperationMock,
+  confirmSubmissionOperationV1: apiOperationMock,
 }));
 
 vi.mock("@operations/reportSubmission.v1", () => ({
-  reportSubmissionOperation: apiOperationMock,
+  reportSubmissionOperationV1: apiOperationMock,
 }));
 
 vi.mock("@operations/checkServiceHealth", () => ({
