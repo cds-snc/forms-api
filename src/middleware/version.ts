@@ -14,7 +14,7 @@ export const versionMiddleware = (version: number) => {
     const requestVersion = Number.parseInt(req.params.version.substring(1)); // removes the "v" and turns into a number
 
     // This should never happen since the route checks for a valid version /v[0-9]/ but just in case
-    if (typeof requestVersion !== "number") {
+    if (Number.isNaN(requestVersion)) {
       return next(new Error("Invalid API version requested."));
     }
     // If the requested version is greater than or equal to the current version, then we can proceed
