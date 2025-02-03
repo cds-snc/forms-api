@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: "22.5.1"
 
-      - name: PNPM update to v9.6.0
-        run: corepack enable pnpm && corepack use pnpm@9.6.0
+      - name: PNPM update to v9.15.5
+        run: npm i -g corepack@latest && corepack enable pnpm && corepack use pnpm@9.15.5
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
