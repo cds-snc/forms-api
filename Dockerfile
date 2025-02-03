@@ -8,7 +8,8 @@ WORKDIR /src
 
 COPY package.json pnpm-lock.yaml ./
 
-RUN corepack enable pnpm &&\
+RUN npm i -g corepack@latest &&\
+    corepack enable pnpm &&\
     corepack use pnpm@$PNPM_VERSION &&\
     pnpm install --frozen-lockfile
 

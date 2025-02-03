@@ -1,4 +1,4 @@
-# GC Forms API V1
+# GC Forms API
 
 Machine-to-machine interface for downloading form submissions.
 
