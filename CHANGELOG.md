@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.3.2](https://github.com/cds-snc/forms-api/compare/v1.3.1...v1.3.2) (2025-02-03)
+
+
+### Bug Fixes
+
+* Corepack Error ([#132](https://github.com/cds-snc/forms-api/issues/132)) ([91d3b6a](https://github.com/cds-snc/forms-api/commit/91d3b6a3a30424f3083e9c4878b9bf39ad1ac225))
+* **deps:** update all minor dependencies ([#120](https://github.com/cds-snc/forms-api/issues/120)) ([1151e13](https://github.com/cds-snc/forms-api/commit/1151e134bcfc87d0bf7a3cd76786c70b8cba97ed))
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#121](https://github.com/cds-snc/forms-api/issues/121)) ([e300f25](https://github.com/cds-snc/forms-api/commit/e300f25c6b68ab1d1d1cd6635d8597cb3e5132ee))
+* **deps:** update all non-major github action dependencies ([#119](https://github.com/cds-snc/forms-api/issues/119)) ([b77d016](https://github.com/cds-snc/forms-api/commit/b77d016f68225756331e8953b5defe152bd1606f))
+* **deps:** update dependency pyjwt to v2.10.1 [security] ([#123](https://github.com/cds-snc/forms-api/issues/123)) ([97ea8ba](https://github.com/cds-snc/forms-api/commit/97ea8ba75d73b084c6cb0e87078478ab7a547dc8))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 6155a48 ([#125](https://github.com/cds-snc/forms-api/issues/125)) ([3b3115c](https://github.com/cds-snc/forms-api/commit/3b3115c46814dd6c422dcbe889dee66d278b3877))
+* synced file(s) with cds-snc/site-reliability-engineering ([#126](https://github.com/cds-snc/forms-api/issues/126)) ([df707f0](https://github.com/cds-snc/forms-api/commit/df707f052c519077f5cf37ecdce396ae667fcba1))
+
 ## [1.3.1](https://github.com/cds-snc/forms-api/compare/v1.3.0...v1.3.1) (2024-12-18)
 
 
