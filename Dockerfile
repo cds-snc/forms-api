@@ -27,7 +27,8 @@ COPY package.json pnpm-lock.yaml ./
 COPY --from=build /src/node_modules ./node_modules
 COPY --from=build /src/build ./build
 
-RUN corepack enable pnpm &&\
+RUN npm i -g corepack@latest &&\
+    corepack enable pnpm &&\
     corepack use pnpm@$PNPM_VERSION
 
 EXPOSE 3001
