@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Configure AWS credentials using OIDC
-        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 # v4.1.0
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/forms-api-apply
           role-session-name: ECSDeploy
@@ -42,14 +42,14 @@ jobs:
 
       - name: Update ECS task image
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@f87d1f66e0c6e10caeeb51f8344a0d25c899c533 # v1.6.2
+        uses: aws-actions/amazon-ecs-render-task-definition@dcaed1bc6bc474b66e41183372f906fe7a4c6325 # v1.7.0
         with:
           task-definition: task-definition.json
           container-name: ${{ env.SERVICE_NAME }}
           image: "${{ env.REGISTRY }}:${{ github.sha }}"
 
       - name: Create the new ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@0e82244a9c6dac43d70151a94c67ebc4bab18fc5 # v2.2.0
+        uses: aws-actions/amazon-ecs-deploy-task-definition@8230edfe842008418c5275908cae75e51d3befb2 # v2.3.0
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           cluster: ${{ env.CLUSTER_NAME }}
