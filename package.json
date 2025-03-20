@@ -1,6 +1,6 @@
 {
   "name": "forms-api",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Machine-to-machine interface for downloading form submissions",
   "repository": "git@github.com:cds-snc/forms-api.git",
   "type": "module",
