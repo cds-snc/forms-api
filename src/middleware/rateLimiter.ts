@@ -30,7 +30,7 @@ export async function rateLimiterMiddleware(
       });
 
       logMessage.info(
-        `[rate-limiter] Form ${formId} consumed all ${consumeTokenResult.bucketStatus.bucketCapacity} tokens. Bucket will be refilled in ${consumeTokenResult.bucketStatus.numberOfMillisecondsBeforeRefill / 1000} seconds`,
+        `[middleware][rate-limiter] Form ${formId} consumed all ${consumeTokenResult.bucketStatus.bucketCapacity} tokens. Bucket will be refilled in ${consumeTokenResult.bucketStatus.numberOfMillisecondsBeforeRefill / 1000} seconds`,
       );
 
       auditLog(
@@ -48,7 +48,7 @@ export async function rateLimiterMiddleware(
     next();
   } catch (error) {
     next(
-      new Error("[middleware] Internal error with rate limiter", {
+      new Error("[middleware][rate-limiter] Internal error", {
         cause: error,
       }),
     );

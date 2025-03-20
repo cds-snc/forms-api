@@ -42,7 +42,7 @@ export async function reportProblemWithFormSubmission(
       }),
     );
   } catch (error) {
-    logMessage.error(
+    logMessage.info(
       error,
       `[dynamodb] Failed to report problem with form submission. FormId: ${formId} / SubmissionName: ${submissionName}`,
     );

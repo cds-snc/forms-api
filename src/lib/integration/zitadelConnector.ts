@@ -33,7 +33,11 @@ export function introspectAccessToken(
       introspectOpaqueToken(jwtSignedToken, accessToken),
     )
     .catch((error) => {
-      logMessage.error(error, "[zitadel] Failed to introspect access token");
+      logMessage.info(
+        error,
+        "[zitadel-connector] Failed to introspect access token",
+      );
+
       throw new ZitadelConnectionError();
     });
 }

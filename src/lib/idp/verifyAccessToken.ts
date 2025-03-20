@@ -30,10 +30,17 @@ export class AccessTokenInvalidError extends Error {
   }
 }
 
+export class AccessTokenMalformedError extends Error {
+  constructor() {
+    super("Access token is malformed");
+    this.name = "AccessTokenMalformedError";
+  }
+}
+
 export class AccessControlError extends Error {
   constructor() {
     super("Access is forbidden");
-    this.name = "AccessForbiddenError";
+    this.name = "AccessControlError";
   }
 }
 
@@ -46,10 +53,12 @@ export async function verifyAccessToken(accessToken: string, formId: string) {
           if (cachedToken !== undefined) {
             return { introspectedAccessToken: cachedToken, cached: true };
           }
+
           const introspectedAccessToken = await generateIntrospectedAccessToken(
             accessToken,
             formId,
           );
+
           return { introspectedAccessToken, cached: false };
         },
       );
@@ -61,9 +70,10 @@ export async function verifyAccessToken(accessToken: string, formId: string) {
     if (!cached) {
       await cacheVerifiedAccessToken(accessToken, introspectedAccessToken);
     }
+
     return introspectedAccessToken;
   } catch (error) {
-    logMessage.warn(error, "[idp] Failed to verify access token");
+    logMessage.info(error, "[idp] Failed to verify access token");
     throw error;
   }
 }
@@ -101,6 +111,7 @@ async function generateIntrospectedAccessToken(
   formId: string,
 ) {
   const introspectedToken = await introspectAccessToken(accessToken);
+
   // Active can be false if the token is invalid, expired, or does not exist.
   if (introspectedToken.active === false) {
     auditLog(
@@ -113,21 +124,21 @@ async function generateIntrospectedAccessToken(
       "InvalidAccessToken",
       "Access token was marked as invalid by IDP",
     );
+
     throw new AccessTokenInvalidError();
   }
+
   if (
     introspectedToken.exp === undefined ||
     introspectedToken.sub === undefined ||
     introspectedToken.username === undefined
   ) {
-    logMessage.warn(
+    logMessage.info(
       introspectedToken,
       "[idp] Introspection result is missing required properties",
     );
 
-    throw new Error(
-      `[idp] Introspection result is missing required properties.  Payload: ${JSON.stringify(introspectedToken)}`,
-    );
+    throw new AccessTokenMalformedError();
   }
 
   auditLog(
@@ -154,6 +165,7 @@ function validateIntrospectedToken(token: VerifiedAccessToken, formId: string) {
       "InvalidAccessToken",
       "Access token has expired",
     );
+
     throw new AccessTokenExpiredError();
   }
 
@@ -164,6 +176,7 @@ function validateIntrospectedToken(token: VerifiedAccessToken, formId: string) {
       "AccessDenied",
       `User ${serviceAccountId} does not have access to form ${formId}`,
     );
+
     throw new AccessControlError();
   }
 }

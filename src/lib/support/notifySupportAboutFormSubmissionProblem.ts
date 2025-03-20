@@ -26,9 +26,9 @@ export async function notifySupportAboutFormSubmissionProblem(
       preferredLanguage: preferredLanguage,
     });
   } catch (error) {
-    logMessage.error(
+    logMessage.info(
       error,
-      `[support] Failed to notify support about form submission problem. FormId: ${formId} / SubmissionName: ${submissionName} / Contact email: ${contactEmail}`,
+      `[support] Failed to notify support about form submission problem. FormId: ${formId} / SubmissionName: ${submissionName} / Contact email: ${contactEmail} / Description: ${description}`,
     );
 
     throw error;

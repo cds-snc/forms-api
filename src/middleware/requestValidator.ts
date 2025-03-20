@@ -34,7 +34,7 @@ export function requestValidatorMiddleware(
       next();
     } catch (error) {
       next(
-        new Error("[middleware] Internal error while validating request", {
+        new Error("[middleware][request-validator] Internal error", {
           cause: error,
         }),
       );

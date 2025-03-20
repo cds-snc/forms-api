@@ -30,7 +30,7 @@ export async function getFormSubmission(
 
     return formSubmissionFromDynamoDbResponse(response.Item);
   } catch (error) {
-    logMessage.error(
+    logMessage.info(
       error,
       `[dynamodb] Failed to retrieve form submission. FormId: ${formId} / SubmissionName: ${submissionName}`,
     );

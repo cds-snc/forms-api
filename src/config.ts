@@ -29,12 +29,6 @@ export const FRESHDESK_API_URL: string = "https://cds-snc.freshdesk.com/api";
 export const FRESHDESK_API_KEY: string =
   loadRequiredEnvVar("FRESHDESK_API_KEY");
 
-// Local configuration
-
-export const LOCALSTACK_ENDPOINT: string | undefined = loadOptionalEnvVar(
-  "LOCALSTACK_ENDPOINT",
-);
-
 // Rate limiting
 
 export const lowRateLimiterConfiguration: TokenBucketConfiguration = {
@@ -61,12 +55,8 @@ export const ZITADEL_APPLICATION_KEY: string = loadRequiredEnvVar(
 
 // Internal function to load environment variables
 
-function loadOptionalEnvVar(envVarName: string): string | undefined {
-  return process.env[envVarName];
-}
-
 function loadRequiredEnvVar(envVarName: string): string {
-  const envVar = loadOptionalEnvVar(envVarName);
+  const envVar = process.env[envVarName];
 
   if (envVar === undefined) {
     throw new Error(`Environment variable ${envVarName} is not defined.`);

@@ -46,7 +46,7 @@ export async function getNewFormSubmissions(
 
     return newFormSubmissions;
   } catch (error) {
-    logMessage.error(
+    logMessage.info(
       error,
       `[dynamodb] Failed to retrieve new form submissions. FormId: ${formId}`,
     );

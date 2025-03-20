@@ -56,7 +56,7 @@ Here is my problem<br/>
   it("throw an error if the createTicket function has an internal failure", async () => {
     const customError = new Error("custom error");
     createFreshdeskTicketMock.mockRejectedValueOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() =>
       notifySupportAboutFormSubmissionProblem(

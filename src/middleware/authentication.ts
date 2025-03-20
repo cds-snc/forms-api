@@ -4,6 +4,7 @@ import {
   AccessTokenExpiredError,
   AccessTokenInvalidError,
   AccessControlError,
+  AccessTokenMalformedError,
 } from "@lib/idp/verifyAccessToken.js";
 
 export async function authenticationMiddleware(
@@ -33,13 +34,14 @@ export async function authenticationMiddleware(
         return;
       }
       case error instanceof AccessTokenInvalidError:
+      case error instanceof AccessTokenMalformedError:
       case error instanceof AccessControlError: {
         response.sendStatus(403);
         return;
       }
       default:
         next(
-          new Error("[middleware] Internal error while authenticating user", {
+          new Error("[middleware][authentication] Internal error", {
             cause: error,
           }),
         );

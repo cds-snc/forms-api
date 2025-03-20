@@ -51,7 +51,6 @@ describe("auditLog should", () => {
   it("console log audit log that failed to be published because of an internal error", async () => {
     const customError = new Error("custom error");
     sqsMock.on(SendMessageCommand).rejectsOnce(customError);
-    const warnLogMessageSpy = vi.spyOn(logMessage, "warn");
     const errorLogMessageSpy = vi.spyOn(logMessage, "error");
 
     await auditLog(
@@ -63,11 +62,7 @@ describe("auditLog should", () => {
 
     expect(errorLogMessageSpy).toHaveBeenCalledWith(
       customError,
-      expect.stringContaining("[logging] Failed to send audit log to AWS SQS"),
-    );
-
-    expect(warnLogMessageSpy).toHaveBeenCalledWith(
-      `[logging] Audit log that failed to be sent: ${JSON.stringify({ userId: "userId", event: "ConfirmResponse", timestamp: 1519129853500, subject: { type: "Response", id: "responseId" }, description: "description" })}`,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ userId: "userId", event: "ConfirmResponse", timestamp: 1519129853500, subject: { type: "Response", id: "responseId" }, description: "description" })}.`,
     );
   });
 });
