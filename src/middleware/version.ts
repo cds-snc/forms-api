@@ -4,8 +4,9 @@ import { logMessage } from "@lib/logging/logger.js";
 export const versionMiddleware = (version: number) => {
   return (req: Request, _: Response, next: NextFunction) => {
     logMessage.debug(
-      `Version requested: ${req.params.version}, Current version: ${version}`,
+      `[middleware][version] Version requested: ${req.params.version}, Current version: ${version}`,
     );
+
     // If the version parameter is not defined, then we assume the latest version
     if (req.params.version === undefined) {
       return next();
@@ -17,6 +18,7 @@ export const versionMiddleware = (version: number) => {
     if (Number.isNaN(requestVersion)) {
       return next(new Error("Invalid API version requested."));
     }
+
     // If the requested version is greater than or equal to the current version, then we can proceed
     if (requestVersion >= version) {
       return next();

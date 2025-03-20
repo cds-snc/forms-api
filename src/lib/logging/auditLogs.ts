@@ -55,14 +55,12 @@ export const auditLog = async (
       }),
     );
     if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
-      logMessage.debug(`[Audit-Log] ${auditLogAsJsonString}`);
+      logMessage.debug(`[audit-log] ${auditLogAsJsonString}`);
     }
   } catch (error) {
-    logMessage.error(error, "[logging] Failed to send audit log to AWS SQS");
-
-    // Ensure the audit log is not lost by sending to console
-    logMessage.warn(
-      `[logging] Audit log that failed to be sent: ${auditLogAsJsonString}`,
+    logMessage.error(
+      error,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${auditLogAsJsonString}.`,
     );
   }
 };

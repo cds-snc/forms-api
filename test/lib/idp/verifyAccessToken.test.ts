@@ -4,6 +4,7 @@ import {
   AccessTokenInvalidError,
   AccessTokenExpiredError,
   AccessControlError,
+  AccessTokenMalformedError,
 } from "@lib/idp/verifyAccessToken.js";
 import {
   introspectAccessToken,
@@ -35,6 +36,7 @@ const createEpochTime = (minutes = 0) => {
   if (minutes === 0) {
     return Date.now() / 1000;
   }
+
   return Date.now() + (minutes * 60) / 1000;
 };
 
@@ -86,6 +88,7 @@ describe("verifyAccessToken should", () => {
         serviceAccountId: "sub",
         serviceUserId: "username",
       });
+
       expect(setValueInRedisMock).toHaveBeenCalledWith(
         "api:auth:4Wqjx84ka16rQpVZ16lnZdKVXScKTRsvfKm6lSqHGgs=",
         `{"expirationEpochTime":${expirationEpochTime},"serviceAccountId":"sub","serviceUserId":"username"}`,
@@ -101,14 +104,12 @@ describe("verifyAccessToken should", () => {
         active: false,
       });
 
-      const invalidAccessTokenError = new AccessTokenInvalidError();
-
       await expect(
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
         ),
-      ).rejects.toThrow(invalidAccessTokenError);
+      ).rejects.toThrow(AccessTokenInvalidError);
 
       expect(auditLogSpy).toHaveBeenCalledWith(
         "0000",
@@ -132,7 +133,7 @@ describe("verifyAccessToken should", () => {
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
         ),
-      ).rejects.toThrow("Introspection result is missing required properties");
+      ).rejects.toThrow(AccessTokenMalformedError);
     });
 
     it("when token is expired", async () => {
@@ -144,14 +145,12 @@ describe("verifyAccessToken should", () => {
         }),
       );
 
-      const expiredAccessTokenError = new AccessTokenExpiredError();
-
       await expect(() =>
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
         ),
-      ).rejects.toThrow(expiredAccessTokenError);
+      ).rejects.toThrow(AccessTokenExpiredError);
 
       expect(auditLogSpy).toHaveBeenCalledWith(
         "0000",
@@ -190,11 +189,12 @@ describe("verifyAccessToken should", () => {
         "User 11111111111 does not have access to form 0000",
       );
     });
+
     it("throw an error if access token introspection has an internal failure", async () => {
       getValueFromRedisMock.mockResolvedValueOnce(undefined);
       const connectionError = new ZitadelConnectionError();
       introspectAccessTokenMock.mockRejectedValueOnce(connectionError);
-      const logMessageSpy = vi.spyOn(logMessage, "warn");
+      const logMessageSpy = vi.spyOn(logMessage, "info");
 
       await expect(() =>
         verifyAccessToken(

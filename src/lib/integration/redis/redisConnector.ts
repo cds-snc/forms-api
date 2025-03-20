@@ -29,10 +29,10 @@ export class RedisConnector {
         ),
       )
       .on("ready", () =>
-        logMessage.debug("[redis-connector]  Redis client ready!"),
+        logMessage.info("[redis-connector]  Redis client ready!"),
       )
       .on("reconnecting", () =>
-        logMessage.debug("[redis-connector] Redis client reconnecting..."),
+        logMessage.info("[redis-connector] Redis client reconnecting..."),
       );
   }
 

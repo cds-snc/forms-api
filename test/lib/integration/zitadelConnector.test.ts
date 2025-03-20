@@ -37,7 +37,7 @@ describe("introspectAccessToken should", () => {
   it("throw an error if Zitadel post request fails", async () => {
     const connectionError = new ZitadelConnectionError();
     vi.spyOn(axios, "post").mockRejectedValueOnce(connectionError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() =>
       introspectAccessToken("accessToken"),
@@ -45,7 +45,9 @@ describe("introspectAccessToken should", () => {
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       connectionError,
-      expect.stringContaining("[zitadel] Failed to introspect access token"),
+      expect.stringContaining(
+        "[zitadel-connector] Failed to introspect access token",
+      ),
     );
   });
 });
