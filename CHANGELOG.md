@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.3.3](https://github.com/cds-snc/forms-api/compare/v1.3.2...v1.3.3) (2025-04-02)
+
+
+### Bug Fixes
+
+* **deps:** update all patch dependencies ([#130](https://github.com/cds-snc/forms-api/issues/130)) ([276b04d](https://github.com/cds-snc/forms-api/commit/276b04d18a57ade1269b41219faff9bb2e46ef6d))
+* **deps:** update all patch dependencies ([#145](https://github.com/cds-snc/forms-api/issues/145)) ([09a4422](https://github.com/cds-snc/forms-api/commit/09a4422548f8471af195828b42c338986b851eee))
+* **deps:** update dependency axios to v1.8.2 [security] ([#140](https://github.com/cds-snc/forms-api/issues/140)) ([627ffd8](https://github.com/cds-snc/forms-api/commit/627ffd870e54d9b232ba8c42613c1957ab6ade05))
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump vitest from 2.1.8 to 2.1.9 ([#137](https://github.com/cds-snc/forms-api/issues/137)) ([4a6d4de](https://github.com/cds-snc/forms-api/commit/4a6d4de5b6d73ce30f5929fa3f75c9482205f9e6))
+* **deps:** lock file maintenance ([#129](https://github.com/cds-snc/forms-api/issues/129)) ([9f5a49c](https://github.com/cds-snc/forms-api/commit/9f5a49cd08e22a8d4973189ee64f8e79e1b9de4f))
+* **deps:** lock file maintenance ([#144](https://github.com/cds-snc/forms-api/issues/144)) ([4584e9d](https://github.com/cds-snc/forms-api/commit/4584e9d43083a6292d0bf7da7e490a722f28f314))
+* **deps:** update all non-major github action dependencies ([#131](https://github.com/cds-snc/forms-api/issues/131)) ([ac24732](https://github.com/cds-snc/forms-api/commit/ac247327b58ee4a22a1d4b2d06e4dba73353604f))
+* **deps:** update all non-major github action dependencies ([#143](https://github.com/cds-snc/forms-api/issues/143)) ([71ffac1](https://github.com/cds-snc/forms-api/commit/71ffac1aba46ad8d91c7fd855752a93558f2f4db))
+* **deps:** update dependency cryptography to v44 [security] ([#135](https://github.com/cds-snc/forms-api/issues/135)) ([464dc75](https://github.com/cds-snc/forms-api/commit/464dc75c40fb8c8d4d64738c9d11a275e64fa021))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 577ed42 ([#142](https://github.com/cds-snc/forms-api/issues/142)) ([e91fc48](https://github.com/cds-snc/forms-api/commit/e91fc48e15918a8611750e5c31db6b27864253b4))
+* synced file(s) with cds-snc/site-reliability-engineering ([#134](https://github.com/cds-snc/forms-api/issues/134)) ([a72ca11](https://github.com/cds-snc/forms-api/commit/a72ca11976250cc0ba700fb78018ee936480fe23))
+
+
+### Code Refactoring
+
+* rework error logs to reduce noise on Slack ([#141](https://github.com/cds-snc/forms-api/issues/141)) ([8cac23c](https://github.com/cds-snc/forms-api/commit/8cac23ca46f361a270da056942ca3e907c2eb8f3))
+
 ## [1.3.2](https://github.com/cds-snc/forms-api/compare/v1.3.1...v1.3.2) (2025-02-03)
 
 
