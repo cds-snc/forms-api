@@ -110,7 +110,7 @@ describe("confirmFormSubmission should", () => {
   it("throw an error if DynamoDB has an internal failure", async () => {
     const customError = new Error("custom error");
     dynamoDbMock.on(GetCommand).rejectsOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() =>
       confirmFormSubmission(

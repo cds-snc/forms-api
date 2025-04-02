@@ -76,7 +76,7 @@ describe("rateLimiterMiddleware should", () => {
       "Retry-After": 2,
     });
     expect(logMessageSpy).toHaveBeenCalledWith(
-      "[rate-limiter] Form clzsn6tao000611j50dexeob0 consumed all 10 tokens. Bucket will be refilled in 2 seconds",
+      "[middleware][rate-limiter] Form clzsn6tao000611j50dexeob0 consumed all 10 tokens. Bucket will be refilled in 2 seconds",
     );
     expect(responseMock.sendStatus).toHaveBeenCalledWith(429);
   });
@@ -89,7 +89,7 @@ describe("rateLimiterMiddleware should", () => {
     await rateLimiterMiddleware(requestMock, responseMock, nextMock);
 
     expect(nextMock).toHaveBeenCalledWith(
-      new Error("[middleware] Internal error with rate limiter"),
+      new Error("[middleware][rate-limiter] Internal error"),
     );
   });
 });

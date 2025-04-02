@@ -96,7 +96,7 @@ describe("authenticationMiddleware should", () => {
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
     expect(nextMock).toHaveBeenCalledWith(
-      new Error("[middleware] Internal error while authenticating user"),
+      new Error("[middleware][authentication] Internal error"),
     );
   });
 });

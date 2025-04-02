@@ -55,7 +55,7 @@ export async function confirmFormSubmission(
       }),
     );
   } catch (error) {
-    logMessage.error(
+    logMessage.info(
       error,
       `[dynamodb] Failed to confirm form submission. FormId: ${formId} / SubmissionName: ${submissionName} / ConfirmationCode: ${confirmationCode}`,
     );

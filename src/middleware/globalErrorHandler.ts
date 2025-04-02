@@ -8,7 +8,10 @@ export async function globalErrorHandlerMiddleware(
   response: Response,
   _next: NextFunction,
 ): Promise<void> {
-  logMessage.error(error, "Global unhandled error");
+  logMessage.error(
+    error,
+    "[middleware][global-error-handler] Global unhandled error",
+  );
 
   if (request.tokenConsumedOnFormId !== undefined) {
     await refundConsumedToken(request.tokenConsumedOnFormId);

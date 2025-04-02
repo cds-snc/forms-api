@@ -44,7 +44,11 @@ export async function createFreshdeskTicket(
       },
     );
   } catch (error) {
-    logMessage.error(error, "Failed to create Freshdesk ticket");
+    logMessage.info(
+      error,
+      "[freshdesk-connector] Failed to create Freshdesk ticket",
+    );
+
     throw error;
   }
 }
