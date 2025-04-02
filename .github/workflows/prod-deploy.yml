@@ -41,14 +41,14 @@ jobs:
 
       - name: Update ECS task image
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@dcaed1bc6bc474b66e41183372f906fe7a4c6325 # v1.7.0
+        uses: aws-actions/amazon-ecs-render-task-definition@23e93b6b860a402948c739b0db055bc5dc55dfa9 # v1.7.1
         with:
           task-definition: task-definition.json
           container-name: ${{ env.SERVICE_NAME }}
           image: "${{ env.REGISTRY }}:${{ github.event.workflow_run.head_branch }}"
 
       - name: Create the new ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@8230edfe842008418c5275908cae75e51d3befb2 # v2.3.0
+        uses: aws-actions/amazon-ecs-deploy-task-definition@176bcc0288c49ee545288583859af21ee17f4b2c # v2.3.1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           cluster: ${{ env.CLUSTER_NAME }}
