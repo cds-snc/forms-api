@@ -21,7 +21,7 @@ importers:
         specifier: ^3.662.0
         version: 3.782.0(@aws-sdk/client-dynamodb@3.782.0)
       axios:
-        specifier: ^1.7.7
+        specifier: ^1.8.4
         version: 1.8.4
       dotenv:
         specifier: ^16.4.5
@@ -73,8 +73,8 @@ importers:
         specifier: ^7.0.0
         version: 7.1.0
       tsc-alias:
-        specifier: ^1.8.10
-        version: 1.8.14
+        specifier: 1.8.13
+        version: 1.8.13
       tsx:
         specifier: ^4.19.1
         version: 4.19.3
