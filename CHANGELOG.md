@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.4](https://github.com/cds-snc/forms-api/compare/v1.3.3...v1.3.4) (2025-04-09)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#148](https://github.com/cds-snc/forms-api/issues/148)) ([be42fd9](https://github.com/cds-snc/forms-api/commit/be42fd94acfcdaa684479e6288820f4dfc26c333))
+* **deps:** update all minor dependencies ([#147](https://github.com/cds-snc/forms-api/issues/147)) ([4775042](https://github.com/cds-snc/forms-api/commit/47750420914e52aa26ae6ceeea6602f9151fdbed))
+* **deps:** update all non-major github action dependencies ([#146](https://github.com/cds-snc/forms-api/issues/146)) ([df11b68](https://github.com/cds-snc/forms-api/commit/df11b682bfadd4ccbe3d132be8aa0cfcc97beb5c))
+* update Axios package to version 1.8.4 ([#150](https://github.com/cds-snc/forms-api/issues/150)) ([3fa176a](https://github.com/cds-snc/forms-api/commit/3fa176a38dd36360cbd5044d376fd6212ac7634c))
+
 ## [1.3.3](https://github.com/cds-snc/forms-api/compare/v1.3.2...v1.3.3) (2025-04-02)
 
 
