@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Download and install .NET version 8.0
+- Download and install .NET version 9.0
   - (with Microsoft installer) https://dotnet.microsoft.com/en-us/download
   - (with Brew) `brew install --cask dotnet-sdk`
 
