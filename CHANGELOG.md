@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.5](https://github.com/cds-snc/forms-api/compare/v1.3.4...v1.3.5) (2025-04-14)
+
+
+### Miscellaneous Chores
+
+* bash example on how to interact with the API targets production instead of staging ([#154](https://github.com/cds-snc/forms-api/issues/154)) ([33c58e5](https://github.com/cds-snc/forms-api/commit/33c58e5ae4afc07ccced3398d63d9127d2dd3dda))
+* **deps:** lock file maintenance ([#152](https://github.com/cds-snc/forms-api/issues/152)) ([42576c9](https://github.com/cds-snc/forms-api/commit/42576c9bf195878e8736253dd7a7e41df779067f))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to eb406d5 ([#151](https://github.com/cds-snc/forms-api/issues/151)) ([4f2d40c](https://github.com/cds-snc/forms-api/commit/4f2d40cbc94009f12e8de17ccd0ae755183c2c8e))
+* update API integration examples to use latest version of frameworks/package dependencies ([#155](https://github.com/cds-snc/forms-api/issues/155)) ([f28f945](https://github.com/cds-snc/forms-api/commit/f28f945a62199f1b473e18cc30c88c97a0be47b7))
+
 ## [1.3.4](https://github.com/cds-snc/forms-api/compare/v1.3.3...v1.3.4) (2025-04-09)
 
 
