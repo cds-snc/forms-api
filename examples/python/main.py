@@ -84,7 +84,7 @@ Selection (1):
                 )
 
                 print(
-                    f"\nIntegrity verification result: {"OK" if integrity_verification_result else "INVALID"}"
+                    f"\nIntegrity verification result: {'OK' if integrity_verification_result else 'INVALID'}"
                 )
 
                 print("\nConfirming submission...")
