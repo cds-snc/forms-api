@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Load environment vars
 script_dir=$(dirname "$(realpath "$0")")
-source "$script_dir/.env.staging"
+source "$script_dir/.environment"
 
 # Decrypt with the private key and return base64 output
 decrypt_with_private_key() {
