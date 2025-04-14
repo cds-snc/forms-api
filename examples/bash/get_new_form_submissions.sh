@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Load environment vars
 script_dir=$(dirname "$(realpath "$0")")
-source "$script_dir/.env.staging"
+source "$script_dir/.environment"
 
 # Retrieve the new form submission names
 get_new_form_submissions() {
