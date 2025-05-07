@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.4.0](https://github.com/cds-snc/forms-api/compare/v1.3.4...v1.4.0) (2025-05-07)
+
+
+### Features
+
+* implement service health checks for status endpoint ([#156](https://github.com/cds-snc/forms-api/issues/156)) ([97121ea](https://github.com/cds-snc/forms-api/commit/97121ea22db64811d051c1cfcda7a7bf5d61811f))
+
+
+### Miscellaneous Chores
+
+* bash example on how to interact with the API targets production instead of staging ([#154](https://github.com/cds-snc/forms-api/issues/154)) ([33c58e5](https://github.com/cds-snc/forms-api/commit/33c58e5ae4afc07ccced3398d63d9127d2dd3dda))
+* catch error in check service health operation (it can help debug issues like a missing permission on DynamoDB) ([#160](https://github.com/cds-snc/forms-api/issues/160)) ([4315886](https://github.com/cds-snc/forms-api/commit/43158866d9ad347c41724d67a9074178c2d217eb))
+* **deps:** lock file maintenance ([#152](https://github.com/cds-snc/forms-api/issues/152)) ([42576c9](https://github.com/cds-snc/forms-api/commit/42576c9bf195878e8736253dd7a7e41df779067f))
+* **deps:** lock file maintenance ([#158](https://github.com/cds-snc/forms-api/issues/158)) ([5988c08](https://github.com/cds-snc/forms-api/commit/5988c08dee6ebe473688bf0ce838f7e9f729123f))
+* **deps:** update all non-major github action dependencies ([#157](https://github.com/cds-snc/forms-api/issues/157)) ([abe00b2](https://github.com/cds-snc/forms-api/commit/abe00b2baa85b04704905fcc76d32b6853667c06))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to eb406d5 ([#151](https://github.com/cds-snc/forms-api/issues/151)) ([4f2d40c](https://github.com/cds-snc/forms-api/commit/4f2d40cbc94009f12e8de17ccd0ae755183c2c8e))
+* switch to CDS Release Bot ([#162](https://github.com/cds-snc/forms-api/issues/162)) ([21f32b4](https://github.com/cds-snc/forms-api/commit/21f32b4dd2c4dcee9767f3321a0945e8be978f1f))
+* synced file(s) with cds-snc/site-reliability-engineering ([#159](https://github.com/cds-snc/forms-api/issues/159)) ([ea10462](https://github.com/cds-snc/forms-api/commit/ea10462343b083ae93216e9d6fc03205d36e8028))
+* synced local '.github/workflows/backstage-catalog-helper.yml' with remote 'tools/sre_file_sync/backstage-catalog-helper.yml' ([ea10462](https://github.com/cds-snc/forms-api/commit/ea10462343b083ae93216e9d6fc03205d36e8028))
+* update API integration examples to use latest version of frameworks/package dependencies ([#155](https://github.com/cds-snc/forms-api/issues/155)) ([f28f945](https://github.com/cds-snc/forms-api/commit/f28f945a62199f1b473e18cc30c88c97a0be47b7))
+
 ## [1.3.4](https://github.com/cds-snc/forms-api/compare/v1.3.3...v1.3.4) (2025-04-09)
 
 
