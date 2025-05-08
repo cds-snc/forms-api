@@ -12,7 +12,7 @@ The purpose of this API is to allow you to securely and reliably retrieve form s
 
 ### What you will need
   - A [GC Forms account](https://articles.alpha.canada.ca/forms-formulaires/)
-  - A draft form (Unclassified or Protected A)
+  - A draft form (Unclassified, Protected A, or Protected B)
   - The form set to "Receive responses via API” in Settings 
   - A few “mock” responses submitted to the form
   - A target system where you plan on receiving form submission data
