@@ -15,7 +15,6 @@ process.env = {
 
 vi.mock("./src/lib/integration/databaseConnector", () => ({
   DatabaseConnectorClient: {
-    query: vi.fn(),
     oneOrNone: vi.fn(),
   },
 }));
@@ -27,7 +26,6 @@ vi.mock("./src/lib/logging/auditLogs", () => ({
 vi.mock("axios", () => {
   return {
     default: {
-      get: vi.fn().mockResolvedValue({}),
       post: vi.fn().mockResolvedValue({}),
     },
   };
@@ -49,7 +47,6 @@ vi.mock("redis", () => {
     connect: vi.fn().mockResolvedValue({}),
     quit: vi.fn(),
     on: vi.fn().mockReturnThis(),
-    ping: vi.fn(),
   };
   return {
     createClient: vi.fn(() => client),
