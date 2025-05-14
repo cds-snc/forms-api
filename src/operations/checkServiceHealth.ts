@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from "express";
+import type { Request, Response } from "express";
 import type { ApiOperation } from "@operations/types/operation.js";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { ScanCommand } from "@aws-sdk/lib-dynamodb";
@@ -13,38 +13,26 @@ type ServiceHealthCheckResult = {
   isHealthy: boolean;
 };
 
-async function main(
-  _: Request,
-  response: Response,
-  next: NextFunction,
-): Promise<void> {
-  try {
-    const serviceHealthCheckResults = await Promise.all([
-      checkDynamoDbServiceHealth(),
-      checkRedisServiceHealth(),
-      checkPostgreSqlServiceHealth(),
-      checkZitadelServiceHealth(),
-    ]);
+async function main(_: Request, response: Response): Promise<void> {
+  const serviceHealthCheckResults = await Promise.all([
+    checkDynamoDbServiceHealth(),
+    checkRedisServiceHealth(),
+    checkPostgreSqlServiceHealth(),
+    checkZitadelServiceHealth(),
+  ]);
 
-    logMessage.info(
-      `[service-health] ${serviceHealthCheckResults.map((r) => `${r.service} => ${r.isHealthy ? "healthy" : "unhealthy"}`).join(" | ")}`,
-    );
+  logMessage.info(
+    `[service-health] ${serviceHealthCheckResults.map((r) => `${r.service} => ${r.isHealthy ? "healthy" : "unhealthy"}`).join(" | ")}`,
+  );
 
-    if (serviceHealthCheckResults.some((r) => r.isHealthy === false)) {
-      response.sendStatus(503);
-      return;
-    }
-
-    response.json({
-      status: "healthy",
-    });
-  } catch (error) {
-    next(
-      new Error("[operation] Internal error while checking service health", {
-        cause: error,
-      }),
-    );
+  if (serviceHealthCheckResults.some((r) => r.isHealthy === false)) {
+    response.sendStatus(503);
+    return;
   }
+
+  response.json({
+    status: "healthy",
+  });
 }
 
 function checkDynamoDbServiceHealth(): Promise<ServiceHealthCheckResult> {
