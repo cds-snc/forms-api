@@ -373,8 +373,7 @@ Vous pouvez configurer les attributs des questions avec des **identifiants de qu
 
 L'identifiant de la question est une valeur unique qui vous permet de faire référence de manière cohérente à un élément de formulaire afin qu'il puisse être mis en correspondance avec des versions de formulaire republiées ou d'autres structures et systèmes de données. Il peut s'agir d'un moyen plus facile et plus utile d'identifier et de se référer à un champ de question. Par exemple, une manière standard de se reférer à toutes les questions sur le prénom ou les numéros de téléphone dans tous les formulaires, de sorte qu'ils se retrouvent au bon endroit sans avoir à être tracées individuellement.
 
-**Formulaires GC vous offre la possibilité de configurer un identifiant de question unique :
-**
+**Formulaires GC vous offre la possibilité de configurer un identifiant de question unique :**
 
 1. Créez un nouveau formulaire ou naviguez vers un formulaire existant dans Formulaires GC.
 2. Dans « Modifier », sélectionnez une question et cliquez sur « Plus ».
