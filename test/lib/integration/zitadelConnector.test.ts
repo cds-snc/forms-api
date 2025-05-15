@@ -27,6 +27,7 @@ describe("introspectAccessToken should", () => {
       },
       {
         headers: {
+          Host: "http://test",
           "Content-Type": "application/x-www-form-urlencoded",
         },
         timeout: 5000,

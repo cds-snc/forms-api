@@ -47,7 +47,11 @@ export const REDIS_URL: string = loadRequiredEnvVar("REDIS_URL");
 
 // Zitadel
 
-export const ZITADEL_DOMAIN: string = loadRequiredEnvVar("ZITADEL_DOMAIN");
+export const ZITADEL_TRUSTED_DOMAIN: string = loadRequiredEnvVar(
+  "ZITADEL_TRUSTED_DOMAIN",
+);
+
+export const ZITADEL_URL: string = loadRequiredEnvVar("ZITADEL_URL");
 
 export const ZITADEL_APPLICATION_KEY: string = loadRequiredEnvVar(
   "ZITADEL_APPLICATION_KEY",
