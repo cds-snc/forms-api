@@ -297,7 +297,7 @@ GET  /forms/{formID}/template
 
 > _Note: The questions will be in a data structure that is JSON format when retrieved. This helps if you’ll be transforming the data and need to match the answers to the questions._
 
-You can configure question attributes with customizable unique **Question IDs** that provide an alternative encoding to the previous integers that are based on the order in which form elements were added when building a form, and **additional tags**, flexible labels to help organize data. Both can be used to help map data from form responses to their target systems or destination fields in a database. Learn more below.
+You can configure question attributes with customizable unique **Question IDs** and **additional tags**. These two attributes can be used to help map data form response data to target systems or destination fields in a database, making it easier to update API integrations with a consistent way of mapping response data. Learn more below.
 
 ##### Response status
 
@@ -374,7 +374,7 @@ You can configure question attributes with customizable unique **Question IDs** 
 
 The Question ID is a unique value that allows you to consistently refer to a form element so that it can be matched across republished form versions, or other data structures and systems. This can provide a more scannable and useful way to identify and reference a question field. For example, a standard way to reference all first name questions or phone numbers across forms, so they land in the right place without having to be rewired individually.
 
-GC Forms gives you the option to configure a single unique question ID:
+**GC Forms gives you the option to configure a single unique question ID:**
 
 1. Create a new form or navigate to an existing form in GC Forms.
 2. In “Edit”, select a question and click “More”.
@@ -385,11 +385,9 @@ GC Forms gives you the option to configure a single unique question ID:
 
 The additional tags are flexible labels that allow you to add metadata to form elements so that related questions can be marked, grouped, or categorized allowing data to be read, searched, sorted, and transformed by machines more meaningfully and easily.
 
-GC Forms gives you the option to configure multiple  tags:
+**GC Forms gives you the option to configure multiple tags:**
 
 1. Create a new form or navigate to an existing form in GC Forms.
 2. In “Edit”, select a question and click “More”.
 3. In the modal, scroll down to “Customize API data attributes”.
 4. Add multiple tags to a question to mark data in a helpful way.
-
-  
