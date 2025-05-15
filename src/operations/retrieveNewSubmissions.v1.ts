@@ -5,7 +5,7 @@ import type { ApiOperation } from "@operations/types/operation.js";
 
 const MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS: number = 100;
 
-async function main(
+async function v1(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -36,7 +36,7 @@ async function main(
   }
 }
 
-export const retrieveNewSubmissionsOperation: ApiOperation = {
+export const retrieveNewSubmissionsOperationV1: ApiOperation = {
   middleware: [],
-  handler: main,
+  handler: v1,
 };

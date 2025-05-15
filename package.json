@@ -1,6 +1,6 @@
 {
   "name": "forms-api",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "Machine-to-machine interface for downloading form submissions",
   "repository": "git@github.com:cds-snc/forms-api.git",
   "type": "module",
@@ -9,9 +9,9 @@
     "start": "node build/server.js",
     "dev": "tsx watch --ignore \"./utils/**/*\" --ignore \"./test/**/*\" --ignore \"./build/**/*\" src/server.ts",
     "test": "vitest run",
-    "lint": "biome lint --write .",
+    "lint": "biome lint --write --diagnostic-level=warn .",
     "lint:github": "biome ci --reporter=github .",
-    "lint:check": "biome lint --error-on-warnings .",
+    "lint:check": "biome lint --error-on-warnings --diagnostic-level=warn .",
     "format": "biome format --write .",
     "format:check": "biome format ."
   },
@@ -23,7 +23,7 @@
     "@aws-sdk/client-secrets-manager": "^3.662.0",
     "@aws-sdk/client-sqs": "^3.662.0",
     "@aws-sdk/lib-dynamodb": "^3.662.0",
-    "axios": "^1.7.7",
+    "axios": "^1.8.4",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-validator": "^7.2.0",
@@ -42,12 +42,12 @@
     "aws-sdk-client-mock": "^4.0.2",
     "pino-pretty": "^11.2.2",
     "supertest": "^7.0.0",
-    "tsc-alias": "^1.8.10",
+    "tsc-alias": "^1.8.15",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^2.1.2",
+    "vitest": "^2.1.9",
     "vitest-mock-express": "^2.2.0"
   },
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@9.15.9"
 }

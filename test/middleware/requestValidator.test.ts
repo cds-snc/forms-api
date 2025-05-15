@@ -90,7 +90,7 @@ describe("requestValidatorMiddleware should", () => {
     );
 
     expect(nextMock).toHaveBeenCalledWith(
-      new Error("[middleware] Internal error while validating request"),
+      new Error("[middleware][request-validator] Internal error"),
     );
   });
 });

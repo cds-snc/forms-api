@@ -43,12 +43,10 @@ describe("reportProblemWithFormSubmission should", () => {
     expect(dynamoDbMock.commandCalls(UpdateCommand).length).toEqual(1);
     expect(dynamoDbMock.commandCalls(UpdateCommand)[0].args[0].input).toEqual({
       ExpressionAttributeNames: {
-        "#status": "Status",
         "#statusCreatedAtKey": "Status#CreatedAt",
       },
       ExpressionAttributeValues: {
         ":problemTimestamp": 1519129853500,
-        ":status": "Problem",
         ":statusCreatedAtValue": "Problem#1519129853500",
       },
       Key: {
@@ -57,7 +55,7 @@ describe("reportProblemWithFormSubmission should", () => {
       },
       TableName: "Vault",
       UpdateExpression:
-        "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
+        "SET #statusCreatedAtKey = :statusCreatedAtValue, ProblemTimestamp = :problemTimestamp REMOVE RemovalDate",
     });
   });
 
@@ -90,7 +88,7 @@ describe("reportProblemWithFormSubmission should", () => {
   it("throw an error if DynamoDB has an internal failure", async () => {
     const customError = new Error("custom error");
     dynamoDbMock.on(GetCommand).rejectsOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() =>
       reportProblemWithFormSubmission(

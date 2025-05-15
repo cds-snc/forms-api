@@ -147,7 +147,7 @@ describe("getNewFormSubmissions should", () => {
   it("throw an error if DynamoDB has an internal failure", async () => {
     const customError = new Error("custom error");
     dynamoDbMock.on(QueryCommand).rejectsOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(
       getNewFormSubmissions("clzamy5qv0000115huc4bh90m", 100),

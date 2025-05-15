@@ -1,7 +1,7 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
-import type {
-  FormSubmission,
+import {
+  type FormSubmission,
   FormSubmissionStatus,
 } from "@lib/vault/types/formSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
@@ -17,9 +17,9 @@ export async function getFormSubmission(
           TableName: "Vault",
           Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
           ProjectionExpression:
-            "CreatedAt,#status,ConfirmationCode,FormSubmission,FormSubmissionHash",
+            "CreatedAt,#statusCreatedAtKey,ConfirmationCode,FormSubmission,FormSubmissionHash",
           ExpressionAttributeNames: {
-            "#status": "Status",
+            "#statusCreatedAtKey": "Status#CreatedAt",
           },
         }),
       );
@@ -30,7 +30,7 @@ export async function getFormSubmission(
 
     return formSubmissionFromDynamoDbResponse(response.Item);
   } catch (error) {
-    logMessage.error(
+    logMessage.info(
       error,
       `[dynamodb] Failed to retrieve form submission. FormId: ${formId} / SubmissionName: ${submissionName}`,
     );
@@ -44,9 +44,32 @@ function formSubmissionFromDynamoDbResponse(
 ): FormSubmission {
   return {
     createdAt: response.CreatedAt as number,
-    status: response.Status as FormSubmissionStatus,
+    status: formSubmissionStatusFromStatusCreatedAt(
+      response["Status#CreatedAt"] as string,
+    ),
     confirmationCode: response.ConfirmationCode as string,
     answers: response.FormSubmission as string,
     checksum: response.FormSubmissionHash as string,
   };
+}
+
+function formSubmissionStatusFromStatusCreatedAt(
+  statusCreatedAtValue: string,
+): FormSubmissionStatus {
+  const status = statusCreatedAtValue.split("#")[0];
+
+  switch (status) {
+    case "New":
+      return FormSubmissionStatus.New;
+    case "Downloaded":
+      return FormSubmissionStatus.Downloaded;
+    case "Confirmed":
+      return FormSubmissionStatus.Confirmed;
+    case "Problem":
+      return FormSubmissionStatus.Problem;
+    default:
+      throw new Error(
+        `Unsupported Status#CreatedAt value. Value = ${statusCreatedAtValue}.`,
+      );
+  }
 }

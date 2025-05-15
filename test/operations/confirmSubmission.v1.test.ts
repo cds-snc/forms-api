@@ -6,7 +6,7 @@ import {
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@lib/vault/types/exceptions.js";
-import { confirmSubmissionOperation } from "@operations/confirmSubmission.js";
+import { confirmSubmissionOperationV1 } from "@operations/confirmSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 
@@ -35,7 +35,7 @@ describe("confirmSubmissionOperation handler should", () => {
   it("respond with success when confirmation successfully completes", async () => {
     confirmFormSubmissionMock.mockResolvedValueOnce();
 
-    await confirmSubmissionOperation.handler(
+    await confirmSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -58,7 +58,7 @@ describe("confirmSubmissionOperation handler should", () => {
       new FormSubmissionNotFoundException(),
     );
 
-    await confirmSubmissionOperation.handler(
+    await confirmSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -75,7 +75,7 @@ describe("confirmSubmissionOperation handler should", () => {
       new FormSubmissionAlreadyConfirmedException(),
     );
 
-    await confirmSubmissionOperation.handler(
+    await confirmSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -92,7 +92,7 @@ describe("confirmSubmissionOperation handler should", () => {
       new FormSubmissionIncorrectConfirmationCodeException(),
     );
 
-    await confirmSubmissionOperation.handler(
+    await confirmSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,
@@ -107,7 +107,7 @@ describe("confirmSubmissionOperation handler should", () => {
   it("pass error to next function when processing fails due to internal error", async () => {
     confirmFormSubmissionMock.mockRejectedValueOnce(new Error("custom error"));
 
-    await confirmSubmissionOperation.handler(
+    await confirmSubmissionOperationV1.handler(
       requestMock,
       responseMock,
       nextMock,

@@ -1,5 +1,5 @@
-ARG NODE_VERSION=22.10.0-alpine3.19@sha256:f1b43157ce277feaed97088f4d1bbf6b209148d49d98cea592e0af6637657baf
-ARG PNPM_VERSION=9.6.0
+ARG NODE_VERSION=22.12.0-alpine3.19@sha256:40dc4b415c17b85bea9be05314b4a753f45a4e1716bb31c01182e6c53d51a654
+ARG PNPM_VERSION=9.15.5
 
 FROM node:$NODE_VERSION AS build
 ARG PNPM_VERSION
@@ -8,7 +8,8 @@ WORKDIR /src
 
 COPY package.json pnpm-lock.yaml ./
 
-RUN corepack enable pnpm &&\
+RUN npm i -g corepack@latest &&\
+    corepack enable pnpm &&\
     corepack use pnpm@$PNPM_VERSION &&\
     pnpm install --frozen-lockfile
 
@@ -26,7 +27,8 @@ COPY package.json pnpm-lock.yaml ./
 COPY --from=build /src/node_modules ./node_modules
 COPY --from=build /src/build ./build
 
-RUN corepack enable pnpm &&\
+RUN npm i -g corepack@latest &&\
+    corepack enable pnpm &&\
     corepack use pnpm@$PNPM_VERSION
 
 EXPOSE 3001

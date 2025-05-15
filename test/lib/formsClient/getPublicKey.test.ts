@@ -48,7 +48,7 @@ describe("getPublicKey should", () => {
     vi.spyOn(DatabaseConnectorClient, "oneOrNone").mockRejectedValueOnce(
       customError,
     );
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() => getPublicKey("254354365464565461")).rejects.toThrowError(
       "custom error",

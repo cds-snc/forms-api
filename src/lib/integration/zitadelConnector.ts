@@ -1,7 +1,11 @@
 import { SignJWT } from "jose";
 import axios from "axios";
 import { createPrivateKey } from "node:crypto";
-import { ZITADEL_APPLICATION_KEY, ZITADEL_DOMAIN } from "@config";
+import {
+  ZITADEL_APPLICATION_KEY,
+  ZITADEL_TRUSTED_DOMAIN,
+  ZITADEL_URL,
+} from "@config";
 import { logMessage } from "@lib/logging/logger.js";
 
 export type AccessTokenIntrospectionResult = {
@@ -18,6 +22,13 @@ const privateKey = createPrivateKey({
   key: JSON.parse(ZITADEL_APPLICATION_KEY).key,
 });
 
+export class ZitadelConnectionError extends Error {
+  constructor() {
+    super("Failed to connect to Zitadel");
+    this.name = "ZitadelConnectionError";
+  }
+}
+
 export function introspectAccessToken(
   accessToken: string,
 ): Promise<AccessTokenIntrospectionResult> {
@@ -26,8 +37,12 @@ export function introspectAccessToken(
       introspectOpaqueToken(jwtSignedToken, accessToken),
     )
     .catch((error) => {
-      logMessage.error(error, "[zitadel] Failed to introspect access token");
-      throw error;
+      logMessage.info(
+        error,
+        "[zitadel-connector] Failed to introspect access token",
+      );
+
+      throw new ZitadelConnectionError();
     });
 }
 
@@ -37,7 +52,7 @@ function generateSignedJwtToken(): Promise<string> {
     .setIssuedAt()
     .setIssuer(clientId)
     .setSubject(clientId)
-    .setAudience(ZITADEL_DOMAIN)
+    .setAudience(`https://${ZITADEL_TRUSTED_DOMAIN}`) // Expected audience for the JWT token is the IdP external domain
     .setExpirationTime("1 minute"); // long enough for the introspection to happen
 
   return jwtSigner.sign(privateKey);
@@ -49,7 +64,7 @@ function introspectOpaqueToken(
 ): Promise<AccessTokenIntrospectionResult> {
   return axios
     .post<AccessTokenIntrospectionResult>(
-      `${ZITADEL_DOMAIN}/oauth/v2/introspect`,
+      `${ZITADEL_URL}/oauth/v2/introspect`,
       {
         client_assertion_type:
           "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
@@ -58,6 +73,7 @@ function introspectOpaqueToken(
       },
       {
         headers: {
+          Host: ZITADEL_TRUSTED_DOMAIN, // This is required by Zitadel to accept requests. See https://zitadel.com/docs/self-hosting/manage/custom-domain#standard-config
           "Content-Type": "application/x-www-form-urlencoded",
         },
         timeout: 5000,

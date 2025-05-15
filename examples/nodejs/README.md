@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-- Download and install Node.js version 22
+- Download and install Node.js version 23
   - (with Node.js installer) https://nodejs.org/en/download/prebuilt-installer
-  - (with Brew) `brew install node@22`
+  - (with Brew) `brew install node@23`
 
 To make sure Node.js is properly installed, try to run the following command `node --version`.
 

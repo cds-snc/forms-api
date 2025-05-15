@@ -43,13 +43,11 @@ export async function confirmFormSubmission(
           NAME_OR_CONF: `NAME#${submissionName}`,
         },
         UpdateExpression:
-          "SET #status = :status, #statusCreatedAtKey = :statusCreatedAtValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
+          "SET #statusCreatedAtKey = :statusCreatedAtValue, ConfirmTimestamp = :confirmTimestamp, RemovalDate = :removalDate",
         ExpressionAttributeNames: {
-          "#status": "Status",
           "#statusCreatedAtKey": "Status#CreatedAt",
         },
         ExpressionAttributeValues: {
-          ":status": "Confirmed",
           ":statusCreatedAtValue": `Confirmed#${formSubmission.createdAt}`,
           ":confirmTimestamp": confirmationTimestamp,
           ":removalDate": removalDate,
@@ -57,7 +55,7 @@ export async function confirmFormSubmission(
       }),
     );
   } catch (error) {
-    logMessage.error(
+    logMessage.info(
       error,
       `[dynamodb] Failed to confirm form submission. FormId: ${formId} / SubmissionName: ${submissionName} / ConfirmationCode: ${confirmationCode}`,
     );

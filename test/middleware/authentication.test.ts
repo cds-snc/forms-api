@@ -5,13 +5,14 @@ import {
   verifyAccessToken,
 } from "@lib/idp/verifyAccessToken.js";
 import { authenticationMiddleware } from "@middleware/authentication.js";
-// biome-ignore lint/style/noNamespaceImport: <explanation>
-import * as auditLogsModule from "@lib/logging/auditLogs.js";
+import {
+  AccessTokenInvalidError,
+  AccessTokenExpiredError,
+  AccessControlError,
+} from "@lib/idp/verifyAccessToken.js";
 
 vi.mock("@lib/idp/verifyAccessToken");
 const verifyAccessTokenMock = vi.mocked(verifyAccessToken);
-
-const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
 
 describe("authenticationMiddleware should", () => {
   let requestMock = getMockReq();
@@ -53,11 +54,14 @@ describe("authenticationMiddleware should", () => {
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
     expect(nextMock).not.toHaveBeenCalled();
-    expect(responseMock.sendStatus).toHaveBeenCalledWith(401);
+    expect(responseMock.status).toHaveBeenCalledWith(401);
+    expect(responseMock.json).toHaveBeenCalledWith({
+      error: "Authorization header is missing",
+    });
   });
 
   it("respond with error when the authorization header value is invalid", async () => {
-    verifyAccessTokenMock.mockResolvedValueOnce(undefined);
+    verifyAccessTokenMock.mockRejectedValueOnce(new AccessTokenInvalidError());
 
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
@@ -66,36 +70,16 @@ describe("authenticationMiddleware should", () => {
   });
 
   it("respond with error when the form identifier passed in the URL is different than the one associated to the token", async () => {
-    const verifiedAccessToken: VerifiedAccessToken = {
-      expirationEpochTime: Date.now() / 1000 + 100000,
-      serviceAccountId: "11111111111",
-      serviceUserId: "clzsn6tao000611j50dexeoa1",
-    };
-    verifyAccessTokenMock.mockResolvedValueOnce(verifiedAccessToken);
+    verifyAccessTokenMock.mockRejectedValueOnce(new AccessControlError());
 
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
     expect(nextMock).not.toHaveBeenCalled();
     expect(responseMock.sendStatus).toHaveBeenCalledWith(403);
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeoa1",
-      {
-        id: "clzsn6tao000611j50dexeob0",
-        type: "Form",
-      },
-      "AccessDenied",
-      "User does not have access to this form",
-    );
   });
 
   it("respond with error when the token is expired", async () => {
-    const verifiedAccessToken: VerifiedAccessToken = {
-      expirationEpochTime: Date.now() / 1000 - 100000,
-      serviceAccountId: "11111111111",
-      serviceUserId: "clzsn6tao000611j50dexeob0",
-    };
-    verifyAccessTokenMock.mockResolvedValueOnce(verifiedAccessToken);
+    verifyAccessTokenMock.mockRejectedValueOnce(new AccessTokenExpiredError());
 
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
@@ -104,16 +88,6 @@ describe("authenticationMiddleware should", () => {
     expect(responseMock.json).toHaveBeenCalledWith({
       error: "Access token has expired",
     });
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "clzsn6tao000611j50dexeob0",
-        type: "Form",
-      },
-      "AccessDenied",
-      "Access token has expired",
-    );
   });
 
   it("pass error to next function when processing fails due to internal error", async () => {
@@ -122,7 +96,7 @@ describe("authenticationMiddleware should", () => {
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
     expect(nextMock).toHaveBeenCalledWith(
-      new Error("[middleware] Internal error while authenticating user"),
+      new Error("[middleware][authentication] Internal error"),
     );
   });
 });

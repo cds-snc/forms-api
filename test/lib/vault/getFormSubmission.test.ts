@@ -4,6 +4,7 @@ import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -27,9 +28,7 @@ describe("getFormSubmission should", () => {
 
   it("return a form submission if DynamoDB was able to find it", async () => {
     dynamoDbMock.on(GetCommand).resolvesOnce({
-      Item: {
-        Status: "New",
-      },
+      Item: buildMockedVaultItem("New"),
     });
 
     const formSubmission = await getFormSubmission(
@@ -47,7 +46,7 @@ describe("getFormSubmission should", () => {
   it("throw an error if DynamoDB has an internal failure", async () => {
     const customError = new Error("custom error");
     dynamoDbMock.on(GetCommand).rejectsOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() =>
       getFormSubmission("clzamy5qv0000115huc4bh90m", "01-08-a571"),

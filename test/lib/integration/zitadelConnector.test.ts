@@ -1,7 +1,10 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { SignJWT } from "jose";
 import axios from "axios";
-import { introspectAccessToken } from "@lib/integration/zitadelConnector.js";
+import {
+  introspectAccessToken,
+  ZitadelConnectionError,
+} from "@lib/integration/zitadelConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 vi.spyOn(SignJWT.prototype, "sign").mockResolvedValue("signedJwtToken");
@@ -24,6 +27,7 @@ describe("introspectAccessToken should", () => {
       },
       {
         headers: {
+          Host: "http://test",
           "Content-Type": "application/x-www-form-urlencoded",
         },
         timeout: 5000,
@@ -32,17 +36,19 @@ describe("introspectAccessToken should", () => {
   });
 
   it("throw an error if Zitadel post request fails", async () => {
-    const customError = new Error("custom error");
-    vi.spyOn(axios, "post").mockRejectedValueOnce(customError);
-    const logMessageSpy = vi.spyOn(logMessage, "error");
+    const connectionError = new ZitadelConnectionError();
+    vi.spyOn(axios, "post").mockRejectedValueOnce(connectionError);
+    const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() =>
       introspectAccessToken("accessToken"),
-    ).rejects.toThrowError("custom error");
+    ).rejects.toThrowError(ZitadelConnectionError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
-      customError,
-      expect.stringContaining("[zitadel] Failed to introspect access token"),
+      connectionError,
+      expect.stringContaining(
+        "[zitadel-connector] Failed to introspect access token",
+      ),
     );
   });
 });
