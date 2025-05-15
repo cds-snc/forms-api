@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/cds-snc/forms-api/compare/v1.4.0...v1.5.0) (2025-05-15)
+
+
+### Features
+
+* enable local communication with Zitadel ([#169](https://github.com/cds-snc/forms-api/issues/169)) ([1f5f7ea](https://github.com/cds-snc/forms-api/commit/1f5f7ea6f571735438c6159d31ebb61fdf1d6fec))
+
+
+### Miscellaneous Chores
+
+* revert complex status endpoint logic ([#167](https://github.com/cds-snc/forms-api/issues/167)) ([c7dd49d](https://github.com/cds-snc/forms-api/commit/c7dd49d3bfbdb8c2aeb215b7a242749ba3d4a2dc))
+
 ## [1.4.0](https://github.com/cds-snc/forms-api/compare/v1.3.4...v1.4.0) (2025-05-07)
 
 
