@@ -294,8 +294,14 @@ GET  /forms/{formID}/template
 
 > _Remarque : Les questions seront dans une structure de données au format JSON lorsqu’elles seront récupérées. Cela est utile si vous transformez les données et que vous devez faire correspondre les réponses aux questions._
 
-Vous pouvez configurer les attributs des questions avec des **identifiants de question** et des **balises supplémentaires**. Ces deux attributs peuvent être utilisés pour aider à mettre en correspondance les données des réponses aux formulaires avec les systèmes cibles ou les champs de destination dans une base de données. Ceci facilite la mise à jour d'intégrations API avec une manière cohérente de mapper les données des réponses. Pour en savoir plus, voir ci-dessous.
+Vous pouvez configurer les attributs des questions avec des **identifiants de question** et des **balises supplémentaires**. Ces deux attributs peuvent être utilisés pour aider à mettre en correspondance les données des réponses aux formulaires avec les systèmes cibles ou les champs de destination dans une base de données. Ceci facilite la mise à jour d'intégrations API avec une manière cohérente de mapper les données des réponses. 
 
+Vous pouvez utiliser ces attributs pour :
+- clarifier l'objectif d'un champ
+- organiser et trier les données
+- soutenir l'automatisation
+
+Pour en savoir plus, voir ci-dessous.
 ##### Statut de la réponse
 
 <table>

@@ -297,7 +297,14 @@ GET  /forms/{formID}/template
 
 > _Note: The questions will be in a data structure that is JSON format when retrieved. This helps if you’ll be transforming the data and need to match the answers to the questions._
 
-You can configure question attributes with customizable unique **Question IDs** and **additional tags**. These two attributes can be used to help map data form response data to target systems or destination fields in a database, making it easier to update API integrations with a consistent way of mapping response data. Learn more below.
+You can configure question attributes with customizable unique **Question IDs** and **additional tags**. These two attributes can be used to help map data form response data to target systems or destination fields in a database, making it easier to update API integrations with a consistent way of mapping response data. 
+
+You might use these attributes to:
+- Clarify a field's purpose 
+- Organize and sort data
+- Support automation
+
+Learn more below.
 
 ##### Response status
 
