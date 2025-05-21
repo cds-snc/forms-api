@@ -294,6 +294,14 @@ GET  /forms/{formID}/template
 
 > _Remarque : Les questions seront dans une structure de données au format JSON lorsqu’elles seront récupérées. Cela est utile si vous transformez les données et que vous devez faire correspondre les réponses aux questions._
 
+Vous pouvez configurer les attributs des questions avec des **identifiants de question** et des **balises supplémentaires**. Ces deux attributs peuvent être utilisés pour aider à mettre en correspondance les données des réponses aux formulaires avec les systèmes cibles ou les champs de destination dans une base de données. Ceci facilite la mise à jour d'intégrations API avec une manière cohérente de mapper les données des réponses. 
+
+Vous pouvez utiliser ces attributs pour :
+- clarifier l'objectif d'un champ
+- organiser et trier les données
+- soutenir l'automatisation
+
+Pour en savoir plus, voir ci-dessous.
 ##### Statut de la réponse
 
 <table>
@@ -367,3 +375,24 @@ GET  /forms/{formID}/template
   Le renseignement “Form ID” est incorrect ou n’a pas pu être trouvé.
   </td>
 
+#### Pour définir et personnaliser des identifiants de question uniques
+
+L'identifiant de la question est une valeur unique qui vous permet de faire référence de manière cohérente à un élément de formulaire afin qu'il puisse être mis en correspondance avec des versions de formulaire republiées ou d'autres structures et systèmes de données. Il peut s'agir d'un moyen plus facile et plus utile d'identifier et de se référer à un champ de question. Par exemple, une manière standard de se reférer à toutes les questions sur le prénom ou les numéros de téléphone dans tous les formulaires, de sorte qu'ils se retrouvent au bon endroit sans avoir à être tracées individuellement.
+
+**Formulaires GC vous offre la possibilité de configurer un identifiant de question unique :**
+
+1. Créez un nouveau formulaire ou naviguez vers un formulaire existant dans Formulaires GC.
+2. Dans « Modifier », sélectionnez une question et cliquez sur « Plus ».
+3. Dans la fenêtre modale, faites défiler vers le bas jusqu'à « Personnaliser les attributs de données de l'API ».
+4. Modifiez l'identifiant de la question avec une valeur unique de votre choix.
+
+#### Pour étiqueter et organiser les données avec des balises supplémentaires
+
+Les balises supplémentaires sont des étiquettes flexibles qui vous permettent d'ajouter des métadonnées aux éléments du formulaire afin que les questions connexes puissent être marquées, regroupées ou catégorisées, ce qui permet de lire, de rechercher, de trier et d'organiser les données.
+
+**Formulaires GC vous offre la possibilité de configurer plusieurs balises :**
+
+1. Créez un nouveau formulaire ou naviguez vers un formulaire existant dans Formulaires GC.
+2. Dans « Modifier », sélectionnez une question et cliquez sur « Plus ».
+3. Dans la fenêtre modale, faites défiler vers le bas jusqu'à « Personnaliser les attributs de données de l'API ».
+4. Ajoutez plusieurs balises à une question pour marquer les données de manière utile.
