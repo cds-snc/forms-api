@@ -96,6 +96,11 @@ describe("router should", () => {
         authenticationLevel: AuthenticationLevel.Authenticated,
       },
       {
+        httpMethod: HttpMethod.Get,
+        path: "/forms/cm05mxdua0003moy60gc0cp8n/submission/05-09-5e1af",
+        authenticationLevel: AuthenticationLevel.Authenticated,
+      },
+      {
         httpMethod: HttpMethod.Put,
         path: "/forms/cm05mxdua0003moy60gc0cp8n/submission/05-09-5e1a/confirm/4239462c-cd01-421a-96bf-2c97a552f012",
         authenticationLevel: AuthenticationLevel.Authenticated,
