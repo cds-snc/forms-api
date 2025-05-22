@@ -26,7 +26,7 @@ jobs:
         run: docker build -t forms/api .
 
       - name: Configure AWS credentials using OIDC
-        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 # v4.1.0
+        uses: aws-actions/configure-aws-credentials@b47578312673ae6fa5b5096b330d9fbac3d116df # v4.2.1
         with:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/forms-api-release
           role-session-name: ECRPush
@@ -34,7 +34,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@41024dce940db1142d80e2cc57337506aed01562
+        uses: aws-actions/amazon-ecr-login@27f0358e4101cb57222f3a355e6c80008b3c6ffc
 
       - name: Tag images
         env:
