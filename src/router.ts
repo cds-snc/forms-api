@@ -56,7 +56,7 @@ export function buildRouter(): Router {
   const submissionRoute = Router(INHERIT_PARAMS)
     .use("/new", newRoute)
     .use(
-      "/:submissionName([0-9]{2}-[0-9]{2}-[a-z0-9]{4})",
+      "/:submissionName([0-9]{2}-[0-9]{2}-[a-z0-9]{4,5})",
       submissionNameRoute,
     );
 
