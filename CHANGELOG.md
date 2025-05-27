@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.5.0](https://github.com/cds-snc/forms-api/compare/v1.4.0...v1.5.0) (2025-05-27)
+
+
+### Features
+
+* enable local communication with Zitadel ([#169](https://github.com/cds-snc/forms-api/issues/169)) ([1f5f7ea](https://github.com/cds-snc/forms-api/commit/1f5f7ea6f571735438c6159d31ebb61fdf1d6fec))
+
+
+### Bug Fixes
+
+* **deps:** update all minor dependencies ([#165](https://github.com/cds-snc/forms-api/issues/165)) ([9aa8036](https://github.com/cds-snc/forms-api/commit/9aa8036e7beab8d19b5a9c44075ac1fa89740e0d))
+* **deps:** update all patch dependencies ([#164](https://github.com/cds-snc/forms-api/issues/164)) ([432910b](https://github.com/cds-snc/forms-api/commit/432910b85e081720f077be396f29c6a24965c268))
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#166](https://github.com/cds-snc/forms-api/issues/166)) ([07e9ae2](https://github.com/cds-snc/forms-api/commit/07e9ae227f7ad20105c4931a1c04c9a8fad3f8dd))
+* **deps:** update all non-major github action dependencies ([#172](https://github.com/cds-snc/forms-api/issues/172)) ([f339eb8](https://github.com/cds-snc/forms-api/commit/f339eb8835198b5d97c0cd4a0aee40c29d006f55))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to a04e0d6 ([#163](https://github.com/cds-snc/forms-api/issues/163)) ([bd70e46](https://github.com/cds-snc/forms-api/commit/bd70e46171ffd77c74502f7b984613e2b3457567))
+* revert complex status endpoint logic ([#167](https://github.com/cds-snc/forms-api/issues/167)) ([c7dd49d](https://github.com/cds-snc/forms-api/commit/c7dd49d3bfbdb8c2aeb215b7a242749ba3d4a2dc))
+* update submission name pattern ([#174](https://github.com/cds-snc/forms-api/issues/174)) ([fd2c0c7](https://github.com/cds-snc/forms-api/commit/fd2c0c7bbdf999d3651154c415fe38a0c4e1b0f0))
+
 ## [1.4.0](https://github.com/cds-snc/forms-api/compare/v1.3.4...v1.4.0) (2025-05-07)
 
 
