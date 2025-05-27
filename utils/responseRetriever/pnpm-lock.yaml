@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@types/node':
-        specifier: ^22.15.19
-        version: 22.15.19
+        specifier: ^22.7.4
+        version: 22.15.21
       axios:
         specifier: ^1.8.4
         version: 1.9.0
@@ -21,7 +21,7 @@ importers:
         specifier: ^5.9.3
         version: 5.10.0
       pino:
-        specifier: ^9.4.0
+        specifier: ^9.7.0
         version: 9.7.0
       tsx:
         specifier: ^4.19.1
@@ -186,8 +186,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@types/node@22.15.19':
-    resolution: {integrity: sha512-3vMNr4TzNQyjHcRZadojpRaD9Ofr6LsonZAoQ+HMUa/9ORTPoxVIw0e0mpqWpdjj8xybyCM+oKOUH2vwFu/oEw==}
+  '@types/node@22.15.21':
+    resolution: {integrity: sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ==}
 
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -521,7 +521,7 @@ snapshots:
   '@esbuild/win32-x64@0.25.4':
     optional: true
 
-  '@types/node@22.15.19':
+  '@types/node@22.15.21':
     dependencies:
       undici-types: 6.21.0
 
