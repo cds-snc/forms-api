@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/cds-snc/forms-api/compare/v1.5.0...v1.6.0) (2025-05-30)
+
+
+### Features
+
+* Enable cors for server ([#175](https://github.com/cds-snc/forms-api/issues/175)) ([fe240be](https://github.com/cds-snc/forms-api/commit/fe240be1176a53f0406e252e49d4bd17d135f8e4))
+
 ## [1.5.0](https://github.com/cds-snc/forms-api/compare/v1.4.0...v1.5.0) (2025-05-27)
 
 
