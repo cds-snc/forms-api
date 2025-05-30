@@ -5,8 +5,11 @@ import { buildRouter } from "./router.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
+import cors from "cors";
 
 const server: Express = express();
+
+server.use(cors());
 
 server.use("/", buildRouter());
 
