@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/cds-snc/forms-api/compare/v1.5.0...v1.6.0) (2025-06-03)
+
+
+### Features
+
+* Enable cors for server ([#175](https://github.com/cds-snc/forms-api/issues/175)) ([fe240be](https://github.com/cds-snc/forms-api/commit/fe240be1176a53f0406e252e49d4bd17d135f8e4))
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#179](https://github.com/cds-snc/forms-api/issues/179)) ([3ea200a](https://github.com/cds-snc/forms-api/commit/3ea200a3295a041d0b4f9563c9fbb0cad3cf114b))
+* **deps:** update all non-major github action dependencies ([#177](https://github.com/cds-snc/forms-api/issues/177)) ([d1e34ad](https://github.com/cds-snc/forms-api/commit/d1e34ad1976e2dd109a47aea69b3147b84823a26))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to da67c59 ([#178](https://github.com/cds-snc/forms-api/issues/178)) ([7095099](https://github.com/cds-snc/forms-api/commit/7095099d8c553e709eec6945ee0f1cbd731563aa))
+
 ## [1.5.0](https://github.com/cds-snc/forms-api/compare/v1.4.0...v1.5.0) (2025-05-27)
 
 
