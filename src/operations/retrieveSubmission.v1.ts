@@ -28,7 +28,7 @@ async function v1(
         ? await getFormSubmissionAttachments(attachmentPaths)
         : undefined;
 
-    const responsePayload = { ...formSubmission, ...attachments };
+    const responsePayload = { ...formSubmission, attachments };
 
     const encryptedResponsePayload = await encryptResponsePayload(
       serviceAccountId,
