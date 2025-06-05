@@ -1,5 +1,5 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
-import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js";
+import { encryptFormSubmission } from "@lib/encryption/encryptResponsePayload.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 import { logMessage } from "@lib/logging/logger.js";

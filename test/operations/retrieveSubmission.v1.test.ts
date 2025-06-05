@@ -1,7 +1,7 @@
 import { vi, describe, beforeEach, it, expect } from "vitest";
 import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
-import { encryptFormSubmission } from "@lib/encryption/encryptFormSubmission.js";
+import { encryptFormSubmission } from "@lib/encryption/encryptResponsePayload.js";
 import { retrieveSubmissionOperationV1 } from "@operations/retrieveSubmission.v1.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
