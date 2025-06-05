@@ -9,10 +9,11 @@ import { generateAccessToken } from "./accessTokenGenerator.js";
 import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
 import { verifyIntegrity } from "./formSubmissionIntegrityVerifier.js";
+import path from "node:path";
 
-const IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca";
-const PROJECT_IDENTIFIER = "284778202772022819";
-const GCFORMS_API_URL = "https://api.forms-formulaires.alpha.canada.ca";
+const IDENTITY_PROVIDER_URL = "https://auth.forms-staging.cdssandbox.xyz";
+const PROJECT_IDENTIFIER = "275372254274006635";
+const GCFORMS_API_URL = "http://localhost:3001";
 
 async function main() {
   try {
@@ -42,11 +43,11 @@ Selection (1):
           accessToken,
         );
 
-        console.info("\nRetrieving form template...\n");
+        // console.info("\nRetrieving form template...\n");
 
-        const formTemplate = await apiClient.getFormTemplate();
+        // const formTemplate = await apiClient.getFormTemplate();
 
-        console.info(formTemplate);
+        // console.info(formTemplate);
 
         console.info("\nRetrieving new form submissions...");
 
@@ -70,7 +71,7 @@ Selection (1):
             );
 
             console.info("\nEncrypted submission:");
-            console.info(encryptedSubmission.encryptedResponses);
+            // console.info(encryptedSubmission.encryptedResponses);
 
             console.info("\nDecrypting submission...");
 
@@ -97,14 +98,27 @@ Selection (1):
               `\nIntegrity verification result: ${integrityVerificationResult ? "OK" : "INVALID"}`,
             );
 
-            console.info("\nConfirming submission...");
+            for (const attachment of formSubmission.attachments) {
+              const attachmentBuffer = Buffer.from(
+                attachment.content,
+                "base64",
+              );
 
-            await apiClient.confirmFormSubmission(
-              newFormSubmission.name,
-              formSubmission.confirmationCode,
-            );
+              const outputPath = path.join("./", attachment.name);
 
-            console.info("\nSubmission confirmed");
+              await filesystem.writeFile(outputPath, attachmentBuffer);
+
+              console.error(`File written to ${outputPath}`);
+            }
+
+            // console.info("\nConfirming submission...");
+
+            // await apiClient.confirmFormSubmission(
+            //   newFormSubmission.name,
+            //   formSubmission.confirmationCode,
+            // );
+
+            // console.info("\nSubmission confirmed");
 
             await requestUserInput(
               "\n=> Press any key to continue processing form submissions or Ctrl-C to exit",

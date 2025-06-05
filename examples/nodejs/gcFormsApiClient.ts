@@ -42,10 +42,11 @@ export class GCFormsApiClient {
     submissionName: string,
   ): Promise<EncryptedFormSubmission> {
     return this.httpClient
-      .get<EncryptedFormSubmission>(
-        `/forms/${this.formId}/submission/${submissionName}`,
-      )
-      .then((response) => response.data)
+      .get(`/forms/${this.formId}/submission/${submissionName}`)
+      .then((response) => {
+        console.debug(response.headers["content-length"]);
+        return response.data;
+      })
       .catch((error) => {
         throw new Error("Failed to retrieve form submission", { cause: error });
       });

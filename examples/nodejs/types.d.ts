@@ -24,12 +24,18 @@ export enum FormSubmissionStatus {
   Problem = "Problem",
 }
 
+export type Attachment = {
+  name: string;
+  content: string;
+};
+
 export type FormSubmission = {
   createdAt: number;
   status: FormSubmissionStatus;
   confirmationCode: string;
   answers: string;
   checksum: string;
+  attachments: Attachment[];
 };
 
 export type FormSubmissionProblem = {
