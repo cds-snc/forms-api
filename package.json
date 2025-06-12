@@ -19,7 +19,6 @@
   "author": "Canadian Digital Service",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.8.4",
     "@aws-sdk/client-dynamodb": "^3.823.0",
     "@aws-sdk/client-s3": "^3.823.0",
     "@aws-sdk/client-secrets-manager": "^3.823.0",
@@ -29,6 +28,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-validator": "^7.2.0",
+    "got": "^14.4.7",
     "jose": "^5.9.3",
     "pg-promise": "^11.9.1",
     "pino": "^9.4.0",
