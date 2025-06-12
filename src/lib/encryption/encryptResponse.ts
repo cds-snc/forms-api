@@ -4,31 +4,27 @@ import {
   createPublicKey,
   publicEncrypt,
 } from "node:crypto";
-import type { FormSubmission } from "@lib/vault/types/formSubmission.js";
-import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-export interface EncryptedFormSubmission {
-  encryptedResponses: string;
+export interface EncryptedResponse {
   encryptedKey: string;
   encryptedNonce: string;
   encryptedAuthTag: string;
+  encryptedResponses: string;
 }
 
-export const encryptFormSubmission = async (
-  serviceAccountId: string,
-  submission: FormSubmission,
-): Promise<EncryptedFormSubmission> => {
+export function encryptResponse(
+  serviceAccountPublicKey: string,
+  payload: string,
+): EncryptedResponse {
   try {
-    const serviceAccountPublicKey = await getPublicKey(serviceAccountId);
-
     const encryptionKey = randomBytes(32);
     const iv = randomBytes(12);
 
     const cipher = createCipheriv("aes-256-gcm", encryptionKey, iv);
 
     const encryptedResponses = Buffer.concat([
-      cipher.update(Buffer.from(JSON.stringify(submission))),
+      cipher.update(Buffer.from(payload)),
       cipher.final(),
     ]).toString("base64");
 
@@ -55,13 +51,13 @@ export const encryptFormSubmission = async (
     );
 
     return {
-      encryptedResponses,
       encryptedKey,
       encryptedNonce,
       encryptedAuthTag,
+      encryptedResponses,
     };
   } catch (error) {
-    logMessage.error(error, "[encryption] Failed to encrypt form submission");
+    logMessage.error(error, "[encryption] Failed to encrypt response");
     throw error;
   }
-};
+}

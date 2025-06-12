@@ -17,3 +17,9 @@ export interface FormSubmission {
   answers: string;
   checksum: string;
 }
+
+export type FormSubmissionAttachment = {
+  name: string;
+  base64EncodedContent: string;
+  isPotentiallyMalicious: boolean;
+};
