@@ -45,6 +45,12 @@ export const highRateLimiterConfiguration: TokenBucketConfiguration = {
 
 export const REDIS_URL: string = loadRequiredEnvVar("REDIS_URL");
 
+// S3
+
+export const VAULT_FILE_STORAGE_BUCKET_NAME: string = loadRequiredEnvVar(
+  "VAULT_FILE_STORAGE_BUCKET_NAME",
+);
+
 // Zitadel
 
 export const ZITADEL_TRUSTED_DOMAIN: string = loadRequiredEnvVar(

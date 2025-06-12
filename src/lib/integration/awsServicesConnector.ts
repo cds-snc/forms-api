@@ -3,6 +3,7 @@ import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { SQSClient } from "@aws-sdk/client-sqs";
 import { SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 import { AWS_REGION } from "@config";
+import { S3Client } from "@aws-sdk/client-s3";
 
 const globalConfig = {
   region: AWS_REGION,
@@ -17,6 +18,8 @@ export class AwsServicesConnector {
 
   public sqsClient: SQSClient;
 
+  public s3Client: S3Client;
+
   private constructor() {
     this.dynamodbClient = DynamoDBDocumentClient.from(
       new DynamoDBClient({
@@ -29,6 +32,10 @@ export class AwsServicesConnector {
     });
 
     this.sqsClient = new SQSClient({
+      ...globalConfig,
+    });
+
+    this.s3Client = new S3Client({
       ...globalConfig,
     });
   }
