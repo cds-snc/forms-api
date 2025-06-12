@@ -11,10 +11,10 @@ export type NewFormSubmission = {
 };
 
 export type EncryptedFormSubmission = {
-  encryptedResponses: string;
   encryptedKey: string;
   encryptedNonce: string;
   encryptedAuthTag: string;
+  encryptedResponses: string;
 };
 
 export enum FormSubmissionStatus {
@@ -24,12 +24,19 @@ export enum FormSubmissionStatus {
   Problem = "Problem",
 }
 
+export type Attachment = {
+  name: string;
+  base64EncodedContent: string;
+  isPotentiallyMalicious: boolean;
+};
+
 export type FormSubmission = {
   createdAt: number;
   status: FormSubmissionStatus;
   confirmationCode: string;
   answers: string;
   checksum: string;
+  attachments?: Attachment[];
 };
 
 export type FormSubmissionProblem = {
