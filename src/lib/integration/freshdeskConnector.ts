@@ -1,4 +1,4 @@
-import axios from "axios";
+import got from "got";
 import { FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
 
@@ -16,9 +16,14 @@ export async function createFreshdeskTicket(
   payload: FreshdeskTicketPayload,
 ): Promise<void> {
   try {
-    await axios.post(
-      `${FRESHDESK_API_URL}/v2/tickets`,
-      {
+    await got.post(`${FRESHDESK_API_URL}/v2/tickets`, {
+      timeout: { request: 5000 },
+      retry: { limit: 1 },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${btoa(`${FRESHDESK_API_KEY}:X`)}`,
+      },
+      form: {
         name: payload.name,
         email: payload.email,
         type: payload.type,
@@ -35,14 +40,7 @@ export async function createFreshdeskTicket(
         product_id: 61000000642,
         group_id: 61000172262,
       },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${btoa(`${FRESHDESK_API_KEY}:X`)}`,
-        },
-        timeout: 5000,
-      },
-    );
+    });
   } catch (error) {
     logMessage.info(
       error,

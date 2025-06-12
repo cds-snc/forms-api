@@ -25,13 +25,13 @@ vi.mock("./src/lib/logging/auditLogs", () => ({
   auditLog: vi.fn(),
 }));
 
-vi.mock("axios", () => {
-  return {
-    default: {
-      post: vi.fn().mockResolvedValue({}),
-    },
-  };
-});
+vi.mock("got", () => ({
+  default: {
+    post: vi.fn().mockReturnValue({
+      json: vi.fn().mockResolvedValue({}),
+    }),
+  },
+}));
 
 vi.mock("node:crypto", async (importOriginal) => {
   const original = (await importOriginal()) as object;
