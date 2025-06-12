@@ -5,11 +5,12 @@ import {
   FormSubmissionStatus,
 } from "@lib/vault/types/formSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.js";
 
 export async function getFormSubmission(
   formId: string,
   submissionName: string,
-): Promise<FormSubmission | undefined> {
+): Promise<FormSubmission> {
   try {
     const response =
       await AwsServicesConnector.getInstance().dynamodbClient.send(
@@ -25,7 +26,7 @@ export async function getFormSubmission(
       );
 
     if (response.Item === undefined) {
-      return undefined;
+      throw new FormSubmissionNotFoundException();
     }
 
     return formSubmissionFromDynamoDbResponse(response.Item);

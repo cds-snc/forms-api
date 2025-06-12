@@ -1,9 +1,6 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
-import {
-  FormSubmissionAlreadyReportedAsProblematicException,
-  FormSubmissionNotFoundException,
-} from "@lib/vault/types/exceptions.js";
+import { FormSubmissionAlreadyReportedAsProblematicException } from "@lib/vault/types/exceptions.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
@@ -14,10 +11,6 @@ export async function reportProblemWithFormSubmission(
 ): Promise<void> {
   try {
     const formSubmission = await getFormSubmission(formId, submissionName);
-
-    if (formSubmission === undefined) {
-      throw new FormSubmissionNotFoundException();
-    }
 
     if (formSubmission.status === FormSubmissionStatus.Problem) {
       throw new FormSubmissionAlreadyReportedAsProblematicException();

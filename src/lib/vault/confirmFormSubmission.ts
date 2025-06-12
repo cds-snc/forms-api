@@ -2,7 +2,6 @@ import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import {
   FormSubmissionAlreadyConfirmedException,
-  FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
 } from "@lib/vault/types/exceptions.js";
 import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
@@ -22,10 +21,6 @@ export async function confirmFormSubmission(
       confirmationTimestamp + REMOVAL_DATE_DELAY_IN_DAYS * 86400000;
 
     const formSubmission = await getFormSubmission(formId, submissionName);
-
-    if (formSubmission === undefined) {
-      throw new FormSubmissionNotFoundException();
-    }
 
     if (formSubmission.status === FormSubmissionStatus.Confirmed) {
       throw new FormSubmissionAlreadyConfirmedException();
