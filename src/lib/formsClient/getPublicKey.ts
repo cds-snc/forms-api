@@ -8,7 +8,7 @@ import { logMessage } from "@lib/logging/logger.js";
 const REDIS_PUBLIC_KEY_PREFIX: string = "api:publicKey";
 const CACHE_EXPIRY_DELAY_IN_SECONDS: number = 300;
 
-export const getPublicKey = async (serviceAccountId: string) => {
+export async function getPublicKey(serviceAccountId: string): Promise<string> {
   try {
     const cachedPublicKey = await getPublicKeyFromCache(serviceAccountId);
 
@@ -35,7 +35,7 @@ export const getPublicKey = async (serviceAccountId: string) => {
 
     throw error;
   }
-};
+}
 
 function retrievePublicKeyFromDatabase(
   serviceAccountId: string,

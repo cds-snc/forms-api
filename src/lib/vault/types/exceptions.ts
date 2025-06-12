@@ -1,4 +1,4 @@
-// Shared
+// Get form submission
 
 export class FormSubmissionNotFoundException extends Error {
   constructor() {
@@ -7,7 +7,7 @@ export class FormSubmissionNotFoundException extends Error {
   }
 }
 
-// Confirm
+// Confirm form submission
 
 export class FormSubmissionAlreadyConfirmedException extends Error {
   constructor() {
@@ -29,7 +29,7 @@ export class FormSubmissionIncorrectConfirmationCodeException extends Error {
   }
 }
 
-// Problem
+// Report problem with form submission
 
 export class FormSubmissionAlreadyReportedAsProblematicException extends Error {
   constructor() {
