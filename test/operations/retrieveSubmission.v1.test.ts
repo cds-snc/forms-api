@@ -63,27 +63,12 @@ describe("retrieveSubmissionOperation handler should", () => {
       nextMock,
     );
 
-    const expectedStreamedData = Buffer.from(
-      JSON.stringify({
-        encryptedKey: "encryptedKey",
-        encryptedNonce: "encryptedNonce",
-        encryptedAuthTag: "encryptedAuthTag",
-        encryptedResponses: "encryptedResponses",
-      }),
-    );
-
-    // We have to wait to let the Response object process the inner stream that was piped into it
-    await delay(1000);
-    expect(responseMock.setHeader).toHaveBeenCalledWith(
-      "Content-Type",
-      "application/json; charset=utf-8",
-    );
-    expect(responseMock.setHeader).toHaveBeenCalledWith(
-      "Content-Length",
-      expectedStreamedData.length,
-    );
-    expect(responseMock.write).toHaveBeenCalledWith(expectedStreamedData);
-    expect(responseMock.end).toHaveBeenCalled();
+    expect(responseMock.json).toHaveBeenCalledWith({
+      encryptedKey: "encryptedKey",
+      encryptedNonce: "encryptedNonce",
+      encryptedAuthTag: "encryptedAuthTag",
+      encryptedResponses: "encryptedResponses",
+    });
 
     expect(getFormSubmissionAttachmentMock).not.toHaveBeenCalled();
     expect(encryptResponseMock).toHaveBeenCalledWith(
@@ -155,7 +140,8 @@ describe("retrieveSubmissionOperation handler should", () => {
       createdAt: 0,
       status: FormSubmissionStatus.New,
       confirmationCode: "",
-      answers: "",
+      answers:
+        '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt',
       checksum: "",
     });
     getFormSubmissionAttachmentMock.mockRejectedValueOnce(
@@ -216,9 +202,3 @@ describe("retrieveSubmissionOperation handler should", () => {
     );
   });
 });
-
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}

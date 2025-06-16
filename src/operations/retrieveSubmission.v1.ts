@@ -6,7 +6,6 @@ import type { ApiOperation } from "@operations/types/operation.js";
 import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.js";
 import { getFormSubmissionAttachment } from "@lib/vault/getFormSubmissionAttachment.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
-import { Readable } from "node:stream";
 import type { FormSubmissionAttachment } from "@lib/vault/types/formSubmission.js";
 
 async function v1(
@@ -46,12 +45,7 @@ async function v1(
       "DownloadResponse",
     );
 
-    const responseAsBuffer = Buffer.from(JSON.stringify(encryptedResponse));
-    const responseAsStream = Readable.from(responseAsBuffer);
-
-    response.setHeader("Content-Type", "application/json; charset=utf-8");
-    response.setHeader("Content-Length", responseAsBuffer.length);
-    responseAsStream.pipe(response);
+    response.json(encryptedResponse);
   } catch (error) {
     switch ((error as Error).constructor) {
       case FormSubmissionNotFoundException:
