@@ -51,7 +51,7 @@ describe("getPublicKey should", () => {
     const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() => getPublicKey("254354365464565461")).rejects.toThrowError(
-      "custom error",
+      customError,
     );
 
     expect(logMessageSpy).toHaveBeenCalledWith(

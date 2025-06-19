@@ -151,7 +151,7 @@ describe("getNewFormSubmissions should", () => {
 
     await expect(
       getNewFormSubmissions("clzamy5qv0000115huc4bh90m", 100),
-    ).rejects.toThrowError("custom error");
+    ).rejects.toThrowError(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

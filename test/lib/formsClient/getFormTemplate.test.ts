@@ -51,7 +51,7 @@ describe("getFormTemplate should", () => {
 
     await expect(() =>
       getFormTemplate("clzamy5qv0000115huc4bh90m"),
-    ).rejects.toThrowError("custom error");
+    ).rejects.toThrowError(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,
