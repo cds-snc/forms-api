@@ -3,10 +3,13 @@ import { getMockReq, getMockRes } from "vitest-mock-express";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptResponse } from "@lib/encryption/encryptResponse.js";
 import { retrieveSubmissionOperationV1 } from "@operations/retrieveSubmission.v1.js";
-import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
+import {
+  AttachmentScanStatus,
+  SubmissionStatus,
+} from "@lib/vault/types/formSubmission.types.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
-import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.js";
+import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 import { getFormSubmissionAttachmentContent } from "@lib/vault/getFormSubmissionAttachmentContent.js";
 
@@ -46,11 +49,11 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("respond with success when form submission with no attachments does exist", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: FormSubmissionStatus.New,
+      status: SubmissionStatus.New,
       confirmationCode: "",
       answers: "",
       checksum: "",
-      submissionAttachments: [],
+      attachments: [],
     });
     getPublicKeyMock.mockResolvedValueOnce("publicKey");
     encryptResponseMock.mockReturnValueOnce({
@@ -99,16 +102,16 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("respond with success when form submission with attachments does exist", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: FormSubmissionStatus.New,
+      status: SubmissionStatus.New,
       confirmationCode: "",
       answers:
         '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
       checksum: "",
-      submissionAttachments: [
+      attachments: [
         {
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
-          scanStatus: "NO_THREATS_FOUND",
+          scanStatus: AttachmentScanStatus.NoThreatsFound,
         },
       ],
     });
@@ -188,19 +191,19 @@ describe("retrieveSubmissionOperation handler should", () => {
 
   it.each([
     {
-      attachmentScanStatus: "NO_THREATS_FOUND",
+      attachmentScanStatus: AttachmentScanStatus.NoThreatsFound,
       isPotentiallyMalicious: false,
     },
     {
-      attachmentScanStatus: "THREATS_FOUND",
+      attachmentScanStatus: AttachmentScanStatus.ThreatsFound,
       isPotentiallyMalicious: true,
     },
     {
-      attachmentScanStatus: "UNSUPPORTED",
+      attachmentScanStatus: AttachmentScanStatus.Unsupported,
       isPotentiallyMalicious: true,
     },
     {
-      attachmentScanStatus: "FAILED",
+      attachmentScanStatus: AttachmentScanStatus.Failed,
       isPotentiallyMalicious: true,
     },
   ])(
@@ -208,12 +211,12 @@ describe("retrieveSubmissionOperation handler should", () => {
     async ({ attachmentScanStatus, isPotentiallyMalicious }) => {
       getFormSubmissionMock.mockResolvedValueOnce({
         createdAt: 0,
-        status: FormSubmissionStatus.New,
+        status: SubmissionStatus.New,
         confirmationCode: "",
         answers:
           '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
         checksum: "",
-        submissionAttachments: [
+        attachments: [
           {
             name: "output.txt",
             path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
@@ -256,16 +259,16 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("pass error to next function when processing fails due to internal error when retrieving submission attachment content", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: FormSubmissionStatus.New,
+      status: SubmissionStatus.New,
       confirmationCode: "",
       answers:
         '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
       checksum: "",
-      submissionAttachments: [
+      attachments: [
         {
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
-          scanStatus: "NO_THREATS_FOUND",
+          scanStatus: AttachmentScanStatus.NoThreatsFound,
         },
       ],
     });
@@ -289,11 +292,11 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("pass error to next function when processing fails due to internal error when retrieving public key", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: FormSubmissionStatus.New,
+      status: SubmissionStatus.New,
       confirmationCode: "",
       answers: "",
       checksum: "",
-      submissionAttachments: [],
+      attachments: [],
     });
     getPublicKeyMock.mockImplementationOnce(() => {
       throw new Error("custom error");

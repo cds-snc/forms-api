@@ -3,15 +3,16 @@ import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { encryptResponse } from "@lib/encryption/encryptResponse.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
-import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.js";
+import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
 import { getFormSubmissionAttachmentContent } from "@lib/vault/getFormSubmissionAttachmentContent.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
-import type {
-  FormSubmission,
-  PartialSubmissionAttachment,
-} from "@lib/vault/types/formSubmission.js";
+import {
+  AttachmentScanStatus,
+  type FormSubmission,
+  type PartialAttachment,
+} from "@lib/vault/types/formSubmission.types.js";
 
-type CompleteFormSubmissionAttachment = PartialSubmissionAttachment & {
+type CompleteFormSubmissionAttachment = PartialAttachment & {
   base64EncodedContent: string;
 };
 
@@ -29,10 +30,8 @@ async function v1(
     const formSubmission = await getFormSubmission(formId, submissionName);
 
     const attachments =
-      formSubmission.submissionAttachments.length > 0
-        ? await getCompleteFormSubmissionAttachments(
-            formSubmission.submissionAttachments,
-          )
+      formSubmission.attachments.length > 0
+        ? await getCompleteFormSubmissionAttachments(formSubmission.attachments)
         : undefined;
 
     const responsePayload = buildJsonResponse(formSubmission, attachments);
@@ -70,7 +69,7 @@ async function v1(
 }
 
 function getCompleteFormSubmissionAttachments(
-  partialAttachments: PartialSubmissionAttachment[],
+  partialAttachments: PartialAttachment[],
 ): Promise<CompleteFormSubmissionAttachment[]> {
   return Promise.all(
     partialAttachments.map((partialAttachment) => {
@@ -105,18 +104,14 @@ function buildJsonResponse(
   });
 }
 
-function isAttachmentPotentiallyMalicious(scanStatus: string): boolean {
+function isAttachmentPotentiallyMalicious(
+  scanStatus: AttachmentScanStatus,
+): boolean {
   switch (scanStatus) {
-    case "NO_THREATS_FOUND":
+    case AttachmentScanStatus.NoThreatsFound:
       return false;
-    case "THREATS_FOUND":
-    case "UNSUPPORTED":
-    case "FAILED":
-      return true;
     default:
-      throw new Error(
-        `Unsupported attachment scan status value. Value = ${scanStatus}.`,
-      );
+      return true;
   }
 }
 

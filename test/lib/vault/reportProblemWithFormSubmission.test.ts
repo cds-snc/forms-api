@@ -9,7 +9,7 @@ import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFor
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@lib/vault/types/exceptions.js";
+} from "@lib/vault/types/exceptions.types.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 

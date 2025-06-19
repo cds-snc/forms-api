@@ -3,8 +3,8 @@ import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "@lib/vault/types/exceptions.js";
-import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
+} from "@lib/vault/types/exceptions.types.js";
+import { SubmissionStatus } from "@lib/vault/types/formSubmission.types.js";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
 import { logMessage } from "@lib/logging/logger.js";
 
@@ -22,7 +22,7 @@ export async function confirmFormSubmission(
 
     const formSubmission = await getFormSubmission(formId, submissionName);
 
-    if (formSubmission.status === FormSubmissionStatus.Confirmed) {
+    if (formSubmission.status === SubmissionStatus.Confirmed) {
       throw new FormSubmissionAlreadyConfirmedException();
     }
 

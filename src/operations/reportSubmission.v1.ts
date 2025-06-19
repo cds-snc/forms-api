@@ -9,7 +9,7 @@ import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@lib/vault/types/exceptions.js";
+} from "@lib/vault/types/exceptions.types.js";
 import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { logMessage } from "@lib/logging/logger.js";

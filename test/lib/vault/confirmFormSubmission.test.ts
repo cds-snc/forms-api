@@ -10,7 +10,7 @@ import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionIncorrectConfirmationCodeException,
   FormSubmissionNotFoundException,
-} from "@lib/vault/types/exceptions.js";
+} from "@lib/vault/types/exceptions.types.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 

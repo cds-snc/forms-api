@@ -2,10 +2,10 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { getFormSubmission } from "@lib/vault/getFormSubmission.js";
-import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
+import { SubmissionStatus } from "@lib/vault/types/formSubmission.types.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
-import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.js";
+import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 
@@ -26,7 +26,7 @@ describe("getFormSubmission should", () => {
 
     expect(formSubmission).toEqual(
       expect.objectContaining({
-        status: FormSubmissionStatus.New,
+        status: SubmissionStatus.New,
       }),
     );
   });

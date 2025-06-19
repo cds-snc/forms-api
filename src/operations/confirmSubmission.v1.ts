@@ -3,7 +3,7 @@ import {
   FormSubmissionAlreadyConfirmedException,
   FormSubmissionNotFoundException,
   FormSubmissionIncorrectConfirmationCodeException,
-} from "@lib/vault/types/exceptions.js";
+} from "@lib/vault/types/exceptions.types.js";
 import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
