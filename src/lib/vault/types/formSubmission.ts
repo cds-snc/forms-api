@@ -10,16 +10,17 @@ export enum FormSubmissionStatus {
   Problem = "Problem",
 }
 
+export type PartialSubmissionAttachment = {
+  name: string;
+  path: string;
+  scanStatus: string;
+};
+
 export interface FormSubmission {
   createdAt: number;
   status: FormSubmissionStatus;
   confirmationCode: string;
   answers: string;
   checksum: string;
+  submissionAttachments: PartialSubmissionAttachment[];
 }
-
-export type FormSubmissionAttachment = {
-  name: string;
-  base64EncodedContent: string;
-  isPotentiallyMalicious: boolean;
-};

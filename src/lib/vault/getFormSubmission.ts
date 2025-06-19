@@ -18,7 +18,7 @@ export async function getFormSubmission(
           TableName: "Vault",
           Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
           ProjectionExpression:
-            "CreatedAt,#statusCreatedAtKey,ConfirmationCode,FormSubmission,FormSubmissionHash",
+            "CreatedAt,#statusCreatedAtKey,ConfirmationCode,FormSubmission,FormSubmissionHash,SubmissionAttachments",
           ExpressionAttributeNames: {
             "#statusCreatedAtKey": "Status#CreatedAt",
           },
@@ -51,6 +51,9 @@ function formSubmissionFromDynamoDbResponse(
     confirmationCode: response.ConfirmationCode as string,
     answers: response.FormSubmission as string,
     checksum: response.FormSubmissionHash as string,
+    submissionAttachments: response.SubmissionAttachments
+      ? JSON.parse(response.SubmissionAttachments as string)
+      : [],
   };
 }
 

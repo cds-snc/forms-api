@@ -8,7 +8,7 @@ import { FormSubmissionStatus } from "@lib/vault/types/formSubmission.js";
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
-import { getFormSubmissionAttachment } from "@lib/vault/getFormSubmissionAttachment.js";
+import { getFormSubmissionAttachmentContent } from "@lib/vault/getFormSubmissionAttachmentContent.js";
 
 vi.mock("@lib/formsClient/getPublicKey");
 const getPublicKeyMock = vi.mocked(getPublicKey);
@@ -16,8 +16,10 @@ const getPublicKeyMock = vi.mocked(getPublicKey);
 vi.mock("@lib/vault/getFormSubmission");
 const getFormSubmissionMock = vi.mocked(getFormSubmission);
 
-vi.mock("@lib/vault/getFormSubmissionAttachment");
-const getFormSubmissionAttachmentMock = vi.mocked(getFormSubmissionAttachment);
+vi.mock("@lib/vault/getFormSubmissionAttachmentContent");
+const getFormSubmissionAttachmentContentMock = vi.mocked(
+  getFormSubmissionAttachmentContent,
+);
 
 vi.mock("@lib/encryption/encryptResponse");
 const encryptResponseMock = vi.mocked(encryptResponse);
@@ -48,6 +50,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       confirmationCode: "",
       answers: "",
       checksum: "",
+      submissionAttachments: [],
     });
     getPublicKeyMock.mockResolvedValueOnce("publicKey");
     encryptResponseMock.mockReturnValueOnce({
@@ -70,10 +73,16 @@ describe("retrieveSubmissionOperation handler should", () => {
       encryptedResponses: "encryptedResponses",
     });
 
-    expect(getFormSubmissionAttachmentMock).not.toHaveBeenCalled();
+    expect(getFormSubmissionAttachmentContentMock).not.toHaveBeenCalled();
     expect(encryptResponseMock).toHaveBeenCalledWith(
       "publicKey",
-      '{"createdAt":0,"status":"New","confirmationCode":"","answers":"","checksum":""}',
+      JSON.stringify({
+        createdAt: 0,
+        status: "New",
+        confirmationCode: "",
+        answers: "",
+        checksum: "",
+      }),
     );
 
     expect(auditLogSpy).toHaveBeenNthCalledWith(
@@ -87,21 +96,32 @@ describe("retrieveSubmissionOperation handler should", () => {
     );
   });
 
-  it("retrieve submission attachments when they are referenced in submission answers", async () => {
+  it("respond with success when form submission with attachments does exist", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
       status: FormSubmissionStatus.New,
       confirmationCode: "",
       answers:
-        '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt',
+        '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
       checksum: "",
+      submissionAttachments: [
+        {
+          name: "output.txt",
+          path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
+          scanStatus: "NO_THREATS_FOUND",
+        },
+      ],
     });
-    getFormSubmissionAttachmentMock.mockResolvedValueOnce({
-      name: "fileName",
-      base64EncodedContent: "fileContent",
-      isPotentiallyMalicious: false,
+    getFormSubmissionAttachmentContentMock.mockResolvedValueOnce({
+      base64EncodedContent: "SGVsbG8gV29ybGQ=",
     });
     getPublicKeyMock.mockResolvedValueOnce("publicKey");
+    encryptResponseMock.mockReturnValueOnce({
+      encryptedKey: "encryptedKey",
+      encryptedNonce: "encryptedNonce",
+      encryptedAuthTag: "encryptedAuthTag",
+      encryptedResponses: "encryptedResponses",
+    });
 
     await retrieveSubmissionOperationV1.handler(
       requestMock,
@@ -109,10 +129,41 @@ describe("retrieveSubmissionOperation handler should", () => {
       nextMock,
     );
 
-    expect(getFormSubmissionAttachmentMock).toHaveBeenCalled();
+    expect(responseMock.json).toHaveBeenCalledWith({
+      encryptedKey: "encryptedKey",
+      encryptedNonce: "encryptedNonce",
+      encryptedAuthTag: "encryptedAuthTag",
+      encryptedResponses: "encryptedResponses",
+    });
+
+    expect(getFormSubmissionAttachmentContentMock).toHaveBeenCalled();
     expect(encryptResponseMock).toHaveBeenCalledWith(
       "publicKey",
-      '{"createdAt":0,"status":"New","confirmationCode":"","answers":"{\\"1\\":\\"Test1\\",\\"2\\":\\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt","checksum":"","attachments":[{"name":"fileName","base64EncodedContent":"fileContent","isPotentiallyMalicious":false}]}',
+      JSON.stringify({
+        createdAt: 0,
+        status: "New",
+        confirmationCode: "",
+        answers:
+          '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
+        checksum: "",
+        attachments: [
+          {
+            name: "output.txt",
+            base64EncodedContent: "SGVsbG8gV29ybGQ=",
+            isPotentiallyMalicious: false,
+          },
+        ],
+      }),
+    );
+
+    expect(auditLogSpy).toHaveBeenNthCalledWith(
+      1,
+      "clzsn6tao000611j50dexeob0",
+      {
+        id: "01-08-a571",
+        type: "Response",
+      },
+      "DownloadResponse",
     );
   });
 
@@ -135,16 +186,90 @@ describe("retrieveSubmissionOperation handler should", () => {
     );
   });
 
-  it("pass error to next function when processing fails due to internal error when retrieving submission attachments", async () => {
+  it.each([
+    {
+      attachmentScanStatus: "NO_THREATS_FOUND",
+      isPotentiallyMalicious: false,
+    },
+    {
+      attachmentScanStatus: "THREATS_FOUND",
+      isPotentiallyMalicious: true,
+    },
+    {
+      attachmentScanStatus: "UNSUPPORTED",
+      isPotentiallyMalicious: true,
+    },
+    {
+      attachmentScanStatus: "FAILED",
+      isPotentiallyMalicious: true,
+    },
+  ])(
+    "properly detect attachment maliciousness depending on scan status (attachmentScanStatus: %s / isPotentiallyMalicious: %s)",
+    async ({ attachmentScanStatus, isPotentiallyMalicious }) => {
+      getFormSubmissionMock.mockResolvedValueOnce({
+        createdAt: 0,
+        status: FormSubmissionStatus.New,
+        confirmationCode: "",
+        answers:
+          '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
+        checksum: "",
+        submissionAttachments: [
+          {
+            name: "output.txt",
+            path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
+            scanStatus: attachmentScanStatus,
+          },
+        ],
+      });
+      getFormSubmissionAttachmentContentMock.mockResolvedValueOnce({
+        base64EncodedContent: "SGVsbG8gV29ybGQ=",
+      });
+      getPublicKeyMock.mockResolvedValueOnce("publicKey");
+
+      await retrieveSubmissionOperationV1.handler(
+        requestMock,
+        responseMock,
+        nextMock,
+      );
+
+      expect(encryptResponseMock).toHaveBeenCalledWith(
+        "publicKey",
+        JSON.stringify({
+          createdAt: 0,
+          status: "New",
+          confirmationCode: "",
+          answers:
+            '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
+          checksum: "",
+          attachments: [
+            {
+              name: "output.txt",
+              base64EncodedContent: "SGVsbG8gV29ybGQ=",
+              isPotentiallyMalicious,
+            },
+          ],
+        }),
+      );
+    },
+  );
+
+  it("pass error to next function when processing fails due to internal error when retrieving submission attachment content", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
       status: FormSubmissionStatus.New,
       confirmationCode: "",
       answers:
-        '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt',
+        '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
       checksum: "",
+      submissionAttachments: [
+        {
+          name: "output.txt",
+          path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
+          scanStatus: "NO_THREATS_FOUND",
+        },
+      ],
     });
-    getFormSubmissionAttachmentMock.mockRejectedValueOnce(
+    getFormSubmissionAttachmentContentMock.mockRejectedValueOnce(
       new Error("custom error"),
     );
 
@@ -168,6 +293,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       confirmationCode: "",
       answers: "",
       checksum: "",
+      submissionAttachments: [],
     });
     getPublicKeyMock.mockImplementationOnce(() => {
       throw new Error("custom error");
