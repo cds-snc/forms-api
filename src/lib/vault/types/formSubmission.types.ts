@@ -11,10 +11,10 @@ export enum SubmissionStatus {
 }
 
 export enum AttachmentScanStatus {
-  NoThreatsFound = 0,
-  ThreatsFound = 1,
-  Unsupported = 2,
-  Failed = 3,
+  NoThreatsFound = "NoThreatsFound",
+  ThreatsFound = "ThreatsFound",
+  Unsupported = "Unsupported",
+  Failed = "Failed",
 }
 
 export type PartialAttachment = {
