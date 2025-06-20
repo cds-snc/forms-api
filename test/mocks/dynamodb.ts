@@ -9,5 +9,6 @@ export function buildMockedVaultItem(
     "Status#CreatedAt": `${status}#${createdAt}`,
     ConfirmationCode: confirmationCode,
     FormSubmission: '{"1":"Test response"}',
+    FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
   };
 }

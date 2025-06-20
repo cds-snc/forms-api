@@ -1,5 +1,4 @@
 import { SignJWT } from "jose";
-import axios from "axios";
 import { createPrivateKey } from "node:crypto";
 import {
   ZITADEL_APPLICATION_KEY,
@@ -7,6 +6,7 @@ import {
   ZITADEL_URL,
 } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
+import got from "got";
 
 export type AccessTokenIntrospectionResult = {
   active: boolean;
@@ -62,22 +62,20 @@ function introspectOpaqueToken(
   jwtSignedToken: string,
   opaqueToken: string,
 ): Promise<AccessTokenIntrospectionResult> {
-  return axios
-    .post<AccessTokenIntrospectionResult>(
-      `${ZITADEL_URL}/oauth/v2/introspect`,
-      {
+  return got
+    .post(`${ZITADEL_URL}/oauth/v2/introspect`, {
+      http2: true,
+      timeout: { request: 5000 },
+      retry: { limit: 1 },
+      headers: {
+        Host: ZITADEL_TRUSTED_DOMAIN, // This is required by Zitadel to accept requests. See https://zitadel.com/docs/self-hosting/manage/custom-domain#standard-config
+      },
+      form: {
         client_assertion_type:
           "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
         client_assertion: jwtSignedToken,
         token: opaqueToken,
       },
-      {
-        headers: {
-          Host: ZITADEL_TRUSTED_DOMAIN, // This is required by Zitadel to accept requests. See https://zitadel.com/docs/self-hosting/manage/custom-domain#standard-config
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        timeout: 5000,
-      },
-    )
-    .then((response) => response.data);
+    })
+    .json<AccessTokenIntrospectionResult>();
 }

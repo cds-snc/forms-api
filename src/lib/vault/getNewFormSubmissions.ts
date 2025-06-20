@@ -1,7 +1,8 @@
 import { QueryCommand, type QueryCommandOutput } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
-import type { NewFormSubmission } from "@lib/vault/types/formSubmission.js";
+import type { NewFormSubmission } from "@lib/vault/types/formSubmission.types.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { mapNewFormSubmissionFromDynamoDbResponse } from "@lib/vault/mappers/formSubmission.mapper.js";
 
 export async function getNewFormSubmissions(
   formId: string,
@@ -34,7 +35,7 @@ export async function getNewFormSubmissions(
         );
 
       newFormSubmissions = newFormSubmissions.concat(
-        response.Items?.map(newFormSubmissionFromDynamoDbResponse) ?? [],
+        response.Items?.map(mapNewFormSubmissionFromDynamoDbResponse) ?? [],
       );
 
       if (newFormSubmissions.length >= limit) {
@@ -53,13 +54,4 @@ export async function getNewFormSubmissions(
 
     throw error;
   }
-}
-
-function newFormSubmissionFromDynamoDbResponse(
-  response: Record<string, unknown>,
-): NewFormSubmission {
-  return {
-    name: response.Name as string,
-    createdAt: response.CreatedAt as number,
-  };
 }

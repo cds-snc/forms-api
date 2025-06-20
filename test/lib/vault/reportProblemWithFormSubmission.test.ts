@@ -9,7 +9,7 @@ import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFor
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@lib/vault/types/exceptions.js";
+} from "@lib/vault/types/exceptions.types.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
 
@@ -95,7 +95,7 @@ describe("reportProblemWithFormSubmission should", () => {
         "clzamy5qv0000115huc4bh90m",
         "01-08-a571",
       ),
-    ).rejects.toThrowError("custom error");
+    ).rejects.toThrowError(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

@@ -4,7 +4,7 @@ import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFor
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
-} from "@lib/vault/types/exceptions.js";
+} from "@lib/vault/types/exceptions.types.js";
 import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupportAboutFormSubmissionProblem.js";
 import { reportSubmissionOperationV1 } from "@operations/reportSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>

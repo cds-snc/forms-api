@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
+import type { FormTemplate } from "@lib/formsClient/types/formTemplate.js";
 
 async function v1(
   request: Request,
@@ -19,9 +20,11 @@ async function v1(
       return;
     }
 
+    const responsePayload = buildResponse(formTemplate);
+
     auditLog(serviceUserId, { type: "Form", id: formId }, "RetrieveTemplate");
 
-    response.json(formTemplate.jsonConfig);
+    response.json(responsePayload);
   } catch (error) {
     next(
       new Error(
@@ -30,6 +33,10 @@ async function v1(
       ),
     );
   }
+}
+
+function buildResponse(formTemplate: FormTemplate): Record<string, unknown> {
+  return formTemplate.jsonConfig;
 }
 
 export const retrieveTemplateOperationV1: ApiOperation = {

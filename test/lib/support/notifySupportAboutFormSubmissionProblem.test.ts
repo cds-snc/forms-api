@@ -67,7 +67,7 @@ Here is my problem<br/>
         "en",
         EnvironmentMode.Production,
       ),
-    ).rejects.toThrowError("custom error");
+    ).rejects.toThrowError(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

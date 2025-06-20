@@ -5,6 +5,7 @@ process.env = {
   ENVIRONMENT_MODE: "production",
   FRESHDESK_API_KEY: "test",
   REDIS_URL: "test",
+  VAULT_FILE_STORAGE_BUCKET_NAME: "bucket",
   ZITADEL_TRUSTED_DOMAIN: "http://test",
   ZITADEL_URL: "http://test",
   ZITADEL_APPLICATION_KEY: JSON.stringify({
@@ -24,13 +25,13 @@ vi.mock("./src/lib/logging/auditLogs", () => ({
   auditLog: vi.fn(),
 }));
 
-vi.mock("axios", () => {
-  return {
-    default: {
-      post: vi.fn().mockResolvedValue({}),
-    },
-  };
-});
+vi.mock("got", () => ({
+  default: {
+    post: vi.fn().mockReturnValue({
+      json: vi.fn().mockResolvedValue({}),
+    }),
+  },
+}));
 
 vi.mock("node:crypto", async (importOriginal) => {
   const original = (await importOriginal()) as object;

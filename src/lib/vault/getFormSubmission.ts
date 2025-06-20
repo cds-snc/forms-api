@@ -1,15 +1,14 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
-import {
-  type FormSubmission,
-  FormSubmissionStatus,
-} from "@lib/vault/types/formSubmission.js";
+import type { FormSubmission } from "@lib/vault/types/formSubmission.types.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
+import { mapFormSubmissionFromDynamoDbResponse } from "@lib/vault/mappers/formSubmission.mapper.js";
 
 export async function getFormSubmission(
   formId: string,
   submissionName: string,
-): Promise<FormSubmission | undefined> {
+): Promise<FormSubmission> {
   try {
     const response =
       await AwsServicesConnector.getInstance().dynamodbClient.send(
@@ -17,7 +16,7 @@ export async function getFormSubmission(
           TableName: "Vault",
           Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
           ProjectionExpression:
-            "CreatedAt,#statusCreatedAtKey,ConfirmationCode,FormSubmission,FormSubmissionHash",
+            "CreatedAt,#statusCreatedAtKey,ConfirmationCode,FormSubmission,FormSubmissionHash,SubmissionAttachments",
           ExpressionAttributeNames: {
             "#statusCreatedAtKey": "Status#CreatedAt",
           },
@@ -25,10 +24,10 @@ export async function getFormSubmission(
       );
 
     if (response.Item === undefined) {
-      return undefined;
+      throw new FormSubmissionNotFoundException();
     }
 
-    return formSubmissionFromDynamoDbResponse(response.Item);
+    return mapFormSubmissionFromDynamoDbResponse(response.Item);
   } catch (error) {
     logMessage.info(
       error,
@@ -36,40 +35,5 @@ export async function getFormSubmission(
     );
 
     throw error;
-  }
-}
-
-function formSubmissionFromDynamoDbResponse(
-  response: Record<string, unknown>,
-): FormSubmission {
-  return {
-    createdAt: response.CreatedAt as number,
-    status: formSubmissionStatusFromStatusCreatedAt(
-      response["Status#CreatedAt"] as string,
-    ),
-    confirmationCode: response.ConfirmationCode as string,
-    answers: response.FormSubmission as string,
-    checksum: response.FormSubmissionHash as string,
-  };
-}
-
-function formSubmissionStatusFromStatusCreatedAt(
-  statusCreatedAtValue: string,
-): FormSubmissionStatus {
-  const status = statusCreatedAtValue.split("#")[0];
-
-  switch (status) {
-    case "New":
-      return FormSubmissionStatus.New;
-    case "Downloaded":
-      return FormSubmissionStatus.Downloaded;
-    case "Confirmed":
-      return FormSubmissionStatus.Confirmed;
-    case "Problem":
-      return FormSubmissionStatus.Problem;
-    default:
-      throw new Error(
-        `Unsupported Status#CreatedAt value. Value = ${statusCreatedAtValue}.`,
-      );
   }
 }
