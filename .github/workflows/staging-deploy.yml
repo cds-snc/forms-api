@@ -49,7 +49,7 @@ jobs:
           image: "${{ env.REGISTRY }}:${{ github.sha }}"
 
       - name: Create the new ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@538b32884c2bf327057c6805f0315e5ee92102cc # v2.3.2
+        uses: aws-actions/amazon-ecs-deploy-task-definition@f7b2b96b7fe1b20b452641919c0559bcc19ab8f9 # v2.3.3
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           cluster: ${{ env.CLUSTER_NAME }}
