@@ -375,6 +375,7 @@ Pour en savoir plus, voir ci-dessous.
   <td> 
   Le renseignement “Form ID” est incorrect ou n’a pas pu être trouvé.
   </td>
+</tr>
 </table>
 
 ---
