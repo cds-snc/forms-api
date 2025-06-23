@@ -378,6 +378,8 @@ Learn more below.
   </td>
 </table>
 
+---
+
 ##### To set and customize unique Question IDs
 
 The Question ID is a unique value that allows you to consistently refer to a form element so that it can be matched across republished form versions, or other data structures and systems. This can provide a more scannable and useful way to identify and reference a question field. For example, a standard way to reference all first name questions or phone numbers across forms, so they land in the right place without having to be rewired individually.
