@@ -370,8 +370,15 @@ Pour en savoir plus, voir ci-dessous.
 {
     "error": "Form template does not exist"
 }
+</code>
+  </td> 
+  <td> 
+  Le renseignement “Form ID” est incorrect ou n’a pas pu être trouvé.
+  </td>
+</tr>
+</table>
 
-  #### Pour définir et personnaliser des identifiants de question uniques
+#### Pour définir et personnaliser des identifiants de question uniques
 
 L'identifiant de la question est une valeur unique qui vous permet de faire référence de manière cohérente à un élément de formulaire afin qu'il puisse être mis en correspondance avec des versions de formulaire republiées ou d'autres structures et systèmes de données. Il peut s'agir d'un moyen plus facile et plus utile d'identifier et de se référer à un champ de question. Par exemple, une manière standard de se reférer à toutes les questions sur le prénom ou les numéros de téléphone dans tous les formulaires, de sorte qu'ils se retrouvent au bon endroit sans avoir à être tracées individuellement.
 
@@ -392,10 +399,3 @@ Les balises supplémentaires sont des étiquettes flexibles qui vous permettent 
 2. Dans « Modifier », sélectionnez une question et cliquez sur « Plus ».
 3. Dans la fenêtre modale, faites défiler vers le bas jusqu'à « Personnaliser les attributs de données de l'API ».
 4. Ajoutez plusieurs balises à une question pour marquer les données de manière utile.
-</code>
-  </td> 
-  <td> 
-  Le renseignement “Form ID” est incorrect ou n’a pas pu être trouvé.
-  </td>
-</tr>
-</table>
