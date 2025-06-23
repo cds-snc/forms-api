@@ -295,7 +295,7 @@ L'identifiant de la question est une valeur unique qui vous permet de faire réf
 3. Dans la fenêtre modale, faites défiler vers le bas jusqu'à « Personnaliser les attributs de données de l'API ».
 4. Modifiez l'identifiant de la question avec une valeur unique de votre choix.
 
-**Pour étiqueter et organiser les données avec des balises supplémentaires**
+#### Pour étiqueter et organiser les données avec des balises supplémentaires
 
 Les balises supplémentaires sont des étiquettes flexibles qui vous permettent d'ajouter des métadonnées aux éléments du formulaire afin que les questions connexes puissent être marquées, regroupées ou catégorisées, ce qui permet de lire, de rechercher, de trier et d'organiser les données.
 
