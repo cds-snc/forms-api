@@ -287,7 +287,7 @@ To report a problem include a message formatted like the one below in the HTTP P
 
 ### Getting form questions
 
-##### To set and customize unique Question IDs
+#### To set and customize unique Question IDs
 
 The Question ID is a unique value that allows you to consistently refer to a form element so that it can be matched across republished form versions, or other data structures and systems. This can provide a more scannable and useful way to identify and reference a question field. For example, a standard way to reference all first name questions or phone numbers across forms, so they land in the right place without having to be rewired individually.
 
@@ -298,9 +298,16 @@ The Question ID is a unique value that allows you to consistently refer to a for
 3. In the modal, scroll down to “Customize API data attributes”.
 4. Modify the Question ID to a unique value of your choice.
 
-**To label and organize data with Additional tags**
+#### To label and organize data with Additional tags
 
 The additional tags are flexible labels that allow you to add metadata to form elements so that related questions can be marked, grouped, or categorized allowing data to be read, searched, sorted, and transformed by machines more meaningfully and easily.
+
+**GC Forms gives you the option to configure multiple tags:**
+
+1. Create a new form or navigate to an existing form in GC Forms.
+2. In “Edit”, select a question and click “More”.
+3. In the modal, scroll down to “Customize API data attributes”.
+4. Add multiple tags to a question to mark data in a helpful way.
 
 ##### HTTP request
 
@@ -393,10 +400,3 @@ Learn more below.
   </td>
 </tr>
 </table>
-
-**GC Forms gives you the option to configure multiple tags:**
-
-1. Create a new form or navigate to an existing form in GC Forms.
-2. In “Edit”, select a question and click “More”.
-3. In the modal, scroll down to “Customize API data attributes”.
-4. Add multiple tags to a question to mark data in a helpful way.
