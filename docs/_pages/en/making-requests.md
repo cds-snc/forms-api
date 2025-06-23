@@ -376,6 +376,7 @@ Learn more below.
   <td> 
   “Form ID” is incorrect or could not be found.
   </td>
+</tr>
 </table>
 
 ---
