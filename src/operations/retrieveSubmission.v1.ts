@@ -4,7 +4,7 @@ import { encryptResponse } from "@lib/encryption/encryptResponse.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
-import { getFormSubmissionAttachmentContent } from "@lib/vault/getFormSubmissionAttachmentContent.js";
+import { getFormSubmissionAttachmentDownloadLink } from "@lib/vault/getFormSubmissionAttachmentDownloadLink.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 import {
   AttachmentScanStatus,
@@ -12,8 +12,8 @@ import {
   type PartialAttachment,
 } from "@lib/vault/types/formSubmission.types.js";
 
-type CompleteFormSubmissionAttachment = PartialAttachment & {
-  base64EncodedContent: string;
+type CompleteAttachment = PartialAttachment & {
+  downloadLink: string;
 };
 
 async function v1(
@@ -70,21 +70,21 @@ async function v1(
 
 function getCompleteFormSubmissionAttachments(
   partialAttachments: PartialAttachment[],
-): Promise<CompleteFormSubmissionAttachment[]> {
+): Promise<CompleteAttachment[]> {
   return Promise.all(
     partialAttachments.map((partialAttachment) => {
-      return getFormSubmissionAttachmentContent(partialAttachment.path).then(
-        ({ base64EncodedContent }) => {
-          return { ...partialAttachment, base64EncodedContent };
-        },
-      );
+      return getFormSubmissionAttachmentDownloadLink(
+        partialAttachment.path,
+      ).then((downloadLink) => {
+        return { ...partialAttachment, downloadLink };
+      });
     }),
   );
 }
 
 function buildJsonResponse(
   formSubmission: FormSubmission,
-  attachments: CompleteFormSubmissionAttachment[] | undefined,
+  attachments: CompleteAttachment[] | undefined,
 ): string {
   return JSON.stringify({
     createdAt: formSubmission.createdAt,
@@ -95,7 +95,7 @@ function buildJsonResponse(
     ...(attachments && {
       attachments: attachments.map((attachment) => ({
         name: attachment.name,
-        base64EncodedContent: attachment.base64EncodedContent,
+        downloadLink: attachment.downloadLink,
         isPotentiallyMalicious: isAttachmentPotentiallyMalicious(
           attachment.scanStatus,
         ),
