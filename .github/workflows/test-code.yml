@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: "22.17.1"
+          node-version: "22.18.0"
 
       - name: PNPM update to v9.15.5
         run: npm i -g corepack@latest && corepack enable pnpm && corepack use pnpm@9.15.5
