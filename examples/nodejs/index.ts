@@ -1,6 +1,6 @@
 import readline from "node:readline";
-import filesystem from "node:fs/promises";
 import type {
+  Attachment,
   FormSubmission,
   FormSubmissionProblem,
   PrivateApiKey,
@@ -10,6 +10,10 @@ import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
 import { verifyIntegrity } from "./formSubmissionIntegrityVerifier.js";
 import path from "node:path";
+import { createWriteStream } from "node:fs";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import axios from "axios";
+import type { Readable } from "node:stream";
 
 const IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca";
 const PROJECT_IDENTIFIER = "284778202772022819";
@@ -106,7 +110,9 @@ async function runRetrieveDecryptAndConfirmFormSubmissions(
       const endGetFormSubmissionTimer = performance.now();
 
       console.info(
-        `\nForm submission retrieved in ${Math.round(endGetFormSubmissionTimer - startGetFormSubmissionTimer)} ms`,
+        `\nForm submission retrieved in ${Math.round(
+          endGetFormSubmissionTimer - startGetFormSubmissionTimer,
+        )} ms`,
       );
 
       console.info("\nEncrypted submission:");
@@ -134,7 +140,9 @@ async function runRetrieveDecryptAndConfirmFormSubmissions(
       );
 
       console.info(
-        `\nIntegrity verification result: ${integrityVerificationResult ? "OK" : "INVALID"}`,
+        `\nIntegrity verification result: ${
+          integrityVerificationResult ? "OK" : "INVALID"
+        }`,
       );
 
       await saveSubmissionLocally(newFormSubmission.name, formSubmission);
@@ -165,36 +173,61 @@ async function saveSubmissionLocally(
 
   const submissionFolderPath = path.join("./", submissionName);
 
-  await filesystem.mkdir(submissionFolderPath, {
+  await mkdir(submissionFolderPath, {
     recursive: true,
   });
 
-  await filesystem.writeFile(
-    path.join(`./${submissionName}`, "answers.json"),
+  await writeFile(
+    path.join(submissionFolderPath, "answers.json"),
     submission.answers,
   );
 
   if (submission.attachments) {
     console.info("\nSaving submission attachments...\n");
 
-    for (const attachment of submission.attachments) {
-      const attachmentBuffer = Buffer.from(
-        attachment.base64EncodedContent,
-        "base64",
-      );
-
-      await filesystem.writeFile(
-        path.join(`./${submissionName}`, attachment.name),
-        attachmentBuffer,
-      );
-
-      console.info(
-        `Submission attachment '${attachment.name}' has been saved ${attachment.isPotentiallyMalicious ? "(flagged as potentially malicious)" : ""}`,
-      );
-    }
+    await Promise.all(
+      submission.attachments.map((attachment) =>
+        downloadAndSaveAttachment(attachment, submissionFolderPath),
+      ),
+    );
   }
 
   console.info(`\nSubmission saved in folder named '${submissionFolderPath}'`);
+}
+
+async function downloadAndSaveAttachment(
+  attachment: Attachment,
+  submissionFolderPath: string,
+): Promise<void> {
+  return axios
+    .get<Readable>(attachment.downloadLink, { responseType: "stream" })
+    .then((response) => {
+      const writableStream = createWriteStream(
+        path.join(submissionFolderPath, attachment.name),
+      );
+
+      return new Promise<void>((resolve, reject) => {
+        writableStream.on("finish", resolve);
+        writableStream.on("error", reject);
+
+        response.data.pipe(writableStream);
+      });
+    })
+    .then(() => {
+      console.info(
+        `Submission attachment '${attachment.name}' has been saved ${
+          attachment.isPotentiallyMalicious
+            ? "(flagged as potentially malicious)"
+            : ""
+        }`,
+      );
+    })
+    .catch((error) => {
+      throw new Error(
+        `Failed to download and save submission attachment ${attachment.name}`,
+        { cause: error },
+      );
+    });
 }
 
 async function runReportProblemWithFormSubmission(
@@ -240,8 +273,7 @@ async function runReportProblemWithFormSubmission(
 }
 
 function loadPrivateApiKey(): Promise<PrivateApiKey> {
-  return filesystem
-    .readdir(".")
+  return readdir(".")
     .then((files) => {
       const validFiles = files.filter((fileName) =>
         fileName.endsWith("_private_api_key.json"),
@@ -256,7 +288,7 @@ function loadPrivateApiKey(): Promise<PrivateApiKey> {
       return validFiles[0];
     })
     .then((privateApiKeyFileName) => {
-      return filesystem.readFile(`./${privateApiKeyFileName}`, {
+      return readFile(`./${privateApiKeyFileName}`, {
         encoding: "utf8",
       });
     })
