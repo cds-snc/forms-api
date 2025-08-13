@@ -11,7 +11,7 @@ import {
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
-import { getFormSubmissionAttachmentContent } from "@lib/vault/getFormSubmissionAttachmentContent.js";
+import { getFormSubmissionAttachmentDownloadLink } from "@lib/vault/getFormSubmissionAttachmentDownloadLink.js";
 
 vi.mock("@lib/formsClient/getPublicKey");
 const getPublicKeyMock = vi.mocked(getPublicKey);
@@ -19,9 +19,9 @@ const getPublicKeyMock = vi.mocked(getPublicKey);
 vi.mock("@lib/vault/getFormSubmission");
 const getFormSubmissionMock = vi.mocked(getFormSubmission);
 
-vi.mock("@lib/vault/getFormSubmissionAttachmentContent");
-const getFormSubmissionAttachmentContentMock = vi.mocked(
-  getFormSubmissionAttachmentContent,
+vi.mock("@lib/vault/getFormSubmissionAttachmentDownloadLink");
+const getFormSubmissionAttachmentDownloadLinkMock = vi.mocked(
+  getFormSubmissionAttachmentDownloadLink,
 );
 
 vi.mock("@lib/encryption/encryptResponse");
@@ -76,7 +76,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       encryptedResponses: "encryptedResponses",
     });
 
-    expect(getFormSubmissionAttachmentContentMock).not.toHaveBeenCalled();
+    expect(getFormSubmissionAttachmentDownloadLinkMock).not.toHaveBeenCalled();
     expect(encryptResponseMock).toHaveBeenCalledWith(
       "publicKey",
       JSON.stringify({
@@ -115,9 +115,9 @@ describe("retrieveSubmissionOperation handler should", () => {
         },
       ],
     });
-    getFormSubmissionAttachmentContentMock.mockResolvedValueOnce({
-      base64EncodedContent: "SGVsbG8gV29ybGQ=",
-    });
+    getFormSubmissionAttachmentDownloadLinkMock.mockResolvedValueOnce(
+      "https://download-link",
+    );
     getPublicKeyMock.mockResolvedValueOnce("publicKey");
     encryptResponseMock.mockReturnValueOnce({
       encryptedKey: "encryptedKey",
@@ -139,7 +139,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       encryptedResponses: "encryptedResponses",
     });
 
-    expect(getFormSubmissionAttachmentContentMock).toHaveBeenCalled();
+    expect(getFormSubmissionAttachmentDownloadLinkMock).toHaveBeenCalled();
     expect(encryptResponseMock).toHaveBeenCalledWith(
       "publicKey",
       JSON.stringify({
@@ -152,7 +152,7 @@ describe("retrieveSubmissionOperation handler should", () => {
         attachments: [
           {
             name: "output.txt",
-            base64EncodedContent: "SGVsbG8gV29ybGQ=",
+            downloadLink: "https://download-link",
             isPotentiallyMalicious: false,
           },
         ],
@@ -224,9 +224,9 @@ describe("retrieveSubmissionOperation handler should", () => {
           },
         ],
       });
-      getFormSubmissionAttachmentContentMock.mockResolvedValueOnce({
-        base64EncodedContent: "SGVsbG8gV29ybGQ=",
-      });
+      getFormSubmissionAttachmentDownloadLinkMock.mockResolvedValueOnce(
+        "https://download-link",
+      );
       getPublicKeyMock.mockResolvedValueOnce("publicKey");
 
       await retrieveSubmissionOperationV1.handler(
@@ -247,7 +247,7 @@ describe("retrieveSubmissionOperation handler should", () => {
           attachments: [
             {
               name: "output.txt",
-              base64EncodedContent: "SGVsbG8gV29ybGQ=",
+              downloadLink: "https://download-link",
               isPotentiallyMalicious,
             },
           ],
@@ -272,7 +272,7 @@ describe("retrieveSubmissionOperation handler should", () => {
         },
       ],
     });
-    getFormSubmissionAttachmentContentMock.mockRejectedValueOnce(
+    getFormSubmissionAttachmentDownloadLinkMock.mockRejectedValueOnce(
       new Error("custom error"),
     );
 

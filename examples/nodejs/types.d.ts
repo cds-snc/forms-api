@@ -26,7 +26,7 @@ export enum FormSubmissionStatus {
 
 export type Attachment = {
   name: string;
-  base64EncodedContent: string;
+  downloadLink: string;
   isPotentiallyMalicious: boolean;
 };
 
