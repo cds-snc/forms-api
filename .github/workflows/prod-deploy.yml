@@ -41,7 +41,7 @@ jobs:
 
       - name: Update ECS task image
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@64aefa8f68c9083d24d230e3099d046d5964bcba # v1.7.5
+        uses: aws-actions/amazon-ecs-render-task-definition@5cb8c74c1b1ecaec4c8ea82eff82c009333509ce # v1.8.0
         with:
           task-definition: task-definition.json
           container-name: ${{ env.SERVICE_NAME }}
