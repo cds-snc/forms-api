@@ -47,6 +47,15 @@ namespace dotnet
     Problem,
   }
 
+  public struct Attachment
+  {
+    public required string name { get; set; }
+
+    public required string downloadLink { get; set; }
+
+    public required bool isPotentiallyMalicious { get; set; }
+  }
+
   public struct FormSubmission
   {
     public required ulong createdAt { get; set; }
@@ -59,6 +68,8 @@ namespace dotnet
     public required string answers { get; set; }
 
     public required string checksum { get; set; }
+
+    public List<Attachment>? attachments { get; set; }
   }
 
   public struct FormSubmissionProblem
