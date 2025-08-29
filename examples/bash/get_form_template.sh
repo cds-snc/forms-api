@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <access_token>"
+    exit 1
+fi
+
 # Load environment vars
 script_dir=$(dirname "$(realpath "$0")")
 source "$script_dir/.environment"
@@ -14,6 +19,4 @@ get_form_template() {
     -H "Content-Type: application/json"
 }
 
-read -p "Enter your access token: " access_token
-
-get_form_template "$access_token"
+get_form_template "$1"

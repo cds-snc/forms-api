@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <answers> <checksum>"
+    exit 1
+fi
+
 # Calculate the form response's 'answers' checksum and compare it to the checksum
 # calculated at submission. The form response JSON has the following structure:
 #
@@ -30,7 +35,4 @@ verify_integrity() {
   fi
 }
 
-read -p "Enter the form response 'answers' property: " answers
-read -p "Enter the form response 'checksum' property: " checksum
-
-verify_integrity "$answers" "$checksum"
+verify_integrity "$1" "$2"

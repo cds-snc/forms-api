@@ -101,18 +101,8 @@ async function runRetrieveDecryptAndConfirmFormSubmissions(
 
       console.info("Retrieving encrypted submission...");
 
-      const startGetFormSubmissionTimer = performance.now();
-
       const encryptedSubmission = await apiClient.getFormSubmission(
         newFormSubmission.name,
-      );
-
-      const endGetFormSubmissionTimer = performance.now();
-
-      console.info(
-        `\nForm submission retrieved in ${Math.round(
-          endGetFormSubmissionTimer - startGetFormSubmissionTimer,
-        )} ms`,
       );
 
       console.info("\nEncrypted submission:");

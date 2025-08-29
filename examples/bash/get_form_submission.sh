@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <access_token> <submission_name>"
+    exit 1
+fi
+
 # Load environment vars
 script_dir=$(dirname "$(realpath "$0")")
 source "$script_dir/.environment"
@@ -15,7 +20,4 @@ get_form_response() {
     -H "Content-Type: application/json"
 }
 
-read -p "Enter the form submission name: " submission_name
-read -p "Enter your access token: " access_token
-
-get_form_response "$access_token" "$submission_name"
+get_form_response "$1" "$2"
