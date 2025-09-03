@@ -5,7 +5,7 @@ import {
 import { AttachmentScanStatus } from "@lib/vault/types/formSubmission.types.js";
 import { describe, it, expect } from "vitest";
 
-describe("formSubmission mapper should", () => {
+describe("in formSubmission mapper", () => {
   describe("mapNewFormSubmissionFromDynamoDbResponse should", () => {
     it("return proper NewFormSubmission when DynamoDB response is complete and valid", () => {
       const newFormSubmission = mapNewFormSubmissionFromDynamoDbResponse({
@@ -47,6 +47,7 @@ describe("formSubmission mapper should", () => {
         FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
         SubmissionAttachments: JSON.stringify([
           {
+            id: "testId",
             name: "output.txt",
             path: "filePath",
             scanStatus: "NO_THREATS_FOUND",
@@ -62,6 +63,41 @@ describe("formSubmission mapper should", () => {
         checksum: "5981e9cd2a2f0032e9b8c99eb7bb8841",
         attachments: [
           {
+            id: "testId",
+            name: "output.txt",
+            path: "filePath",
+            scanStatus: AttachmentScanStatus.NoThreatsFound,
+          },
+        ],
+      });
+    });
+
+    // This test should be deleted once `PartialAttachment` has its `id` property set to non optional
+    it("return proper FormSubmission when DynamoDB response is complete and valid (testing backwards compatibility with file attachments not having defined 'id')", () => {
+      const formSubmission = mapFormSubmissionFromDynamoDbResponse({
+        CreatedAt: 1750263415913,
+        "Status#CreatedAt": "New#1750263415913",
+        ConfirmationCode: "99063d75-9804-4efa-8f4c-605b4ba6ad95",
+        FormSubmission: '{"1":"Test response"}',
+        FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
+        SubmissionAttachments: JSON.stringify([
+          {
+            name: "output.txt",
+            path: "filePath",
+            scanStatus: "NO_THREATS_FOUND",
+          },
+        ]),
+      });
+
+      expect(formSubmission).toEqual({
+        createdAt: 1750263415913,
+        status: "New",
+        confirmationCode: "99063d75-9804-4efa-8f4c-605b4ba6ad95",
+        answers: '{"1":"Test response"}',
+        checksum: "5981e9cd2a2f0032e9b8c99eb7bb8841",
+        attachments: [
+          {
+            id: undefined,
             name: "output.txt",
             path: "filePath",
             scanStatus: AttachmentScanStatus.NoThreatsFound,
