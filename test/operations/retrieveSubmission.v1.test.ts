@@ -109,6 +109,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       checksum: "",
       attachments: [
         {
+          id: "testId",
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
           scanStatus: AttachmentScanStatus.NoThreatsFound,
@@ -218,6 +219,7 @@ describe("retrieveSubmissionOperation handler should", () => {
         checksum: "",
         attachments: [
           {
+            id: "testId",
             name: "output.txt",
             path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
             scanStatus: attachmentScanStatus,
@@ -266,6 +268,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       checksum: "",
       attachments: [
         {
+          id: "testId",
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
           scanStatus: AttachmentScanStatus.NoThreatsFound,

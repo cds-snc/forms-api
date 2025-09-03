@@ -123,6 +123,7 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
     }
 
     if (
+      typeof item.id !== "string" || typeof item.id !== "undefined" ||
       typeof item.name !== "string" ||
       typeof item.path !== "string" ||
       typeof item.scanStatus !== "string"
@@ -131,6 +132,7 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
     }
 
     return {
+      id: item.id,
       name: item.name,
       path: item.path,
       scanStatus: attachmentScanStatusFromScanStatus(item.scanStatus),
