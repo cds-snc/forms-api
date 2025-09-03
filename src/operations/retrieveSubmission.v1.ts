@@ -94,6 +94,7 @@ function buildJsonResponse(
     checksum: formSubmission.checksum,
     ...(attachments && {
       attachments: attachments.map((attachment) => ({
+        id: attachment.id,
         name: attachment.name,
         downloadLink: attachment.downloadLink,
         isPotentiallyMalicious: isAttachmentPotentiallyMalicious(

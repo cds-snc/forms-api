@@ -109,6 +109,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       checksum: "",
       attachments: [
         {
+          id: "testId",
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
           scanStatus: AttachmentScanStatus.NoThreatsFound,
@@ -151,6 +152,7 @@ describe("retrieveSubmissionOperation handler should", () => {
         checksum: "",
         attachments: [
           {
+            id: "testId",
             name: "output.txt",
             downloadLink: "https://download-link",
             isPotentiallyMalicious: false,
@@ -167,6 +169,61 @@ describe("retrieveSubmissionOperation handler should", () => {
         type: "Response",
       },
       "DownloadResponse",
+    );
+  });
+
+  // This test should be deleted once `PartialAttachment` has its `id` property set to non optional
+  it("respond with success when form submission with attachments does exist (testing backwards compatibility with file attachments not having defined 'id')", async () => {
+    getFormSubmissionMock.mockResolvedValueOnce({
+      createdAt: 0,
+      status: SubmissionStatus.New,
+      confirmationCode: "",
+      answers:
+        '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
+      checksum: "",
+      attachments: [
+        {
+          name: "output.txt",
+          path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
+          scanStatus: AttachmentScanStatus.NoThreatsFound,
+        },
+      ],
+    });
+    getFormSubmissionAttachmentDownloadLinkMock.mockResolvedValueOnce(
+      "https://download-link",
+    );
+    getPublicKeyMock.mockResolvedValueOnce("publicKey");
+    encryptResponseMock.mockReturnValueOnce({
+      encryptedKey: "encryptedKey",
+      encryptedNonce: "encryptedNonce",
+      encryptedAuthTag: "encryptedAuthTag",
+      encryptedResponses: "encryptedResponses",
+    });
+
+    await retrieveSubmissionOperationV1.handler(
+      requestMock,
+      responseMock,
+      nextMock,
+    );
+
+    expect(encryptResponseMock).toHaveBeenCalledWith(
+      "publicKey",
+      JSON.stringify({
+        createdAt: 0,
+        status: "New",
+        confirmationCode: "",
+        answers:
+          '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
+        checksum: "",
+        attachments: [
+          {
+            id: undefined,
+            name: "output.txt",
+            downloadLink: "https://download-link",
+            isPotentiallyMalicious: false,
+          },
+        ],
+      }),
     );
   });
 
@@ -218,6 +275,7 @@ describe("retrieveSubmissionOperation handler should", () => {
         checksum: "",
         attachments: [
           {
+            id: "testId",
             name: "output.txt",
             path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
             scanStatus: attachmentScanStatus,
@@ -246,6 +304,7 @@ describe("retrieveSubmissionOperation handler should", () => {
           checksum: "",
           attachments: [
             {
+              id: "testId",
               name: "output.txt",
               downloadLink: "https://download-link",
               isPotentiallyMalicious,
@@ -266,6 +325,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       checksum: "",
       attachments: [
         {
+          id: "testId",
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
           scanStatus: AttachmentScanStatus.NoThreatsFound,

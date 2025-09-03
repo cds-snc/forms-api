@@ -17,7 +17,10 @@ export enum AttachmentScanStatus {
   Failed = "Failed",
 }
 
+// id is marked as optional to ensure backwards compatibility.
+// it can be marked as required in the future once we are sure all attachment responses contain id's
 export type PartialAttachment = {
+  id?: string;
   name: string;
   path: string;
   scanStatus: AttachmentScanStatus;
