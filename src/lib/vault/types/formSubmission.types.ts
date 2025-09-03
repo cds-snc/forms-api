@@ -18,6 +18,7 @@ export enum AttachmentScanStatus {
 }
 
 export type PartialAttachment = {
+  id: string;
   name: string;
   path: string;
   scanStatus: AttachmentScanStatus;
