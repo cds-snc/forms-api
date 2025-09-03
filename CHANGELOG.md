@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.7.0](https://github.com/cds-snc/forms-api/compare/v1.6.0...v1.7.0) (2025-09-03)
+
+
+### Features
+
+* Add ID to attachment object ([#212](https://github.com/cds-snc/forms-api/issues/212)) ([f0eadf1](https://github.com/cds-snc/forms-api/commit/f0eadf1e32387af74b2479895820986260845f6b))
+
+
+### Bug Fixes
+
+* **deps:** update all patch dependencies ([#210](https://github.com/cds-snc/forms-api/issues/210)) ([5d142a5](https://github.com/cds-snc/forms-api/commit/5d142a5955c5ddaa3d01b5fd93871e5aefb57a2a))
+
+
+### Miscellaneous Chores
+
+* add submission attachments support to API examples ([#209](https://github.com/cds-snc/forms-api/issues/209)) ([3a44e95](https://github.com/cds-snc/forms-api/commit/3a44e95c0b148312c0a134345af6e10e1f47f599))
+
 ## [1.6.0](https://github.com/cds-snc/forms-api/compare/v1.5.0...v1.6.0) (2025-08-28)
 
 
