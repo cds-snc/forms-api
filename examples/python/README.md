@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-- Download and install Python version 3
-  - (with Python installer) https://www.python.org/downloads
-  - (with Brew) `brew install python`
+- Download and install Python version 3.12
+  - (with Python installer) https://www.python.org/downloads/release/python-31210/
+  - (with Brew) `brew install python@3.12`
 
 To make sure Python is properly installed, try to run the following command `python3 --version`.
 
