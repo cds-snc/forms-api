@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.7.0](https://github.com/cds-snc/forms-api/compare/v1.6.0...v1.7.0) (2025-09-08)
+
+
+### Features
+
+* Add ID to attachment object ([#212](https://github.com/cds-snc/forms-api/issues/212)) ([f0eadf1](https://github.com/cds-snc/forms-api/commit/f0eadf1e32387af74b2479895820986260845f6b))
+
+
+### Bug Fixes
+
+* **deps:** update all patch dependencies ([#210](https://github.com/cds-snc/forms-api/issues/210)) ([5d142a5](https://github.com/cds-snc/forms-api/commit/5d142a5955c5ddaa3d01b5fd93871e5aefb57a2a))
+* **deps:** update dependency got to v14.4.8 ([#215](https://github.com/cds-snc/forms-api/issues/215)) ([0a72ecd](https://github.com/cds-snc/forms-api/commit/0a72ecd1b1ca644f0ce5a1769e1ac0b72f6a559f))
+
+
+### Miscellaneous Chores
+
+* add submission attachments support to API examples ([#209](https://github.com/cds-snc/forms-api/issues/209)) ([3a44e95](https://github.com/cds-snc/forms-api/commit/3a44e95c0b148312c0a134345af6e10e1f47f599))
+* **deps:** update all non-major github action dependencies ([#214](https://github.com/cds-snc/forms-api/issues/214)) ([6a2e10d](https://github.com/cds-snc/forms-api/commit/6a2e10d5c63e1e3ad2889fe1997fe21b9c33cec9))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 4fe00dc ([#213](https://github.com/cds-snc/forms-api/issues/213)) ([ef361a6](https://github.com/cds-snc/forms-api/commit/ef361a6fd6a72281acd2396aadec59aa4bcdeecb))
+* edit Python example requirements ([#216](https://github.com/cds-snc/forms-api/issues/216)) ([eb7ad03](https://github.com/cds-snc/forms-api/commit/eb7ad03adf50d321133ec91e481623c469c2cf94))
+
 ## [1.6.0](https://github.com/cds-snc/forms-api/compare/v1.5.0...v1.6.0) (2025-08-28)
 
 
