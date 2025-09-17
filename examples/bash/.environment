@@ -1,6 +1,6 @@
-idp_url="https://auth.forms-formulaires.alpha.canada.ca"
-api_url="https://api.forms-formulaires.alpha.canada.ca"
-project_id="284778202772022819"
+idp_url="https://auth.forms-staging.cdssandbox.xyz"
+api_url="https://api.forms-staging.cdssandbox.xyz"
+project_id=275372254274006635
 
 json_key_file="$(find . -name "*_private_api_key.json" | head -n 1)"
 if [ -z "$json_key_file" ]; then
