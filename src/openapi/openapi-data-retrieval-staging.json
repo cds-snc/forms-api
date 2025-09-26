@@ -1,0 +1,189 @@
+{
+    "openapi":"3.0.3",
+    "info": {
+      "title":"Forms Data Retrieval API",
+      "version":"1.0"
+    },
+    "servers": [
+        {
+            "url":"https://api.forms-staging.cdssandbox.xyz"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "accessToken": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "paths": {
+        "/forms/{formId}/submission/new": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "formId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the form",
+                        "example": "cmfmmallr0001x00113h7f9bt"
+                    }
+                ],          
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/forms/{formId}/template": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "formId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the form",
+                        "example": "cmfmmallr0001x00113h7f9bt"
+                    }
+                ],          
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Form template does not exist"
+                    }
+                }
+            }
+        },
+        "/forms/{formId}/submission/{submissionName}": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "formId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the form",
+                        "example": "cmfmmallr0001x00113h7f9bt"
+                    },
+                    {
+                        "name": "submissionName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the submission",
+                        "example": "24-09-d4ff1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Form submission does not exist"
+                    }
+                }
+            }
+        },
+        "/forms/{formId}/submission/{submissionName}/confirm/{confirmationCode}": {
+            "put": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "formId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the form",
+                        "example": "cmfmmallr0001x00113h7f9bt"
+                    },
+                    {
+                        "name": "submissionName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the submission",
+                        "example": "24-09-d4ff1"
+                    },
+                    {
+                        "name": "confirmationCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The confirmation code of a submission"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Form submission does not exist"
+                    }
+                }
+            }
+        },
+        "/forms/{formId}/submission/{submissionName}/problem": {
+            "post": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "formId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the form",
+                        "example": "cmfmmallr0001x00113h7f9bt"
+                    },
+                    {
+                        "name": "submissionName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The ID of the submission",
+                        "example": "24-09-d4ff1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Form submission does not exist"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "accessToken": []
+        }
+    ]
+  }
