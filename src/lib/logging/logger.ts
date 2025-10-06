@@ -1,7 +1,7 @@
 import pino from "pino";
 import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 
-export const logMessage = pino.default({
+export const logMessage = pino({
   level: ENVIRONMENT_MODE === EnvironmentMode.Local ? "debug" : "info",
 
   formatters: {
