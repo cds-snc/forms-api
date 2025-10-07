@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.7.0](https://github.com/cds-snc/forms-api/compare/v1.6.0...v1.7.0) (2025-10-07)
+
+
+### Features
+
+* Add ID to attachment object ([#212](https://github.com/cds-snc/forms-api/issues/212)) ([f0eadf1](https://github.com/cds-snc/forms-api/commit/f0eadf1e32387af74b2479895820986260845f6b))
+
+
+### Bug Fixes
+
+* **deps:** update all patch dependencies ([#210](https://github.com/cds-snc/forms-api/issues/210)) ([5d142a5](https://github.com/cds-snc/forms-api/commit/5d142a5955c5ddaa3d01b5fd93871e5aefb57a2a))
+* **deps:** update dependency got to v14.4.8 ([#215](https://github.com/cds-snc/forms-api/issues/215)) ([0a72ecd](https://github.com/cds-snc/forms-api/commit/0a72ecd1b1ca644f0ce5a1769e1ac0b72f6a559f))
+
+
+### Miscellaneous Chores
+
+* add submission attachments support to API examples ([#209](https://github.com/cds-snc/forms-api/issues/209)) ([3a44e95](https://github.com/cds-snc/forms-api/commit/3a44e95c0b148312c0a134345af6e10e1f47f599))
+* **deps:** bump axios from 1.11.0 to 1.12.0 in /examples/nodejs ([#223](https://github.com/cds-snc/forms-api/issues/223)) ([a14af97](https://github.com/cds-snc/forms-api/commit/a14af97e684f2c34c945c95c9861577c58e6e3a6))
+* **deps:** bump axios from 1.11.0 to 1.12.0 in /utils/responseRetriever ([#217](https://github.com/cds-snc/forms-api/issues/217)) ([bdf8024](https://github.com/cds-snc/forms-api/commit/bdf8024586b1cdaf63a85bf7189e55e647f4a4f7))
+* **deps:** bump axios in /utils/responseRetriever ([bdf8024](https://github.com/cds-snc/forms-api/commit/bdf8024586b1cdaf63a85bf7189e55e647f4a4f7))
+* **deps:** lock file maintenance ([#227](https://github.com/cds-snc/forms-api/issues/227)) ([7d626dc](https://github.com/cds-snc/forms-api/commit/7d626dc21c6dabb1816b9556d8a6a7133a55111e))
+* **deps:** update all non-major github action dependencies ([#214](https://github.com/cds-snc/forms-api/issues/214)) ([6a2e10d](https://github.com/cds-snc/forms-api/commit/6a2e10d5c63e1e3ad2889fe1997fe21b9c33cec9))
+* **deps:** update all non-major github action dependencies ([#225](https://github.com/cds-snc/forms-api/issues/225)) ([d43fd0f](https://github.com/cds-snc/forms-api/commit/d43fd0f6a9c8eb214566695eda9c01af9a3e8597))
+* **deps:** update all patch dependencies ([#224](https://github.com/cds-snc/forms-api/issues/224)) ([746a112](https://github.com/cds-snc/forms-api/commit/746a1123864930e61dce72fba1f5775fadff3414))
+* **deps:** update aws-actions/amazon-ecs-deploy-task-definition action to v2.4.0 ([#220](https://github.com/cds-snc/forms-api/issues/220)) ([eb7ab45](https://github.com/cds-snc/forms-api/commit/eb7ab457e6ca84bc5914dbfbf6f977b593e96799))
+* **deps:** update dependency axios to v1.12.0 [security] ([#218](https://github.com/cds-snc/forms-api/issues/218)) ([7a4aac2](https://github.com/cds-snc/forms-api/commit/7a4aac2fa3afd7cbf749dd2ca46670bd09e71709))
+* **deps:** update dependency got to v14.4.9 ([#222](https://github.com/cds-snc/forms-api/issues/222)) ([a2cb2f8](https://github.com/cds-snc/forms-api/commit/a2cb2f8cb54518536eeb14c8854e771c7371a241))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 4fe00dc ([#213](https://github.com/cds-snc/forms-api/issues/213)) ([ef361a6](https://github.com/cds-snc/forms-api/commit/ef361a6fd6a72281acd2396aadec59aa4bcdeecb))
+* edit Python example requirements ([#216](https://github.com/cds-snc/forms-api/issues/216)) ([eb7ad03](https://github.com/cds-snc/forms-api/commit/eb7ad03adf50d321133ec91e481623c469c2cf94))
+* synced file(s) with cds-snc/site-reliability-engineering ([#226](https://github.com/cds-snc/forms-api/issues/226)) ([51ef53a](https://github.com/cds-snc/forms-api/commit/51ef53aff1b34f3499b40be82a22339b7ceadfde))
+* synced file(s) with cds-snc/site-reliability-engineering ([#228](https://github.com/cds-snc/forms-api/issues/228)) ([e8cdc90](https://github.com/cds-snc/forms-api/commit/e8cdc90532b4e24e7962b166fb2c5b84c024882d))
+* synced local '.github/workflows/export_github_data.yml' with remote 'tools/sre_file_sync/export_github_data.yml' ([51ef53a](https://github.com/cds-snc/forms-api/commit/51ef53aff1b34f3499b40be82a22339b7ceadfde))
+
 ## [1.6.0](https://github.com/cds-snc/forms-api/compare/v1.5.0...v1.6.0) (2025-08-28)
 
 
