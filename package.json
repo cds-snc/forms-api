@@ -1,6 +1,6 @@
 {
   "name": "forms-api",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Machine-to-machine interface for downloading form submissions",
   "repository": "git@github.com:cds-snc/forms-api.git",
   "type": "module",
@@ -24,6 +24,7 @@
     "@aws-sdk/client-secrets-manager": "^3.823.0",
     "@aws-sdk/client-sqs": "^3.823.0",
     "@aws-sdk/lib-dynamodb": "^3.823.0",
+    "@aws-sdk/s3-request-presigner": "^3.859.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
@@ -38,7 +39,6 @@
   "devDependencies": {
     "@aws-sdk/types": "^3.662.0",
     "@biomejs/biome": "^1.9.0",
-    "@smithy/util-stream": "^4.2.2",
     "@types/cors": "^2.8.18",
     "@types/express": "^4.17.21",
     "@types/node": "^22.7.4",

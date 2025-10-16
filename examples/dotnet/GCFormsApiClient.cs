@@ -35,7 +35,7 @@ namespace dotnet
           .Result
           .EnsureSuccessStatusCode()
           .Content
-          .ReadFromJsonAsync<object>();
+          .ReadFromJsonAsync<object>()!;
       }
       catch (Exception exception)
       {
@@ -53,7 +53,7 @@ namespace dotnet
           .Result
           .EnsureSuccessStatusCode()
           .Content
-          .ReadFromJsonAsync<List<NewFormSubmission>>();
+          .ReadFromJsonAsync<List<NewFormSubmission>>()!;
       }
       catch (Exception exception)
       {
@@ -79,15 +79,14 @@ namespace dotnet
       }
     }
 
-    public async Task ConfirmFormSubmission(string submissionName, string confirmationCode)
+    public Task ConfirmFormSubmission(string submissionName, string confirmationCode)
     {
       try
       {
-        HttpResponseMessage response = await this
+        return this
           .httpClient
-          .PutAsync($"/forms/{this.formId}/submission/{submissionName}/confirm/{confirmationCode}", null);
-
-        response.EnsureSuccessStatusCode();
+          .PutAsync($"/forms/{this.formId}/submission/{submissionName}/confirm/{confirmationCode}", null)
+          .ContinueWith(t => t.Result.EnsureSuccessStatusCode());
       }
       catch (Exception exception)
       {
@@ -95,18 +94,17 @@ namespace dotnet
       }
     }
 
-    public async Task ReportProblemWithFormSubmission(string submissionName, FormSubmissionProblem problem)
+    public Task ReportProblemWithFormSubmission(string submissionName, FormSubmissionProblem problem)
     {
       try
       {
-        HttpResponseMessage response = await this
+        return this
           .httpClient
           .PostAsync(
             $"/forms/{this.formId}/submission/{submissionName}/problem",
             new StringContent(JsonSerializer.Serialize(problem), Encoding.UTF8, "application/json")
-          );
-
-        response.EnsureSuccessStatusCode();
+          )
+          .ContinueWith(t => t.Result.EnsureSuccessStatusCode());
       }
       catch (Exception exception)
       {
