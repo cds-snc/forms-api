@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import List, Optional
 
 
 @dataclass
@@ -34,10 +35,10 @@ class NewFormSubmission:
 
 @dataclass
 class EncryptedFormSubmission:
-    encrypted_responses: str
     encrypted_key: str
     encrypted_nonce: str
     encrypted_auth_tag: str
+    encrypted_responses: str
 
     @staticmethod
     def from_json(json_object: dict) -> "EncryptedFormSubmission":
@@ -57,12 +58,28 @@ class FormSubmissionStatus(Enum):
 
 
 @dataclass
+class Attachment:
+    name: str
+    download_link: str
+    is_potentially_malicious: bool
+
+    @staticmethod
+    def from_json(json_object: dict) -> "Attachment":
+        return Attachment(
+            name=json_object["name"],
+            download_link=json_object["downloadLink"],
+            is_potentially_malicious=json_object["isPotentiallyMalicious"],
+        )
+
+
+@dataclass
 class FormSubmission:
     created_at: int
     status: FormSubmissionStatus
     confirmation_code: str
     answers: str
     checksum: str
+    attachments: Optional[List[Attachment]]
 
     @staticmethod
     def from_json(json_object: dict) -> "FormSubmission":
@@ -72,6 +89,11 @@ class FormSubmission:
             confirmation_code=json_object["confirmationCode"],
             answers=json_object["answers"],
             checksum=json_object["checksum"],
+            attachments=(
+                [Attachment.from_json(obj) for obj in json_object["attachments"]]
+                if json_object.get("attachments")
+                else None
+            ),
         )
 
 
