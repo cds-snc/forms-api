@@ -41,6 +41,8 @@ describe("rateLimiterMiddleware should", () => {
     await rateLimiterMiddleware(requestMock, responseMock, nextMock);
 
     expect(responseMock.header).toHaveBeenCalledWith({
+      "Access-Control-Expose-Headers":
+        "X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After",
       "X-RateLimit-Limit": 10,
       "X-RateLimit-Remaining": 5,
       "X-RateLimit-Reset": new Date("2018-02-20T12:30:55.500Z"),
@@ -68,6 +70,8 @@ describe("rateLimiterMiddleware should", () => {
     await rateLimiterMiddleware(requestMock, responseMock, nextMock);
 
     expect(responseMock.header).toHaveBeenNthCalledWith(1, {
+      "Access-Control-Expose-Headers":
+        "X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After",
       "X-RateLimit-Limit": 10,
       "X-RateLimit-Remaining": 0,
       "X-RateLimit-Reset": new Date("2018-02-20T12:30:55.500Z"),
