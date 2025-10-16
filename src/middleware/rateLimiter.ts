@@ -14,6 +14,8 @@ export async function rateLimiterMiddleware(
     const consumeTokenResult = await consumeTokenIfAvailable(formId);
 
     response.header({
+      "Access-Control-Expose-Headers":
+        "X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After",
       "X-RateLimit-Limit": consumeTokenResult.bucketStatus.bucketCapacity,
       "X-RateLimit-Remaining": consumeTokenResult.bucketStatus.remainingTokens,
       "X-RateLimit-Reset": new Date(
