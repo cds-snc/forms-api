@@ -36,6 +36,6 @@ Vous pouvez obtenir des informations supplémentaires dans les en-têtes inclus 
 
 À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer des limites plus appropriées par minute pour les demandes d’API.
 
-### Actualisation des clés API
+### Rotation des clés API
 
-L’actualisation d’une clé API peut devenir nécessaire si une clé est compromise. Les clés peuvent être supprimées et recréées, ce qui nécessite simplement une modification des paramètres demandés dans la demande.
+L’La rotation d’une clé API peut s'avérer nécessaire si une clé est compromise. Vous pouvez générer une nouvelle clé dans les paramètre du formulaire, sous l'onglet Intégration API. Cela nécessite simplement une modification des paramètres demandés dans la demande.
