@@ -13,9 +13,9 @@ The purpose of this API is to allow you to securely and reliably retrieve form s
 ### What you will need
   - A [GC Forms account](https://articles.alpha.canada.ca/forms-formulaires/)
   - A draft form (Unclassified, Protected A, or Protected B)
-  - The form set to "Receive responses via API” in Settings 
+  - An API key (that you generate in Settings > API integration).
   - A few “mock” responses submitted to the form
   - A target system where you plan on receiving form submission data
   - Infrastructure development resources who can craft HTTP requests to reach the API. _No infrastructure development capabilities available? This first version of the API might not be ready for you just yet._
-  - An API key  (that you create in Settings).
+
 > **IMPORTANT: You must keep this API key secure as it is used to authenticate API requests and could be used to access protected data. Use encrypted email if you must share it with a developer team member to set up the integration.**

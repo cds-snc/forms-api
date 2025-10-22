@@ -36,7 +36,7 @@ You can see additional information in the headers included as part of the API re
 
 In the future, we anticipate the API call limits may be tied to different use cases or types of usage and will try to determine more appropriate limits for API requests per minute. 
 
-### Refreshing API keys
+### Rotating API keys
 
-Refreshing an API key may become necessary if a key is compromised. Keys can be deleted and recreated, simply requiring a change in the parameters being queried in the request.
+Rotating an API key may become necessary if a key is compromised. You can generate a new key in form settings in the API integration tab. This also requires a change in the parameters being queried in the request.
 
