@@ -1,0 +1,11 @@
+idp_url="https://auth.forms-staging.cdssandbox.xyz"
+api_url="https://api.forms-staging.cdssandbox.xyz"
+project_id=275372254274006635
+
+json_key_file="cmfmmallr0001x00113h7f9bt_private_api_key.json"
+if [ -z "$json_key_file" ]; then
+  echo "Private key file not found.  Please make sure it is in the script directory and ends with '_private_api_key.json'"
+  exit 1
+fi
+
+form_id="$(jq -r '.formId' "$json_key_file")"
