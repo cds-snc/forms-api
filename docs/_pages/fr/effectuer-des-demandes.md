@@ -134,7 +134,7 @@ La sécurité du système est primordiale et elle est renforcée par le chiffrem
 
 La récupération des fichiers joints aux soumissions n'est possible que via la méthode de livraison des données par l'entremise de l'API. Les conditions de stockage sont les mêmes que pour les données soumises, Formulaires GC ne conserve les données et les fichiers que temporairement, jusqu'à leur téléchargement et leur confirmation.
 
-Les fichiers sont directement liés aux réponses et accompagnés d'un attribut indiquant si l'analyse des fichiers malveillants a détecté un danger potentiel.
+Les fichiers sont directement liés aux réponses (récupérées de AWS) et elles sont accompagnés d'un attribut indiquant si l'analyse des fichiers malveillants a détecté un danger potentiel.
 
 Bien qu'un logiciel d'analyse de fichiers soit mis en œuvre avec Amazon Web Services (AWS), pour marquer les fichiers, il est de votre responsabilité de vérifier l'attribut de malveillance <code>isPotentiallyMalicious</code> avant d'ouvrir les fichiers liés. Vous pouvez décider de la manière d'utiliser cet attribut, par exemple : envoyer un avertissement dans les journeaux, exécuter un système de quarantaine ou toute autre logique que vous développez en fonction de la manière dont vous et votre équipe de sécurité souhaitez vous protéger contre les fichiers malveillants.
 
