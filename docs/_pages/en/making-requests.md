@@ -138,7 +138,7 @@ Security of the system is paramount and it is enhanced by encrypting form submis
 
 The retrieval of files attached within submissions is only possible via the API data delivery method. The same storage conditions apply as for submission data, where GC Forms only temporarily keeps data and files until downloaded and confirmed. 
 
-Files are linked directly within responses accompanied by an attribute that shows whether scanning for malicious files detected any potential harm.
+Files are linked directly within responses (retrieval from AWS) and are accompanied by an attribute that shows whether scanning for malicious files detected any potential harm.
 
 While there is a file scanning software implemented via Amazon Web Services (AWS), to mark files, it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files. You can decide how to use this attribute, for example: sending a warning in the logs, running a quarantine system, or other logic you develop based on how you and your security team want to safeguard against malicious files.
 
