@@ -140,7 +140,7 @@ The retrieval of files attached within submissions is only possible via the API 
 
 Files are linked directly within responses accompanied by an attribute that shows whether scanning for malicious files detected any potential harm.
 
-While there is a file scanning software implemented via Amazon Web Services (AWS), it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files. You can decide how to use this attribute, for example: sending a warning in the logs, running a quarantine system, or other logic you develop based on how you and your security team want to safeguard against malicious files.
+While there is a file scanning software implemented via Amazon Web Services (AWS), to mark files, it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files. You can decide how to use this attribute, for example: sending a warning in the logs, running a quarantine system, or other logic you develop based on how you and your security team want to safeguard against malicious files.
 
 #### To retrieve files uploaded to a form:
 
