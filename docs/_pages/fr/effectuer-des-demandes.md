@@ -132,13 +132,13 @@ La sécurité du système est primordiale et elle est renforcée par le chiffrem
 
 ### Obtenir les fichiers joints aux soumissions de formulaires
 
-La récupération des fichiers joints aux soumissions n'est possible que via la méthode de livraison des données par l'entremise de l'API. Les conditions de stockage sont les mêmes que pour les données soumises, Formulaires GC ne conserve les données et les fichiers que temporairement, jusqu'à leur téléchargement et leur confirmation.
+La récupération des fichiers joints aux soumissions n'est possible que via la méthode de livraison des données par l'entremise de l'API. Les conditions de stockage sont les mêmes que pour les données soumises, Formulaires GC ne conserve les données et les fichiers que temporairement, jusqu'à leur téléchargement et leur confirmation. Pour en savoir plus sur l'ajout d'éléments de téléversement de fichiers à votre formulaire, consultez notre [guide de référence](https://articles.alpha.canada.ca/forms-formulaires/fr/recuperation-via-api-de-fichiers-joints-beta-fonctionnalite-a-lessai/).
 
 Les fichiers sont directement liés aux réponses (récupérées de AWS) et elles sont accompagnés d'un attribut indiquant si l'analyse des fichiers malveillants a détecté un danger potentiel.
 
 Bien qu'un logiciel d'analyse de fichiers soit mis en œuvre avec Amazon Web Services (AWS), pour marquer les fichiers, il est de votre responsabilité de vérifier l'attribut de malveillance <code>isPotentiallyMalicious</code> avant d'ouvrir les fichiers liés. Vous pouvez décider de la manière d'utiliser cet attribut, par exemple : envoyer un avertissement dans les journeaux, exécuter un système de quarantaine ou toute autre logique que vous développez en fonction de la manière dont vous et votre équipe de sécurité souhaitez vous protéger contre les fichiers malveillants.
 
-#### Pour récupérer les fichiers téléchargés vers un formulaire :
+#### Pour récupérer les fichiers téléchargés vers un formulaire en toute sécurité :
 
 Vous recevrez chaque soumission sous forme de fichier JSON brut comprenant des liens directs vers les fichiers, s'ils sont joints. Pour des raisons de sécurité, ces liens de téléchargement direct ne sont valables que pendant 10 secondes.
 
