@@ -134,13 +134,13 @@ GET /forms/{formID}/submission/{submissionName}
 
 Security of the system is paramount and it is enhanced by encrypting form submissions. While encrypted in HTTPS, we’ve added another layer of security with AES-256-GSM encryption. When you get a form submission it will be encrypted and it will come with an encrypted key, an encrypted nonce, and an encrypted AuthTag. These can be decrypted using the Private key.
 
-### Getting files that were attached to form submissions
+### Getting files that were attached to form submissions securely
 
 The retrieval of files attached within submissions is only possible via the API data delivery method. The same storage conditions apply as for submission data, where GC Forms only temporarily keeps data and files until downloaded and confirmed. 
 
 Files are linked directly within responses accompanied by an attribute that shows whether scanning for malicious files detected any potential harm.
 
-While there is a file scanning software implemented via Amazon Web Services (AWS), it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files.
+While there is a file scanning software implemented via Amazon Web Services (AWS), it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files. You can decide how to use this attribute, for example: sending a warning in the logs, running a quarantine system, or other logic you develop based on how you and your security team want to safeguard against malicious files.
 
 #### To retrieve files uploaded to a form:
 
