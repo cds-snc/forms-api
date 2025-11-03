@@ -134,13 +134,11 @@ GET /forms/{formID}/submission/{submissionName}
 
 Security of the system is paramount and it is enhanced by encrypting form submissions. While encrypted in HTTPS, we’ve added another layer of security with AES-256-GSM encryption. When you get a form submission it will be encrypted and it will come with an encrypted key, an encrypted nonce, and an encrypted AuthTag. These can be decrypted using the Private key.
 
-### Getting files that were attached to a submission
+### Getting files that were attached to form submissions
 
 The retrieval of files attached within submissions is only possible via the API data delivery method. The same storage conditions apply as for submission data, where GC Forms only temporarily keeps data and files until downloaded and confirmed. 
 
 Files are linked directly within responses accompanied by an attribute that shows whether scanning for malicious files detected any potential harm.
-
-Files are linked directly within responses accompanied by an attribute that shows whether scanning for malicious files detected any potential harm. 
 
 While there is a file scanning software implemented via Amazon Web Services (AWS), it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files.
 
@@ -156,9 +154,9 @@ The confirmation step helps ensure the form submissions are exploitable and rend
 
 Before confirming a response, ensure you’ve got access to all attached files, if any are present. These file download links are only temporarily available, as they are valid for up to 10 seconds. If you have not received all files, redownload the same form submission to get new download links. Report a problem if there is one with file or data. Once you are confident that you indeed have all submission data and files submitted, confirm that all data has been transferred successfully. Responses and files will then be removed from GC Forms after 30 days.
 
-#### Example
+#### Example of response data with files
 
-Response data will look something like this when files are attached:
+Data will look something like this when files are attached:
 
 <code>
 {
