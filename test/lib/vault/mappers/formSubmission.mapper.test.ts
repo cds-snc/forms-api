@@ -102,7 +102,7 @@ describe("in formSubmission mapper", () => {
             name: "output.txt",
             path: "filePath",
             scanStatus: AttachmentScanStatus.NoThreatsFound,
-            md5: undefined
+            md5: undefined,
           },
         ],
       });

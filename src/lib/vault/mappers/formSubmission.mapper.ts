@@ -127,7 +127,7 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
       typeof item.id !== "string" ||
       typeof item.name !== "string" ||
       typeof item.path !== "string" ||
-      typeof item.scanStatus !== "string" 
+      typeof item.scanStatus !== "string"
     ) {
       throw new Error("Unexpected type in submission attachment JSON");
     }
@@ -137,7 +137,7 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
       name: item.name,
       path: item.path,
       scanStatus: attachmentScanStatusFromScanStatus(item.scanStatus),
-      md5: item.md5
+      md5: item.md5,
     };
   });
 }

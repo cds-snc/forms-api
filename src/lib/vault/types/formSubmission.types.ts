@@ -24,7 +24,7 @@ export type PartialAttachment = {
   name: string;
   path: string;
   scanStatus: AttachmentScanStatus;
-  md5?: string
+  md5?: string;
 };
 
 export type FormSubmission = {
