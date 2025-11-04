@@ -158,31 +158,20 @@ Les données ressembleront à ceci lorsque des fichiers sont joints :
 
 <code>
 {
-
    "createdAt":1749476854628,
-
    "status":"New",
-
    "confirmationCode":"714dfe46-6fa1-4281-8d15-a39bcebc3c4f",
-
    "answers":"{\"1\":\"Test1\",\"2\":\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\",\"3\":\"form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\",\"4\":\"form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\"}",
-
    "checksum":"cc33cb49f6c088bf98b7315794db216e",
-
    "attachments":[
-
       {
-
-         "name":"output.txt",
-
-         "directLinkToFile":"((s3 link))",
-
-         "isPotentiallyMalicious":true
-
+        "id": "04d8aff7-25d7-49e5-8f01-77a8b6fba214",
+        "name":"output.txt",
+        "downloadLink":"https://...",
+        "isPotentiallyMalicious":true,
+        "md5": "54b0c58c7ce9f2a8b551351102ee0938"
       }
-
    ]
-
 }
 </code>
 
