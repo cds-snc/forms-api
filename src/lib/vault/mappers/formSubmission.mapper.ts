@@ -115,6 +115,7 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
 
   return attachments.map((item) => {
     if (
+      item.id === undefined ||
       item.name === undefined ||
       item.path === undefined ||
       item.scanStatus === undefined
