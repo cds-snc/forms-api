@@ -72,8 +72,8 @@ describe("in formSubmission mapper", () => {
       });
     });
 
-    // This test should be deleted once `PartialAttachment` has its `id` property set to non optional
-    it("return proper FormSubmission when DynamoDB response is complete and valid (testing backwards compatibility with file attachments not having defined 'id')", () => {
+    // This test should be deleted once `PartialAttachment` has its `md5` property set to non optional
+    it("return proper FormSubmission when DynamoDB response is complete and valid (testing backwards compatibility with file attachments not having defined 'md5')", () => {
       const formSubmission = mapFormSubmissionFromDynamoDbResponse({
         CreatedAt: 1750263415913,
         "Status#CreatedAt": "New#1750263415913",
@@ -82,6 +82,7 @@ describe("in formSubmission mapper", () => {
         FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
         SubmissionAttachments: JSON.stringify([
           {
+            id: "test",
             name: "output.txt",
             path: "filePath",
             scanStatus: "NO_THREATS_FOUND",
@@ -97,10 +98,11 @@ describe("in formSubmission mapper", () => {
         checksum: "5981e9cd2a2f0032e9b8c99eb7bb8841",
         attachments: [
           {
-            id: undefined,
+            id: "test",
             name: "output.txt",
             path: "filePath",
             scanStatus: AttachmentScanStatus.NoThreatsFound,
+            md5: undefined,
           },
         ],
       });

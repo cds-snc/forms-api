@@ -100,6 +100,7 @@ function buildJsonResponse(
         isPotentiallyMalicious: isAttachmentPotentiallyMalicious(
           attachment.scanStatus,
         ),
+        md5: attachment.md5,
       })),
     }),
   });

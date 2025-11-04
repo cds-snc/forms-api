@@ -115,6 +115,7 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
 
   return attachments.map((item) => {
     if (
+      item.id === undefined ||
       item.name === undefined ||
       item.path === undefined ||
       item.scanStatus === undefined
@@ -123,7 +124,8 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
     }
 
     if (
-      (typeof item.id !== "string" && typeof item.id !== "undefined") ||
+      (typeof item.md5 !== "string" && typeof item.md5 !== "undefined") ||
+      typeof item.id !== "string" ||
       typeof item.name !== "string" ||
       typeof item.path !== "string" ||
       typeof item.scanStatus !== "string"
@@ -136,6 +138,7 @@ function partialAttachmentFromSubmissionAttachmentsAsJson(
       name: item.name,
       path: item.path,
       scanStatus: attachmentScanStatusFromScanStatus(item.scanStatus),
+      md5: item.md5,
     };
   });
 }
