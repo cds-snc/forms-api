@@ -72,7 +72,7 @@ describe("in formSubmission mapper", () => {
       });
     });
 
-    // This test should be deleted once `PartialAttachment` has its `id` property set to non optional
+    // This test should be deleted once `PartialAttachment` has its `md5` property set to non optional
     it("return proper FormSubmission when DynamoDB response is complete and valid (testing backwards compatibility with file attachments not having defined 'md5')", () => {
       const formSubmission = mapFormSubmissionFromDynamoDbResponse({
         CreatedAt: 1750263415913,
