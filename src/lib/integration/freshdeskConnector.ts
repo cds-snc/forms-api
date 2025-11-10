@@ -20,10 +20,9 @@ export async function createFreshdeskTicket(
       timeout: { request: 5000 },
       retry: { limit: 1 },
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Basic ${btoa(`${FRESHDESK_API_KEY}:X`)}`,
       },
-      form: {
+      json: {
         name: payload.name,
         email: payload.email,
         type: payload.type,
