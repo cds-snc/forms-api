@@ -26,10 +26,9 @@ describe("createFreshdeskTicket should", () => {
         timeout: { request: 5000 },
         retry: { limit: 1 },
         headers: {
-          "Content-Type": "application/json",
           Authorization: "Basic dGVzdDpY",
         },
-        form: {
+        json: {
           name: "test",
           email: "test@test.com",
           type: "test",
