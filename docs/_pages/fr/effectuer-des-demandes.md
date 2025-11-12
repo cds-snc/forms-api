@@ -169,7 +169,7 @@ Les données ressembleront à ceci lorsque des fichiers sont joints :
         "name":"output.txt",
         "downloadLink":"https://...",
         "isPotentiallyMalicious":true,
-        "md5": "54b0c58c7ce9f2a8b551351102ee0938"
+        "md5":"54b0c58c7ce9f2a8b551351102ee0938"
       }
    ]
 }
