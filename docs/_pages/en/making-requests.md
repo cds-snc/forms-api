@@ -134,9 +134,48 @@ GET /forms/{formID}/submission/{submissionName}
 
 Security of the system is paramount and it is enhanced by encrypting form submissions. While encrypted in HTTPS, we’ve added another layer of security with AES-256-GSM encryption. When you get a form submission it will be encrypted and it will come with an encrypted key, an encrypted nonce, and an encrypted AuthTag. These can be decrypted using the Private key.
 
+### Getting files that were attached to form submissions securely
+
+The retrieval of files attached within submissions is only possible via the API data delivery method. The same storage conditions apply as for submission data, where GC Forms only temporarily keeps data and files until downloaded and confirmed. To learn more about adding a file upload element to your form, consult our [Guidance page](https://articles.alpha.canada.ca/forms-formulaires/beta-instructions-retrieving-files-attached-via-api-limited-trial-feature/). 
+
+Files are linked directly within responses (retrieval from AWS) and are accompanied by an attribute that shows whether scanning for malicious files detected any potential harm, with basic antivirus technology. Be careful when opening any attachments: choose a secure location, follow security guidelines, and run host-level sensors if possible. The safety of files cannot be guaranteed, as no software is perfect at detecting threats.
+
+While there is a file scanning software implemented via Amazon Web Services (AWS), to mark files, it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files. You can decide how to use this attribute, for example: sending a warning in the logs, running a quarantine system, or other logic you develop based on how you and your security team want to safeguard against malicious files.
+
+#### To retrieve files uploaded to a form:
+
+You will receive each submission as a raw JSON file that includes direct links to files, if attached. These direct download links are only valid for 10 seconds for security reasons. 
+
+As files are scanned upon being submitted, they may also be marked as potentially being malicious, based on the file scanning software. You must decide what to do with flagged files — whether to download those files or not if they include a flagged with a “malicious” or “bad” metadata attribute. Add some code for how to handle the encountering of <code>isPotentiallyMalicious:true</code>. You'll then be able to access submission data and files attached in your system. 
+
 ### **Confirming** form submissions
 
 The confirmation step helps ensure the form submissions are exploitable and render as expected before they are permanently removed from the GC Forms system’s database. 
+
+Before confirming a response, ensure you’ve got access to all attached files, if any are present. These file download links are only temporarily available, as they are valid for up to 10 seconds. If you have not received all files, redownload the same form submission to get new download links. Report a problem if there is one with file or data. Once you are confident that you indeed have all submission data and files submitted, confirm that all data has been transferred successfully. Responses and files will then be removed from GC Forms after 30 days.
+
+#### Example of response data with files
+
+Data will look something like this when files are attached:
+
+<code>
+{
+   "createdAt":1749476854628,
+   "status":"New",
+   "confirmationCode":"714dfe46-6fa1-4281-8d15-a39bcebc3c4f",
+   "answers":"{\"1\":\"Test1\",\"2\":\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\",\"3\":\"form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\",\"4\":\"form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\"}",
+   "checksum":"cc33cb49f6c088bf98b7315794db216e",
+   "attachments":[
+      {
+        "id": "04d8aff7-25d7-49e5-8f01-77a8b6fba214",
+        "name":"output.txt",
+        "downloadLink":"https://...",
+        "isPotentiallyMalicious":true,
+        "md5":"54b0c58c7ce9f2a8b551351102ee0938"
+      }
+   ]
+}
+</code>
 
 ##### HTTP request
 

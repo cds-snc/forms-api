@@ -14,7 +14,6 @@ childPages:
 
 L’API de Formulaires GC vous permet de récupérer des soumissions de formulaire sous forme de fichiers JSON. Vous pouvez obtenir jusqu’à 100 soumissions de formulaire par lot, et celles-ci sont accessibles jusqu’à 30 jours après la soumission, compte tenu de nos périodes actuelles de rétention des données. Les soumissions de formulaire sont chiffrées à l’aide d’une clé publique et peuvent être déchiffrées localement par vous.
 
-
 ### Paramètres de requête
 
 Les demandes d’API pour les données de soumission de Formulaires GC sont possibles à l’aide de paramètres de requête tels que :
@@ -131,9 +130,50 @@ GET /forms/{formID}/submission/{submissionName}
 
 La sécurité du système est primordiale et elle est renforcée par le chiffrement des soumissions de formulaires. Bien que le chiffrement soit effectué en HTTPS, nous avons ajouté une autre couche de sécurité avec le chiffrement AES-256-GSM. Lorsque vous recevrez une soumission de formulaire, elle sera chiffrée et elle comprendra une clé chiffrée, un nonce chiffré et un élément AuthTag chiffré. Ceux-ci peuvent être déchiffrés par l’intermédiaire d’une clé privée.
 
+### Obtenir les fichiers joints aux soumissions de formulaires
+
+La récupération des fichiers joints aux soumissions n'est possible que via la méthode de livraison des données par l'entremise de l'API. Les conditions de stockage sont les mêmes que pour les données soumises, Formulaires GC ne conserve les données et les fichiers que temporairement, jusqu'à leur téléchargement et leur confirmation. Pour en savoir plus sur l'ajout d'éléments de téléversement de fichiers à votre formulaire, consultez notre [guide de référence](https://articles.alpha.canada.ca/forms-formulaires/fr/recuperation-via-api-de-fichiers-joints-beta-fonctionnalite-a-lessai/).
+
+Les fichiers sont directement liés aux réponses (récupérées de AWS) et ils sont accompagnés d'un attribut indiquant si l'analyse des fichiers malveillants a détecté un danger potentiel à l'aide de technologie antivirus de base. Soyez prudent lorsque vous ouvrez n'importe quelle pièces jointes : choisissez un emplacement sécurisé, suivez les consignes de sécurité, et exécutez des capteurs au niveau de l'hôte si possible. La sécurité des fichiers ne peut être garantie, car aucune technologie n'est parfaite pour détecter les menaces. 
+
+Bien qu'un logiciel d'analyse de fichiers soit mis en œuvre avec Amazon Web Services (AWS), pour marquer les fichiers, il est de votre responsabilité de vérifier l'attribut de malveillance <code>isPotentiallyMalicious</code> avant d'ouvrir les fichiers liés. Vous pouvez décider de la manière d'utiliser cet attribut, par exemple : envoyer un avertissement dans les journeaux, exécuter un système de quarantaine ou toute autre logique que vous développez en fonction de la manière dont vous et votre équipe de sécurité souhaitez vous protéger contre les fichiers malveillants.
+
+#### Pour récupérer les fichiers téléchargés vers un formulaire en toute sécurité :
+
+Vous recevrez chaque soumission sous forme de fichier JSON brut comprenant des liens directs vers les fichiers, s'ils sont joints. Pour des raisons de sécurité, ces liens de téléchargement direct ne sont valables que pendant 10 secondes.
+
+Les fichiers étant analysés lors de leur soumission, ils peuvent également être signalés comme potentiellement malveillants, en fonction du logiciel d'analyse des fichiers. Vous devez décider quoi faire avec les fichiers signalés — soit que vous les téléchargez ou non, s'ils comportent un attribut de métadonnées « malveillant » ou « mauvais ».
+
+Ajoutez du code pour gérer les cas où les fichiers sont signalés et <code>isPotentiallyMalicious:true</code> est rencontré. Vous pourrez ensuite accéder aux données soumises et aux fichiers sécurisés joints dans votre système. 
+
 ### **Confirmer** des soumissions de formulaires
 
 L’étape de confirmation permet de s’assurer que les formulaires soumis sont exploitables et s’affichent comme prévu avant qu’ils ne soient définitivement retirés de la base de données du système Formulaires GC. 
+
+Avant de confirmer une réponse, assurez-vous d'avoir accès à tous les fichiers joints, le cas échéant. Ces liens de téléchargement de fichiers ne sont disponibles que temporairement, car ils ne sont valables que pendant 10 secondes. Si vous n'avez pas reçu tous les fichiers, téléchargez à nouveau le même formulaire soumis pour obtenir de nouveaux liens de téléchargement. Signalez tout problème lié aux fichiers ou aux données. Une fois que vous êtes certain d'avoir bien reçu toutes les données et tous les fichiers soumis, confirmez que toutes les données ont été transférées avec succès. Les réponses et les fichiers seront ensuite supprimés de GC Forms après 30 jours.
+
+#### Exemple de données de réponses avec fichiers
+
+Les données ressembleront à ceci lorsque des fichiers sont joints :
+
+<code>
+{
+   "createdAt":1749476854628,
+   "status":"New",
+   "confirmationCode":"714dfe46-6fa1-4281-8d15-a39bcebc3c4f",
+   "answers":"{\"1\":\"Test1\",\"2\":\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\",\"3\":\"form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\",\"4\":\"form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\"}",
+   "checksum":"cc33cb49f6c088bf98b7315794db216e",
+   "attachments":[
+      {
+        "id": "04d8aff7-25d7-49e5-8f01-77a8b6fba214",
+        "name":"output.txt",
+        "downloadLink":"https://...",
+        "isPotentiallyMalicious":true,
+        "md5":"54b0c58c7ce9f2a8b551351102ee0938"
+      }
+   ]
+}
+</code>
 
 ##### Demande HTTP
 
