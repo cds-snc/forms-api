@@ -171,7 +171,7 @@ Data will look something like this when files are attached:
         "name":"output.txt",
         "downloadLink":"https://...",
         "isPotentiallyMalicious":true,
-        "md5": "54b0c58c7ce9f2a8b551351102ee0938"
+        "md5":"54b0c58c7ce9f2a8b551351102ee0938"
       }
    ]
 }
