@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.1](https://github.com/cds-snc/forms-api/compare/v1.7.0...v1.7.1) (2025-11-13)
+
+
+### Miscellaneous Chores
+
+* synced file(s) with cds-snc/site-reliability-engineering ([#254](https://github.com/cds-snc/forms-api/issues/254)) ([14a8ebd](https://github.com/cds-snc/forms-api/commit/14a8ebd00905d160ae8d15286b2faab0878e75b7))
+* synced local '.github/workflows/s3-backup.yml' with remote 'tools/sre_file_sync/s3-backup.yml' ([14a8ebd](https://github.com/cds-snc/forms-api/commit/14a8ebd00905d160ae8d15286b2faab0878e75b7))
+
 ## [1.7.0](https://github.com/cds-snc/forms-api/compare/v1.6.0...v1.7.0) (2025-11-10)
 
 
