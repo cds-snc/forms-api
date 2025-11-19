@@ -136,7 +136,7 @@ Security of the system is paramount and it is enhanced by encrypting form submis
 
 ### Getting files that were attached to form submissions securely
 
-The retrieval of files attached within submissions is only possible via the API data delivery method. The same storage conditions apply as for submission data, where GC Forms only temporarily keeps data and files until downloaded and confirmed. To learn more about adding a file upload element to your form, consult our [Guidance page](https://articles.alpha.canada.ca/forms-formulaires/beta-instructions-retrieving-files-attached-via-api-limited-trial-feature/). 
+The retrieval of files attached within submissions is only possible via the API data delivery method. The same storage conditions apply as for submission data, where GC Forms only temporarily keeps data and files until downloaded and confirmed. To learn more about adding a file upload element to your form, consult our [Guidance page]([https://articles.alpha.canada.ca/forms-formulaires/beta-instructions-retrieving-files-attached-via-api-limited-trial-feature/](https://articles.alpha.canada.ca/forms-formulaires/files-attachments/). 
 
 Files are linked directly within responses (retrieval from AWS) and are accompanied by an attribute that shows whether scanning for malicious files detected any potential harm, with basic antivirus technology. Be careful when opening any attachments: choose a secure location, follow security guidelines, and run host-level sensors if possible. The safety of files cannot be guaranteed, as no software is perfect at detecting threats.
 
