@@ -9,7 +9,7 @@ trans_url: "/authentification/"
 ### Base URL
 
 <code>
-https://api.forms-formulaires.alpha.canada.ca/
+https://api.forms-formulaires.alpha.canada.ca/v1/...
 </code>
 
 
