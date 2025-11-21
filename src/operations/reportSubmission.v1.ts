@@ -25,10 +25,11 @@ const validationSchema: Schema = {
     exists: { bail: true, errorMessage: "Missing description property" },
     isString: true,
     isLength: {
-      options: { min: 10 },
-      errorMessage: "Must be at least 10 characters long",
+      options: { min: 10, max: 1000 },
+      errorMessage: "Text length must be between 10 and 1000 characters",
     },
     escape: true,
+    isBase64: { negated: true },
   },
   preferredLanguage: {
     exists: { bail: true, errorMessage: "Missing preferredLanguage property" },
