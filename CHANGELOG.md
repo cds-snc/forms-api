@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.1](https://github.com/cds-snc/forms-api/compare/v1.7.0...v1.7.1) (2025-11-21)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#256](https://github.com/cds-snc/forms-api/issues/256)) ([2459658](https://github.com/cds-snc/forms-api/commit/2459658a6fc61e5130998ceea6101c32cb8115a7))
+* set limit for max number of characters when reporting problem with response. Also prevent base64 encoded string from being accepted ([#258](https://github.com/cds-snc/forms-api/issues/258)) ([d71fabf](https://github.com/cds-snc/forms-api/commit/d71fabfdfdcf23152820cda279a269f2559c20ab))
+* synced file(s) with cds-snc/site-reliability-engineering ([#254](https://github.com/cds-snc/forms-api/issues/254)) ([14a8ebd](https://github.com/cds-snc/forms-api/commit/14a8ebd00905d160ae8d15286b2faab0878e75b7))
+* synced local '.github/workflows/s3-backup.yml' with remote 'tools/sre_file_sync/s3-backup.yml' ([14a8ebd](https://github.com/cds-snc/forms-api/commit/14a8ebd00905d160ae8d15286b2faab0878e75b7))
+
 ## [1.7.0](https://github.com/cds-snc/forms-api/compare/v1.6.0...v1.7.0) (2025-11-10)
 
 
