@@ -141,17 +141,27 @@ Selection (1):");
       Console.WriteLine($"\nSubmission saved in folder named '{Path.GetFileName(submissionFolderPath)}'");
     }
 
-    static Task DownloadAndSaveAttachment(Attachment attachment, string submissionFolderPath)
+    static async Task DownloadAndSaveAttachment(Attachment attachment, string submissionFolderPath)
     {
       try
       {
-        return sharedHttpClient
-          .GetAsync(attachment.downloadLink, HttpCompletionOption.ResponseHeadersRead)
-          .Result
-          .EnsureSuccessStatusCode()
-          .Content
-          .CopyToAsync(new FileStream(Path.Combine(submissionFolderPath, attachment.name), FileMode.Create, FileAccess.Write, FileShare.None))
-          .ContinueWith(_ => Console.WriteLine($"Submission attachment '{attachment.name}' has been saved {(attachment.isPotentiallyMalicious ? "(flagged as potentially malicious)" : "")}"));
+        using var response = await sharedHttpClient.GetAsync(
+            attachment.downloadLink,
+            HttpCompletionOption.ResponseHeadersRead
+        );
+
+        response.EnsureSuccessStatusCode();
+
+        using var fileStream = new FileStream(
+            Path.Combine(submissionFolderPath, attachment.name),
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.None
+        );
+
+        await response.Content.CopyToAsync(fileStream);
+
+        Console.WriteLine($"Submission attachment '{attachment.name}' has been saved {(attachment.isPotentiallyMalicious ? "(flagged as potentially malicious)" : "")}");
       }
       catch (Exception exception)
       {
