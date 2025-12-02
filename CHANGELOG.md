@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.7.1](https://github.com/cds-snc/forms-api/compare/v1.7.0...v1.7.1) (2025-12-01)
+
+
+### Bug Fixes
+
+* broken submission attachment download in .NET example ([#261](https://github.com/cds-snc/forms-api/issues/261)) ([bf9b2fa](https://github.com/cds-snc/forms-api/commit/bf9b2fafcf2078ae1e3f01e20c36b00380a38da7))
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#256](https://github.com/cds-snc/forms-api/issues/256)) ([2459658](https://github.com/cds-snc/forms-api/commit/2459658a6fc61e5130998ceea6101c32cb8115a7))
+* **deps:** update all non-major github action dependencies ([#259](https://github.com/cds-snc/forms-api/issues/259)) ([318f70f](https://github.com/cds-snc/forms-api/commit/318f70f4a26789bc98c5de049a58f801e4aa71cc))
+* **deps:** update all patch dependencies ([#264](https://github.com/cds-snc/forms-api/issues/264)) ([ba04f2c](https://github.com/cds-snc/forms-api/commit/ba04f2c2d4f5c7d83e6dcd6babc7716a588992a0))
+* set limit for max number of characters when reporting problem with response. Also prevent base64 encoded string from being accepted ([#258](https://github.com/cds-snc/forms-api/issues/258)) ([d71fabf](https://github.com/cds-snc/forms-api/commit/d71fabfdfdcf23152820cda279a269f2559c20ab))
+* synced file(s) with cds-snc/site-reliability-engineering ([#254](https://github.com/cds-snc/forms-api/issues/254)) ([14a8ebd](https://github.com/cds-snc/forms-api/commit/14a8ebd00905d160ae8d15286b2faab0878e75b7))
+* synced file(s) with cds-snc/site-reliability-engineering ([#262](https://github.com/cds-snc/forms-api/issues/262)) ([ea4f193](https://github.com/cds-snc/forms-api/commit/ea4f1939e3cc46ff0ad5d9ed866b9574cb59e157))
+* synced local '.github/workflows/export_github_data.yml' with remote 'tools/sre_file_sync/export_github_data.yml' ([ea4f193](https://github.com/cds-snc/forms-api/commit/ea4f1939e3cc46ff0ad5d9ed866b9574cb59e157))
+* synced local '.github/workflows/s3-backup.yml' with remote 'tools/sre_file_sync/s3-backup.yml' ([14a8ebd](https://github.com/cds-snc/forms-api/commit/14a8ebd00905d160ae8d15286b2faab0878e75b7))
+
 ## [1.7.0](https://github.com/cds-snc/forms-api/compare/v1.6.0...v1.7.0) (2025-11-10)
 
 
