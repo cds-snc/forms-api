@@ -29,6 +29,6 @@
     }
   },
   "appPort": [3001],
-  "postCreateCommand": "npm i -g corepack@latest && corepack enable pnpm && pnpm config set store-dir /home/vscode/pnpm/store && corepack use pnpm@9.15.5 && pnpm install",
+  "postCreateCommand": "npm i -g corepack@latest && corepack enable pnpm && pnpm config set store-dir /home/vscode/pnpm/store && corepack use pnpm@10.25.0 && pnpm install",
   "remoteUser": "vscode"
 }
