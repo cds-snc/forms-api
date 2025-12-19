@@ -48,7 +48,7 @@ Ce chemin d’URL renvoie une liste de soumissions qui comprend les 100 plus anc
 GET  /forms/{formID}/submission/new
 </code>
 
-> _Remarque : Le statut de ces soumissions de formulaire ne passera pas à « Téléchargé »._
+> _À noter : Le statut de ces soumissions de formulaire ne passera pas à « Téléchargé »._
 
 ##### Statut de la réponse
 
@@ -79,6 +79,8 @@ GET  /forms/{formID}/submission/new
   </td>
 </tr>
 </table>
+
+> _À noter : L'horodatage est en temps universel coordonné (TUC)._
 
 ### Récupérer des soumissions de formulaires **spécifiques**
 
