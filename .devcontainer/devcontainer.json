@@ -1,6 +1,6 @@
 {
   "name": "Forms API",
-  "image": "mcr.microsoft.com/vscode/devcontainers/base:debian@sha256:2e826a6ae92e5744cc0a471a03b4411e64f6b7cc6af3adaecddad697f0018f10",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:debian@sha256:30b0a0c004ca94d36c323ee993361a7e0ae25ea255ea125201e8a9587501c324",
   "containerEnv": {
     "SHELL": "/bin/zsh"
   },
