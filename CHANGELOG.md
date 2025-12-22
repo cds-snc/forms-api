@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.2](https://github.com/cds-snc/forms-api/compare/v1.7.1...v1.7.2) (2025-12-22)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#267](https://github.com/cds-snc/forms-api/issues/267)) ([e3a05cd](https://github.com/cds-snc/forms-api/commit/e3a05cd701d8de562788f077dc54894251823a02))
+* **deps:** lock file maintenance ([#273](https://github.com/cds-snc/forms-api/issues/273)) ([96403ef](https://github.com/cds-snc/forms-api/commit/96403efc73229eddbeb50a7bca56f071ee6ad55d))
+* **deps:** update all patch dependencies ([#270](https://github.com/cds-snc/forms-api/issues/270)) ([bee77d4](https://github.com/cds-snc/forms-api/commit/bee77d4aea3d166edb54d61fed3fefd535fe19fa))
+* **deps:** update aws-actions/amazon-ecs-deploy-task-definition action to v2.5.0 ([#266](https://github.com/cds-snc/forms-api/issues/266)) ([593c128](https://github.com/cds-snc/forms-api/commit/593c1288c89455224597b2ad124afda73e788792))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 30b0a0c ([#272](https://github.com/cds-snc/forms-api/issues/272)) ([45440d1](https://github.com/cds-snc/forms-api/commit/45440d1b826cb30ba6f3c706bfc6efffa1787b32))
+* update pnpm to v10 ([#269](https://github.com/cds-snc/forms-api/issues/269)) ([33cd80d](https://github.com/cds-snc/forms-api/commit/33cd80d47a2f1dd28601c22cdd72d957c040f5fd))
+
 ## [1.7.1](https://github.com/cds-snc/forms-api/compare/v1.7.0...v1.7.1) (2025-12-01)
 
 
