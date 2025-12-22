@@ -83,6 +83,8 @@ GET  /forms/{formID}/submission/new
 </tr>
 </table>
 
+> _Note: The timestamp is in Coordinated Universal Time (UTC)._
+
 ### Retrieving **specific** form submissions
 
 #### Getting the form submission
