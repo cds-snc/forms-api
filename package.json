@@ -53,5 +53,5 @@
     "vitest": "^2.1.9",
     "vitest-mock-express": "^2.2.0"
   },
-  "packageManager": "pnpm@10.25.0"
+  "packageManager": "pnpm@10.27.0"
 }
