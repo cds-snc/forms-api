@@ -59,6 +59,7 @@ describe("verifyAccessToken should", () => {
       const verifiedAccessToken = await verifyAccessToken(
         "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
         "clzsn6tao000611j50dexeob0",
+        "1.1.1.1",
       );
 
       expect(verifiedAccessToken).toEqual({
@@ -81,6 +82,7 @@ describe("verifyAccessToken should", () => {
       const verifiedAccessToken = await verifyAccessToken(
         "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
         "username",
+        "1.1.1.1",
       );
 
       expect(verifiedAccessToken).toEqual({
@@ -108,18 +110,20 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
+          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessTokenInvalidError);
 
-      expect(auditLogSpy).toHaveBeenCalledWith(
-        "0000",
-        {
+      expect(auditLogSpy).toHaveBeenCalledWith({
+        userId: "0000",
+        subject: {
           id: "unknown",
           type: "ServiceAccount",
         },
-        "InvalidAccessToken",
-        "Access token was marked as invalid by IDP",
-      );
+        event: "InvalidAccessToken",
+        description: "Access token was marked as invalid by IDP",
+        clientIp: "1.1.1.1",
+      });
     });
 
     it("when token is active but missing additional properties", async () => {
@@ -132,6 +136,7 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
+          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessTokenMalformedError);
     });
@@ -149,18 +154,20 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
+          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessTokenExpiredError);
 
-      expect(auditLogSpy).toHaveBeenCalledWith(
-        "0000",
-        {
+      expect(auditLogSpy).toHaveBeenCalledWith({
+        userId: "0000",
+        subject: {
           id: "11111111111",
           type: "ServiceAccount",
         },
-        "InvalidAccessToken",
-        "Access token has expired",
-      );
+        event: "InvalidAccessToken",
+        description: "Access token has expired",
+        clientIp: "1.1.1.1",
+      });
     });
 
     it("when token does not match the formId", async () => {
@@ -176,18 +183,20 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
+          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessControlError);
 
-      expect(auditLogSpy).toHaveBeenCalledWith(
-        "1111",
-        {
+      expect(auditLogSpy).toHaveBeenCalledWith({
+        userId: "1111",
+        subject: {
           id: "0000",
           type: "Form",
         },
-        "AccessDenied",
-        "User 11111111111 does not have access to form 0000",
-      );
+        event: "AccessDenied",
+        description: "User 11111111111 does not have access to form 0000",
+        clientIp: "1.1.1.1",
+      });
     });
 
     it("throw an error if access token introspection has an internal failure", async () => {
@@ -200,6 +209,7 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
+          "1.1.1.1",
         ),
       ).rejects.toThrowError(ZitadelConnectionError);
 

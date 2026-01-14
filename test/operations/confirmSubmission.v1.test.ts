@@ -23,6 +23,7 @@ describe("confirmSubmissionOperation handler should", () => {
       confirmationCode: "620b203c-9836-4000-bf30-1c3bcc26b834",
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
+    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -42,15 +43,12 @@ describe("confirmSubmissionOperation handler should", () => {
     );
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "01-08-a571",
-        type: "Response",
-      },
-      "ConfirmResponse",
-    );
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Response", id: "01-08-a571" },
+      event: "ConfirmResponse",
+      clientIp: "1.1.1.1",
+    });
   });
 
   it("respond with error when form submission does not exist", async () => {

@@ -16,6 +16,7 @@ describe("retrieveTemplateOperation handler should", () => {
       formId: "clzsn6tao000611j50dexeob0",
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
+    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -51,15 +52,12 @@ describe("retrieveTemplateOperation handler should", () => {
         },
       ],
     });
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "clzsn6tao000611j50dexeob0",
-        type: "Form",
-      },
-      "RetrieveTemplate",
-    );
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
+      event: "RetrieveTemplate",
+      clientIp: "1.1.1.1",
+    });
   });
 
   it("respond with error when form template does not exist", async () => {

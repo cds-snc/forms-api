@@ -22,11 +22,12 @@ async function v1(
 
     const responsePayload = buildResponse(newFormSubmissions);
 
-    auditLog(
-      serviceUserId,
-      { type: "Form", id: formId },
-      "RetrieveNewResponses",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Form", id: formId },
+      event: "RetrieveNewResponses",
+      clientIp: request.clientIp,
+    });
 
     response.json(responsePayload);
   } catch (error) {

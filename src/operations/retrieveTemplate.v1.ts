@@ -22,7 +22,12 @@ async function v1(
 
     const responsePayload = buildResponse(formTemplate);
 
-    auditLog(serviceUserId, { type: "Form", id: formId }, "RetrieveTemplate");
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Form", id: formId },
+      event: "RetrieveTemplate",
+      clientIp: request.clientIp,
+    });
 
     response.json(responsePayload);
   } catch (error) {

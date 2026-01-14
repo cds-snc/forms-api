@@ -68,11 +68,12 @@ async function v1(
       );
     }
 
-    auditLog(
-      serviceUserId,
-      { type: "Response", id: submissionName },
-      "IdentifyProblemResponse",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Response", id: submissionName },
+      event: "IdentifyProblemResponse",
+      clientIp: request.clientIp,
+    });
 
     response.sendStatus(200);
   } catch (error) {

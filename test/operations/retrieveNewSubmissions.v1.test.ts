@@ -16,6 +16,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       formId: "clzsn6tao000611j50dexeob0",
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
+    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -35,15 +36,12 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
     );
 
     expect(responseMock.json).toHaveBeenCalledWith([]);
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "clzsn6tao000611j50dexeob0",
-        type: "Form",
-      },
-      "RetrieveNewResponses",
-    );
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
+      event: "RetrieveNewResponses",
+      clientIp: "1.1.1.1",
+    });
   });
 
   it("respond with success when new form submission have been found", async () => {
@@ -66,15 +64,12 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
         name: "ABC",
       },
     ]);
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "clzsn6tao000611j50dexeob0",
-        type: "Form",
-      },
-      "RetrieveNewResponses",
-    );
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
+      event: "RetrieveNewResponses",
+      clientIp: "1.1.1.1",
+    });
   });
 
   it("pass error to next function when processing fails due to internal error", async () => {

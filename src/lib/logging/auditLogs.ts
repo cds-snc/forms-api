@@ -29,18 +29,18 @@ export enum AuditSubjectType {
   Response = "Response",
 }
 
-export const auditLog = async (
-  userId: string,
-  subject: { type: keyof typeof AuditSubjectType; id?: string },
-  event: AuditLogEventStrings,
-  description?: string,
-): Promise<void> => {
+export type AuditLog = {
+  userId: string;
+  subject: { type: keyof typeof AuditSubjectType; id?: string };
+  event: AuditLogEventStrings;
+  description?: string;
+  clientIp: string;
+};
+
+export async function auditLog(log: AuditLog): Promise<void> {
   const auditLogAsJsonString = JSON.stringify({
-    userId,
-    event,
     timestamp: Date.now(),
-    subject,
-    description,
+    ...log,
   });
 
   try {
@@ -63,4 +63,4 @@ export const auditLog = async (
       `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${auditLogAsJsonString}.`,
     );
   }
-};
+}

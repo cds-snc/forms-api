@@ -27,22 +27,24 @@ describe("auditLog should", () => {
 
   it("successfully publish an audit log if everything goes well", async () => {
     await expect(
-      auditLog(
-        "userId",
-        { type: "Response", id: "responseId" },
-        "ConfirmResponse",
-        "description",
-      ),
+      auditLog({
+        userId: "userId",
+        subject: { type: "Response", id: "responseId" },
+        event: "ConfirmResponse",
+        description: "description",
+        clientIp: "1.1.1.1",
+      }),
     ).resolves.not.toThrow();
 
     expect(sqsMock.commandCalls(SendMessageCommand).length).toEqual(1);
     expect(sqsMock.commandCalls(SendMessageCommand)[0].args[0].input).toEqual({
       MessageBody: JSON.stringify({
-        userId: "userId",
-        event: "ConfirmResponse",
         timestamp: 1519129853500,
+        userId: "userId",
         subject: { type: "Response", id: "responseId" },
+        event: "ConfirmResponse",
         description: "description",
+        clientIp: "1.1.1.1",
       }),
       QueueUrl: "apiAuditLogQueueUrl",
     });
@@ -53,16 +55,17 @@ describe("auditLog should", () => {
     sqsMock.on(SendMessageCommand).rejectsOnce(customError);
     const errorLogMessageSpy = vi.spyOn(logMessage, "error");
 
-    await auditLog(
-      "userId",
-      { type: "Response", id: "responseId" },
-      "ConfirmResponse",
-      "description",
-    );
+    await auditLog({
+      userId: "userId",
+      subject: { type: "Response", id: "responseId" },
+      event: "ConfirmResponse",
+      description: "description",
+      clientIp: "1.1.1.1",
+    });
 
     expect(errorLogMessageSpy).toHaveBeenCalledWith(
       customError,
-      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ userId: "userId", event: "ConfirmResponse", timestamp: 1519129853500, subject: { type: "Response", id: "responseId" }, description: "description" })}.`,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description", clientIp: "1.1.1.1" })}.`,
     );
   });
 });

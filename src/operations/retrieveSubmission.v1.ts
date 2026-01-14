@@ -43,11 +43,12 @@ async function v1(
       responsePayload,
     );
 
-    auditLog(
-      serviceUserId,
-      { type: "Response", id: submissionName },
-      "DownloadResponse",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Response", id: submissionName },
+      event: "DownloadResponse",
+      clientIp: request.clientIp,
+    });
 
     response.json(encryptedResponse);
   } catch (error) {

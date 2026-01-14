@@ -37,6 +37,7 @@ describe("retrieveSubmissionOperation handler should", () => {
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
     serviceAccountId: "235435656365365363",
+    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -88,15 +89,12 @@ describe("retrieveSubmissionOperation handler should", () => {
       }),
     );
 
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "01-08-a571",
-        type: "Response",
-      },
-      "DownloadResponse",
-    );
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Response", id: "01-08-a571" },
+      event: "DownloadResponse",
+      clientIp: "1.1.1.1",
+    });
   });
 
   it("respond with success when form submission with attachments does exist", async () => {
@@ -161,70 +159,12 @@ describe("retrieveSubmissionOperation handler should", () => {
       }),
     );
 
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "01-08-a571",
-        type: "Response",
-      },
-      "DownloadResponse",
-    );
-  });
-
-  // This test should be deleted once `PartialAttachment` has its `id` property set to non optional
-  it("respond with success when form submission with attachments does exist (testing backwards compatibility with file attachments not having defined 'id')", async () => {
-    getFormSubmissionMock.mockResolvedValueOnce({
-      createdAt: 0,
-      status: SubmissionStatus.New,
-      confirmationCode: "",
-      answers:
-        '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
-      checksum: "",
-      attachments: [
-        {
-          name: "output.txt",
-          path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
-          scanStatus: AttachmentScanStatus.NoThreatsFound,
-        },
-      ],
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Response", id: "01-08-a571" },
+      event: "DownloadResponse",
+      clientIp: "1.1.1.1",
     });
-    getFormSubmissionAttachmentDownloadLinkMock.mockResolvedValueOnce(
-      "https://download-link",
-    );
-    getPublicKeyMock.mockResolvedValueOnce("publicKey");
-    encryptResponseMock.mockReturnValueOnce({
-      encryptedKey: "encryptedKey",
-      encryptedNonce: "encryptedNonce",
-      encryptedAuthTag: "encryptedAuthTag",
-      encryptedResponses: "encryptedResponses",
-    });
-
-    await retrieveSubmissionOperationV1.handler(
-      requestMock,
-      responseMock,
-      nextMock,
-    );
-
-    expect(encryptResponseMock).toHaveBeenCalledWith(
-      "publicKey",
-      JSON.stringify({
-        createdAt: 0,
-        status: "New",
-        confirmationCode: "",
-        answers:
-          '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
-        checksum: "",
-        attachments: [
-          {
-            id: undefined,
-            name: "output.txt",
-            downloadLink: "https://download-link",
-            isPotentiallyMalicious: false,
-          },
-        ],
-      }),
-    );
   });
 
   it("respond with error when form submission does not exist", async () => {

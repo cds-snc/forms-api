@@ -91,6 +91,7 @@ describe("reportSubmissionOperation", () => {
         submissionName: "01-08-a571",
       },
       serviceUserId: "clzsn6tao000611j50dexeob0",
+      clientIp: "1.1.1.1",
       body: {
         contactEmail: "test@test.com",
         description: "This is the problem",
@@ -109,15 +110,12 @@ describe("reportSubmissionOperation", () => {
       );
 
       expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-      expect(auditLogSpy).toHaveBeenNthCalledWith(
-        1,
-        "clzsn6tao000611j50dexeob0",
-        {
-          id: "01-08-a571",
-          type: "Response",
-        },
-        "IdentifyProblemResponse",
-      );
+      expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+        userId: "clzsn6tao000611j50dexeob0",
+        subject: { type: "Response", id: "01-08-a571" },
+        event: "IdentifyProblemResponse",
+        clientIp: "1.1.1.1",
+      });
     });
 
     it("respond with error when form submission does not exist", async () => {

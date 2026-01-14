@@ -21,11 +21,12 @@ async function v1(
   try {
     await confirmFormSubmission(formId, submissionName, confirmationCode);
 
-    auditLog(
-      serviceUserId,
-      { type: "Response", id: submissionName },
-      "ConfirmResponse",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Response", id: submissionName },
+      event: "ConfirmResponse",
+      clientIp: request.clientIp,
+    });
 
     response.sendStatus(200);
   } catch (error) {

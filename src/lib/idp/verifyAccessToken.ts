@@ -44,7 +44,11 @@ export class AccessControlError extends Error {
   }
 }
 
-export async function verifyAccessToken(accessToken: string, formId: string) {
+export async function verifyAccessToken(
+  accessToken: string,
+  formId: string,
+  clientIp: string,
+) {
   try {
     // Get token from cache, it if doesn't exist introspect from IDP
     const { introspectedAccessToken, cached } =
@@ -57,6 +61,7 @@ export async function verifyAccessToken(accessToken: string, formId: string) {
           const introspectedAccessToken = await generateIntrospectedAccessToken(
             accessToken,
             formId,
+            clientIp,
           );
 
           return { introspectedAccessToken, cached: false };
@@ -64,7 +69,7 @@ export async function verifyAccessToken(accessToken: string, formId: string) {
       );
 
     // Checks for expiry and access control
-    validateIntrospectedToken(introspectedAccessToken, formId);
+    validateIntrospectedToken(introspectedAccessToken, formId, clientIp);
 
     // If the token was not cached, cache the valid token
     if (!cached) {
@@ -109,21 +114,23 @@ function getVerifiedAccessTokenCacheKey(accessToken: string): string {
 async function generateIntrospectedAccessToken(
   accessToken: string,
   formId: string,
+  clientIp: string,
 ) {
   const introspectedToken = await introspectAccessToken(accessToken);
 
   // Active can be false if the token is invalid, expired, or does not exist.
   if (introspectedToken.active === false) {
-    auditLog(
+    auditLog({
       // We use the formId as the userId here because we don't have a valid userId
-      formId,
-      {
+      userId: formId,
+      subject: {
         type: "ServiceAccount",
         id: "unknown",
       },
-      "InvalidAccessToken",
-      "Access token was marked as invalid by IDP",
-    );
+      event: "InvalidAccessToken",
+      description: "Access token was marked as invalid by IDP",
+      clientIp: clientIp,
+    });
 
     throw new AccessTokenInvalidError();
   }
@@ -141,12 +148,13 @@ async function generateIntrospectedAccessToken(
     throw new AccessTokenMalformedError();
   }
 
-  auditLog(
-    introspectedToken.username,
-    { type: "ServiceAccount", id: introspectedToken.sub },
-    "IntrospectedAccessToken",
-    "Access token has been introspected by the IDP",
-  );
+  auditLog({
+    userId: introspectedToken.username,
+    subject: { type: "ServiceAccount", id: introspectedToken.sub },
+    event: "IntrospectedAccessToken",
+    description: "Access token has been introspected by the IDP",
+    clientIp: clientIp,
+  });
 
   return {
     expirationEpochTime: introspectedToken.exp,
@@ -155,27 +163,33 @@ async function generateIntrospectedAccessToken(
   };
 }
 
-function validateIntrospectedToken(token: VerifiedAccessToken, formId: string) {
+function validateIntrospectedToken(
+  token: VerifiedAccessToken,
+  formId: string,
+  clientIp: string,
+) {
   const { serviceUserId, serviceAccountId, expirationEpochTime } = token;
 
   if (expirationEpochTime < Date.now() / 1000) {
-    auditLog(
-      serviceUserId,
-      { type: "ServiceAccount", id: serviceAccountId },
-      "InvalidAccessToken",
-      "Access token has expired",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "ServiceAccount", id: serviceAccountId },
+      event: "InvalidAccessToken",
+      description: "Access token has expired",
+      clientIp: clientIp,
+    });
 
     throw new AccessTokenExpiredError();
   }
 
   if (serviceUserId !== formId) {
-    auditLog(
-      serviceUserId,
-      { type: "Form", id: formId },
-      "AccessDenied",
-      `User ${serviceAccountId} does not have access to form ${formId}`,
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Form", id: formId },
+      event: "AccessDenied",
+      description: `User ${serviceAccountId} does not have access to form ${formId}`,
+      clientIp: clientIp,
+    });
 
     throw new AccessControlError();
   }

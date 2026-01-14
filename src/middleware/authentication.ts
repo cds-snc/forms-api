@@ -24,9 +24,13 @@ export async function authenticationMiddleware(
       return;
     }
 
-    const verifiedAccessToken = await verifyAccessToken(accessToken, formId);
-
     const clientIp = extractClientIpFromRequestHeaders(request.headers);
+
+    const verifiedAccessToken = await verifyAccessToken(
+      accessToken,
+      formId,
+      clientIp,
+    );
 
     request.serviceUserId = verifiedAccessToken.serviceUserId;
     request.serviceAccountId = verifiedAccessToken.serviceAccountId;
