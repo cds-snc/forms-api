@@ -8,6 +8,7 @@ declare global {
       tokenConsumedOnFormId?: string;
       serviceAccountId: string;
       serviceUserId: string;
+      clientIp: string;
     }
   }
 }
