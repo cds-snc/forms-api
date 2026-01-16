@@ -16,7 +16,6 @@ describe("retrieveTemplateOperation handler should", () => {
       formId: "clzsn6tao000611j50dexeob0",
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
-    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -56,7 +55,6 @@ describe("retrieveTemplateOperation handler should", () => {
       userId: "clzsn6tao000611j50dexeob0",
       subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
       event: "RetrieveTemplate",
-      clientIp: "1.1.1.1",
     });
   });
 

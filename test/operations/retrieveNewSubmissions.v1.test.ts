@@ -16,7 +16,6 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       formId: "clzsn6tao000611j50dexeob0",
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
-    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -40,7 +39,6 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       userId: "clzsn6tao000611j50dexeob0",
       subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
       event: "RetrieveNewResponses",
-      clientIp: "1.1.1.1",
     });
   });
 
@@ -68,7 +66,6 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       userId: "clzsn6tao000611j50dexeob0",
       subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
       event: "RetrieveNewResponses",
-      clientIp: "1.1.1.1",
     });
   });
 

@@ -6,9 +6,6 @@ import {
   AccessControlError,
   AccessTokenMalformedError,
 } from "@lib/idp/verifyAccessToken.js";
-import type { IncomingHttpHeaders } from "node:http";
-
-const FALLBACK_CLIENT_IP_ADDRESS = "0.0.0.0";
 
 export async function authenticationMiddleware(
   request: Request,
@@ -24,17 +21,10 @@ export async function authenticationMiddleware(
       return;
     }
 
-    const clientIp = extractClientIpFromRequestHeaders(request.headers);
-
-    const verifiedAccessToken = await verifyAccessToken(
-      accessToken,
-      formId,
-      clientIp,
-    );
+    const verifiedAccessToken = await verifyAccessToken(accessToken, formId);
 
     request.serviceUserId = verifiedAccessToken.serviceUserId;
     request.serviceAccountId = verifiedAccessToken.serviceAccountId;
-    request.clientIp = clientIp;
 
     next();
   } catch (error) {
@@ -57,20 +47,4 @@ export async function authenticationMiddleware(
         );
     }
   }
-}
-
-function extractClientIpFromRequestHeaders(
-  requestHeaders: IncomingHttpHeaders,
-): string {
-  const xForwardedForHeader = requestHeaders["x-forwarded-for"];
-
-  if (xForwardedForHeader === undefined || Array.isArray(xForwardedForHeader)) {
-    return FALLBACK_CLIENT_IP_ADDRESS;
-  }
-
-  /**
-   * Only consider last IP as the source of truth as it has been added by AWS ECS Load balancer
-   * See https://docs.aws.amazon.com/elasticloadbalancing/latest/application/x-forwarded-headers.html#x-forwarded-for-append
-   */
-  return xForwardedForHeader.split(",").at(-1) ?? FALLBACK_CLIENT_IP_ADDRESS;
 }

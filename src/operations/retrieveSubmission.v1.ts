@@ -47,7 +47,6 @@ async function v1(
       userId: serviceUserId,
       subject: { type: "Response", id: submissionName },
       event: "DownloadResponse",
-      clientIp: request.clientIp,
     });
 
     response.json(encryptedResponse);

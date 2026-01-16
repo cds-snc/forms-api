@@ -25,7 +25,6 @@ async function v1(
       userId: serviceUserId,
       subject: { type: "Response", id: submissionName },
       event: "ConfirmResponse",
-      clientIp: request.clientIp,
     });
 
     response.sendStatus(200);

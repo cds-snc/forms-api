@@ -91,7 +91,6 @@ describe("reportSubmissionOperation", () => {
         submissionName: "01-08-a571",
       },
       serviceUserId: "clzsn6tao000611j50dexeob0",
-      clientIp: "1.1.1.1",
       body: {
         contactEmail: "test@test.com",
         description: "This is the problem",
@@ -114,7 +113,6 @@ describe("reportSubmissionOperation", () => {
         userId: "clzsn6tao000611j50dexeob0",
         subject: { type: "Response", id: "01-08-a571" },
         event: "IdentifyProblemResponse",
-        clientIp: "1.1.1.1",
       });
     });
 

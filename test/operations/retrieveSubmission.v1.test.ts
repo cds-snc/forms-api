@@ -37,7 +37,6 @@ describe("retrieveSubmissionOperation handler should", () => {
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
     serviceAccountId: "235435656365365363",
-    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -93,7 +92,6 @@ describe("retrieveSubmissionOperation handler should", () => {
       userId: "clzsn6tao000611j50dexeob0",
       subject: { type: "Response", id: "01-08-a571" },
       event: "DownloadResponse",
-      clientIp: "1.1.1.1",
     });
   });
 
@@ -163,7 +161,6 @@ describe("retrieveSubmissionOperation handler should", () => {
       userId: "clzsn6tao000611j50dexeob0",
       subject: { type: "Response", id: "01-08-a571" },
       event: "DownloadResponse",
-      clientIp: "1.1.1.1",
     });
   });
 

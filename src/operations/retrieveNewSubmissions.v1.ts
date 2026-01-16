@@ -26,7 +26,6 @@ async function v1(
       userId: serviceUserId,
       subject: { type: "Form", id: formId },
       event: "RetrieveNewResponses",
-      clientIp: request.clientIp,
     });
 
     response.json(responsePayload);

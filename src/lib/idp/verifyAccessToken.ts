@@ -44,11 +44,7 @@ export class AccessControlError extends Error {
   }
 }
 
-export async function verifyAccessToken(
-  accessToken: string,
-  formId: string,
-  clientIp: string,
-) {
+export async function verifyAccessToken(accessToken: string, formId: string) {
   try {
     // Get token from cache, it if doesn't exist introspect from IDP
     const { introspectedAccessToken, cached } =
@@ -61,7 +57,6 @@ export async function verifyAccessToken(
           const introspectedAccessToken = await generateIntrospectedAccessToken(
             accessToken,
             formId,
-            clientIp,
           );
 
           return { introspectedAccessToken, cached: false };
@@ -69,7 +64,7 @@ export async function verifyAccessToken(
       );
 
     // Checks for expiry and access control
-    validateIntrospectedToken(introspectedAccessToken, formId, clientIp);
+    validateIntrospectedToken(introspectedAccessToken, formId);
 
     // If the token was not cached, cache the valid token
     if (!cached) {
@@ -114,7 +109,6 @@ function getVerifiedAccessTokenCacheKey(accessToken: string): string {
 async function generateIntrospectedAccessToken(
   accessToken: string,
   formId: string,
-  clientIp: string,
 ) {
   const introspectedToken = await introspectAccessToken(accessToken);
 
@@ -129,7 +123,6 @@ async function generateIntrospectedAccessToken(
       },
       event: "InvalidAccessToken",
       description: "Access token was marked as invalid by IDP",
-      clientIp: clientIp,
     });
 
     throw new AccessTokenInvalidError();
@@ -153,7 +146,6 @@ async function generateIntrospectedAccessToken(
     subject: { type: "ServiceAccount", id: introspectedToken.sub },
     event: "IntrospectedAccessToken",
     description: "Access token has been introspected by the IDP",
-    clientIp: clientIp,
   });
 
   return {
@@ -163,11 +155,7 @@ async function generateIntrospectedAccessToken(
   };
 }
 
-function validateIntrospectedToken(
-  token: VerifiedAccessToken,
-  formId: string,
-  clientIp: string,
-) {
+function validateIntrospectedToken(token: VerifiedAccessToken, formId: string) {
   const { serviceUserId, serviceAccountId, expirationEpochTime } = token;
 
   if (expirationEpochTime < Date.now() / 1000) {
@@ -176,7 +164,6 @@ function validateIntrospectedToken(
       subject: { type: "ServiceAccount", id: serviceAccountId },
       event: "InvalidAccessToken",
       description: "Access token has expired",
-      clientIp: clientIp,
     });
 
     throw new AccessTokenExpiredError();
@@ -188,7 +175,6 @@ function validateIntrospectedToken(
       subject: { type: "Form", id: formId },
       event: "AccessDenied",
       description: `User ${serviceAccountId} does not have access to form ${formId}`,
-      clientIp: clientIp,
     });
 
     throw new AccessControlError();

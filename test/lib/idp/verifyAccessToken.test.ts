@@ -59,7 +59,6 @@ describe("verifyAccessToken should", () => {
       const verifiedAccessToken = await verifyAccessToken(
         "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
         "clzsn6tao000611j50dexeob0",
-        "1.1.1.1",
       );
 
       expect(verifiedAccessToken).toEqual({
@@ -82,7 +81,6 @@ describe("verifyAccessToken should", () => {
       const verifiedAccessToken = await verifyAccessToken(
         "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
         "username",
-        "1.1.1.1",
       );
 
       expect(verifiedAccessToken).toEqual({
@@ -110,7 +108,6 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
-          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessTokenInvalidError);
 
@@ -122,7 +119,6 @@ describe("verifyAccessToken should", () => {
         },
         event: "InvalidAccessToken",
         description: "Access token was marked as invalid by IDP",
-        clientIp: "1.1.1.1",
       });
     });
 
@@ -136,7 +132,6 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
-          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessTokenMalformedError);
     });
@@ -154,7 +149,6 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
-          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessTokenExpiredError);
 
@@ -166,7 +160,6 @@ describe("verifyAccessToken should", () => {
         },
         event: "InvalidAccessToken",
         description: "Access token has expired",
-        clientIp: "1.1.1.1",
       });
     });
 
@@ -183,7 +176,6 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
-          "1.1.1.1",
         ),
       ).rejects.toThrow(AccessControlError);
 
@@ -195,7 +187,6 @@ describe("verifyAccessToken should", () => {
         },
         event: "AccessDenied",
         description: "User 11111111111 does not have access to form 0000",
-        clientIp: "1.1.1.1",
       });
     });
 
@@ -209,7 +200,6 @@ describe("verifyAccessToken should", () => {
         verifyAccessToken(
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
-          "1.1.1.1",
         ),
       ).rejects.toThrowError(ZitadelConnectionError);
 

@@ -39,7 +39,6 @@ export async function rateLimiterMiddleware(
         userId: request.serviceUserId,
         subject: { type: "Form", id: formId },
         event: "RateLimitExceeded",
-        clientIp: request.clientIp,
       });
 
       response.sendStatus(429);

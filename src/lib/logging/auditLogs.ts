@@ -2,7 +2,7 @@ import { SendMessageCommand } from "@aws-sdk/client-sqs";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
-
+import { asyncContext } from "@middleware/asyncContext.js";
 import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 
 export enum AuditLogEvent {
@@ -34,16 +34,24 @@ export type AuditLog = {
   subject: { type: keyof typeof AuditSubjectType; id?: string };
   event: AuditLogEventStrings;
   description?: string;
-  clientIp: string;
 };
 
 export async function auditLog(log: AuditLog): Promise<void> {
-  const auditLogAsJsonString = JSON.stringify({
-    timestamp: Date.now(),
-    ...log,
-  });
-
+  const reqContext = asyncContext.getStore();
+  const clientIp = reqContext?.get("clientIp");
   try {
+    if (typeof clientIp !== "string") {
+      throw new Error(
+        "[audit log] IP in request context was not of type string",
+      );
+    }
+
+    const auditLogAsJsonString = JSON.stringify({
+      timestamp: Date.now(),
+      clientIp,
+      ...log,
+    });
+
     const queueUrl = await getApiAuditLogSqsQueueUrl();
 
     await AwsServicesConnector.getInstance().sqsClient.send(
@@ -60,7 +68,13 @@ export async function auditLog(log: AuditLog): Promise<void> {
   } catch (error) {
     logMessage.error(
       error,
-      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${auditLogAsJsonString}.`,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify(
+        {
+          timestamp: Date.now(),
+          clientIp: clientIp ?? "unknown",
+          ...log,
+        },
+      )}.`,
     );
   }
 }

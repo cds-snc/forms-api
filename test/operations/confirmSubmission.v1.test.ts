@@ -23,7 +23,6 @@ describe("confirmSubmissionOperation handler should", () => {
       confirmationCode: "620b203c-9836-4000-bf30-1c3bcc26b834",
     },
     serviceUserId: "clzsn6tao000611j50dexeob0",
-    clientIp: "1.1.1.1",
   });
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -47,7 +46,6 @@ describe("confirmSubmissionOperation handler should", () => {
       userId: "clzsn6tao000611j50dexeob0",
       subject: { type: "Response", id: "01-08-a571" },
       event: "ConfirmResponse",
-      clientIp: "1.1.1.1",
     });
   });
 

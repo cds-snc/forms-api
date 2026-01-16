@@ -72,7 +72,6 @@ async function v1(
       userId: serviceUserId,
       subject: { type: "Response", id: submissionName },
       event: "IdentifyProblemResponse",
-      clientIp: request.clientIp,
     });
 
     response.sendStatus(200);

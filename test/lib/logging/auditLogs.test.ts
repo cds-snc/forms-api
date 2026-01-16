@@ -4,6 +4,7 @@ import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { asyncContext } from "@middleware/asyncContext.js";
 
 vi.unmock("@lib/logging/auditLogs");
 
@@ -26,32 +27,59 @@ describe("auditLog should", () => {
   });
 
   it("successfully publish an audit log if everything goes well", async () => {
-    await expect(
-      auditLog({
-        userId: "userId",
-        subject: { type: "Response", id: "responseId" },
-        event: "ConfirmResponse",
-        description: "description",
-        clientIp: "1.1.1.1",
-      }),
-    ).resolves.not.toThrow();
+    const contextMock = new Map([["clientIp", "1.1.1.1"]]);
+    await asyncContext.run(contextMock, async () => {
+      await expect(
+        auditLog({
+          userId: "userId",
+          subject: { type: "Response", id: "responseId" },
+          event: "ConfirmResponse",
+          description: "description",
+        }),
+      ).resolves.not.toThrow();
 
-    expect(sqsMock.commandCalls(SendMessageCommand).length).toEqual(1);
-    expect(sqsMock.commandCalls(SendMessageCommand)[0].args[0].input).toEqual({
-      MessageBody: JSON.stringify({
-        timestamp: 1519129853500,
-        userId: "userId",
-        subject: { type: "Response", id: "responseId" },
-        event: "ConfirmResponse",
-        description: "description",
-        clientIp: "1.1.1.1",
-      }),
-      QueueUrl: "apiAuditLogQueueUrl",
+      expect(sqsMock.commandCalls(SendMessageCommand).length).toEqual(1);
+      expect(sqsMock.commandCalls(SendMessageCommand)[0].args[0].input).toEqual(
+        {
+          MessageBody: JSON.stringify({
+            timestamp: 1519129853500,
+            clientIp: "1.1.1.1",
+            userId: "userId",
+            subject: { type: "Response", id: "responseId" },
+            event: "ConfirmResponse",
+            description: "description",
+          }),
+          QueueUrl: "apiAuditLogQueueUrl",
+        },
+      );
     });
   });
 
   it("console log audit log that failed to be published because of an internal error", async () => {
-    const customError = new Error("custom error");
+    const contextMock = new Map([["clientIp", "1.1.1.1"]]);
+    await asyncContext.run(contextMock, async () => {
+      const customError = new Error("custom error");
+      sqsMock.on(SendMessageCommand).rejectsOnce(customError);
+      const errorLogMessageSpy = vi.spyOn(logMessage, "error");
+
+      await auditLog({
+        userId: "userId",
+        subject: { type: "Response", id: "responseId" },
+        event: "ConfirmResponse",
+        description: "description",
+      });
+
+      expect(errorLogMessageSpy).toHaveBeenCalledWith(
+        customError,
+        `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, clientIp: "1.1.1.1", userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description" })}.`,
+      );
+    });
+  });
+
+  it("console log audit log that failed to be published due to missing IP", async () => {
+    const customError = new Error(
+      "[audit log] IP in request context was not of type string",
+    );
     sqsMock.on(SendMessageCommand).rejectsOnce(customError);
     const errorLogMessageSpy = vi.spyOn(logMessage, "error");
 
@@ -60,12 +88,11 @@ describe("auditLog should", () => {
       subject: { type: "Response", id: "responseId" },
       event: "ConfirmResponse",
       description: "description",
-      clientIp: "1.1.1.1",
     });
 
     expect(errorLogMessageSpy).toHaveBeenCalledWith(
       customError,
-      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description", clientIp: "1.1.1.1" })}.`,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, clientIp: "unknown", userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description" })}.`,
     );
   });
 });
