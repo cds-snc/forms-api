@@ -37,12 +37,12 @@ export type AuditLog = {
 };
 
 export async function auditLog(log: AuditLog): Promise<void> {
-  const reqContext = asyncContext.getStore();
-  const clientIp = reqContext?.get("clientIp");
+  const clientIp = asyncContext.getStore()?.get("clientIp");
+
   try {
-    if (typeof clientIp !== "string") {
+    if (clientIp === undefined) {
       throw new Error(
-        "[audit log] IP in request context was not of type string",
+        "[audit-log] clientIp retrieved from async context store is undefined",
       );
     }
 
@@ -62,6 +62,7 @@ export async function auditLog(log: AuditLog): Promise<void> {
         QueueUrl: queueUrl,
       }),
     );
+
     if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
       logMessage.debug(`[audit-log] ${auditLogAsJsonString}`);
     }
@@ -71,7 +72,7 @@ export async function auditLog(log: AuditLog): Promise<void> {
       `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify(
         {
           timestamp: Date.now(),
-          clientIp: clientIp ?? "unknown",
+          clientIp: clientIp ?? "undefined",
           ...log,
         },
       )}.`,

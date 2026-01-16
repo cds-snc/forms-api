@@ -76,9 +76,9 @@ describe("auditLog should", () => {
     });
   });
 
-  it("console log audit log that failed to be published due to missing IP", async () => {
+  it("console log audit log that failed to be published due to missing client IP", async () => {
     const customError = new Error(
-      "[audit log] IP in request context was not of type string",
+      "[audit-log] clientIp retrieved from async context store is undefined",
     );
     sqsMock.on(SendMessageCommand).rejectsOnce(customError);
     const errorLogMessageSpy = vi.spyOn(logMessage, "error");
@@ -92,7 +92,7 @@ describe("auditLog should", () => {
 
     expect(errorLogMessageSpy).toHaveBeenCalledWith(
       customError,
-      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, clientIp: "unknown", userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description" })}.`,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, clientIp: "undefined", userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description" })}.`,
     );
   });
 });
