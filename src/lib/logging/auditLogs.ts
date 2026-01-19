@@ -2,8 +2,11 @@ import { SendMessageCommand } from "@aws-sdk/client-sqs";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { asyncContext } from "@middleware/asyncContext.js";
 import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 export enum AuditLogEvent {
   // Form Response Events
@@ -37,7 +40,9 @@ export type AuditLog = {
 };
 
 export async function auditLog(log: AuditLog): Promise<void> {
-  const clientIp = asyncContext.getStore()?.get("clientIp");
+  const clientIp = retrieveRequestContextData(
+    RequestContextualStoreKey.ClientIp,
+  );
 
   try {
     if (clientIp === undefined) {

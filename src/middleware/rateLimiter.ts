@@ -2,6 +2,11 @@ import type { NextFunction, Request, Response } from "express";
 import { consumeTokenIfAvailable } from "@lib/rateLimiting/tokenBucketLimiter.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+  saveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 export async function rateLimiterMiddleware(
   request: Request,
@@ -36,7 +41,9 @@ export async function rateLimiterMiddleware(
       );
 
       auditLog({
-        userId: request.serviceUserId,
+        userId: retrieveRequestContextData(
+          RequestContextualStoreKey.ServiceUserId,
+        ),
         subject: { type: "Form", id: formId },
         event: "RateLimitExceeded",
       });
@@ -45,7 +52,10 @@ export async function rateLimiterMiddleware(
       return;
     }
 
-    request.tokenConsumedOnFormId = formId;
+    saveRequestContextData(
+      RequestContextualStoreKey.TokenConsumedOnFormId,
+      formId,
+    );
 
     next();
   } catch (error) {

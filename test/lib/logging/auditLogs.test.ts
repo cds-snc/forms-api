@@ -4,7 +4,7 @@ import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { asyncContext } from "@middleware/asyncContext.js";
+import { asyncContext } from "@middleware/requestContext.js";
 
 vi.unmock("@lib/logging/auditLogs");
 

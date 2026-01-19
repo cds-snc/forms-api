@@ -11,6 +11,10 @@ import {
   type FormSubmission,
   type PartialAttachment,
 } from "@lib/vault/types/formSubmission.types.js";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 type CompleteAttachment = PartialAttachment & {
   downloadLink: string;
@@ -23,8 +27,12 @@ async function v1(
 ): Promise<void> {
   const formId = request.params.formId;
   const submissionName = request.params.submissionName;
-  const serviceUserId = request.serviceUserId;
-  const serviceAccountId = request.serviceAccountId;
+  const serviceUserId = retrieveRequestContextData(
+    RequestContextualStoreKey.ServiceUserId,
+  );
+  const serviceAccountId = retrieveRequestContextData(
+    RequestContextualStoreKey.ServiceAccountId,
+  );
 
   try {
     const formSubmission = await getFormSubmission(formId, submissionName);

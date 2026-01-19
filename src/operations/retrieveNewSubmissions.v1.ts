@@ -3,6 +3,10 @@ import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 import type { NewFormSubmission } from "@lib/vault/types/formSubmission.types.js";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 const MAXIMUM_NUMBER_OF_RETURNED_NEW_FORM_SUBMISSIONS: number = 100;
 
@@ -12,7 +16,9 @@ async function v1(
   next: NextFunction,
 ): Promise<void> {
   const formId = request.params.formId;
-  const serviceUserId = request.serviceUserId;
+  const serviceUserId = retrieveRequestContextData(
+    RequestContextualStoreKey.ServiceUserId,
+  );
 
   try {
     const newFormSubmissions = await getNewFormSubmissions(

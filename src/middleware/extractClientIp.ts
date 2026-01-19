@@ -1,29 +1,27 @@
-import { AsyncLocalStorage } from "node:async_hooks";
 import type { NextFunction, Request, Response } from "express";
+import {
+  RequestContextualStoreKey,
+  saveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 import type { IncomingHttpHeaders } from "node:http";
-
-export const asyncContext = new AsyncLocalStorage<Map<string, string>>();
 
 const FALLBACK_CLIENT_IP_ADDRESS = "0.0.0.0";
 
-export async function asyncContextMiddleware(
+export function extractClientIpMiddleware(
   request: Request,
   _: Response,
   next: NextFunction,
-): Promise<void> {
+): void {
   try {
-    const storeContext = new Map<string, string>();
-
-    storeContext.set(
-      "clientIp",
+    saveRequestContextData(
+      RequestContextualStoreKey.ClientIp,
       extractClientIpFromRequestHeaders(request.headers),
     );
 
-    // Run the rest of the middleware chain and route handlers within the store's context
-    asyncContext.run(storeContext, () => next());
+    next();
   } catch (error) {
     next(
-      new Error("[middleware][async-context] Internal error", {
+      new Error("[middleware][extract-client-ip] Internal error", {
         cause: error,
       }),
     );
