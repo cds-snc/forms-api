@@ -12,6 +12,7 @@ import * as auditLogsModule from "@lib/logging/auditLogs.js";
 import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 import { getFormSubmissionAttachmentDownloadLink } from "@lib/vault/getFormSubmissionAttachmentDownloadLink.js";
+import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/formsClient/getPublicKey");
 const getPublicKeyMock = vi.mocked(getPublicKey);
@@ -28,6 +29,11 @@ vi.mock("@lib/encryption/encryptResponse");
 const encryptResponseMock = vi.mocked(encryptResponse);
 
 const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
+
+vi.mock("@lib/storage/requestContextualStore");
+vi.mocked(retrieveRequestContextData).mockReturnValue(
+  "clzsn6tao000611j50dexeob0",
+);
 
 describe("retrieveSubmissionOperation handler should", () => {
   const requestMock = getMockReq({

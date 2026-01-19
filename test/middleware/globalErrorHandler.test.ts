@@ -5,6 +5,12 @@ import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler.js"
 import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as tokenBucketLimiterModule from "@lib/rateLimiting/tokenBucketLimiter.js";
+import { retrieveOptionalRequestContextData } from "@lib/storage/requestContextualStore.js";
+
+vi.mock("@lib/storage/requestContextualStore");
+const retrieveOptionalRequestContextDataMock = vi.mocked(
+  retrieveOptionalRequestContextData,
+);
 
 const refundConsumedTokenSpy = vi.spyOn(
   tokenBucketLimiterModule,
@@ -43,7 +49,9 @@ describe("globalErrorHandlerMiddleware should", () => {
   });
 
   it("refund a token if request had consumed one", () => {
-    requestMock.tokenConsumedOnFormId = "clzsn6tao000611j50dexeob0";
+    retrieveOptionalRequestContextDataMock.mockReturnValueOnce(
+      "clzsn6tao000611j50dexeob0",
+    );
     const customError = new Error("custom error");
 
     globalErrorHandlerMiddleware(

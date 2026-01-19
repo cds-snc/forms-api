@@ -4,11 +4,17 @@ import { getNewFormSubmissions } from "@lib/vault/getNewFormSubmissions.js";
 import { retrieveNewSubmissionsOperationV1 } from "@operations/retrieveNewSubmissions.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
+import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/vault/getNewFormSubmissions");
 const getNewFormSubmissionsMock = vi.mocked(getNewFormSubmissions);
 
 const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
+
+vi.mock("@lib/storage/requestContextualStore");
+vi.mocked(retrieveRequestContextData).mockReturnValue(
+  "clzsn6tao000611j50dexeob0",
+);
 
 describe("retrieveNewSubmissionsOperation handler should", () => {
   const requestMock = getMockReq({

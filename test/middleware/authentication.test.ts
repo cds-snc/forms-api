@@ -3,16 +3,23 @@ import { getMockReq, getMockRes } from "vitest-mock-express";
 import {
   type VerifiedAccessToken,
   verifyAccessToken,
-} from "@lib/idp/verifyAccessToken.js";
-import { authenticationMiddleware } from "@middleware/authentication.js";
-import {
   AccessTokenInvalidError,
   AccessTokenExpiredError,
   AccessControlError,
 } from "@lib/idp/verifyAccessToken.js";
+import { authenticationMiddleware } from "@middleware/authentication.js";
+import { RequestContextualStoreKey } from "@lib/storage/requestContextualStore.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as requestContextualStoreModule from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/idp/verifyAccessToken");
 const verifyAccessTokenMock = vi.mocked(verifyAccessToken);
+
+vi.mock("@lib/storage/requestContextualStore");
+const saveRequestContextDataSpy = vi.spyOn(
+  requestContextualStoreModule,
+  "saveRequestContextData",
+);
 
 describe("authenticationMiddleware should", () => {
   let requestMock = getMockReq();
@@ -43,8 +50,16 @@ describe("authenticationMiddleware should", () => {
 
     await authenticationMiddleware(requestMock, responseMock, nextMock);
 
-    expect(requestMock.serviceUserId).toEqual("clzsn6tao000611j50dexeob0");
-    expect(requestMock.serviceAccountId).toEqual("11111111111");
+    expect(saveRequestContextDataSpy).toHaveBeenNthCalledWith(
+      1,
+      RequestContextualStoreKey.ServiceUserId,
+      "clzsn6tao000611j50dexeob0",
+    );
+    expect(saveRequestContextDataSpy).toHaveBeenNthCalledWith(
+      2,
+      RequestContextualStoreKey.ServiceAccountId,
+      "11111111111",
+    );
     expect(nextMock).toHaveBeenCalledOnce();
   });
 

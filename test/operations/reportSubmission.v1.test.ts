@@ -9,6 +9,7 @@ import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupp
 import { reportSubmissionOperationV1 } from "@operations/reportSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
+import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/vault/reportProblemWithFormSubmission");
 const reportProblemWithFormSubmissionMock = vi.mocked(
@@ -21,6 +22,11 @@ const notifySupportAboutFormSubmissionProblemMock = vi.mocked(
 );
 
 const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
+
+vi.mock("@lib/storage/requestContextualStore");
+vi.mocked(retrieveRequestContextData).mockReturnValue(
+  "clzsn6tao000611j50dexeob0",
+);
 
 describe("reportSubmissionOperation", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
