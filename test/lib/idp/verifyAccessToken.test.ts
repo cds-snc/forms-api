@@ -111,15 +111,15 @@ describe("verifyAccessToken should", () => {
         ),
       ).rejects.toThrow(AccessTokenInvalidError);
 
-      expect(auditLogSpy).toHaveBeenCalledWith(
-        "0000",
-        {
+      expect(auditLogSpy).toHaveBeenCalledWith({
+        userId: "0000",
+        subject: {
           id: "unknown",
           type: "ServiceAccount",
         },
-        "InvalidAccessToken",
-        "Access token was marked as invalid by IDP",
-      );
+        event: "InvalidAccessToken",
+        description: "Access token was marked as invalid by IDP",
+      });
     });
 
     it("when token is active but missing additional properties", async () => {
@@ -152,15 +152,15 @@ describe("verifyAccessToken should", () => {
         ),
       ).rejects.toThrow(AccessTokenExpiredError);
 
-      expect(auditLogSpy).toHaveBeenCalledWith(
-        "0000",
-        {
+      expect(auditLogSpy).toHaveBeenCalledWith({
+        userId: "0000",
+        subject: {
           id: "11111111111",
           type: "ServiceAccount",
         },
-        "InvalidAccessToken",
-        "Access token has expired",
-      );
+        event: "InvalidAccessToken",
+        description: "Access token has expired",
+      });
     });
 
     it("when token does not match the formId", async () => {
@@ -179,15 +179,15 @@ describe("verifyAccessToken should", () => {
         ),
       ).rejects.toThrow(AccessControlError);
 
-      expect(auditLogSpy).toHaveBeenCalledWith(
-        "1111",
-        {
+      expect(auditLogSpy).toHaveBeenCalledWith({
+        userId: "1111",
+        subject: {
           id: "0000",
           type: "Form",
         },
-        "AccessDenied",
-        "User 11111111111 does not have access to form 0000",
-      );
+        event: "AccessDenied",
+        description: "User 11111111111 does not have access to form 0000",
+      });
     });
 
     it("throw an error if access token introspection has an internal failure", async () => {

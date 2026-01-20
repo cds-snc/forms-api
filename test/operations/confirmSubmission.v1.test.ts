@@ -9,11 +9,17 @@ import {
 import { confirmSubmissionOperationV1 } from "@operations/confirmSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
+import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/vault/confirmFormSubmission");
 const confirmFormSubmissionMock = vi.mocked(confirmFormSubmission);
 
 const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
+
+vi.mock("@lib/storage/requestContextualStore");
+vi.mocked(retrieveRequestContextData).mockReturnValue(
+  "clzsn6tao000611j50dexeob0",
+);
 
 describe("confirmSubmissionOperation handler should", () => {
   const requestMock = getMockReq({
@@ -42,15 +48,11 @@ describe("confirmSubmissionOperation handler should", () => {
     );
 
     expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "01-08-a571",
-        type: "Response",
-      },
-      "ConfirmResponse",
-    );
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Response", id: "01-08-a571" },
+      event: "ConfirmResponse",
+    });
   });
 
   it("respond with error when form submission does not exist", async () => {

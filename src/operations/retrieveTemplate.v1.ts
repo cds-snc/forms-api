@@ -3,6 +3,10 @@ import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 import type { FormTemplate } from "@lib/formsClient/types/formTemplate.js";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 async function v1(
   request: Request,
@@ -10,7 +14,9 @@ async function v1(
   next: NextFunction,
 ): Promise<void> {
   const formId = request.params.formId;
-  const serviceUserId = request.serviceUserId;
+  const serviceUserId = retrieveRequestContextData(
+    RequestContextualStoreKey.serviceUserId,
+  );
 
   try {
     const formTemplate = await getFormTemplate(formId);
@@ -22,7 +28,11 @@ async function v1(
 
     const responsePayload = buildResponse(formTemplate);
 
-    auditLog(serviceUserId, { type: "Form", id: formId }, "RetrieveTemplate");
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Form", id: formId },
+      event: "RetrieveTemplate",
+    });
 
     response.json(responsePayload);
   } catch (error) {

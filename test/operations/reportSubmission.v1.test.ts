@@ -9,6 +9,7 @@ import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupp
 import { reportSubmissionOperationV1 } from "@operations/reportSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
+import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/vault/reportProblemWithFormSubmission");
 const reportProblemWithFormSubmissionMock = vi.mocked(
@@ -21,6 +22,11 @@ const notifySupportAboutFormSubmissionProblemMock = vi.mocked(
 );
 
 const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
+
+vi.mock("@lib/storage/requestContextualStore");
+vi.mocked(retrieveRequestContextData).mockReturnValue(
+  "clzsn6tao000611j50dexeob0",
+);
 
 describe("reportSubmissionOperation", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
@@ -109,15 +115,11 @@ describe("reportSubmissionOperation", () => {
       );
 
       expect(responseMock.sendStatus).toHaveBeenCalledWith(200);
-      expect(auditLogSpy).toHaveBeenNthCalledWith(
-        1,
-        "clzsn6tao000611j50dexeob0",
-        {
-          id: "01-08-a571",
-          type: "Response",
-        },
-        "IdentifyProblemResponse",
-      );
+      expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+        userId: "clzsn6tao000611j50dexeob0",
+        subject: { type: "Response", id: "01-08-a571" },
+        event: "IdentifyProblemResponse",
+      });
     });
 
     it("respond with error when form submission does not exist", async () => {

@@ -15,6 +15,10 @@ import { notifySupportAboutFormSubmissionProblem } from "@lib/support/notifySupp
 import { logMessage } from "@lib/logging/logger.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 const validationSchema: Schema = {
   contactEmail: {
@@ -44,7 +48,9 @@ async function v1(
 ): Promise<void> {
   const formId = request.params.formId;
   const submissionName = request.params.submissionName;
-  const serviceUserId = request.serviceUserId;
+  const serviceUserId = retrieveRequestContextData(
+    RequestContextualStoreKey.serviceUserId,
+  );
 
   const contactEmail = request.body.contactEmail as string;
   const description = request.body.description as string;
@@ -68,11 +74,11 @@ async function v1(
       );
     }
 
-    auditLog(
-      serviceUserId,
-      { type: "Response", id: submissionName },
-      "IdentifyProblemResponse",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Response", id: submissionName },
+      event: "IdentifyProblemResponse",
+    });
 
     response.sendStatus(200);
   } catch (error) {

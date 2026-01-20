@@ -2,8 +2,11 @@ import { SendMessageCommand } from "@aws-sdk/client-sqs";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
-
 import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 export enum AuditLogEvent {
   // Form Response Events
@@ -29,21 +32,31 @@ export enum AuditSubjectType {
   Response = "Response",
 }
 
-export const auditLog = async (
-  userId: string,
-  subject: { type: keyof typeof AuditSubjectType; id?: string },
-  event: AuditLogEventStrings,
-  description?: string,
-): Promise<void> => {
-  const auditLogAsJsonString = JSON.stringify({
-    userId,
-    event,
-    timestamp: Date.now(),
-    subject,
-    description,
-  });
+export type AuditLog = {
+  userId: string;
+  subject: { type: keyof typeof AuditSubjectType; id?: string };
+  event: AuditLogEventStrings;
+  description?: string;
+};
+
+export async function auditLog(log: AuditLog): Promise<void> {
+  const clientIp = retrieveRequestContextData(
+    RequestContextualStoreKey.clientIp,
+  );
 
   try {
+    if (clientIp === undefined) {
+      throw new Error(
+        "[audit-log] clientIp retrieved from async context store is undefined",
+      );
+    }
+
+    const auditLogAsJsonString = JSON.stringify({
+      timestamp: Date.now(),
+      clientIp,
+      ...log,
+    });
+
     const queueUrl = await getApiAuditLogSqsQueueUrl();
 
     await AwsServicesConnector.getInstance().sqsClient.send(
@@ -54,13 +67,20 @@ export const auditLog = async (
         QueueUrl: queueUrl,
       }),
     );
+
     if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
       logMessage.debug(`[audit-log] ${auditLogAsJsonString}`);
     }
   } catch (error) {
     logMessage.error(
       error,
-      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${auditLogAsJsonString}.`,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify(
+        {
+          timestamp: Date.now(),
+          clientIp: clientIp ?? "undefined",
+          ...log,
+        },
+      )}.`,
     );
   }
-};
+}

@@ -4,11 +4,17 @@ import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { retrieveTemplateOperationV1 } from "@operations/retrieveTemplate.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
+import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/formsClient/getFormTemplate");
 const getFormTemplateMock = vi.mocked(getFormTemplate);
 
 const auditLogSpy = vi.spyOn(auditLogsModule, "auditLog");
+
+vi.mock("@lib/storage/requestContextualStore");
+vi.mocked(retrieveRequestContextData).mockReturnValue(
+  "clzsn6tao000611j50dexeob0",
+);
 
 describe("retrieveTemplateOperation handler should", () => {
   const requestMock = getMockReq({
@@ -51,15 +57,11 @@ describe("retrieveTemplateOperation handler should", () => {
         },
       ],
     });
-    expect(auditLogSpy).toHaveBeenNthCalledWith(
-      1,
-      "clzsn6tao000611j50dexeob0",
-      {
-        id: "clzsn6tao000611j50dexeob0",
-        type: "Form",
-      },
-      "RetrieveTemplate",
-    );
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
+      event: "RetrieveTemplate",
+    });
   });
 
   it("respond with error when form template does not exist", async () => {

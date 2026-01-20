@@ -1,10 +1,14 @@
 import type { Request, Response, NextFunction } from "express";
 import { logMessage } from "@lib/logging/logger.js";
 import { refundConsumedToken } from "@lib/rateLimiting/tokenBucketLimiter.js";
+import {
+  RequestContextualStoreKey,
+  retrieveOptionalRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 export async function globalErrorHandlerMiddleware(
   error: Error,
-  request: Request,
+  _: Request,
   response: Response,
   _next: NextFunction,
 ): Promise<void> {
@@ -13,8 +17,12 @@ export async function globalErrorHandlerMiddleware(
     "[middleware][global-error-handler] Global unhandled error",
   );
 
-  if (request.tokenConsumedOnFormId !== undefined) {
-    await refundConsumedToken(request.tokenConsumedOnFormId);
+  const tokenConsumedOnFormId = retrieveOptionalRequestContextData(
+    RequestContextualStoreKey.tokenConsumedOnFormId,
+  );
+
+  if (tokenConsumedOnFormId !== undefined) {
+    await refundConsumedToken(tokenConsumedOnFormId);
   }
 
   response.sendStatus(500);

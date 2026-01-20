@@ -7,6 +7,10 @@ import {
 import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import type { ApiOperation } from "@operations/types/operation.js";
+import {
+  RequestContextualStoreKey,
+  retrieveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 async function v1(
   request: Request,
@@ -16,16 +20,18 @@ async function v1(
   const formId = request.params.formId;
   const submissionName = request.params.submissionName;
   const confirmationCode = request.params.confirmationCode;
-  const serviceUserId = request.serviceUserId;
+  const serviceUserId = retrieveRequestContextData(
+    RequestContextualStoreKey.serviceUserId,
+  );
 
   try {
     await confirmFormSubmission(formId, submissionName, confirmationCode);
 
-    auditLog(
-      serviceUserId,
-      { type: "Response", id: submissionName },
-      "ConfirmResponse",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Response", id: submissionName },
+      event: "ConfirmResponse",
+    });
 
     response.sendStatus(200);
   } catch (error) {

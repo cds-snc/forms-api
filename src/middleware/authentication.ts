@@ -6,6 +6,10 @@ import {
   AccessControlError,
   AccessTokenMalformedError,
 } from "@lib/idp/verifyAccessToken.js";
+import {
+  RequestContextualStoreKey,
+  saveRequestContextData,
+} from "@lib/storage/requestContextualStore.js";
 
 export async function authenticationMiddleware(
   request: Request,
@@ -23,8 +27,14 @@ export async function authenticationMiddleware(
 
     const verifiedAccessToken = await verifyAccessToken(accessToken, formId);
 
-    request.serviceUserId = verifiedAccessToken.serviceUserId;
-    request.serviceAccountId = verifiedAccessToken.serviceAccountId;
+    saveRequestContextData(
+      RequestContextualStoreKey.serviceUserId,
+      verifiedAccessToken.serviceUserId,
+    );
+    saveRequestContextData(
+      RequestContextualStoreKey.serviceAccountId,
+      verifiedAccessToken.serviceAccountId,
+    );
 
     next();
   } catch (error) {

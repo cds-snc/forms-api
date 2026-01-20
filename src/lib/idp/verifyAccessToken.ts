@@ -114,16 +114,16 @@ async function generateIntrospectedAccessToken(
 
   // Active can be false if the token is invalid, expired, or does not exist.
   if (introspectedToken.active === false) {
-    auditLog(
+    auditLog({
       // We use the formId as the userId here because we don't have a valid userId
-      formId,
-      {
+      userId: formId,
+      subject: {
         type: "ServiceAccount",
         id: "unknown",
       },
-      "InvalidAccessToken",
-      "Access token was marked as invalid by IDP",
-    );
+      event: "InvalidAccessToken",
+      description: "Access token was marked as invalid by IDP",
+    });
 
     throw new AccessTokenInvalidError();
   }
@@ -141,12 +141,12 @@ async function generateIntrospectedAccessToken(
     throw new AccessTokenMalformedError();
   }
 
-  auditLog(
-    introspectedToken.username,
-    { type: "ServiceAccount", id: introspectedToken.sub },
-    "IntrospectedAccessToken",
-    "Access token has been introspected by the IDP",
-  );
+  auditLog({
+    userId: introspectedToken.username,
+    subject: { type: "ServiceAccount", id: introspectedToken.sub },
+    event: "IntrospectedAccessToken",
+    description: "Access token has been introspected by the IDP",
+  });
 
   return {
     expirationEpochTime: introspectedToken.exp,
@@ -159,23 +159,23 @@ function validateIntrospectedToken(token: VerifiedAccessToken, formId: string) {
   const { serviceUserId, serviceAccountId, expirationEpochTime } = token;
 
   if (expirationEpochTime < Date.now() / 1000) {
-    auditLog(
-      serviceUserId,
-      { type: "ServiceAccount", id: serviceAccountId },
-      "InvalidAccessToken",
-      "Access token has expired",
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "ServiceAccount", id: serviceAccountId },
+      event: "InvalidAccessToken",
+      description: "Access token has expired",
+    });
 
     throw new AccessTokenExpiredError();
   }
 
   if (serviceUserId !== formId) {
-    auditLog(
-      serviceUserId,
-      { type: "Form", id: formId },
-      "AccessDenied",
-      `User ${serviceAccountId} does not have access to form ${formId}`,
-    );
+    auditLog({
+      userId: serviceUserId,
+      subject: { type: "Form", id: formId },
+      event: "AccessDenied",
+      description: `User ${serviceAccountId} does not have access to form ${formId}`,
+    });
 
     throw new AccessControlError();
   }

@@ -3,9 +3,18 @@ import { getMockReq, getMockRes } from "vitest-mock-express";
 import { rateLimiterMiddleware } from "@middleware/rateLimiter.js";
 import { consumeTokenIfAvailable } from "@lib/rateLimiting/tokenBucketLimiter.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { RequestContextualStoreKey } from "@lib/storage/requestContextualStore.js";
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as requestContextualStoreModule from "@lib/storage/requestContextualStore.js";
 
 vi.mock("@lib/rateLimiting/tokenBucketLimiter");
 const consumeTokenIfAvailableMock = vi.mocked(consumeTokenIfAvailable);
+
+vi.mock("@lib/storage/requestContextualStore");
+const saveRequestContextDataSpy = vi.spyOn(
+  requestContextualStoreModule,
+  "saveRequestContextData",
+);
 
 describe("rateLimiterMiddleware should", () => {
   const requestMock = getMockReq({
@@ -47,7 +56,8 @@ describe("rateLimiterMiddleware should", () => {
       "X-RateLimit-Remaining": 5,
       "X-RateLimit-Reset": new Date("2018-02-20T12:30:55.500Z"),
     });
-    expect(requestMock.tokenConsumedOnFormId).toEqual(
+    expect(saveRequestContextDataSpy).toHaveBeenCalledWith(
+      RequestContextualStoreKey.tokenConsumedOnFormId,
       "clzsn6tao000611j50dexeob0",
     );
     expect(nextMock).toHaveBeenCalledOnce();

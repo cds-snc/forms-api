@@ -4,11 +4,15 @@ import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { auditLog } from "@lib/logging/auditLogs.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
 
 vi.unmock("@lib/logging/auditLogs");
 
 vi.mock("@lib/integration/awsSqsQueueLoader");
 vi.mocked(getApiAuditLogSqsQueueUrl).mockResolvedValue("apiAuditLogQueueUrl");
+
+vi.mock("@lib/storage/requestContextualStore");
+const retrieveRequestContextDataMock = vi.mocked(retrieveRequestContextData);
 
 const sqsMock = mockClient(SQSClient);
 
@@ -26,22 +30,24 @@ describe("auditLog should", () => {
   });
 
   it("successfully publish an audit log if everything goes well", async () => {
+    retrieveRequestContextDataMock.mockReturnValueOnce("1.1.1.1");
     await expect(
-      auditLog(
-        "userId",
-        { type: "Response", id: "responseId" },
-        "ConfirmResponse",
-        "description",
-      ),
+      auditLog({
+        userId: "userId",
+        subject: { type: "Response", id: "responseId" },
+        event: "ConfirmResponse",
+        description: "description",
+      }),
     ).resolves.not.toThrow();
 
     expect(sqsMock.commandCalls(SendMessageCommand).length).toEqual(1);
     expect(sqsMock.commandCalls(SendMessageCommand)[0].args[0].input).toEqual({
       MessageBody: JSON.stringify({
-        userId: "userId",
-        event: "ConfirmResponse",
         timestamp: 1519129853500,
+        clientIp: "1.1.1.1",
+        userId: "userId",
         subject: { type: "Response", id: "responseId" },
+        event: "ConfirmResponse",
         description: "description",
       }),
       QueueUrl: "apiAuditLogQueueUrl",
@@ -49,20 +55,41 @@ describe("auditLog should", () => {
   });
 
   it("console log audit log that failed to be published because of an internal error", async () => {
+    retrieveRequestContextDataMock.mockReturnValueOnce("1.1.1.1");
     const customError = new Error("custom error");
     sqsMock.on(SendMessageCommand).rejectsOnce(customError);
     const errorLogMessageSpy = vi.spyOn(logMessage, "error");
 
-    await auditLog(
-      "userId",
-      { type: "Response", id: "responseId" },
-      "ConfirmResponse",
-      "description",
-    );
+    await auditLog({
+      userId: "userId",
+      subject: { type: "Response", id: "responseId" },
+      event: "ConfirmResponse",
+      description: "description",
+    });
 
     expect(errorLogMessageSpy).toHaveBeenCalledWith(
       customError,
-      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ userId: "userId", event: "ConfirmResponse", timestamp: 1519129853500, subject: { type: "Response", id: "responseId" }, description: "description" })}.`,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, clientIp: "1.1.1.1", userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description" })}.`,
+    );
+  });
+
+  it("console log audit log that failed to be published due to missing client IP", async () => {
+    const customError = new Error(
+      "[audit-log] clientIp retrieved from async context store is undefined",
+    );
+    sqsMock.on(SendMessageCommand).rejectsOnce(customError);
+    const errorLogMessageSpy = vi.spyOn(logMessage, "error");
+
+    await auditLog({
+      userId: "userId",
+      subject: { type: "Response", id: "responseId" },
+      event: "ConfirmResponse",
+      description: "description",
+    });
+
+    expect(errorLogMessageSpy).toHaveBeenCalledWith(
+      customError,
+      `[audit-log] Failed to send audit log to AWS SQS. Audit log: ${JSON.stringify({ timestamp: 1519129853500, clientIp: "undefined", userId: "userId", subject: { type: "Response", id: "responseId" }, event: "ConfirmResponse", description: "description" })}.`,
     );
   });
 });

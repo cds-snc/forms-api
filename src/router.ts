@@ -10,11 +10,13 @@ import { retrieveSubmissionOperationV1 } from "@operations/retrieveSubmission.v1
 import { confirmSubmissionOperationV1 } from "@operations/confirmSubmission.v1.js";
 import { reportSubmissionOperationV1 } from "@operations/reportSubmission.v1.js";
 import { versionMiddleware } from "@middleware/version.js";
-
+import { requestContextMiddleware } from "@middleware/requestContext.js";
+import cors from "cors";
 import type {
   ApiOperation,
   OperationHandler,
 } from "@operations/types/operation.js";
+import { extractClientIpMiddleware } from "@middleware/extractClientIp.js";
 
 // Router configuration to inherit from parent router params
 const INHERIT_PARAMS = { mergeParams: true };
@@ -77,6 +79,9 @@ export function buildRouter(): Router {
   );
 
   const router = Router()
+    .use(cors())
+    .use(requestContextMiddleware)
+    .use(extractClientIpMiddleware)
     .use("/:version(v[0-9]{1,2})?/forms", formsRoute)
     .use("/status", statusRoute)
     // 404: Catches all unmatched routes
