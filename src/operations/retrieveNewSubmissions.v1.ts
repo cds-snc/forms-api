@@ -17,7 +17,7 @@ async function v1(
 ): Promise<void> {
   const formId = request.params.formId;
   const serviceUserId = retrieveRequestContextData(
-    RequestContextualStoreKey.ServiceUserId,
+    RequestContextualStoreKey.serviceUserId,
   );
 
   try {

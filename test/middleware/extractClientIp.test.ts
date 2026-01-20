@@ -27,7 +27,7 @@ describe("extractClientIpMiddleware should", () => {
     extractClientIpMiddleware(requestMock, responseMock, nextMock);
 
     expect(saveRequestContextDataMock).toHaveBeenCalledWith(
-      RequestContextualStoreKey.ClientIp,
+      RequestContextualStoreKey.clientIp,
       "8.8.8.8",
     );
     expect(nextMock).toHaveBeenCalledOnce();
@@ -41,7 +41,7 @@ describe("extractClientIpMiddleware should", () => {
     extractClientIpMiddleware(requestMock, responseMock, nextMock);
 
     expect(saveRequestContextDataMock).toHaveBeenCalledWith(
-      RequestContextualStoreKey.ClientIp,
+      RequestContextualStoreKey.clientIp,
       "8.8.8.8",
     );
     expect(nextMock).toHaveBeenCalledOnce();
@@ -53,7 +53,7 @@ describe("extractClientIpMiddleware should", () => {
     extractClientIpMiddleware(requestMock, responseMock, nextMock);
 
     expect(saveRequestContextDataMock).toHaveBeenCalledWith(
-      RequestContextualStoreKey.ClientIp,
+      RequestContextualStoreKey.clientIp,
       "0.0.0.0",
     );
     expect(nextMock).toHaveBeenCalledOnce();

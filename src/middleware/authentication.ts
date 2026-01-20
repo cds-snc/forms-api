@@ -28,11 +28,11 @@ export async function authenticationMiddleware(
     const verifiedAccessToken = await verifyAccessToken(accessToken, formId);
 
     saveRequestContextData(
-      RequestContextualStoreKey.ServiceUserId,
+      RequestContextualStoreKey.serviceUserId,
       verifiedAccessToken.serviceUserId,
     );
     saveRequestContextData(
-      RequestContextualStoreKey.ServiceAccountId,
+      RequestContextualStoreKey.serviceAccountId,
       verifiedAccessToken.serviceAccountId,
     );
 

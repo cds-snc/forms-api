@@ -21,7 +21,7 @@ async function v1(
   const submissionName = request.params.submissionName;
   const confirmationCode = request.params.confirmationCode;
   const serviceUserId = retrieveRequestContextData(
-    RequestContextualStoreKey.ServiceUserId,
+    RequestContextualStoreKey.serviceUserId,
   );
 
   try {

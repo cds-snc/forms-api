@@ -57,7 +57,7 @@ describe("rateLimiterMiddleware should", () => {
       "X-RateLimit-Reset": new Date("2018-02-20T12:30:55.500Z"),
     });
     expect(saveRequestContextDataSpy).toHaveBeenCalledWith(
-      RequestContextualStoreKey.TokenConsumedOnFormId,
+      RequestContextualStoreKey.tokenConsumedOnFormId,
       "clzsn6tao000611j50dexeob0",
     );
     expect(nextMock).toHaveBeenCalledOnce();

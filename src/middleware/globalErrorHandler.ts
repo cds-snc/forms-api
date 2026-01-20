@@ -18,7 +18,7 @@ export async function globalErrorHandlerMiddleware(
   );
 
   const tokenConsumedOnFormId = retrieveOptionalRequestContextData(
-    RequestContextualStoreKey.TokenConsumedOnFormId,
+    RequestContextualStoreKey.tokenConsumedOnFormId,
   );
 
   if (tokenConsumedOnFormId !== undefined) {

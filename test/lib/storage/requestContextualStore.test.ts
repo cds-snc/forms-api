@@ -11,17 +11,17 @@ describe("requestContextualStore", () => {
   describe("saveRequestContextData should", () => {
     it("properly save given data in the store", () => {
       requestContextualStore.run(new Map(), () => {
-        saveRequestContextData(RequestContextualStoreKey.ServiceUserId, "test");
+        saveRequestContextData(RequestContextualStoreKey.serviceUserId, "test");
 
         expect(
-          retrieveRequestContextData(RequestContextualStoreKey.ServiceUserId),
+          retrieveRequestContextData(RequestContextualStoreKey.serviceUserId),
         ).toEqual("test");
       });
     });
 
     it("throw an error if the requestContextualStore is undefined", () => {
       expect(() =>
-        saveRequestContextData(RequestContextualStoreKey.ServiceUserId, "test"),
+        saveRequestContextData(RequestContextualStoreKey.serviceUserId, "test"),
       ).toThrowError("requestContextualStore is undefined");
     });
   });
@@ -31,7 +31,7 @@ describe("requestContextualStore", () => {
       requestContextualStore.run(new Map(), () => {
         expect(
           retrieveOptionalRequestContextData(
-            RequestContextualStoreKey.ClientIp,
+            RequestContextualStoreKey.clientIp,
           ),
         ).toEqual(undefined);
       });
@@ -39,7 +39,7 @@ describe("requestContextualStore", () => {
 
     it("throw an error if the requestContextualStore is undefined", () => {
       expect(() =>
-        retrieveOptionalRequestContextData(RequestContextualStoreKey.ClientIp),
+        retrieveOptionalRequestContextData(RequestContextualStoreKey.clientIp),
       ).toThrowError("requestContextualStore is undefined");
     });
   });
@@ -47,29 +47,29 @@ describe("requestContextualStore", () => {
   describe("retrieveRequestContextData should", () => {
     it("return the requested data if it is available in the store", () => {
       requestContextualStore.run(new Map(), () => {
-        saveRequestContextData(RequestContextualStoreKey.ClientIp, "8.8.8.8");
+        saveRequestContextData(RequestContextualStoreKey.clientIp, "8.8.8.8");
 
         expect(
-          retrieveRequestContextData(RequestContextualStoreKey.ClientIp),
+          retrieveRequestContextData(RequestContextualStoreKey.clientIp),
         ).toEqual("8.8.8.8");
       });
     });
 
     it("throw an error if the requested data is not availavble in the store", () => {
       requestContextualStore.run(new Map(), () => {
-        saveRequestContextData(RequestContextualStoreKey.ServiceUserId, "test");
+        saveRequestContextData(RequestContextualStoreKey.serviceUserId, "test");
 
         expect(() =>
-          retrieveRequestContextData(RequestContextualStoreKey.ClientIp),
+          retrieveRequestContextData(RequestContextualStoreKey.clientIp),
         ).toThrowError(
-          "requestContextualStore does not have any set value for key: ClientIp",
+          "requestContextualStore does not have any set value for key: clientIp",
         );
       });
     });
 
     it("throw an error if the requestContextualStore is undefined", () => {
       expect(() =>
-        retrieveRequestContextData(RequestContextualStoreKey.ClientIp),
+        retrieveRequestContextData(RequestContextualStoreKey.clientIp),
       ).toThrowError("requestContextualStore is undefined");
     });
   });

@@ -42,7 +42,7 @@ export async function rateLimiterMiddleware(
 
       auditLog({
         userId: retrieveRequestContextData(
-          RequestContextualStoreKey.ServiceUserId,
+          RequestContextualStoreKey.serviceUserId,
         ),
         subject: { type: "Form", id: formId },
         event: "RateLimitExceeded",
@@ -53,7 +53,7 @@ export async function rateLimiterMiddleware(
     }
 
     saveRequestContextData(
-      RequestContextualStoreKey.TokenConsumedOnFormId,
+      RequestContextualStoreKey.tokenConsumedOnFormId,
       formId,
     );
 

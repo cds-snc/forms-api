@@ -49,7 +49,7 @@ async function v1(
   const formId = request.params.formId;
   const submissionName = request.params.submissionName;
   const serviceUserId = retrieveRequestContextData(
-    RequestContextualStoreKey.ServiceUserId,
+    RequestContextualStoreKey.serviceUserId,
   );
 
   const contactEmail = request.body.contactEmail as string;

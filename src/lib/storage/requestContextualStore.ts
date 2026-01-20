@@ -1,11 +1,14 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 
-export enum RequestContextualStoreKey {
-  ServiceUserId = "ServiceUserId",
-  ServiceAccountId = "ServiceAccountId",
-  TokenConsumedOnFormId = "TokenConsumedOnFormId",
-  ClientIp = "ClientIp",
-}
+export const RequestContextualStoreKey = {
+  serviceUserId: "serviceUserId",
+  serviceAccountId: "serviceAccountId",
+  tokenConsumedOnFormId: "tokenConsumedOnFormId",
+  clientIp: "clientIp",
+} as const;
+
+type RequestContextualStoreKey =
+  (typeof RequestContextualStoreKey)[keyof typeof RequestContextualStoreKey];
 
 export const requestContextualStore = new AsyncLocalStorage<
   Map<string, string>

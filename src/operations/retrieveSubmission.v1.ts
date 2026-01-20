@@ -28,10 +28,10 @@ async function v1(
   const formId = request.params.formId;
   const submissionName = request.params.submissionName;
   const serviceUserId = retrieveRequestContextData(
-    RequestContextualStoreKey.ServiceUserId,
+    RequestContextualStoreKey.serviceUserId,
   );
   const serviceAccountId = retrieveRequestContextData(
-    RequestContextualStoreKey.ServiceAccountId,
+    RequestContextualStoreKey.serviceAccountId,
   );
 
   try {

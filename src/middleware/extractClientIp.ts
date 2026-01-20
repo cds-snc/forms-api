@@ -14,7 +14,7 @@ export function extractClientIpMiddleware(
 ): void {
   try {
     saveRequestContextData(
-      RequestContextualStoreKey.ClientIp,
+      RequestContextualStoreKey.clientIp,
       extractClientIpFromRequestHeaders(request.headers),
     );
 

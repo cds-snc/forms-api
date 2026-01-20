@@ -52,12 +52,12 @@ describe("authenticationMiddleware should", () => {
 
     expect(saveRequestContextDataSpy).toHaveBeenNthCalledWith(
       1,
-      RequestContextualStoreKey.ServiceUserId,
+      RequestContextualStoreKey.serviceUserId,
       "clzsn6tao000611j50dexeob0",
     );
     expect(saveRequestContextDataSpy).toHaveBeenNthCalledWith(
       2,
-      RequestContextualStoreKey.ServiceAccountId,
+      RequestContextualStoreKey.serviceAccountId,
       "11111111111",
     );
     expect(nextMock).toHaveBeenCalledOnce();
