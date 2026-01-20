@@ -41,7 +41,7 @@ export type AuditLog = {
 
 export async function auditLog(log: AuditLog): Promise<void> {
   const clientIp = retrieveRequestContextData(
-    RequestContextualStoreKey.ClientIp,
+    RequestContextualStoreKey.clientIp,
   );
 
   try {
