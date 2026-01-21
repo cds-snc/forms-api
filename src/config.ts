@@ -1,8 +1,11 @@
-export enum EnvironmentMode {
-  Local = "local",
-  Staging = "staging",
-  Production = "production",
-}
+export const EnvironmentMode = {
+  local: "local",
+  staging: "staging",
+  production: "production",
+} as const;
+
+export type EnvironmentMode =
+  (typeof EnvironmentMode)[keyof typeof EnvironmentMode];
 
 export type TokenBucketConfiguration = {
   capacity: number;
@@ -79,12 +82,12 @@ function mapEnvironmentModeFromStringToEnum(
   environmentMode: string,
 ): EnvironmentMode {
   if (environmentMode === "staging") {
-    return EnvironmentMode.Staging;
+    return EnvironmentMode.staging;
   }
 
   if (environmentMode === "production") {
-    return EnvironmentMode.Production;
+    return EnvironmentMode.production;
   }
 
-  return EnvironmentMode.Local;
+  return EnvironmentMode.local;
 }

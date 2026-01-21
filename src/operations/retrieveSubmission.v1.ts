@@ -118,7 +118,7 @@ function isAttachmentPotentiallyMalicious(
   scanStatus: AttachmentScanStatus,
 ): boolean {
   switch (scanStatus) {
-    case AttachmentScanStatus.NoThreatsFound:
+    case AttachmentScanStatus.noThreatsFound:
       return false;
     default:
       return true;
