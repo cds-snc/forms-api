@@ -8,34 +8,37 @@ import {
   retrieveRequestContextData,
 } from "@lib/storage/requestContextualStore.js";
 
-export enum AuditLogEvent {
+const AuditLogEvent = {
   // Form Response Events
-  DownloadResponse = "DownloadResponse",
-  ConfirmResponse = "ConfirmResponse",
-  IdentifyProblemResponse = "IdentifyProblemResponse",
-  RetrieveNewResponses = "RetrieveNewResponses",
-  RateLimitExceeded = "RateLimitExceeded",
+  downloadResponse: "DownloadResponse",
+  confirmResponse: "ConfirmResponse",
+  identifyProblemResponse: "IdentifyProblemResponse",
+  retrieveNewResponses: "RetrieveNewResponses",
+  rateLimitExceeded: "RateLimitExceeded",
   // Application Events
-  AccessDenied = "AccessDenied",
+  accessDenied: "AccessDenied",
   // Template Events
-  RetrieveTemplate = "RetrieveTemplate",
+  retrieveTemplate: "RetrieveTemplate",
   // Auth Events
-  IntrospectedAccessToken = "IntrospectedAccessToken",
-  InvalidAccessToken = "InvalidAccessToken",
-}
+  introspectedAccessToken: "IntrospectedAccessToken",
+  invalidAccessToken: "InvalidAccessToken",
+} as const;
 
-export type AuditLogEventStrings = keyof typeof AuditLogEvent;
+type AuditLogEvent = (typeof AuditLogEvent)[keyof typeof AuditLogEvent];
 
-export enum AuditSubjectType {
-  ServiceAccount = "ServiceAccount",
-  Form = "Form",
-  Response = "Response",
-}
+const AuditSubjectType = {
+  serviceAccount: "ServiceAccount",
+  form: "Form",
+  response: "Response",
+} as const;
+
+type AuditSubjectType =
+  (typeof AuditSubjectType)[keyof typeof AuditSubjectType];
 
 export type AuditLog = {
   userId: string;
-  subject: { type: keyof typeof AuditSubjectType; id?: string };
-  event: AuditLogEventStrings;
+  subject: { type: AuditSubjectType; id?: string };
+  event: AuditLogEvent;
   description?: string;
 };
 
@@ -68,7 +71,7 @@ export async function auditLog(log: AuditLog): Promise<void> {
       }),
     );
 
-    if (ENVIRONMENT_MODE === EnvironmentMode.Local) {
+    if (ENVIRONMENT_MODE === EnvironmentMode.local) {
       logMessage.debug(`[audit-log] ${auditLogAsJsonString}`);
     }
   } catch (error) {

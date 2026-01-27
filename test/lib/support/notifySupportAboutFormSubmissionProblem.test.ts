@@ -22,7 +22,7 @@ describe("notifySupportAboutFormSubmissionProblem should", () => {
         "test@test.com",
         "Here is my problem",
         "en",
-        EnvironmentMode.Production,
+        EnvironmentMode.production,
       ),
     ).resolves.not.toThrow();
 
@@ -65,7 +65,7 @@ Here is my problem<br/>
         "test@test.com",
         "Here is my problem",
         "en",
-        EnvironmentMode.Production,
+        EnvironmentMode.production,
       ),
     ).rejects.toThrowError(customError);
 
