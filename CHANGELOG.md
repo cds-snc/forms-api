@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.7.2](https://github.com/cds-snc/forms-api/compare/v1.7.1...v1.7.2) (2026-01-27)
+
+
+### Miscellaneous Chores
+
+* add client ip to audit logs ([#279](https://github.com/cds-snc/forms-api/issues/279)) ([fdc7848](https://github.com/cds-snc/forms-api/commit/fdc784884912eb1908970174439c3a24743f1c36))
+* **deps:** lock file maintenance ([#267](https://github.com/cds-snc/forms-api/issues/267)) ([e3a05cd](https://github.com/cds-snc/forms-api/commit/e3a05cd701d8de562788f077dc54894251823a02))
+* **deps:** lock file maintenance ([#273](https://github.com/cds-snc/forms-api/issues/273)) ([96403ef](https://github.com/cds-snc/forms-api/commit/96403efc73229eddbeb50a7bca56f071ee6ad55d))
+* **deps:** lock file maintenance ([#276](https://github.com/cds-snc/forms-api/issues/276)) ([e2eabd1](https://github.com/cds-snc/forms-api/commit/e2eabd1ec4766aebbdab41a700ac4b3f9ec6a9ad))
+* **deps:** lock file maintenance ([#277](https://github.com/cds-snc/forms-api/issues/277)) ([ca0d379](https://github.com/cds-snc/forms-api/commit/ca0d379c283863c972494ac96ff4a12a481ced26))
+* **deps:** lock file maintenance ([#281](https://github.com/cds-snc/forms-api/issues/281)) ([bebd678](https://github.com/cds-snc/forms-api/commit/bebd678256129e450a38286c9102c4a13c94da4e))
+* **deps:** lock file maintenance ([#285](https://github.com/cds-snc/forms-api/issues/285)) ([bba9f96](https://github.com/cds-snc/forms-api/commit/bba9f9633a8259c490575b9104b630f35591ef06))
+* **deps:** update all minor dependencies ([#275](https://github.com/cds-snc/forms-api/issues/275)) ([6f01162](https://github.com/cds-snc/forms-api/commit/6f01162ccb422f3095cb5ca5bbb57a982b340b95))
+* **deps:** update all minor dependencies ([#280](https://github.com/cds-snc/forms-api/issues/280)) ([bfaaa1a](https://github.com/cds-snc/forms-api/commit/bfaaa1a0531c1e219f6652b10b423d11c1711045))
+* **deps:** update all non-major github action dependencies ([#274](https://github.com/cds-snc/forms-api/issues/274)) ([54ffc00](https://github.com/cds-snc/forms-api/commit/54ffc0073f7c166d9106604cefa8728893981d3d))
+* **deps:** update all non-major github action dependencies ([#284](https://github.com/cds-snc/forms-api/issues/284)) ([b33c05a](https://github.com/cds-snc/forms-api/commit/b33c05a7cc3412556156bfc0ccfac41d5838b6ce))
+* **deps:** update all patch dependencies ([#270](https://github.com/cds-snc/forms-api/issues/270)) ([bee77d4](https://github.com/cds-snc/forms-api/commit/bee77d4aea3d166edb54d61fed3fefd535fe19fa))
+* **deps:** update aws-actions/amazon-ecs-deploy-task-definition action to v2.5.0 ([#266](https://github.com/cds-snc/forms-api/issues/266)) ([593c128](https://github.com/cds-snc/forms-api/commit/593c1288c89455224597b2ad124afda73e788792))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 30b0a0c ([#272](https://github.com/cds-snc/forms-api/issues/272)) ([45440d1](https://github.com/cds-snc/forms-api/commit/45440d1b826cb30ba6f3c706bfc6efffa1787b32))
+* synced file(s) with cds-snc/site-reliability-engineering ([#282](https://github.com/cds-snc/forms-api/issues/282)) ([48cbc5f](https://github.com/cds-snc/forms-api/commit/48cbc5f9cf0b33e9f42d808a96a6562e8e6b3f98))
+* synced local '.github/workflows/backstage-catalog-helper.yml' with remote 'tools/sre_file_sync/backstage-catalog-helper.yml' ([48cbc5f](https://github.com/cds-snc/forms-api/commit/48cbc5f9cf0b33e9f42d808a96a6562e8e6b3f98))
+* update pnpm to v10 ([#269](https://github.com/cds-snc/forms-api/issues/269)) ([33cd80d](https://github.com/cds-snc/forms-api/commit/33cd80d47a2f1dd28601c22cdd72d957c040f5fd))
+* upgrade NodeJS docker image to include latest security fixes ([#286](https://github.com/cds-snc/forms-api/issues/286)) ([59df827](https://github.com/cds-snc/forms-api/commit/59df827b59c57dfb497dec8a4ed205ba833bd3ad))
+
 ## [1.7.1](https://github.com/cds-snc/forms-api/compare/v1.7.0...v1.7.1) (2025-12-01)
 
 
