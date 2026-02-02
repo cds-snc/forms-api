@@ -3,19 +3,25 @@ export type NewFormSubmission = {
   createdAt: number;
 };
 
-export enum SubmissionStatus {
-  New = "New",
-  Downloaded = "Downloaded",
-  Confirmed = "Confirmed",
-  Problem = "Problem",
-}
+export const SubmissionStatus = {
+  new: "New",
+  downloaded: "Downloaded",
+  confirmed: "Confirmed",
+  problem: "Problem",
+} as const;
 
-export enum AttachmentScanStatus {
-  NoThreatsFound = "NoThreatsFound",
-  ThreatsFound = "ThreatsFound",
-  Unsupported = "Unsupported",
-  Failed = "Failed",
-}
+export type SubmissionStatus =
+  (typeof SubmissionStatus)[keyof typeof SubmissionStatus];
+
+export const AttachmentScanStatus = {
+  noThreatsFound: "NoThreatsFound",
+  threatsFound: "ThreatsFound",
+  unsupported: "Unsupported",
+  failed: "Failed",
+} as const;
+
+export type AttachmentScanStatus =
+  (typeof AttachmentScanStatus)[keyof typeof AttachmentScanStatus];
 
 // id is marked as optional to ensure backwards compatibility.
 // it can be marked as required in the future once we are sure all attachment responses contain id's
