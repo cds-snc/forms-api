@@ -59,7 +59,7 @@ async function v1(
   try {
     await reportProblemWithFormSubmission(formId, submissionName);
 
-    if (ENVIRONMENT_MODE !== EnvironmentMode.Local) {
+    if (ENVIRONMENT_MODE !== EnvironmentMode.local) {
       await notifySupportAboutFormSubmissionProblem(
         formId,
         submissionName,

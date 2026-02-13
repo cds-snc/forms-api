@@ -12,7 +12,7 @@ export async function reportProblemWithFormSubmission(
   try {
     const formSubmission = await getFormSubmission(formId, submissionName);
 
-    if (formSubmission.status === SubmissionStatus.Problem) {
+    if (formSubmission.status === SubmissionStatus.problem) {
       throw new FormSubmissionAlreadyReportedAsProblematicException();
     }
 

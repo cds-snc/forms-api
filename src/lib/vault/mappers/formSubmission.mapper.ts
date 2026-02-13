@@ -92,13 +92,13 @@ function submissionStatusFromStatusCreatedAt(
 
   switch (status) {
     case "New":
-      return SubmissionStatus.New;
+      return SubmissionStatus.new;
     case "Downloaded":
-      return SubmissionStatus.Downloaded;
+      return SubmissionStatus.downloaded;
     case "Confirmed":
-      return SubmissionStatus.Confirmed;
+      return SubmissionStatus.confirmed;
     case "Problem":
-      return SubmissionStatus.Problem;
+      return SubmissionStatus.problem;
     default:
       throw new Error(
         `Unsupported Status#CreatedAt value. Value = ${statusCreatedAtValue}.`,
@@ -148,13 +148,13 @@ function attachmentScanStatusFromScanStatus(
 ): AttachmentScanStatus {
   switch (scanStatus) {
     case "NO_THREATS_FOUND":
-      return AttachmentScanStatus.NoThreatsFound;
+      return AttachmentScanStatus.noThreatsFound;
     case "THREATS_FOUND":
-      return AttachmentScanStatus.ThreatsFound;
+      return AttachmentScanStatus.threatsFound;
     case "UNSUPPORTED":
-      return AttachmentScanStatus.Unsupported;
+      return AttachmentScanStatus.unsupported;
     case "FAILED":
-      return AttachmentScanStatus.Failed;
+      return AttachmentScanStatus.failed;
     default:
       throw new Error(`Unsupported scan status value. Value = ${scanStatus}.`);
   }
