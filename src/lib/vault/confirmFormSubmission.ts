@@ -22,7 +22,7 @@ export async function confirmFormSubmission(
 
     const formSubmission = await getFormSubmission(formId, submissionName);
 
-    if (formSubmission.status === SubmissionStatus.Confirmed) {
+    if (formSubmission.status === SubmissionStatus.confirmed) {
       throw new FormSubmissionAlreadyConfirmedException();
     }
 

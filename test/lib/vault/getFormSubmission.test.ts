@@ -26,7 +26,7 @@ describe("getFormSubmission should", () => {
 
     expect(formSubmission).toEqual(
       expect.objectContaining({
-        status: SubmissionStatus.New,
+        status: SubmissionStatus.new,
       }),
     );
   });

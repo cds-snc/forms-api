@@ -37,11 +37,11 @@ export async function notifySupportAboutFormSubmissionProblem(
 
 function tagFromEnvironmentMode(environmentMode: EnvironmentMode): string {
   switch (environmentMode) {
-    case EnvironmentMode.Local:
+    case EnvironmentMode.local:
       return "Forms_Dev";
-    case EnvironmentMode.Staging:
+    case EnvironmentMode.staging:
       return "Forms_Staging";
-    case EnvironmentMode.Production:
+    case EnvironmentMode.production:
       return "Forms_Production";
     default:
       throw new Error(`Unsupported environment mode: ${environmentMode}`);

@@ -55,7 +55,7 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("respond with success when form submission with no attachments does exist", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: SubmissionStatus.New,
+      status: SubmissionStatus.new,
       confirmationCode: "",
       answers: "",
       checksum: "",
@@ -104,7 +104,7 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("respond with success when form submission with attachments does exist", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: SubmissionStatus.New,
+      status: SubmissionStatus.new,
       confirmationCode: "",
       answers:
         '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
@@ -114,7 +114,7 @@ describe("retrieveSubmissionOperation handler should", () => {
           id: "testId",
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
-          scanStatus: AttachmentScanStatus.NoThreatsFound,
+          scanStatus: AttachmentScanStatus.noThreatsFound,
         },
       ],
     });
@@ -191,19 +191,19 @@ describe("retrieveSubmissionOperation handler should", () => {
 
   it.each([
     {
-      attachmentScanStatus: AttachmentScanStatus.NoThreatsFound,
+      attachmentScanStatus: AttachmentScanStatus.noThreatsFound,
       isPotentiallyMalicious: false,
     },
     {
-      attachmentScanStatus: AttachmentScanStatus.ThreatsFound,
+      attachmentScanStatus: AttachmentScanStatus.threatsFound,
       isPotentiallyMalicious: true,
     },
     {
-      attachmentScanStatus: AttachmentScanStatus.Unsupported,
+      attachmentScanStatus: AttachmentScanStatus.unsupported,
       isPotentiallyMalicious: true,
     },
     {
-      attachmentScanStatus: AttachmentScanStatus.Failed,
+      attachmentScanStatus: AttachmentScanStatus.failed,
       isPotentiallyMalicious: true,
     },
   ])(
@@ -211,7 +211,7 @@ describe("retrieveSubmissionOperation handler should", () => {
     async ({ attachmentScanStatus, isPotentiallyMalicious }) => {
       getFormSubmissionMock.mockResolvedValueOnce({
         createdAt: 0,
-        status: SubmissionStatus.New,
+        status: SubmissionStatus.new,
         confirmationCode: "",
         answers:
           '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
@@ -261,7 +261,7 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("pass error to next function when processing fails due to internal error when retrieving submission attachment content", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: SubmissionStatus.New,
+      status: SubmissionStatus.new,
       confirmationCode: "",
       answers:
         '{"1":"Test1","2":"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt}',
@@ -271,7 +271,7 @@ describe("retrieveSubmissionOperation handler should", () => {
           id: "testId",
           name: "output.txt",
           path: "form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt",
-          scanStatus: AttachmentScanStatus.NoThreatsFound,
+          scanStatus: AttachmentScanStatus.noThreatsFound,
         },
       ],
     });
@@ -295,7 +295,7 @@ describe("retrieveSubmissionOperation handler should", () => {
   it("pass error to next function when processing fails due to internal error when retrieving public key", async () => {
     getFormSubmissionMock.mockResolvedValueOnce({
       createdAt: 0,
-      status: SubmissionStatus.New,
+      status: SubmissionStatus.new,
       confirmationCode: "",
       answers: "",
       checksum: "",

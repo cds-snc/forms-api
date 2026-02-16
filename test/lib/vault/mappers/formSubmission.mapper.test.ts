@@ -66,7 +66,7 @@ describe("in formSubmission mapper", () => {
             id: "testId",
             name: "output.txt",
             path: "filePath",
-            scanStatus: AttachmentScanStatus.NoThreatsFound,
+            scanStatus: AttachmentScanStatus.noThreatsFound,
           },
         ],
       });
@@ -101,7 +101,7 @@ describe("in formSubmission mapper", () => {
             id: "test",
             name: "output.txt",
             path: "filePath",
-            scanStatus: AttachmentScanStatus.NoThreatsFound,
+            scanStatus: AttachmentScanStatus.noThreatsFound,
             md5: undefined,
           },
         ],
