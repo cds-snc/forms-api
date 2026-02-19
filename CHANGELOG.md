@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.3](https://github.com/cds-snc/forms-api/compare/v1.7.2...v1.7.3) (2026-02-19)
+
+
+### Miscellaneous Chores
+
+* synced file(s) with cds-snc/site-reliability-engineering ([#301](https://github.com/cds-snc/forms-api/issues/301)) ([6e88fd0](https://github.com/cds-snc/forms-api/commit/6e88fd0f2fb97c5227b39ca058f3f52682ca94bc))
+* synced local '.github/workflows/export_github_data.yml' with remote 'tools/sre_file_sync/export_github_data.yml' ([6e88fd0](https://github.com/cds-snc/forms-api/commit/6e88fd0f2fb97c5227b39ca058f3f52682ca94bc))
+
 ## [1.7.2](https://github.com/cds-snc/forms-api/compare/v1.7.1...v1.7.2) (2026-02-16)
 
 
