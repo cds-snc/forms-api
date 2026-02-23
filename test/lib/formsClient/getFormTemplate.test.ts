@@ -1,7 +1,9 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
+import { vi, describe, it, expect, beforeEach, type Mock } from "vitest";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
-import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
+import { databaseConnector } from "@lib/integration/databaseConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
+
+const sqlMock = databaseConnector.executeSqlStatement() as unknown as Mock;
 
 describe("getFormTemplate should", () => {
   beforeEach(() => {
@@ -9,7 +11,7 @@ describe("getFormTemplate should", () => {
   });
 
   it("return an undefined form template if database was not able to find it", async () => {
-    vi.spyOn(DatabaseConnectorClient, "oneOrNone").mockResolvedValueOnce(null);
+    sqlMock.mockResolvedValueOnce([]);
 
     const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m");
 
@@ -17,16 +19,18 @@ describe("getFormTemplate should", () => {
   });
 
   it("return a form template if database was able to find it", async () => {
-    vi.spyOn(DatabaseConnectorClient, "oneOrNone").mockResolvedValueOnce({
-      jsonConfig: {
-        elements: [
-          {
-            id: 1,
-            type: "textField",
-          },
-        ],
+    sqlMock.mockResolvedValueOnce([
+      {
+        jsonConfig: {
+          elements: [
+            {
+              id: 1,
+              type: "textField",
+            },
+          ],
+        },
       },
-    });
+    ]);
 
     const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m");
 
@@ -44,9 +48,7 @@ describe("getFormTemplate should", () => {
 
   it("throw an error if database has an internal failure", async () => {
     const customError = new Error("custom error");
-    vi.spyOn(DatabaseConnectorClient, "oneOrNone").mockRejectedValueOnce(
-      customError,
-    );
+    sqlMock.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>

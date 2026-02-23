@@ -1,4 +1,4 @@
-import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
+import { databaseConnector } from "@lib/integration/databaseConnector.js";
 import {
   getValueFromRedis,
   setValueInRedis,
@@ -37,19 +37,18 @@ export async function getPublicKey(serviceAccountId: string): Promise<string> {
   }
 }
 
-function retrievePublicKeyFromDatabase(
+async function retrievePublicKeyFromDatabase(
   serviceAccountId: string,
 ): Promise<string | undefined> {
-  return DatabaseConnectorClient.oneOrNone<Record<string, unknown>>(
-    'SELECT "publicKey" FROM "ApiServiceAccount" WHERE id = $1',
-    [serviceAccountId],
-  ).then((result) => {
-    if (result === null) {
-      return undefined;
-    }
+  const results = await databaseConnector.executeSqlStatement()<
+    { publicKey: string }[]
+  >`SELECT "publicKey" FROM "ApiServiceAccount" WHERE id = ${serviceAccountId}`;
 
-    return result.publicKey as string;
-  });
+  if (results.length !== 1) {
+    return undefined;
+  }
+
+  return results[0].publicKey;
 }
 
 function getPublicKeyFromCache(
