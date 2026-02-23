@@ -1,4 +1,5 @@
 import { vi } from "vitest";
+import type { Sql } from "postgres";
 
 process.env = {
   ...process.env,
@@ -15,11 +16,28 @@ process.env = {
   }),
 };
 
-vi.mock("./src/lib/integration/databaseConnector", () => ({
-  DatabaseConnectorClient: {
-    oneOrNone: vi.fn(),
-  },
-}));
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const mockSql: Sql<any> = vi.fn().mockResolvedValue([]) as unknown as Sql<any>;
+
+class PostgresConnectorMock {
+  executeSqlStatement() {
+    return mockSql;
+  }
+}
+
+vi.mock("@gcforms/connectors", async () => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const actual: any = await vi.importActual("@gcforms/connectors");
+
+  return {
+    ...actual,
+    PostgresConnector: {
+      defaultUsingPostgresConnectionUrlFromAwsSecret: vi.fn(
+        async () => new PostgresConnectorMock(),
+      ),
+    },
+  };
+});
 
 vi.mock("./src/lib/logging/auditLogs", () => ({
   auditLog: vi.fn(),

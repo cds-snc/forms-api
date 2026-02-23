@@ -1,35 +1,26 @@
-import { DatabaseConnectorClient } from "@lib/integration/databaseConnector.js";
+import { databaseConnector } from "@lib/integration/databaseConnector.js";
 import type { FormTemplate } from "@lib/formsClient/types/formTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
 
-export function getFormTemplate(
+export async function getFormTemplate(
   formId: string,
 ): Promise<FormTemplate | undefined> {
-  return DatabaseConnectorClient.oneOrNone<Record<string, unknown>>(
-    'SELECT "jsonConfig" FROM "Template" WHERE id = $1',
-    [formId],
-  )
-    .then((result) => {
-      if (result === null) {
-        return undefined;
-      }
+  try {
+    const results = await databaseConnector.executeSqlStatement()<
+      FormTemplate[]
+    >`SELECT "jsonConfig" FROM "Template" WHERE id = ${formId}`;
 
-      return formTemplateFromPostgreSqlResult(result);
-    })
-    .catch((error) => {
-      logMessage.error(
-        error,
-        `[formsClient] Failed to retrieve form template. FormId: ${formId}`,
-      );
+    if (results.length !== 1) {
+      return undefined;
+    }
 
-      throw error;
-    });
-}
+    return results[0];
+  } catch (error) {
+    logMessage.error(
+      error,
+      `[formsClient] Failed to retrieve form template. FormId: ${formId}`,
+    );
 
-function formTemplateFromPostgreSqlResult(
-  response: Record<string, unknown>,
-): FormTemplate {
-  return {
-    jsonConfig: response.jsonConfig as Record<string, unknown>,
-  };
+    throw error;
+  }
 }
