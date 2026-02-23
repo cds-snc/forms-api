@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.7.3](https://github.com/cds-snc/forms-api/compare/v1.7.2...v1.7.3) (2026-02-23)
+
+
+### Bug Fixes
+
+* force SSL connection with database ([#306](https://github.com/cds-snc/forms-api/issues/306)) ([070f6ed](https://github.com/cds-snc/forms-api/commit/070f6ede879d0fb4fa4f86b0381b48a05b1d5ea3))
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#305](https://github.com/cds-snc/forms-api/issues/305)) ([2e0bbc5](https://github.com/cds-snc/forms-api/commit/2e0bbc527998bce75d1ea7b9b502156dca70df42))
+* **deps:** update all non-major github action dependencies ([#303](https://github.com/cds-snc/forms-api/issues/303)) ([15db1a5](https://github.com/cds-snc/forms-api/commit/15db1a5205186ccaa41fc9d9c7ec5b342022fc80))
+* **deps:** update pnpm to v10.29.3 ([#304](https://github.com/cds-snc/forms-api/issues/304)) ([de5a3ff](https://github.com/cds-snc/forms-api/commit/de5a3ff5c46cb2078789f99d8b587ead0db40c76))
+* replace pg-promise with gcforms/connectors package ([#307](https://github.com/cds-snc/forms-api/issues/307)) ([40486a6](https://github.com/cds-snc/forms-api/commit/40486a6c2e71935fa7d8eb91753527704c39f3c2))
+* synced file(s) with cds-snc/site-reliability-engineering ([#301](https://github.com/cds-snc/forms-api/issues/301)) ([6e88fd0](https://github.com/cds-snc/forms-api/commit/6e88fd0f2fb97c5227b39ca058f3f52682ca94bc))
+* synced local '.github/workflows/export_github_data.yml' with remote 'tools/sre_file_sync/export_github_data.yml' ([6e88fd0](https://github.com/cds-snc/forms-api/commit/6e88fd0f2fb97c5227b39ca058f3f52682ca94bc))
+
 ## [1.7.2](https://github.com/cds-snc/forms-api/compare/v1.7.1...v1.7.2) (2026-02-16)
 
 
