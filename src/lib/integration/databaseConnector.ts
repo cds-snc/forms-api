@@ -36,7 +36,10 @@ const createDatabaseConnector = (): Promise<
   logMessage.debug("[database-connector] Creating new database connector");
 
   return getConnectionString().then((connectionString) =>
-    pgp()(connectionString),
+    pgp()({
+      connectionString,
+      ssl: true,
+    }),
   );
 };
 
