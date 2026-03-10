@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.7.4](https://github.com/cds-snc/forms-api/compare/v1.7.3...v1.7.4) (2026-03-10)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#313](https://github.com/cds-snc/forms-api/issues/313)) ([3120a1c](https://github.com/cds-snc/forms-api/commit/3120a1cf29afe4c18876657389722c99ff67fc33))
+* **deps:** update all non-major github action dependencies ([#308](https://github.com/cds-snc/forms-api/issues/308)) ([663ce30](https://github.com/cds-snc/forms-api/commit/663ce307196a27ec915711db1625931ebe38608c))
+* **deps:** update pnpm to v10.30.1 ([#309](https://github.com/cds-snc/forms-api/issues/309)) ([f732639](https://github.com/cds-snc/forms-api/commit/f73263982a9f06569bbdd7d4a832d16ef02702a4))
+* fix Github action including 'generate-sbom' sub-action ([#311](https://github.com/cds-snc/forms-api/issues/311)) ([3815995](https://github.com/cds-snc/forms-api/commit/38159955686cffd556429e4a6c33b6f64812d574))
+* synced file(s) with cds-snc/site-reliability-engineering ([#314](https://github.com/cds-snc/forms-api/issues/314)) ([e14475c](https://github.com/cds-snc/forms-api/commit/e14475cc6caf8bafabffff192c295ba7ad7aa93c))
+* synced local '.github/workflows/export_github_data.yml' with remote 'tools/sre_file_sync/export_github_data.yml' ([e14475c](https://github.com/cds-snc/forms-api/commit/e14475cc6caf8bafabffff192c295ba7ad7aa93c))
+* upgrade generate-sbom Github action from v4.0.1 to v4.0.2 ([#312](https://github.com/cds-snc/forms-api/issues/312)) ([27e98a3](https://github.com/cds-snc/forms-api/commit/27e98a3e265ac563f3f4169cfa036be8f19ad82c))
+
 ## [1.7.3](https://github.com/cds-snc/forms-api/compare/v1.7.2...v1.7.3) (2026-02-23)
 
 
