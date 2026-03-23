@@ -1,4 +1,4 @@
-PyJWT==2.12.0
+PyJWT==2.12.1
 httpx==0.28.1
 cryptography==46.0.5
 requests==2.32.5
