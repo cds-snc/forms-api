@@ -34,7 +34,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@a6f26d4dac281724664e992240eebeb7469b9154
+        uses: aws-actions/amazon-ecr-login@a080f59b057d681bf221f98cbdcd9f0defa1a1a9
 
       - name: Tag images
         env:

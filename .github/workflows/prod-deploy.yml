@@ -41,7 +41,7 @@ jobs:
 
       - name: Update ECS task image
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@6b89923a897d41e9ad789181d8865b532ecf973c # v1.8.3
+        uses: aws-actions/amazon-ecs-render-task-definition@77954e213ba1f9f9cb016b86a1d4f6fcdea0d57e # v1.8.4
         with:
           task-definition: task-definition.json
           container-name: ${{ env.SERVICE_NAME }}
@@ -66,7 +66,7 @@ jobs:
 
       - name: Report deployment to Sentinel
         if: always()
-        uses: cds-snc/sentinel-forward-data-action@main
+        uses: cds-snc/sentinel-forward-data-action@0c349852373284a1130f87f8b91896132b0fc138 # main
         with:
           input_data: '{"product": "forms", "sha": "${{ github.event.workflow_run.head_branch }}", "version": "${{ github.event.workflow_run.head_branch }}", "repository": "${{ github.repository }}", "environment": "production", "status": "${{ job.status }}"}'
           log_type: CDS_Product_Deployment_Data
