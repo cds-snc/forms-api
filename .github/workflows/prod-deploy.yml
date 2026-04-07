@@ -48,7 +48,7 @@ jobs:
           image: "${{ env.REGISTRY }}:${{ github.event.workflow_run.head_branch }}"
 
       - name: Create the new ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@cbf54ec46642b86ff78c2f5793da6746954cf8ff # v2.6.0
+        uses: aws-actions/amazon-ecs-deploy-task-definition@fc8fc60f3a60ffd500fcb13b209c59d221ac8c8c # v2.6.1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           cluster: ${{ env.CLUSTER_NAME }}
