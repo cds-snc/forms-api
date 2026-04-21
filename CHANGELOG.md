@@ -1,5 +1,42 @@
 # Changelog
 
+## [1.7.4](https://github.com/cds-snc/forms-api/compare/v1.7.3...v1.7.4) (2026-04-21)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump cryptography from 46.0.5 to 46.0.6 in /examples/python ([#329](https://github.com/cds-snc/forms-api/issues/329)) ([08443b6](https://github.com/cds-snc/forms-api/commit/08443b63fd596bc2014e25959c90eef0a6038f69))
+* **deps:** bump cryptography from 46.0.6 to 46.0.7 in /examples/python ([#337](https://github.com/cds-snc/forms-api/issues/337)) ([bc23ed2](https://github.com/cds-snc/forms-api/commit/bc23ed20b370971f2803c48ebbeb737da34b669c))
+* **deps:** lock file maintenance ([#313](https://github.com/cds-snc/forms-api/issues/313)) ([3120a1c](https://github.com/cds-snc/forms-api/commit/3120a1cf29afe4c18876657389722c99ff67fc33))
+* **deps:** lock file maintenance ([#321](https://github.com/cds-snc/forms-api/issues/321)) ([bddd74c](https://github.com/cds-snc/forms-api/commit/bddd74cdf6754b6835171f818e43800e55e593da))
+* **deps:** lock file maintenance ([#325](https://github.com/cds-snc/forms-api/issues/325)) ([c42a494](https://github.com/cds-snc/forms-api/commit/c42a49463e6e32c80100ba9bb98757cc2b114015))
+* **deps:** lock file maintenance ([#330](https://github.com/cds-snc/forms-api/issues/330)) ([a7f9edf](https://github.com/cds-snc/forms-api/commit/a7f9edfca5ce10c7820b882728dcafbbe88a4de1))
+* **deps:** lock file maintenance ([#335](https://github.com/cds-snc/forms-api/issues/335)) ([6eeb448](https://github.com/cds-snc/forms-api/commit/6eeb448d28f6d553410eb45342170c6706c76088))
+* **deps:** lock file maintenance ([#340](https://github.com/cds-snc/forms-api/issues/340)) ([6b725c8](https://github.com/cds-snc/forms-api/commit/6b725c88f977d4e89150812a79c73aa8af084f7c))
+* **deps:** update all minor dependencies ([#334](https://github.com/cds-snc/forms-api/issues/334)) ([61a3d58](https://github.com/cds-snc/forms-api/commit/61a3d58fa01510aea5a991046f687d2dde106553))
+* **deps:** update all non-major github action dependencies ([#308](https://github.com/cds-snc/forms-api/issues/308)) ([663ce30](https://github.com/cds-snc/forms-api/commit/663ce307196a27ec915711db1625931ebe38608c))
+* **deps:** update all non-major github action dependencies ([#319](https://github.com/cds-snc/forms-api/issues/319)) ([700bb1e](https://github.com/cds-snc/forms-api/commit/700bb1e382f7b90007764206f953abd36e97d4f3))
+* **deps:** update all non-major github action dependencies ([#322](https://github.com/cds-snc/forms-api/issues/322)) ([bc150ba](https://github.com/cds-snc/forms-api/commit/bc150ba02a03d6650684c2b5ed503ee7792c1e97))
+* **deps:** update all non-major github action dependencies ([#328](https://github.com/cds-snc/forms-api/issues/328)) ([1c50268](https://github.com/cds-snc/forms-api/commit/1c502687a8b74a10d3981615322cc521d065dd92))
+* **deps:** update all non-major github action dependencies ([#332](https://github.com/cds-snc/forms-api/issues/332)) ([8e9dfb7](https://github.com/cds-snc/forms-api/commit/8e9dfb7d0310322eb57d1de606bb085fab217413))
+* **deps:** update all patch dependencies ([#318](https://github.com/cds-snc/forms-api/issues/318)) ([bb5d02b](https://github.com/cds-snc/forms-api/commit/bb5d02b25bf20233c98e2b34f79c19217203600d))
+* **deps:** update all patch dependencies ([#333](https://github.com/cds-snc/forms-api/issues/333)) ([8781d5e](https://github.com/cds-snc/forms-api/commit/8781d5e5694534154b8534833d49ec72c26bb9a6))
+* **deps:** update dependency axios to v1.15.0 [security] ([#338](https://github.com/cds-snc/forms-api/issues/338)) ([a372a3b](https://github.com/cds-snc/forms-api/commit/a372a3b336e8a4b6a832ac0f560bd7e82243e333))
+* **deps:** update dependency pyjwt to v2.12.0 [security] ([#316](https://github.com/cds-snc/forms-api/issues/316)) ([d2e2cab](https://github.com/cds-snc/forms-api/commit/d2e2cabd81c0e2c60268eae1379418853525ecf2))
+* **deps:** update dependency pyjwt to v2.12.1 ([#323](https://github.com/cds-snc/forms-api/issues/323)) ([94992b4](https://github.com/cds-snc/forms-api/commit/94992b4ac380e2dc34a6b0d56bdb04155d6d6895))
+* **deps:** update dependency requests to v2.33.0 [security] ([#326](https://github.com/cds-snc/forms-api/issues/326)) ([eb2f952](https://github.com/cds-snc/forms-api/commit/eb2f9522f4dead23d40acafacbbb5796f4980dd9))
+* **deps:** update googleapis/release-please-action action to v4.4.1 ([#342](https://github.com/cds-snc/forms-api/issues/342)) ([e321f68](https://github.com/cds-snc/forms-api/commit/e321f68ddf420dc39c234342feb46bea3a4726fa))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to aa263c6 ([#317](https://github.com/cds-snc/forms-api/issues/317)) ([7685704](https://github.com/cds-snc/forms-api/commit/76857041b0287f67bbbcaf59e2c8bfd48c2cf570))
+* **deps:** update pnpm to v10.30.1 ([#309](https://github.com/cds-snc/forms-api/issues/309)) ([f732639](https://github.com/cds-snc/forms-api/commit/f73263982a9f06569bbdd7d4a832d16ef02702a4))
+* **deps:** update pnpm to v10.31.0 ([#320](https://github.com/cds-snc/forms-api/issues/320)) ([000defb](https://github.com/cds-snc/forms-api/commit/000defb2699ffa0b71a3da4dfa7e21ccf7372aeb))
+* **deps:** update pnpm to v10.32.1 ([#324](https://github.com/cds-snc/forms-api/issues/324)) ([3fc83b3](https://github.com/cds-snc/forms-api/commit/3fc83b315d224be7f0f0cabef17717dd6bd4820e))
+* fix Github action including 'generate-sbom' sub-action ([#311](https://github.com/cds-snc/forms-api/issues/311)) ([3815995](https://github.com/cds-snc/forms-api/commit/38159955686cffd556429e4a6c33b6f64812d574))
+* fix Slack notification when Github workflow fails ([#343](https://github.com/cds-snc/forms-api/issues/343)) ([b573792](https://github.com/cds-snc/forms-api/commit/b573792b893d797953607b3c096ad680d8032bde))
+* synced file(s) with cds-snc/site-reliability-engineering ([#314](https://github.com/cds-snc/forms-api/issues/314)) ([e14475c](https://github.com/cds-snc/forms-api/commit/e14475cc6caf8bafabffff192c295ba7ad7aa93c))
+* synced file(s) with cds-snc/site-reliability-engineering ([#331](https://github.com/cds-snc/forms-api/issues/331)) ([5117586](https://github.com/cds-snc/forms-api/commit/5117586dc37476c1499fa690f3d8dc4cf873fef6))
+* synced local '.github/workflows/export_github_data.yml' with remote 'tools/sre_file_sync/export_github_data.yml' ([e14475c](https://github.com/cds-snc/forms-api/commit/e14475cc6caf8bafabffff192c295ba7ad7aa93c))
+* upgrade generate-sbom Github action from v4.0.1 to v4.0.2 ([#312](https://github.com/cds-snc/forms-api/issues/312)) ([27e98a3](https://github.com/cds-snc/forms-api/commit/27e98a3e265ac563f3f4169cfa036be8f19ad82c))
+
 ## [1.7.3](https://github.com/cds-snc/forms-api/compare/v1.7.2...v1.7.3) (2026-02-23)
 
 
