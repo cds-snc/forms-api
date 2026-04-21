@@ -19,5 +19,5 @@ jobs:
     steps:
       - name: Notify Slack
         run: |
-          json='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":":red: Forms API workflow failed: <${{ github.event.workflow_run.html_url }}|${{ github.event.workflow.name }}>"}}]}'
+          json='{"text":":x: GCForms API deployment failed.\n<${{ github.event.workflow_run.html_url }}|${{ github.event.workflow.name }}>"}'
           curl -X POST -H 'Content-type: application/json' --data "$json" ${{ env.SLACK_WEBHOOK_URL }}
