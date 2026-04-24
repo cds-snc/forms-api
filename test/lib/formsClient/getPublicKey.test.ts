@@ -1,20 +1,22 @@
-import { vi, describe, it, expect, beforeEach, type Mock } from "vitest";
-import { databaseConnector } from "@lib/integration/databaseConnector.js";
+import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 import {
   getValueFromRedis,
   setValueInRedis,
 } from "@lib/integration/redis/redisClientAdapter.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { prisma, type PrismaClient } from "@gcforms/database";
+import { type DeepMockProxy, mockReset } from "vitest-mock-extended";
 
 vi.mock("@lib/integration/redis/redisClientAdapter");
 const getValueFromRedisMock = vi.mocked(getValueFromRedis);
 const setValueInRedisMock = vi.mocked(setValueInRedis);
 
-const sqlMock = databaseConnector.executeSqlStatement() as unknown as Mock;
+const prismaMock = prisma as unknown as DeepMockProxy<PrismaClient>;
 
 describe("getPublicKey should", () => {
   beforeEach(() => {
+    mockReset(prismaMock);
     vi.clearAllMocks();
   });
 
@@ -30,9 +32,10 @@ describe("getPublicKey should", () => {
     });
 
     it("when it does not exist in cache", async () => {
-      sqlMock.mockResolvedValueOnce([
-        { publicKey: "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=" },
-      ]);
+      prismaMock.apiServiceAccount.findUnique.mockResolvedValue({
+        publicKey: "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      } as any);
 
       const publicKey = await getPublicKey("254354365464565461");
 
@@ -47,7 +50,7 @@ describe("getPublicKey should", () => {
 
   it("throw an error if database has an internal failure", async () => {
     const customError = new Error("custom error");
-    sqlMock.mockRejectedValueOnce(customError);
+    prismaMock.apiServiceAccount.findUnique.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "info");
 
     await expect(() => getPublicKey("254354365464565461")).rejects.toThrowError(

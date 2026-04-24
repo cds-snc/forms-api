@@ -1,4 +1,4 @@
-import { databaseConnector } from "@lib/integration/databaseConnector.js";
+import { prisma } from "@gcforms/database";
 import {
   getValueFromRedis,
   setValueInRedis,
@@ -40,15 +40,20 @@ export async function getPublicKey(serviceAccountId: string): Promise<string> {
 async function retrievePublicKeyFromDatabase(
   serviceAccountId: string,
 ): Promise<string | undefined> {
-  const results = await databaseConnector.executeSqlStatement()<
-    { publicKey: string }[]
-  >`SELECT "publicKey" FROM "ApiServiceAccount" WHERE id = ${serviceAccountId}`;
+  const apiServiceAccount = await prisma.apiServiceAccount.findUnique({
+    where: {
+      id: serviceAccountId,
+    },
+    select: {
+      publicKey: true,
+    },
+  });
 
-  if (results.length !== 1) {
+  if (apiServiceAccount === null) {
     return undefined;
   }
 
-  return results[0].publicKey;
+  return apiServiceAccount.publicKey;
 }
 
 function getPublicKeyFromCache(

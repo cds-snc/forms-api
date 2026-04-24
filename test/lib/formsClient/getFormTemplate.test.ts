@@ -1,17 +1,19 @@
-import { vi, describe, it, expect, beforeEach, type Mock } from "vitest";
+import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
-import { databaseConnector } from "@lib/integration/databaseConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
+import { prisma, type PrismaClient } from "@gcforms/database";
+import { type DeepMockProxy, mockReset } from "vitest-mock-extended";
 
-const sqlMock = databaseConnector.executeSqlStatement() as unknown as Mock;
+const prismaMock = prisma as unknown as DeepMockProxy<PrismaClient>;
 
 describe("getFormTemplate should", () => {
   beforeEach(() => {
+    mockReset(prismaMock);
     vi.clearAllMocks();
   });
 
   it("return an undefined form template if database was not able to find it", async () => {
-    sqlMock.mockResolvedValueOnce([]);
+    prismaMock.template.findUnique.mockResolvedValueOnce(null);
 
     const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m");
 
@@ -19,18 +21,17 @@ describe("getFormTemplate should", () => {
   });
 
   it("return a form template if database was able to find it", async () => {
-    sqlMock.mockResolvedValueOnce([
-      {
-        jsonConfig: {
-          elements: [
-            {
-              id: 1,
-              type: "textField",
-            },
-          ],
-        },
+    prismaMock.template.findUnique.mockResolvedValue({
+      jsonConfig: {
+        elements: [
+          {
+            id: 1,
+            type: "textField",
+          },
+        ],
       },
-    ]);
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    } as any);
 
     const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m");
 
@@ -48,7 +49,7 @@ describe("getFormTemplate should", () => {
 
   it("throw an error if database has an internal failure", async () => {
     const customError = new Error("custom error");
-    sqlMock.mockRejectedValueOnce(customError);
+    prismaMock.template.findUnique.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
