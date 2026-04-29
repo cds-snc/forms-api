@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { prisma, type PrismaClient } from "@gcforms/database";
+import { prisma, type Template, type PrismaClient } from "@gcforms/database";
 import { type DeepMockProxy, mockReset } from "vitest-mock-extended";
 
 const prismaMock = prisma as unknown as DeepMockProxy<PrismaClient>;
@@ -30,8 +30,7 @@ describe("getFormTemplate should", () => {
           },
         ],
       },
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    } as any);
+    } as unknown as Template);
 
     const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m");
 
