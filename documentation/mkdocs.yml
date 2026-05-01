@@ -1,0 +1,40 @@
+site_name: GC Forms — Data retrieval API
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Authentication: authentication.md
+  - Making requests: making-requests.md
+  - Monitoring: monitoring.md
+  - Getting support: getting-support.md
+
+theme:
+  name: material
+
+extra:
+  generator: false # The footer displays a Made with Material for MkDocs notice to denote how the site was generated
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/cds-snc/forms-api
+
+plugins:
+  - i18n:
+      docs_structure: folder
+      default_language: en
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: fr
+          name: Français
+          build: true
+          site_name: API pour la récupération de données — Formulaires GC
+          nav_translations:
+            Home: Accueil
+            Getting started: Pour commencer
+            Authentication: Authentification
+            Making requests: Effectuer des demandes
+            Monitoring: Surveiller
+            Getting support: Obtenir du soutien
+  - search
