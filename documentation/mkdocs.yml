@@ -1,0 +1,69 @@
+# Documentation about MkDocs https://www.mkdocs.org/user-guide/
+
+site_name: GC Forms — Data retrieval API
+site_url: https://cds-snc.github.io/forms-api
+
+repo_name: cds-snc/forms-api
+repo_url: https://github.com/cds-snc/forms-api
+
+theme:
+  name: material # Documentation about Material for MkDocs https://squidfunk.github.io/mkdocs-material/setup/
+  logo: assets/images/logo.svg
+  favicon: assets/images/favicon.ico
+  icon:
+    repo: fontawesome/brands/github
+
+  features:
+    - toc.integrate
+    - navigation.top
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+
+extra:
+  social:
+    - icon: fontawesome/solid/globe
+      name: GC Forms - Formulaires GC
+      link: https://forms-formulaires.alpha.canada.ca
+    - icon: fontawesome/solid/hands-helping
+      name: Support - Soutien
+      link: https://forms-formulaires.alpha.canada.ca/en/support
+
+nav:
+  - Introduction: index.md
+  - Getting started: getting-started.md
+  - Authentication: authentication.md
+  - Making requests: making-requests.md
+  - Monitoring: monitoring.md
+  - Getting support: getting-support.md
+
+plugins:
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: fr
+          name: Français
+          build: true
+          site_name: API pour la récupération de données — Formulaires GC
+          nav_translations:
+            Introduction: Introduction
+            Getting started: Pour commencer
+            Authentication: Authentification
+            Making requests: Effectuer des demandes
+            Monitoring: Surveiller
+            Getting support: Obtenir du soutien
+  - search
+  - open-in-new-tab
