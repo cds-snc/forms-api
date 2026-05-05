@@ -1,9 +1,11 @@
 import { vi } from "vitest";
-import type { Sql } from "postgres";
+import { mockDeep } from "vitest-mock-extended";
+import type { PrismaClient } from "@gcforms/database";
 
 process.env = {
   ...process.env,
   ENVIRONMENT_MODE: "production",
+  DATABASE_URL: "test",
   FRESHDESK_API_KEY: "test",
   REDIS_URL: "test",
   VAULT_FILE_STORAGE_BUCKET_NAME: "bucket",
@@ -16,28 +18,9 @@ process.env = {
   }),
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const mockSql: Sql<any> = vi.fn().mockResolvedValue([]) as unknown as Sql<any>;
-
-class PostgresConnectorMock {
-  executeSqlStatement() {
-    return mockSql;
-  }
-}
-
-vi.mock("@gcforms/connectors", async () => {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const actual: any = await vi.importActual("@gcforms/connectors");
-
-  return {
-    ...actual,
-    PostgresConnector: {
-      defaultUsingPostgresConnectionUrlFromAwsSecret: vi.fn(
-        async () => new PostgresConnectorMock(),
-      ),
-    },
-  };
-});
+vi.mock("@gcforms/database", () => ({
+  prisma: mockDeep<PrismaClient>(),
+}));
 
 vi.mock("./src/lib/logging/auditLogs", () => ({
   auditLog: vi.fn(),
