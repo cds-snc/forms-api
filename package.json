@@ -24,7 +24,7 @@
     "@aws-sdk/client-sqs": "^3.823.0",
     "@aws-sdk/lib-dynamodb": "^3.823.0",
     "@aws-sdk/s3-request-presigner": "^3.859.0",
-    "@gcforms/database": "^1.0.5",
+    "@gcforms/database": "^1.0.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
