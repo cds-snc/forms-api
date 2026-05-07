@@ -24,7 +24,7 @@
     "@aws-sdk/client-sqs": "^3.823.0",
     "@aws-sdk/lib-dynamodb": "^3.823.0",
     "@aws-sdk/s3-request-presigner": "^3.859.0",
-    "@gcforms/connectors": "^2.2.17",
+    "@gcforms/database": "^1.0.8",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
@@ -44,14 +44,14 @@
     "@types/supertest": "^6.0.2",
     "aws-sdk-client-mock": "^4.0.2",
     "pino-pretty": "^11.2.2",
-    "postgres": "^3.4.8",
     "supertest": "^7.0.0",
     "tsc-alias": "^1.8.15",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.1.9",
-    "vitest-mock-express": "^2.2.0"
+    "vitest-mock-express": "^2.2.0",
+    "vitest-mock-extended": "^4.0.0"
   },
   "packageManager": "pnpm@10.33.0"
 }

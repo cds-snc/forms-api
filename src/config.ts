@@ -16,6 +16,10 @@ export type TokenBucketConfiguration = {
 
 export const AWS_REGION: string = "ca-central-1";
 
+// Database
+
+loadRequiredEnvVar("DATABASE_URL"); // Make sure DATABASE_URL exist as it will be required by the @gcforms/database package
+
 // Environment mode
 
 export const ENVIRONMENT_MODE: EnvironmentMode =
