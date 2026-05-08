@@ -1,11 +1,1 @@
-idp_url="https://auth.forms-formulaires.alpha.canada.ca"
-api_url="https://api.forms-formulaires.alpha.canada.ca"
-project_id="284778202772022819"
-
-json_key_file="$(find . -name "*_private_api_key.json" | head -n 1)"
-if [ -z "$json_key_file" ]; then
-  echo "Private key file not found.  Please make sure it is in the script directory and ends with '_private_api_key.json'"
-  exit 1
-fi
-
-form_id="$(jq -r '.formId' "$json_key_file")"
+.environment-fu-test

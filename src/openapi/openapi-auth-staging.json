@@ -1,0 +1,58 @@
+{
+    "openapi":"3.0.3",
+    "info": {
+      "title":"Forms Data Retrieval Authentication API",
+      "version":"1.0"
+    },
+    "servers": [
+        {
+            "url":"https://auth.forms-staging.cdssandbox.xyz"
+        }
+    ],
+    "components": {
+    },
+    "paths": {
+        "/oauth/v2/token": {
+            "post": {
+                "description": "",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "grant_type": {
+                                        "type": "string"
+                                    },
+                                    "assertion": {
+                                        "type": "string"
+                                    },
+                                    "scope": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "grant_type",
+                                    "assertion",
+                                    "scope"
+                                ],
+                                "example": {
+                                    "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+                                    "assertion": "ewogICAgImFsZyI6ICJSUzI1NiIsCiAgICAia2lkIjogIjMzODQwMzY4MTk5NTA2OTU5OCIKICB9.ewogICAgImlzcyI6ICIzMzg0MDM2ODEzMDcyMDM3NDIiLAogICAgInN1YiI6ICIzMzg0MDM2ODEzMDcyMDM3NDIiLAogICAgImF1ZCI6ICJodHRwczovL2F1dGguZm9ybXMtc3RhZ2luZy5jZHNzYW5kYm94Lnh5eiIsCiAgICAiaWF0IjogMTc1ODg5ODc1OCwKICAgICJleHAiOiAxNzU4ODk4ODE4CiAgfQ.rA5KtWjrdfNij8VQ1nSqF1iRlWtD6chxnmbi17pPMwTofMhYqzG6OdukH4r1YSs02YW3gOgtjlF6rZdcAyD1UMm6H9OnnKyChPccmMqkzGVKxngkCr1b5dQRB448b7qiY750sajQAhA1Hyn3qjmS1X8v228fNpzzrPMNCxNPES_Nh7ZTUjIY1xUuKFXpzevLmJiMsKlS7NCP3ISCJDXBl76Mfw41uRbhUPznTYwcDK2IE2UdB1HZKwSwKrDfhL_Q4_-wto4fJSmuk6BCCf5niLpa0EYMVukaTXH_rLxfH4G_sQVkqAyjz8q_nT3IEyzlvpwgwyT2FEv5rYhKVAVD-g",
+                                    "scope": "openid profile urn:zitadel:iam:org:project:id:275372254274006635:aud"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
