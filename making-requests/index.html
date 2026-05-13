@@ -1,0 +1,1300 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://cds-snc.github.io/forms-api/making-requests/">
+      
+      
+        <link rel="prev" href="../authentication/">
+      
+      
+        <link rel="next" href="../monitoring/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../fr/making-requests/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Making requests - GC Forms — Data retrieval API</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#query-parameters" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="GC Forms — Data retrieval API" class="md-header__button md-logo" aria-label="GC Forms — Data retrieval API" data-md-component="logo">
+      
+  <img src="../assets/images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GC Forms — Data retrieval API
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Making requests
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../fr/making-requests/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cds-snc/forms-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cds-snc/forms-api
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="GC Forms — Data retrieval API" class="md-nav__button md-logo" aria-label="GC Forms — Data retrieval API" data-md-component="logo">
+      
+  <img src="../assets/images/logo.svg" alt="logo">
+
+    </a>
+    GC Forms — Data retrieval API
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cds-snc/forms-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cds-snc/forms-api
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making requests
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making requests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Query parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieving-new-form-submissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieving new form submissions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieving new form submissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieving-specific-form-submissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieving specific form submissions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieving specific form submissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-the-form-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting the form submission
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting the form submission">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http-request_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-status_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decrypting-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decrypting the data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-files-that-were-attached-to-form-submissions-securely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting files that were attached to form submissions securely
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting files that were attached to form submissions securely">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to-retrieve-files-uploaded-to-a-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        To retrieve files uploaded to a form:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#confirming-form-submissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confirming form submissions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Confirming form submissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-of-response-data-with-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of response data with files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example of response data with files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http-request_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-status_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting-a-problem-with-a-form-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting a problem with a form submission
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reporting a problem with a form submission">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http-request_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-payload-for-reporting-a-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example payload for reporting a problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-status_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-form-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting form questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting form questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http-request_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-status_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to-set-and-customize-unique-question-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        To set and customize unique Question IDs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to-label-and-organize-data-with-additional-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        To label and organize data with Additional tags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Making requests</h1>
+
+<p>The GC Forms API allows you to retrieve form submissions as files in JSON file format. You can get up to 100 form submissions in a batch, and these are available for up to 30 days after submission, given our current data retention periods. Form submissions are encrypted with a public key and can be decrypted by you locally.</p>
+<h3 id="query-parameters">Query parameters</h3>
+<p>The API requests for GC Forms submission data are possible using query parameters such as:
+ - <strong>{formID}</strong>
+  25-character alphanumeric string found at the end of the URL for the form or at the start of the 
+  file name of the API key. 
+  For example: <code>clzvj8fzb00226o90r2b7l1gt</code>.
+ - <strong>{SubmissionName}</strong>
+  11-character alphanumeric including dashes, sometimes also called the SubmissionID in the GC Forms 
+  app. 
+  For example: <code>e02-08-d732</code>.
+ - <strong>{ConfirmationCode}</strong>
+  36-character alphanumeric string that includes dashes, sometimes also called the Receipt code in the 
+  GC Forms app. 
+  For example: <code>620b203c-9836-4000-bf30-1c3bcc26b834</code>. </p>
+<h3 id="integration-examples">Integration examples</h3>
+<p>We’ve developed some examples that you can reference or run the program for, that we hope will help make integration easier. Here are the programming languages currently available:</p>
+<ul>
+<li><a href="https://github.com/cds-snc/forms-api/tree/main/examples/dotnet">.NET / C#</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/tree/main/examples/nodejs">Node.JS / Typescript</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/tree/main/examples/python">Python</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/tree/main/examples/bash">Bash /Curl</a></li>
+</ul>
+<p>Work with your development team to test out a draft form and ensure the API integration is receiving responses, able to decrypt, check the hash, and confirm the responses or report a problem. Once that process is complete, you are ready to publish your form with this data delivery method.</p>
+<h3 id="retrieving-new-form-submissions">Retrieving <strong>new</strong> form submissions</h3>
+<h5 id="http-request">HTTP request</h5>
+<p>This URL path returns a list of submissions that includes the 100 oldest form submissions marked with a “New” status: </p>
+<p><code>
+GET  /forms/{formID}/submission/new
+</code></p>
+<blockquote>
+<p><em>Note: The status of these form submissions will not change to “Downloaded”.</em></p>
+</blockquote>
+<h5 id="response-status">Response status</h5>
+<table>
+<tr>
+  <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
+</tr>  
+<tr>
+  <td><code>200</code></td>
+  <td>
+<code>[
+  {
+    "name": "05-09-09f4",
+    "createdAt": 1725553403512
+  },
+  {
+    "name": "05-09-9620",
+    "createdAt": 1725553404965
+  },
+  {
+    "name": "05-09-75dc",
+    "createdAt": 1725553404972
+  }
+]</code>
+  </td> 
+  <td> 
+  List of new submission names successfully retrieved.
+  </td>
+</tr>
+</table>
+
+<blockquote>
+<p><em>Note: The timestamp is in Coordinated Universal Time (UTC).</em></p>
+</blockquote>
+<h3 id="retrieving-specific-form-submissions">Retrieving <strong>specific</strong> form submissions</h3>
+<h4 id="getting-the-form-submission">Getting the form submission</h4>
+<h5 id="http-request_1">HTTP request</h5>
+<p>This URL path returns one form submission per request based on the respective submission name: </p>
+<p><code>
+GET /forms/{formID}/submission/{submissionName}
+</code></p>
+<blockquote>
+<p><em>Note: Retrieval is only possible for 1 submission, with 1 download per request. The status of these form submissions will not change to “Downloaded”. To change the status of the form submissions, make a request to confirm form submissions once they are properly received.</em></p>
+</blockquote>
+<h5 id="response-status_1">Response status</h5>
+<table>
+<tr>
+  <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
+</tr>  
+<tr>
+  <td><code>200</code></td>
+  <td>
+<code>{
+  "encryptedResponses": "IOWyM7bpo+wVCXpFkU13JeO0HcxFHTIwLX17ol+jUWdvhicIG+fJj",
+  "encryptedKey": "IOWyM7bpELZg4kPBOPVe7jeHcxFHTIwLX17ol+jUw6KGictIG+fJj",
+  "encryptedNonce": "GVyPXC/6UTteJ3uf8d6doBNbppHzKjEXDxwE2DXQbD30/vIxlsY",
+  "encryptedAuthTag": "VRMt87LgedVo+wVCXpFkU13JeO0guDGHb48XVpvWdvhs3bv/D"
+}</code>
+  </td> 
+  <td> 
+  Encrypted data of the submission successfully retrieved.
+  </td>
+</tr>
+<tr>
+  <td><code>404</code></td>
+  <td>
+<code>{
+  "error": "Form submission does not exist"
+}</code>  
+  </td> 
+  <td> 
+  "Form ID" and/or "Submission name" are incorrect or cannot be found.
+  </td>
+</tr>
+</table>
+
+<h4 id="decrypting-the-data">Decrypting the data</h4>
+<p>Security of the system is paramount and it is enhanced by encrypting form submissions. While encrypted in HTTPS, we’ve added another layer of security with AES-256-GSM encryption. When you get a form submission it will be encrypted and it will come with an encrypted key, an encrypted nonce, and an encrypted AuthTag. These can be decrypted using the Private key.</p>
+<h3 id="getting-files-that-were-attached-to-form-submissions-securely">Getting files that were attached to form submissions securely</h3>
+<p>The retrieval of files attached within submissions is only possible via the API data delivery method. The same storage conditions apply as for submission data, where GC Forms only temporarily keeps data and files until downloaded and confirmed. To learn more about adding a file upload element to your form, consult our <a href="https://articles.alpha.canada.ca/forms-formulaires/files-attachments/">Guidance page</a>. </p>
+<p>Files are linked directly within responses (retrieval from AWS) and are accompanied by an attribute that shows whether scanning for malicious files detected any potential harm, with basic antivirus technology. Be careful when opening any attachments: choose a secure location, follow security guidelines, and run host-level sensors if possible. The safety of files cannot be guaranteed, as no software is perfect at detecting threats.</p>
+<p>While there is a file scanning software implemented via Amazon Web Services (AWS), to mark files, it is your responsibility to check the <code>isPotentiallyMalicious</code> attribute before opening the linked files. You can decide how to use this attribute, for example: sending a warning in the logs, running a quarantine system, or other logic you develop based on how you and your security team want to safeguard against malicious files.</p>
+<h4 id="to-retrieve-files-uploaded-to-a-form">To retrieve files uploaded to a form:</h4>
+<p>You will receive each submission as a raw JSON file that includes direct links to files, if attached. These direct download links are only valid for 10 seconds for security reasons. </p>
+<p>As files are scanned upon being submitted, they may also be marked as potentially being malicious, based on the file scanning software. You must decide what to do with flagged files — whether to download those files or not if they include a flagged with a “malicious” or “bad” metadata attribute. Add some code for how to handle the encountering of <code>isPotentiallyMalicious:true</code>. You'll then be able to access submission data and files attached in your system. </p>
+<h3 id="confirming-form-submissions"><strong>Confirming</strong> form submissions</h3>
+<p>The confirmation step helps ensure the form submissions are exploitable and render as expected before they are permanently removed from the GC Forms system’s database. </p>
+<p>Before confirming a response, ensure you’ve got access to all attached files, if any are present. These file download links are only temporarily available, as they are valid for up to 10 seconds. If you have not received all files, redownload the same form submission to get new download links. Report a problem if there is one with file or data. Once you are confident that you indeed have all submission data and files submitted, confirm that all data has been transferred successfully. Responses and files will then be removed from GC Forms after 30 days.</p>
+<h4 id="example-of-response-data-with-files">Example of response data with files</h4>
+<p>Data will look something like this when files are attached:</p>
+<p><code>
+{
+   "createdAt":1749476854628,
+   "status":"New",
+   "confirmationCode":"714dfe46-6fa1-4281-8d15-a39bcebc3c4f",
+   "answers":"{\"1\":\"Test1\",\"2\":\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\",\"3\":\"form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\",\"4\":\"form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\"}",
+   "checksum":"cc33cb49f6c088bf98b7315794db216e",
+   "attachments":[
+      {
+        "id": "04d8aff7-25d7-49e5-8f01-77a8b6fba214",
+        "name":"output.txt",
+        "downloadLink":"https://...",
+        "isPotentiallyMalicious":true,
+        "md5":"54b0c58c7ce9f2a8b551351102ee0938"
+      }
+   ]
+}
+</code></p>
+<h5 id="http-request_2">HTTP request</h5>
+<p>This URL path confirms form submissions were successfully retrieved from the system, thus removing them:</p>
+<p><code>
+PUT  /forms/{formID}/submission/{submissionName}/confirm/{confirmationCode}
+</code></p>
+<blockquote>
+<p><em>Note: Confirmation is only possible for one submission at a time, with one confirmation code per request. The status of that submission will be modified from “New” to “Confirmed”. This is similar to the two-step “Download” and “Sign off on removal” process in the application.</em></p>
+</blockquote>
+<h5 id="response-status_2">Response status</h5>
+<table>
+<tr>
+  <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
+</tr>  
+<tr>
+  <td><code>200</code></td>
+  <td><code>OK</code></td> 
+  <td> Submission has been successfully confirmed</td>
+</tr>
+<tr>
+  <td><code>200</code></td>
+  <td>
+<code>{
+  "info": "Form submission is already confirmed"
+}</code> 
+  </td> 
+  <td> 
+  Submission has already been successfully confirmed.
+  </td>
+</tr>
+<tr>
+  <td><code>400</code></td>
+  <td>
+<code>{
+  "error": "Confirmation code is incorrect"
+}</code>
+  </td> 
+  <td> 
+  Provided confirmation code is not the one associated with the submission to be confirmed.
+  </td>
+</tr>
+<tr>
+  <td><code>404</code></td>
+  <td>
+<code>{
+  "error": "Form submission does not exist"
+}</code>
+  </td> 
+  <td> 
+  "Form ID" and/or "Submission name" are incorrect or cannot be found.
+  </td>
+</tr>
+</table>
+
+<h3 id="reporting-a-problem-with-a-form-submission">Reporting a problem with a form submission</h3>
+<h5 id="http-request_3">HTTP request</h5>
+<p>This URL path identifies a form submission as having a problem if something unexpected occurs:</p>
+<p><code>
+POST  /forms/{formID}/submission/{submissionName}/problem
+</code></p>
+<blockquote>
+<p><em>Note: Reporting a problem is only possible for one submission at a time. You can report a problem with form submissions that are “New” or “Confirmed” as long as they have not been removed from the system. This will change the status to “Problem” and block the submission’s removal from the system until the problem is resolved.</em></p>
+</blockquote>
+<h5 id="example-payload-for-reporting-a-problem">Example payload for reporting a problem</h5>
+<p>To report a problem include a message formatted like the one below in the HTTP POST request body:</p>
+<p><code>
+{
+  “contactEmail”: “something@somethingelse.com”,
+  “description”: “Here is my problem”,
+  “preferredLanguage”: “en” (either “en” or “fr”)
+}
+</code></p>
+<blockquote>
+<p><em>Note: This will be directed to our support team.</em></p>
+</blockquote>
+<h5 id="response-status_3">Response status</h5>
+<table>
+<tr>
+  <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
+</tr>  
+<tr>
+  <td><code>200</code></td>
+  <td><code>OK</code></td> 
+  <td> Submission has been successfully reported as having a problem</td>
+</tr>
+<tr>
+  <td><code>200</code></td>
+  <td>
+<code>
+{
+  "info": "Form submission is already confirmed"
+}
+</code>
+  </td> 
+  <td> 
+  Submission has already been successfully reported as having a problem.
+  </td>
+</tr>
+<tr>
+  <td><code>400</code></td>
+  <td>
+<code>{
+  "error": "Invalid payload",
+  "details": [
+    {
+      "type": "field",
+      "value": "test@cds-snc",
+      "msg": "Invalid value",
+      "path": "contactEmail",
+      "location": "body"
+    },
+    {
+      "type": "field",
+      "value": "",
+      "msg": "Must be at least 10 characters long",
+      "path": "description",
+      "location": "body"
+    }
+  ]
+}</code>
+  </td> 
+  <td> 
+  Details about why the provided payload is invalid.
+  </td>
+</tr>
+<tr>
+  <td><code>400</code></td>
+  <td>
+<code>{
+  "error": "Form submission does not exist"
+}</code> 
+  </td> 
+  <td> 
+  “Form ID” and/or “Submission name” are incorrect or could not be found.
+  </td>
+</tr>
+</table>
+
+<h3 id="getting-form-questions">Getting form questions</h3>
+<h5 id="http-request_4">HTTP request</h5>
+<p>This URL path retrieves the questions that were asked in JSON format so they can more easily be associated with the answer data retrieved:</p>
+<p><code>
+GET  /forms/{formID}/template
+</code></p>
+<blockquote>
+<p><em>Note: The questions will be in a data structure that is JSON format when retrieved. This helps if you’ll be transforming the data and need to match the answers to the questions.</em></p>
+</blockquote>
+<p>You can configure question attributes with customizable unique <strong>Question IDs</strong> and <strong>additional tags</strong>. These two attributes can be used to help map form response data to target systems or destination fields in a database, making it easier to update API integrations with a consistent way of mapping response data. </p>
+<p>You might use these attributes to:
+- Clarify a field's purpose 
+- Organize and sort data
+- Support automation</p>
+<p>Learn more below.</p>
+<h5 id="response-status_4">Response status</h5>
+<table>
+<tr>
+  <td><b>Status code</b></td> <td><b>Example message</b></td> <td><b>Meaning or how to fix</b></td>
+</tr>  
+<tr>
+  <td><code>200</code></td>
+  <td>
+<code>
+  {
+  "layout": [
+    1
+  ],
+  "titleEn": "Test Form",
+  "titleFr": "Formulaire de test",
+  "elements": [
+    {
+      "id": 1,
+      "type": "textField",
+      "properties": {
+        "choices": [
+          {
+            "en": "",
+            "fr": ""
+          }
+        ],
+        "titleEn": "This is a question",
+        "titleFr": "C'est une question",
+        "validation": {
+          "required": false
+        },
+        "subElements": [],
+        "descriptionEn": "",
+        "descriptionFr": "",
+        "placeholderEn": "",
+        "placeholderFr": ""
+      }
+    }
+  ],
+  "confirmation": {
+    "descriptionEn": "Confirmed",
+    "descriptionFr": "Confirmation",
+    "referrerUrlEn": "",
+    "referrerUrlFr": ""
+  },
+  "introduction": {
+    "descriptionEn": "Description",
+    "descriptionFr": "Description"
+  },
+  "privacyPolicy": {
+    "descriptionEn": "Private",
+    "descriptionFr": "Privé"
+  }
+}
+</code></td> 
+  <td> Form template data successfully retrieved.</td>
+</tr>
+<tr>
+  <td><code>404</code></td>
+  <td>
+<code>
+{
+    "error": "Form template does not exist"
+}
+</code>
+  </td> 
+  <td> 
+  “Form ID” is incorrect or could not be found.
+  </td>
+</tr>
+</table>
+
+<h4 id="to-set-and-customize-unique-question-ids">To set and customize unique Question IDs</h4>
+<p>The Question ID is a unique value that allows you to consistently refer to a form element so that it can be matched across republished form versions, or other data structures and systems. This can provide a more scannable and useful way to identify and reference a question field. For example, a standard way to reference all first name questions or phone numbers across forms, so they land in the right place without having to be rewired individually.</p>
+<p><strong>GC Forms gives you the option to configure a single unique question ID:</strong></p>
+<ol>
+<li>Create a new form or navigate to an existing form in GC Forms.</li>
+<li>In “Edit”, select a question and click “More”.</li>
+<li>In the modal, scroll down to “Customize API data attributes”.</li>
+<li>Modify the Question ID to a unique value of your choice.</li>
+</ol>
+<h4 id="to-label-and-organize-data-with-additional-tags">To label and organize data with Additional tags</h4>
+<p>The additional tags are flexible labels that allow you to add metadata to form elements so that related questions can be marked, grouped, or categorized allowing data to be read, searched, sorted, and transformed by machines more meaningfully and easily.</p>
+<p><strong>GC Forms gives you the option to configure multiple tags:</strong></p>
+<ol>
+<li>Create a new form or navigate to an existing form in GC Forms.</li>
+<li>In “Edit”, select a question and click “More”.</li>
+<li>In the modal, scroll down to “Customize API data attributes”.</li>
+<li>Add multiple tags to a question to mark data in a helpful way.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://forms-formulaires.alpha.canada.ca" target="_blank" rel="noopener" title="GC Forms - Formulaires GC" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://forms-formulaires.alpha.canada.ca/en/support" target="_blank" rel="noopener" title="Support - Soutien" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M268.9 53.2 152.3 182.8c-4.6 5.1-4.4 13 .5 17.9 30.5 30.5 80 30.5 110.5 0l31.8-31.8c4.2-4.2 9.5-6.5 14.9-6.9 6.8-.6 13.8 1.7 19 6.9L505.6 344l70.4-56V0L464 64l-23.8-15.9A96.2 96.2 0 0 0 386.9 32h-70.4c-1.1 0-2.3 0-3.4.1-16.9.9-32.8 8.5-44.2 21.1m-152.3 97.5L223.4 32h-39.6c-25.5 0-49.9 10.1-67.9 28.1L0 192v352l144-136 12.4 10.3c23 19.2 52 29.7 81.9 29.7H254l-7-7c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l41 41h9c19.1 0 37.8-4.3 54.8-12.3L359 409c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l32 32 17.5-17.5c8.9-8.9 11.5-21.8 7.6-33.1L312.1 219.7l-14.9 14.9c-49.3 49.3-129.1 49.3-178.4 0-23-23-23.9-59.9-2.2-84z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["toc.integrate", "navigation.top"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../js/open_in_new_tab.js"></script>
+      
+    
+  </body>
+</html>
