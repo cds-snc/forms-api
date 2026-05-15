@@ -20,7 +20,7 @@ Make sure you have:
 ## Install dependencies
 
 ```bash
-pip install mkdocs-material mkdocs-static-i18n[material] mkdocs-open-in-new-tab
+pip install mkdocs-material "mkdocs-static-i18n[material]" mkdocs-open-in-new-tab
 ```
 
 ## Running the documentation locally

@@ -1,9 +1,6 @@
 ### URL de base
 
-<code>
-https://api.forms-formulaires.alpha.canada.ca/v1/...
-</code>
-
+`https://api.forms-formulaires.alpha.canada.ca/v1/...`
 
 > _Remarque : il se pourrait que vous deviez utiliser un fournisseur d’infonuagique comme Microsoft Azure ou Amazon Web Services (AWS) pour obtenir cet accès._
 
@@ -20,6 +17,7 @@ L’API requiert une authentification à l’aide d’une adresse courriel du go
 Une fois le formulaire créé, vous pouvez remplir des formulaires de manière fictive afin de simuler un formulaire actif et de tester l’intégration. 
 
 Utilisez ces exemples comme référence pour générer des jetons d’accès dans le langage de programmation de votre choix :
+
 - [.NET / C#](https://github.com/cds-snc/forms-api/blob/main/examples/dotnet/AccessTokenGenerator.cs)
 - [Node.JS / Typescript](https://github.com/cds-snc/forms-api/blob/main/examples/nodejs/accessTokenGenerator.ts)
 - [Python](https://github.com/cds-snc/forms-api/blob/main/examples/python/access_token_generator.py)
@@ -28,9 +26,7 @@ Utilisez ces exemples comme référence pour générer des jetons d’accès dan
 ### En-tête d’autorisation
 
 Utilisez cet en-tête pour chaque demande d’API pour confirmer votre identité :
-<code>
-<br>
-<br> curl \
-<br>   --request GET "$FORMS_URL" \
-<br>   --header "Authorization: Bearer $ACCESS_TOKEN"
-</code>
+
+```bash
+curl --request GET "$FORMS_URL" --header "Authorization: Bearer $ACCESS_TOKEN"
+```
