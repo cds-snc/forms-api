@@ -1,9 +1,6 @@
 ### Base URL
 
-<code>
-https://api.forms-formulaires.alpha.canada.ca/v1/...
-</code>
-
+`https://api.forms-formulaires.alpha.canada.ca/v1/...`
 
 > _Note: You may need to use a cloud provider such as Microsoft Azure or Amazon Web Services (AWS), to be able to access the endpoint._
 
@@ -20,6 +17,7 @@ The API requires authentication with a Government of Canada email, an associated
 Once you’ve created a form, you can submit mock form submissions to simulate an active form and be able to test generating an access token. 
 
 Use these examples as a reference to generate access tokens in your preferred programming language:
+
 - [.NET / C#](https://github.com/cds-snc/forms-api/blob/main/examples/dotnet/AccessTokenGenerator.cs)
 - [Node.JS / Typescript](https://github.com/cds-snc/forms-api/blob/main/examples/nodejs/accessTokenGenerator.ts)
 - [Python](https://github.com/cds-snc/forms-api/blob/main/examples/python/access_token_generator.py)
@@ -28,9 +26,7 @@ Use these examples as a reference to generate access tokens in your preferred pr
 ### Authorization header
 
 Use this header for each API request to verify it’s you:
-<code>
-<br>
-<br> curl \
-<br>   --request GET "$FORMS_URL" \
-<br>   --header "Authorization: Bearer $ACCESS_TOKEN"
-</code>
+
+```bash
+curl --request GET "$FORMS_URL" --header "Authorization: Bearer $ACCESS_TOKEN"
+```

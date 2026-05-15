@@ -3,10 +3,10 @@
 Le but de cette API est de récupérer des soumissions de formulaires de manière sécurisée et fiable directement depuis le point de terminaison d’API. Cela devrait alléger la charge de travail associée aux volumes élevés de soumissions de formulaires. Ainsi, plutôt que de télécharger et d’approuver manuellement la suppression des réponses pour confirmer leur récupération à partir de la base de données, l’API automatisera le flux de travail avec des systèmes communiquant entre eux et échangeant des données. 
 
 ### Ce dont vous aurez besoin
+
   - Un [compte Formulaires GC](https://articles.alpha.canada.ca/forms-formulaires/fr)
   - Un formulaire d'ébauche (Non-classifié, Protégé A ou Protégé B)
   - Une clé API (que vous générez dans la section Paramètres > Intégration API)
-
   - Un formulaire configuré pour « Recevoir les réponses via l'API » dans les paramètres. 
   - Quelques réponses « fictives » soumises dans le formulaire
   - Un système cible dans lequel vous prévoyez de recevoir des données de soumission de formulaire

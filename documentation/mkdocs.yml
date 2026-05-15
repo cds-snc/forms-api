@@ -16,6 +16,7 @@ theme:
   features:
     - toc.integrate
     - navigation.top
+    - content.code.copy
 
   palette:
     - media: "(prefers-color-scheme: light)"
