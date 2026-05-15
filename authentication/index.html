@@ -553,9 +553,7 @@
   <h1>Authentication</h1>
 
 <h3 id="base-url">Base URL</h3>
-<p><code>
-https://api.forms-formulaires.alpha.canada.ca/v1/...
-</code></p>
+<p><code>https://api.forms-formulaires.alpha.canada.ca/v1/...</code></p>
 <blockquote>
 <p><em>Note: You may need to use a cloud provider such as Microsoft Azure or Amazon Web Services (AWS), to be able to access the endpoint.</em></p>
 </blockquote>
@@ -565,19 +563,17 @@ https://api.forms-formulaires.alpha.canada.ca/v1/...
 <p>The API requires authentication with a Government of Canada email, an associated <strong>formID</strong>, a JWT signed with a <strong>Private key</strong> and verified using a <strong>Public key</strong> with the IDP. This token contains a claim to specify the form ID from which it is associated.</p>
 <h3 id="integration-examples">Integration examples</h3>
 <p>Once you’ve created a form, you can submit mock form submissions to simulate an active form and be able to test generating an access token. </p>
-<p>Use these examples as a reference to generate access tokens in your preferred programming language:
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/dotnet/AccessTokenGenerator.cs">.NET / C#</a>
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/nodejs/accessTokenGenerator.ts">Node.JS / Typescript</a>
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/python/access_token_generator.py">Python</a>
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/bash/get_access_token.sh">Bash /Curl</a></p>
+<p>Use these examples as a reference to generate access tokens in your preferred programming language:</p>
+<ul>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/dotnet/AccessTokenGenerator.cs">.NET / C#</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/nodejs/accessTokenGenerator.ts">Node.JS / Typescript</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/python/access_token_generator.py">Python</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/bash/get_access_token.sh">Bash /Curl</a></li>
+</ul>
 <h3 id="authorization-header">Authorization header</h3>
-<p>Use this header for each API request to verify it’s you:
-<code>
-<br>
-<br> curl \
-<br>   --request GET "$FORMS_URL" \
-<br>   --header "Authorization: Bearer $ACCESS_TOKEN"
-</code></p>
+<p>Use this header for each API request to verify it’s you:</p>
+<pre><code class="language-bash">curl --request GET &quot;$FORMS_URL&quot; --header &quot;Authorization: Bearer $ACCESS_TOKEN&quot;
+</code></pre>
 
 
 
@@ -654,7 +650,7 @@ https://api.forms-formulaires.alpha.canada.ca/v1/...
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["toc.integrate", "navigation.top"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["toc.integrate", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>

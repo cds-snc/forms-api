@@ -563,41 +563,41 @@
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Code du statut</th>
-<th style="text-align: left;">Exemple de message</th>
-<th style="text-align: left;">Signification / comment corriger</th>
+<th>Code du statut</th>
+<th>Exemple de message</th>
+<th>Signification / comment corriger</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>401</code></td>
-<td style="text-align: left;"><code>Unauthorized</code></td>
-<td style="text-align: left;">Aucun jeton d’accès n’a été fourni.</td>
+<td><code>401</code></td>
+<td><code>Unauthorized</code></td>
+<td>Aucun jeton d’accès n’a été fourni.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>401</code></td>
-<td style="text-align: left;"><code>Access token has expired</code></td>
-<td style="text-align: left;">Le jeton d’accès a expiré.</td>
+<td><code>401</code></td>
+<td><code>Access token has expired</code></td>
+<td>Le jeton d’accès a expiré.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>403</code></td>
-<td style="text-align: left;"><code>Forbidden</code></td>
-<td style="text-align: left;">Le jeton d’accès n’a pas pu être validé OU le renseignement “Form ID” est inaccessible avec le jeton d’accès fourni.</td>
+<td><code>403</code></td>
+<td><code>Forbidden</code></td>
+<td>Le jeton d’accès n’a pas pu être validé OU le renseignement “Form ID” est inaccessible avec le jeton d’accès fourni.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>404</code></td>
-<td style="text-align: left;"><code>Not found</code></td>
-<td style="text-align: left;">L’URL de requête n’est pas valide.</td>
+<td><code>404</code></td>
+<td><code>Not found</code></td>
+<td>L’URL de requête n’est pas valide.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>429</code></td>
-<td style="text-align: left;"><code>Too many requests</code></td>
-<td style="text-align: left;">Reportez-vous à la limite du débit de l'API pour le nombre maximal.</td>
+<td><code>429</code></td>
+<td><code>Too many requests</code></td>
+<td>Reportez-vous à la limite du débit de l'API pour le nombre maximal.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>500</code></td>
-<td style="text-align: left;"><code>Internal server error</code></td>
-<td style="text-align: left;">Une erreur interne est survenue durant le traitement de la requête.</td>
+<td><code>500</code></td>
+<td><code>Internal server error</code></td>
+<td>Une erreur interne est survenue durant le traitement de la requête.</td>
 </tr>
 </tbody>
 </table>
@@ -606,11 +606,13 @@
 <h3 id="limite-du-debit-de-lapi">Limite du débit de l'API</h3>
 <p>Les limitations en matière de requêtes API nous permet de gérer le trafic élevé et de maintenir la stabilité du système. Cela permettra d’éviter les situations de surcharge où trop de demandes sont traitées simultanément. </p>
 <p>La limite des demandes d'API à partir d'un formulaire est de <strong>500 demandes par minute</strong> par défaut. Si vous dépassez cette limite, vous obtiendrez une erreur <code>429 RateLimitError</code>. Vous pouvez soit attendre et réessayer, ou demander une limite plus élevée pour votre formulaire. Si vous avez besoin d'une augmentation du nombre de requêtes API, veuillez <a href="https://forms-formulaires.alpha.canada.ca/fr/support">contactez l'équipe de soutien</a> et nous pourrons augmenter la limite à 1000 demandes par minute pendant certaine période de temps.</p>
-<p>Vous pouvez obtenir des informations supplémentaires dans les en-têtes inclus dans la réponse de l'API :
-- <code>X-RateLimit-Limit</code> : la limite actuelle de demandes API pour votre formulaire par 60 secondes
-- <code>X-RateLimit-Remaining</code> : le nombre de demandes d'API restantes dans cet intervalle de 60 secondes
-- <code>X-RateLimit-Reset</code> : le moment où la limite sera réinitialisée au montant total de la limite
-- <code>Retry-After</code> : le temps en secondes à attendre avant d'envoyer une autre demande à l'API</p>
+<p>Vous pouvez obtenir des informations supplémentaires dans les en-têtes inclus dans la réponse de l'API :</p>
+<ul>
+<li><code>X-RateLimit-Limit</code> : la limite actuelle de demandes API pour votre formulaire par 60 secondes</li>
+<li><code>X-RateLimit-Remaining</code> : le nombre de demandes d'API restantes dans cet intervalle de 60 secondes</li>
+<li><code>X-RateLimit-Reset</code> : le moment où la limite sera réinitialisée au montant total de la limite</li>
+<li><code>Retry-After</code> : le temps en secondes à attendre avant d'envoyer une autre demande à l'API</li>
+</ul>
 <p>À l'avenir, nous prévoyons que les limites d’API seront liées à différents cas d’utilisation ou types d’utilisation et nous essaierons de déterminer des limites plus appropriées par minute pour les demandes d’API.</p>
 <h3 id="rotation-des-cles-api">Rotation des clés API</h3>
 <p>L’La rotation d’une clé API peut s'avérer nécessaire si une clé est compromise. Vous pouvez générer une nouvelle clé dans les paramètre du formulaire, sous l'onglet Intégration API. Cela nécessite simplement une modification des paramètres demandés dans la demande.</p>
@@ -690,7 +692,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>

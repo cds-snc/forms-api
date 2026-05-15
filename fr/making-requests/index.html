@@ -833,16 +833,15 @@
 
 <p>L’API de Formulaires GC vous permet de récupérer des soumissions de formulaire sous forme de fichiers JSON. Vous pouvez obtenir jusqu’à 100 soumissions de formulaire par lot, et celles-ci sont accessibles jusqu’à 30 jours après la soumission, compte tenu de nos périodes actuelles de rétention des données. Les soumissions de formulaire sont chiffrées à l’aide d’une clé publique et peuvent être déchiffrées localement par vous.</p>
 <h3 id="parametres-de-requete">Paramètres de requête</h3>
-<p>Les demandes d’API pour les données de soumission de Formulaires GC sont possibles à l’aide de paramètres de requête tels que :
- - <strong>{formID}</strong>
-  L'identifiant de formulaire est une chaîne alphanumérique de 25 caractères trouvée à la fin de l’URL du formulaire ou au début du nom de fichier de la clé API. 
-  Par exemple : <code>clzvj8fzb00226o90r2b7l1gt</code>.
- - <strong>{SubmissionName}</strong>
-   Le nom de la soumission est une chaîne alphanumérique de 11 caractères, y compris les tirets, parfois appelée identifiant de soumission dans l’application Formulaires GC.<br />
-  Par exemple : <code>e02-08-d732</code>.
- - <strong>{ConfirmationCode}</strong>
-   Le code de confirmation est une chaîne alphanumérique de 36 caractères, y compris les tirets, parfois appelée code de réception dans l’application Formulaires GC.<br />
-  Par exemple : <code>620b203c-9836-4000-bf30-1c3bcc26b834</code>. </p>
+<p>Les demandes d’API pour les données de soumission de Formulaires GC sont possibles à l’aide de paramètres de requête tels que :</p>
+<ul>
+<li><strong>{FormId}</strong>
+L'identifiant de formulaire est une chaîne alphanumérique de 25 caractères trouvée à la fin de l’URL du formulaire ou au début du nom de fichier de la clé API. Par exemple : <code>clzvj8fzb00226o90r2b7l1gt</code>.</li>
+<li><strong>{SubmissionName}</strong>
+Le nom de la soumission est une chaîne alphanumérique de 11 caractères, y compris les tirets, parfois appelée identifiant de soumission dans l’application Formulaires GC. Par exemple : <code>e02-08-d732</code>.</li>
+<li><strong>{ConfirmationCode}</strong>
+Le code de confirmation est une chaîne alphanumérique de 36 caractères, y compris les tirets, parfois appelée code de réception dans l’application Formulaires GC. Par exemple : <code>620b203c-9836-4000-bf30-1c3bcc26b834</code>.</li>
+</ul>
 <h3 id="exemples-dintegration">Exemples d'intégration</h3>
 <p>Nous avons élaboré quelques exemples auxquels vous pouvez vous référer, ou pour lesquels vous pouvez exécuter le programme, et qui, nous l’espérons, faciliteront l’intégration. Voici les langages de programmation disponibles à l’heure actuelle :</p>
 <ul>
@@ -854,39 +853,40 @@
 <p>Travaillez avec votre équipe de développement pour tester une ébauche de formulaire et vous assurer que l'intégration de l'API reçoit des réponses, qu'elle est capable de décrypter, de vérifier le hachage et de confirmer les réponses ou de signaler un problème. Une fois ce processus terminé, vous êtes prêt à publier votre formulaire avec cette méthode de livraison des données.</p>
 <h3 id="recuperer-des-nouvelles-soumissions-de-formulaires">Récupérer des <strong>nouvelles</strong> soumissions de formulaires</h3>
 <h5 id="demande-http">Demande HTTP</h5>
-<p>Ce chemin d’URL renvoie une liste de soumissions qui comprend les 100 plus anciennes soumissions de formulaire ayant le statut « Nouveautés » : </p>
-<p><code>
-GET  /forms/{formID}/submission/new
-</code></p>
+<p>Ce chemin d’URL renvoie une liste de soumissions qui comprend les 100 plus anciennes soumissions de formulaire ayant le statut « Nouveautés » :</p>
+<p><code>GET /forms/{formID}/submission/new</code></p>
 <blockquote>
 <p><em>À noter : Le statut de ces soumissions de formulaire ne passera pas à « Téléchargé ».</em></p>
 </blockquote>
 <h5 id="statut-de-la-reponse">Statut de la réponse</h5>
 <table>
 <tr>
-  <td><b>Code du statut</b></td> <td><b>Exemple de message</b></td> <td><b>Signification / comment corriger</b></td>
+  <td><b>Code du statut</b></td>
+  <td><b>Exemple de message</b></td>
+  <td><b>Signification / comment corriger</b></td>
 </tr>  
 <tr>
-  <td><code>200</code></td>
+  <td>200</td>
   <td>
-<code>[
+
+<pre><code class="language-json">[
   {
-    "name": "05-09-09f4",
-    "createdAt": 1725553403512
+    &quot;name&quot;: &quot;05-09-09f4&quot;,
+    &quot;createdAt&quot;: 1725553403512
   },
   {
-    "name": "05-09-9620",
-    "createdAt": 1725553404965
+    &quot;name&quot;: &quot;05-09-9620&quot;,
+    &quot;createdAt&quot;: 1725553404965
   },
   {
-    "name": "05-09-75dc",
-    "createdAt": 1725553404972
+    &quot;name&quot;: &quot;05-09-75dc&quot;,
+    &quot;createdAt&quot;: 1725553404972
   }
-]</code>
+]
+</code></pre>
+
   </td> 
-  <td> 
-  Liste des nouveaux noms de soumission récupérés avec succès.
-  </td>
+  <td>Liste des nouveaux noms de soumission récupérés avec succès.</td>
 </tr>
 </table>
 
@@ -896,42 +896,44 @@ GET  /forms/{formID}/submission/new
 <h3 id="recuperer-des-soumissions-de-formulaires-specifiques">Récupérer des soumissions de formulaires <strong>spécifiques</strong></h3>
 <h4 id="obtenir-la-soumission-du-formulaire">Obtenir la soumission du formulaire</h4>
 <h5 id="demande-http_1">Demande HTTP</h5>
-<p>Ce chemin d’URL renvoie une soumission de formulaire par demande en fonction du nom de soumission respectif : 
-<code>
-GET /forms/{formID}/submission/{submissionName}
-</code></p>
+<p>Ce chemin d’URL renvoie une soumission de formulaire par demande en fonction du nom de soumission respectif :</p>
+<p><code>GET /forms/{formID}/submission/{submissionName}</code></p>
 <blockquote>
 <p><em>Remarque : La récupération n’est possible que pour une soumission, avec un téléchargement par demande. Le statut de ces soumissions de formulaire ne passera pas à « Téléchargé ». Pour modifier le statut des soumissions de formulaires, faites une demande de confirmation des soumissions de formulaire une fois qu’elles ont été correctement reçues.</em></p>
 </blockquote>
 <h5 id="statut-de-la-reponse_1">Statut de la réponse</h5>
 <table>
 <tr>
-  <td><b>Code du statut</b></td> <td><b>Exemple de message</b></td> <td><b>Signification / comment corriger</b></td>
+  <td><b>Code du statut</b></td>
+  <td><b>Exemple de message</b></td>
+  <td><b>Signification / comment corriger</b></td>
 </tr>  
 <tr>
-  <td><code>200</code></td>
+  <td>200</td>
   <td>
-<code>{
-  "encryptedResponses": "IOWyM7bpo+wVCXpFkU13JeO0HcxFHTIwLX17ol+jUWdvhicIG+fJj",
-  "encryptedKey": "IOWyM7bpELZg4kPBOPVe7jeHcxFHTIwLX17ol+jUw6KGictIG+fJj",
-  "encryptedNonce": "GVyPXC/6UTteJ3uf8d6doBNbppHzKjEXDxwE2DXQbD30/vIxlsY",
-  "encryptedAuthTag": "VRMt87LgedVo+wVCXpFkU13JeO0guDGHb48XVpvWdvhs3bv/D"
-}</code>
+
+<pre><code class="language-json">{
+  &quot;encryptedResponses&quot;: &quot;IOWyM7bpo+wVCXpFkU13JeO0HcxFHTIwLX17ol+jUWdvhicIG+fJj&quot;,
+  &quot;encryptedKey&quot;: &quot;IOWyM7bpELZg4kPBOPVe7jeHcxFHTIwLX17ol+jUw6KGictIG+fJj&quot;,
+  &quot;encryptedNonce&quot;: &quot;GVyPXC/6UTteJ3uf8d6doBNbppHzKjEXDxwE2DXQbD30/vIxlsY&quot;,
+  &quot;encryptedAuthTag&quot;: &quot;VRMt87LgedVo+wVCXpFkU13JeO0guDGHb48XVpvWdvhs3bv/D&quot;
+}
+</code></pre>
+
   </td> 
-  <td> 
-  Les données chiffrées de la soumission ont été récupérées avec succès.
-  </td>
+  <td>Les données chiffrées de la soumission ont été récupérées avec succès.</td>
 </tr>
 <tr>
-  <td><code>404</code></td>
+  <td>404</td>
   <td>
-<code>{
-  "error": "Form submission does not exist"
-}</code>  
+
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;Form submission does not exist&quot;
+}
+</code></pre>
+
   </td> 
-  <td> 
-  Le renseignement “Form ID” (identifiant du formulaire) ou “Submission name” (nom de soumission) est incorrect ou introuvable.
-  </td>
+  <td>Le renseignement “Form ID” (identifiant du formulaire) ou “Submission name” (nom de soumission) est incorrect ou introuvable.</td>
 </tr>
 </table>
 
@@ -950,247 +952,250 @@ GET /forms/{formID}/submission/{submissionName}
 <p>Avant de confirmer une réponse, assurez-vous d'avoir accès à tous les fichiers joints, le cas échéant. Ces liens de téléchargement de fichiers ne sont disponibles que temporairement, car ils ne sont valables que pendant 10 secondes. Si vous n'avez pas reçu tous les fichiers, téléchargez à nouveau le même formulaire soumis pour obtenir de nouveaux liens de téléchargement. Signalez tout problème lié aux fichiers ou aux données. Une fois que vous êtes certain d'avoir bien reçu toutes les données et tous les fichiers soumis, confirmez que toutes les données ont été transférées avec succès. Les réponses et les fichiers seront ensuite supprimés de GC Forms après 30 jours.</p>
 <h4 id="exemple-de-donnees-de-reponses-avec-fichiers">Exemple de données de réponses avec fichiers</h4>
 <p>Les données ressembleront à ceci lorsque des fichiers sont joints :</p>
-<p><code>
-{
-   "createdAt":1749476854628,
-   "status":"New",
-   "confirmationCode":"714dfe46-6fa1-4281-8d15-a39bcebc3c4f",
-   "answers":"{\"1\":\"Test1\",\"2\":\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\",\"3\":\"form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\",\"4\":\"form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\"}",
-   "checksum":"cc33cb49f6c088bf98b7315794db216e",
-   "attachments":[
+<pre><code class="language-json">{
+   &quot;createdAt&quot;: 1749476854628,
+   &quot;status&quot;: &quot;New&quot;,
+   &quot;confirmationCode&quot;: &quot;714dfe46-6fa1-4281-8d15-a39bcebc3c4f&quot;,
+   &quot;answers&quot;: &quot;{\&quot;1\&quot;:\&quot;Test1\&quot;,\&quot;2\&quot;:\&quot;form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\&quot;,\&quot;3\&quot;:\&quot;form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\&quot;,\&quot;4\&quot;:\&quot;form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\&quot;}&quot;,
+   &quot;checksum&quot;: &quot;cc33cb49f6c088bf98b7315794db216e&quot;,
+   &quot;attachments&quot;: [
       {
-        "id": "04d8aff7-25d7-49e5-8f01-77a8b6fba214",
-        "name":"output.txt",
-        "downloadLink":"https://...",
-        "isPotentiallyMalicious":true,
-        "md5":"54b0c58c7ce9f2a8b551351102ee0938"
+        &quot;id&quot;: &quot;04d8aff7-25d7-49e5-8f01-77a8b6fba214&quot;,
+        &quot;name&quot;: &quot;output.txt&quot;,
+        &quot;downloadLink&quot;: &quot;https://...&quot;,
+        &quot;isPotentiallyMalicious&quot;: true,
+        &quot;md5&quot;: &quot;54b0c58c7ce9f2a8b551351102ee0938&quot;
       }
    ]
 }
-</code></p>
+</code></pre>
 <h5 id="demande-http_2">Demande HTTP</h5>
 <p>Le chemin d’URL confirme que les soumissions de formulaires ont bien été récupérées à partir du système et les supprime :</p>
-<p><code>
-PUT  /forms/{formID}/submission/{submissionName}/confirm/{confirmationCode}
-</code></p>
+<p><code>PUT /forms/{formID}/submission/{submissionName}/confirm/{confirmationCode}</code></p>
 <blockquote>
 <p><em>Remarque : La confirmation n’est possible que pour une soumission à la fois, avec un code de confirmation par requête. Le statut de cette soumission passera de « Nouveautés » à « Confirmations ». Il s’agit d’un processus similaire au processus en deux étapes de téléchargement et d’approbation de la suppression dans l’application.</em></p>
 </blockquote>
 <h5 id="statut-de-la-reponse_2">Statut de la réponse</h5>
 <table>
 <tr>
-  <td><b>Code du statut</b></td> <td><b>Exemple de message</b></td> <td><b>Signification / comment corriger</b></td>
+  <td><b>Code du statut</b></td>
+  <td><b>Exemple de message</b></td>
+  <td><b>Signification / comment corriger</b></td>
 </tr>  
 <tr>
-  <td><code>200</code></td>
-  <td><code>OK</code></td> 
-  <td> La soumission a bien été confirmée.</td>
+  <td>200</td>
+  <td>OK</td> 
+  <td>La soumission a bien été confirmée.</td>
 </tr>
 <tr>
-  <td><code>200</code></td>
+  <td>200</td>
   <td>
-<code>{
-  "info": "Form submission is already confirmed"
-}</code> 
+
+<pre><code class="language-json">{
+  &quot;info&quot;: &quot;Form submission is already confirmed&quot;
+}
+</code></pre>
+
   </td> 
-  <td> 
-  La soumission a déjà été confirmée.
-  </td>
+  <td>La soumission a déjà été confirmée.</td>
 </tr>
 <tr>
-  <td><code>400</code></td>
+  <td>400</td>
   <td>
-<code>{
-  "error": "Confirmation code is incorrect"
-}</code>
+
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;Confirmation code is incorrect&quot;
+}
+</code></pre>
+
   </td> 
-  <td> 
-  Le code de confirmation fourni ne correspond pas à la soumission à confirmer.
-  </td>
+  <td>Le code de confirmation fourni ne correspond pas à la soumission à confirmer.</td>
 </tr>
 <tr>
-  <td><code>404</code></td>
+  <td>404</td>
   <td>
-<code>{
-  "error": "Form submission does not exist"
-}</code>
+
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;Form submission does not exist&quot;
+}
+</code></pre>
+
   </td> 
-  <td> 
-  Le renseignement “form ID” ou “Submission name” est incorrect ou introuvable.
-  </td>
+  <td>Le renseignement “form ID” ou “Submission name” est incorrect ou introuvable.</td>
 </tr>
 </table>
 
 <h3 id="signaler-un-probleme-avec-la-soumission-de-formulaire">Signaler un problème avec la soumission de formulaire</h3>
 <h5 id="demande-http_3">Demande HTTP</h5>
 <p>Ce chemin d’URL identifie une soumission de formulaire comme ayant un problème si un évènement inattendu se produit :</p>
-<p><code>
-POST  /forms/{formID}/submission/{submissionName}/problem
-</code></p>
+<p><code>POST /forms/{formID}/submission/{submissionName}/problem</code></p>
 <blockquote>
 <p><em>Remarque : Le signalement d’un problème n’est possible que pour une seule soumission à la fois. Vous pouvez signaler un problème avec les soumissions de formulaires portant le statut « Nouveautés » ou « Confirmations » tant qu’elles n’ont pas été supprimées du système. Cela changera le statut en « Problème » et bloquera la suppression de la soumission du système jusqu’à ce que le problème soit résolu.</em></p>
 </blockquote>
 <h5 id="exemple-de-charge-utile-pour-le-signalement-dun-probleme">Exemple de charge utile pour le signalement d’un problème</h5>
 <p>Pour signaler un problème, incluez un message au format similaire à celui ci-dessous dans le corps de la requête HTTP POST :</p>
-<p><code>
-{
-  “contactEmail”: “nom@ministere.gc.ca”,
-  “description”: “Voici mon problème”,
-  “preferredLanguage”: “fr” (soit “en” ou “fr”)
+<pre><code class="language-json">{
+  &quot;contactEmail&quot;: &quot;nom@ministere.gc.ca&quot;,
+  &quot;description&quot;: &quot;Voici mon problème&quot;,
+  &quot;preferredLanguage&quot;: &quot;fr&quot; // (soit &quot;en&quot; ou &quot;fr&quot;)
 }
-</code></p>
+</code></pre>
 <blockquote>
 <p><em>Remarque : Ce message sera transmis à notre équipe de soutien.</em></p>
 </blockquote>
 <h5 id="statut-de-la-reponse_3">Statut de la réponse</h5>
 <table>
 <tr>
-  <td><b>Code du statut</b></td> <td><b>Exemple de message</b></td> <td><b>Signification / comment corriger</b></td>
+  <td><b>Code du statut</b></td>
+  <td><b>Exemple de message</b></td>
+  <td><b>Signification / comment corriger</b></td>
 </tr>  
 <tr>
-  <td><code>200</code></td>
-  <td><code>OK</code></td> 
-  <td> La soumission a bien été signalée comme ayant un problème.</td>
+  <td>200</td>
+  <td>OK</td> 
+  <td>La soumission a bien été signalée comme ayant un problème.</td>
 </tr>
 <tr>
-  <td><code>200</code></td>
+  <td>200</td>
   <td>
-<code>
-{
-  "info": "Form submission is already confirmed"
+
+<pre><code class="language-json">{
+  &quot;info&quot;: &quot;Form submission is already confirmed&quot;
 }
-</code>
+</code></pre>
+
   </td> 
-  <td> 
-  La soumission a déjà été signalée comme ayant un problème.
-  </td>
+  <td>La soumission a déjà été signalée comme ayant un problème.</td>
 </tr>
 <tr>
-  <td><code>400</code></td>
+  <td>400</td>
   <td>
-<code>{
-  "error": "Invalid payload",
-  "details": [
+
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;Invalid payload&quot;,
+  &quot;details&quot;: [
     {
-      "type": "field",
-      "value": "test@cds-snc",
-      "msg": "Invalid value",
-      "path": "contactEmail",
-      "location": "body"
+      &quot;type&quot;: &quot;field&quot;,
+      &quot;value&quot;: &quot;test@cds-snc&quot;,
+      &quot;msg&quot;: &quot;Invalid value&quot;,
+      &quot;path&quot;: &quot;contactEmail&quot;,
+      &quot;location&quot;: &quot;body&quot;
     },
     {
-      "type": "field",
-      "value": "",
-      "msg": "Must be at least 10 characters long",
-      "path": "description",
-      "location": "body"
+      &quot;type&quot;: &quot;field&quot;,
+      &quot;value&quot;: &quot;&quot;,
+      &quot;msg&quot;: &quot;Must be at least 10 characters long&quot;,
+      &quot;path&quot;: &quot;description&quot;,
+      &quot;location&quot;: &quot;body&quot;
     }
   ]
-}</code>
+}
+</code></pre>
+
   </td> 
-  <td> 
-  Détails sur la raison pour laquelle la charge utile fournie n’est pas valide.
-  </td>
+  <td>Détails sur la raison pour laquelle la charge utile fournie n’est pas valide.</td>
 </tr>
 <tr>
-  <td><code>400</code></td>
+  <td>400</td>
   <td>
-<code>{
-  "error": "Form submission does not exist"
-}</code> 
+
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;Form submission does not exist&quot;
+}
+</code></pre>
+
   </td> 
-  <td> 
-  Le renseignement “Form ID” ou “Submission name” est incorrect ou n’a pas pu être trouvé.
-  </td>
+  <td>Le renseignement “Form ID” ou “Submission name” est incorrect ou n’a pas pu être trouvé.</td>
 </tr>
 </table>
 
 <h3 id="obtenir-les-questions-du-formulaire">Obtenir les questions du formulaire</h3>
 <h5 id="demande-http_4">Demande HTTP</h5>
 <p>Ce chemin d’URL récupère les questions qui ont été posées au format JSON afin qu’elles puissent être plus facilement associées aux réponses récupérées :</p>
-<p><code>
-GET  /forms/{formID}/template
-</code></p>
+<p><code>GET /forms/{formID}/template</code></p>
 <blockquote>
 <p><em>Remarque : Les questions seront dans une structure de données au format JSON lorsqu’elles seront récupérées. Cela est utile si vous transformez les données et que vous devez faire correspondre les réponses aux questions.</em></p>
 </blockquote>
 <p>Vous pouvez configurer les attributs des questions avec des <strong>identifiants de question</strong> et des <strong>balises supplémentaires</strong>. Ces deux attributs peuvent être utilisés pour aider à mettre en correspondance les données des réponses aux formulaires avec les systèmes cibles ou les champs de destination dans une base de données. Ceci facilite la mise à jour d'intégrations API avec une manière cohérente de mapper les données des réponses. </p>
-<p>Vous pouvez utiliser ces attributs pour :
-- clarifier l'objectif d'un champ
-- organiser et trier les données
-- soutenir l'automatisation</p>
+<p>Vous pouvez utiliser ces attributs pour :</p>
+<ul>
+<li>clarifier l'objectif d'un champ</li>
+<li>organiser et trier les données</li>
+<li>soutenir l'automatisation</li>
+</ul>
 <p>Pour en savoir plus, voir ci-dessous.</p>
 <h5 id="statut-de-la-reponse_4">Statut de la réponse</h5>
 <table>
 <tr>
-  <td><b>Code du statut</b></td> <td><b>Exemple de message</b></td> <td><b>Signification / comment corriger</b></td>
+  <td><b>Code du statut</b></td>
+  <td><b>Exemple de message</b></td>
+  <td><b>Signification / comment corriger</b></td>
 </tr>  
 <tr>
-  <td><code>200</code></td>
+  <td>200</td>
   <td>
-<code>
-  {
-  "layout": [
+
+<pre><code class="language-json">{
+  &quot;layout&quot;: [
     1
   ],
-  "titleEn": "Test Form",
-  "titleFr": "Formulaire de test",
-  "elements": [
+  &quot;titleEn&quot;: &quot;Test Form&quot;,
+  &quot;titleFr&quot;: &quot;Formulaire de test&quot;,
+  &quot;elements&quot;: [
     {
-      "id": 1,
-      "type": "textField",
-      "properties": {
-        "choices": [
+      &quot;id&quot;: 1,
+      &quot;type&quot;: &quot;textField&quot;,
+      &quot;properties&quot;: {
+        &quot;choices&quot;: [
           {
-            "en": "",
-            "fr": ""
+            &quot;en&quot;: &quot;&quot;,
+            &quot;fr&quot;: &quot;&quot;
           }
         ],
-        "titleEn": "This is a question",
-        "titleFr": "C'est une question",
-        "validation": {
-          "required": false
+        &quot;titleEn&quot;: &quot;This is a question&quot;,
+        &quot;titleFr&quot;: &quot;C'est une question&quot;,
+        &quot;validation&quot;: {
+          &quot;required&quot;: false
         },
-        "subElements": [],
-        "descriptionEn": "",
-        "descriptionFr": "",
-        "placeholderEn": "",
-        "placeholderFr": ""
+        &quot;subElements&quot;: [],
+        &quot;descriptionEn&quot;: &quot;&quot;,
+        &quot;descriptionFr&quot;: &quot;&quot;,
+        &quot;placeholderEn&quot;: &quot;&quot;,
+        &quot;placeholderFr&quot;: &quot;&quot;
       }
     }
   ],
-  "confirmation": {
-    "descriptionEn": "Confirmed",
-    "descriptionFr": "Confirmation",
-    "referrerUrlEn": "",
-    "referrerUrlFr": ""
+  &quot;confirmation&quot;: {
+    &quot;descriptionEn&quot;: &quot;Confirmed&quot;,
+    &quot;descriptionFr&quot;: &quot;Confirmation&quot;,
+    &quot;referrerUrlEn&quot;: &quot;&quot;,
+    &quot;referrerUrlFr&quot;: &quot;&quot;
   },
-  "introduction": {
-    "descriptionEn": "Description",
-    "descriptionFr": "Description"
+  &quot;introduction&quot;: {
+    &quot;descriptionEn&quot;: &quot;Description&quot;,
+    &quot;descriptionFr&quot;: &quot;Description&quot;
   },
-  "privacyPolicy": {
-    "descriptionEn": "Private",
-    "descriptionFr": "Privé"
+  &quot;privacyPolicy&quot;: {
+    &quot;descriptionEn&quot;: &quot;Private&quot;,
+    &quot;descriptionFr&quot;: &quot;Privé&quot;
   }
 }
-</code></td> 
-  <td>Les données relatives au modèle de formulaire ont bien été récupérées.
+</code></pre>
 
-</td>
+  </td> 
+  <td>Les données relatives au modèle de formulaire ont bien été récupérées.</td>
 </tr>
 <tr>
-  <td><code>404</code></td>
+  <td>404</td>
   <td>
-<code>
-{
-    "error": "Form template does not exist"
+
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;Form template does not exist&quot;
 }
-</code>
+</code></pre>
+
   </td> 
-  <td> 
-  Le renseignement “Form ID” est incorrect ou n’a pas pu être trouvé.
-  </td>
+  <td>Le renseignement “Form ID” est incorrect ou n’a pas pu être trouvé.</td>
 </tr>
 </table>
 
@@ -1288,7 +1293,7 @@ GET  /forms/{formID}/template
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>

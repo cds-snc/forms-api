@@ -553,9 +553,7 @@
   <h1>Authentification</h1>
 
 <h3 id="url-de-base">URL de base</h3>
-<p><code>
-https://api.forms-formulaires.alpha.canada.ca/v1/...
-</code></p>
+<p><code>https://api.forms-formulaires.alpha.canada.ca/v1/...</code></p>
 <blockquote>
 <p><em>Remarque : il se pourrait que vous deviez utiliser un fournisseur d’infonuagique comme Microsoft Azure ou Amazon Web Services (AWS) pour obtenir cet accès.</em></p>
 </blockquote>
@@ -565,19 +563,17 @@ https://api.forms-formulaires.alpha.canada.ca/v1/...
 <p>L’API requiert une authentification à l’aide d’une adresse courriel du gouvernement du Canada, d’un <strong>identifiant de formulaire</strong> connexe et d’un JWT signé avec une <strong>clé privée</strong> et vérifié par l’intermédiaire d’une <strong>clé publique</strong> avec l’IDP. Ce jeton requiert l’identifiant de formulaire connexe.</p>
 <h3 id="exemples-dintegration">Exemples d’intégration</h3>
 <p>Une fois le formulaire créé, vous pouvez remplir des formulaires de manière fictive afin de simuler un formulaire actif et de tester l’intégration. </p>
-<p>Utilisez ces exemples comme référence pour générer des jetons d’accès dans le langage de programmation de votre choix :
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/dotnet/AccessTokenGenerator.cs">.NET / C#</a>
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/nodejs/accessTokenGenerator.ts">Node.JS / Typescript</a>
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/python/access_token_generator.py">Python</a>
-- <a href="https://github.com/cds-snc/forms-api/blob/main/examples/bash/get_access_token.sh">Bash /Curl</a></p>
+<p>Utilisez ces exemples comme référence pour générer des jetons d’accès dans le langage de programmation de votre choix :</p>
+<ul>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/dotnet/AccessTokenGenerator.cs">.NET / C#</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/nodejs/accessTokenGenerator.ts">Node.JS / Typescript</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/python/access_token_generator.py">Python</a></li>
+<li><a href="https://github.com/cds-snc/forms-api/blob/main/examples/bash/get_access_token.sh">Bash /Curl</a></li>
+</ul>
 <h3 id="en-tete-dautorisation">En-tête d’autorisation</h3>
-<p>Utilisez cet en-tête pour chaque demande d’API pour confirmer votre identité :
-<code>
-<br>
-<br> curl \
-<br>   --request GET "$FORMS_URL" \
-<br>   --header "Authorization: Bearer $ACCESS_TOKEN"
-</code></p>
+<p>Utilisez cet en-tête pour chaque demande d’API pour confirmer votre identité :</p>
+<pre><code class="language-bash">curl --request GET &quot;$FORMS_URL&quot; --header &quot;Authorization: Bearer $ACCESS_TOKEN&quot;
+</code></pre>
 
 
 
@@ -654,7 +650,7 @@ https://api.forms-formulaires.alpha.canada.ca/v1/...
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.integrate", "navigation.top", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>

@@ -563,41 +563,41 @@
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Status code</th>
-<th style="text-align: left;">Example message</th>
-<th style="text-align: left;">Meaning or how to fix</th>
+<th>Status code</th>
+<th>Example message</th>
+<th>Meaning or how to fix</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>401</code></td>
-<td style="text-align: left;"><code>Unauthorized</code></td>
-<td style="text-align: left;">No access token was provided.</td>
+<td><code>401</code></td>
+<td><code>Unauthorized</code></td>
+<td>No access token was provided.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>401</code></td>
-<td style="text-align: left;"><code>Access token has expired</code></td>
-<td style="text-align: left;">Access token has expired</td>
+<td><code>401</code></td>
+<td><code>Access token has expired</code></td>
+<td>Access token has expired</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>403</code></td>
-<td style="text-align: left;"><code>Forbidden</code></td>
-<td style="text-align: left;">Could not validate access token OR "Form ID" in request is not allowed to be accessed with the provided access token.</td>
+<td><code>403</code></td>
+<td><code>Forbidden</code></td>
+<td>Could not validate access token OR "Form ID" in request is not allowed to be accessed with the provided access token.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>404</code></td>
-<td style="text-align: left;"><code>Not found</code></td>
-<td style="text-align: left;">Invalid request URL.</td>
+<td><code>404</code></td>
+<td><code>Not found</code></td>
+<td>Invalid request URL.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>429</code></td>
-<td style="text-align: left;"><code>Too many requests</code></td>
-<td style="text-align: left;">Refer to API rate limit for the limit number.</td>
+<td><code>429</code></td>
+<td><code>Too many requests</code></td>
+<td>Refer to API rate limit for the limit number.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>500</code></td>
-<td style="text-align: left;"><code>Internal server error</code></td>
-<td style="text-align: left;">Internal error while serving request.</td>
+<td><code>500</code></td>
+<td><code>Internal server error</code></td>
+<td>Internal error while serving request.</td>
 </tr>
 </tbody>
 </table>
@@ -606,11 +606,13 @@
 <h3 id="api-rate-limit">API rate limit</h3>
 <p>API throttling allows us to manage high API traffic and helps maintain the system’s stability. This helps avoid overloading situations where too many requests are processed simultaneously. </p>
 <p>The limit for API requests from one form is <strong>500 requests per minute</strong> by default. Should you happen to exceed the limit, you will get a <code>RateLimitError</code>. You may either wait and try again, or request a higher limit for your form. If you require an API request rate increase, please <a href="https://forms-formulaires.alpha.canada.ca/en/support">contact Support</a> and we'll be able to increase the limit to 1000 requests per minute for a period of time.</p>
-<p>You can see additional information in the headers included as part of the API response: 
-- <code>X-RateLimit-Limit</code>: the current limit of API requests for your form per 60 seconds
-- <code>X-RateLimit-Remaining</code>: the number of remaining API requests within this 60 second interval
-- <code>X-RateLimit-Reset</code>: the moment at which the limit will reset to the full limit amount
-- <code>Retry-After</code>: the time in seconds to wait before sending another request to the API</p>
+<p>You can see additional information in the headers included as part of the API response:</p>
+<ul>
+<li><code>X-RateLimit-Limit</code>: the current limit of API requests for your form per 60 seconds</li>
+<li><code>X-RateLimit-Remaining</code>: the number of remaining API requests within this 60 second interval</li>
+<li><code>X-RateLimit-Reset</code>: the moment at which the limit will reset to the full limit amount</li>
+<li><code>Retry-After</code>: the time in seconds to wait before sending another request to the API</li>
+</ul>
 <p>In the future, we anticipate the API call limits may be tied to different use cases or types of usage and will try to determine more appropriate limits for API requests per minute. </p>
 <h3 id="rotating-api-keys">Rotating API keys</h3>
 <p>Rotating an API key may become necessary if a key is compromised. You can generate a new key in form settings in the API integration tab. This also requires a change in the parameters being queried in the request.</p>
@@ -690,7 +692,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["toc.integrate", "navigation.top"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["toc.integrate", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
