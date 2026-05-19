@@ -2,84 +2,84 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>https://cds-snc.github.io/forms-api/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/authentication/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/authentication/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/authentication/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/getting-started/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/getting-started/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/getting-started/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/getting-support/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/getting-support/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/getting-support/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/making-requests/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/making-requests/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/making-requests/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/monitoring/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/monitoring/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/monitoring/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/fr/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/fr/authentication/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/authentication/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/authentication/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/fr/getting-started/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/getting-started/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/getting-started/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/fr/getting-support/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/getting-support/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/getting-support/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/fr/making-requests/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/making-requests/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/making-requests/"/>
     </url>
     <url>
         <loc>https://cds-snc.github.io/forms-api/fr/monitoring/</loc>
-        <lastmod>2026-05-15</lastmod>
+        <lastmod>2026-05-19</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://cds-snc.github.io/forms-api/fr/monitoring/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://cds-snc.github.io/forms-api/monitoring/"/>
