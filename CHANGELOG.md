@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.8.1](https://github.com/cds-snc/forms-api/compare/v1.8.0...v1.8.1) (2026-05-20)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#361](https://github.com/cds-snc/forms-api/issues/361)) ([2c760b7](https://github.com/cds-snc/forms-api/commit/2c760b7848f311fa553425379d26393b1b763850))
+* **deps:** update all non-major github action dependencies ([#360](https://github.com/cds-snc/forms-api/issues/360)) ([abe7afe](https://github.com/cds-snc/forms-api/commit/abe7afe969f3bfd49d843bbf7950d8f8e95df28f))
+* **deps:** update all patch dependencies ([#359](https://github.com/cds-snc/forms-api/issues/359)) ([11e968f](https://github.com/cds-snc/forms-api/commit/11e968f36291c9c48fa86aae11ddc8732e109d5d))
+
 ## [1.8.0](https://github.com/cds-snc/forms-api/compare/v1.7.3...v1.8.0) (2026-05-15)
 
 
