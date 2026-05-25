@@ -3,8 +3,7 @@ name: Workflow failure
 on:
   workflow_run:
     workflows:
-      - "Staging - Deploy"
-      - "Staging — Docker build and push"
+      - "Staging — Post deployment"
       - "Production - Deploy"
       - "Production — Docker build and push"
     types:
