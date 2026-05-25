@@ -4,8 +4,7 @@ on:
   workflow_run:
     workflows:
       - "Staging — Post deployment"
-      - "Production - Deploy"
-      - "Production — Docker build and push"
+      - "Production — Post deployment"
     types:
       - completed
 
