@@ -1,0 +1,47 @@
+name: "Staging — Post deployment"
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "tests/**"
+
+# Limit execution to 1 and also makes new trigger events cancel currently running workflow
+concurrency:
+  group: staging-post-deployment
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  security-events: write
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Build Docker image
+        run: docker build --platform=linux/amd64 --provenance false -t forms-api .
+
+      - name: Docker generate SBOM
+        uses: cds-snc/security-tools/.github/actions/generate-sbom@837a88b6337d4842543184c8eac97a8adac8f302 # v4.0.3
+        env:
+          TRIVY_DB_REPOSITORY: ${{ vars.TRIVY_DB_REPOSITORY }}
+        with:
+          docker_image: "forms-api"
+          dockerfile_path: "Dockerfile"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+
+  report-to-sentinel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report deployment to Sentinel
+        uses: cds-snc/sentinel-forward-data-action@343498df663a056249bd96f260265aa80691b747 # main
+        with:
+          input_data: '{"product": "forms", "sha": "${{ github.sha }}", "version": "${{ github.sha }}", "repository": "${{ github.repository }}", "environment": "staging", "status": "${{ job.status }}"}'
+          log_type: CDS_Product_Deployment_Data
+          log_analytics_workspace_id: ${{ secrets.LOG_ANALYTICS_WORKSPACE_ID }}
+          log_analytics_workspace_key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
