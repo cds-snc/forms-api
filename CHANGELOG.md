@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.8.1](https://github.com/cds-snc/forms-api/compare/v1.8.0...v1.8.1) (2026-06-01)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#361](https://github.com/cds-snc/forms-api/issues/361)) ([2c760b7](https://github.com/cds-snc/forms-api/commit/2c760b7848f311fa553425379d26393b1b763850))
+* **deps:** lock file maintenance ([#368](https://github.com/cds-snc/forms-api/issues/368)) ([0201371](https://github.com/cds-snc/forms-api/commit/0201371e1e97e937d7eb5d5c718349611fa400ff))
+* **deps:** update all non-major github action dependencies ([#360](https://github.com/cds-snc/forms-api/issues/360)) ([abe7afe](https://github.com/cds-snc/forms-api/commit/abe7afe969f3bfd49d843bbf7950d8f8e95df28f))
+* **deps:** update all non-major github action dependencies ([#363](https://github.com/cds-snc/forms-api/issues/363)) ([11d5d0e](https://github.com/cds-snc/forms-api/commit/11d5d0e9a9e610332315222fa0b8e11153aa5de5))
+* **deps:** update all patch dependencies ([#359](https://github.com/cds-snc/forms-api/issues/359)) ([11e968f](https://github.com/cds-snc/forms-api/commit/11e968f36291c9c48fa86aae11ddc8732e109d5d))
+* **deps:** update dependency requests to v2.34.2 ([#366](https://github.com/cds-snc/forms-api/issues/366)) ([334739e](https://github.com/cds-snc/forms-api/commit/334739ec58932eec9077407881de5caaf7d5ecb8))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to a07f180 ([#364](https://github.com/cds-snc/forms-api/issues/364)) ([bac9adb](https://github.com/cds-snc/forms-api/commit/bac9adbcaa2befe97db856fb607da95c33fec5e9))
+* **deps:** update node.js to v22.22.3 ([#365](https://github.com/cds-snc/forms-api/issues/365)) ([b6f6499](https://github.com/cds-snc/forms-api/commit/b6f6499f8640e5890d36de552d20c924e2b7ddda))
+* rework Github actions to transition to AWS CodePipeline ([8dd036e](https://github.com/cds-snc/forms-api/commit/8dd036e42075581549e3a2ff5227dfa19dc5644c))
+* rework Github actions to transition to AWS CodePipeline (Production) ([#370](https://github.com/cds-snc/forms-api/issues/370)) ([eec05e5](https://github.com/cds-snc/forms-api/commit/eec05e57fbd12f0023691803b5faadcec2f86fab))
+* rework Github actions to transition to AWS CodePipeline (Staging) ([#369](https://github.com/cds-snc/forms-api/issues/369)) ([8dd036e](https://github.com/cds-snc/forms-api/commit/8dd036e42075581549e3a2ff5227dfa19dc5644c))
+* synced file(s) with cds-snc/site-reliability-engineering ([#367](https://github.com/cds-snc/forms-api/issues/367)) ([cbffd6d](https://github.com/cds-snc/forms-api/commit/cbffd6d1bf7b530a9336106b6677822c992bc7cb))
+* synced local '.github/workflows/ossf-scorecard.yml' with remote 'tools/sre_file_sync/ossf-scorecard.yml' ([cbffd6d](https://github.com/cds-snc/forms-api/commit/cbffd6d1bf7b530a9336106b6677822c992bc7cb))
+
 ## [1.8.0](https://github.com/cds-snc/forms-api/compare/v1.7.3...v1.8.0) (2026-05-15)
 
 
