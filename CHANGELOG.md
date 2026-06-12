@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.8.2](https://github.com/cds-snc/forms-api/compare/v1.8.1...v1.8.2) (2026-06-12)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#373](https://github.com/cds-snc/forms-api/issues/373)) ([31c39b4](https://github.com/cds-snc/forms-api/commit/31c39b41aa45d8cd0686714ef5d0d60c602bf0d4))
+* **deps:** lock file maintenance ([#379](https://github.com/cds-snc/forms-api/issues/379)) ([61c5017](https://github.com/cds-snc/forms-api/commit/61c501701e64568594f2fd818794da825f0b2ebe))
+* **deps:** update all minor dependencies to v10.34.1 ([#378](https://github.com/cds-snc/forms-api/issues/378)) ([af7fa0d](https://github.com/cds-snc/forms-api/commit/af7fa0d95615dd2c61b7ac73b3d777ef5baf51c8))
+* **deps:** update all non-major github action dependencies ([#371](https://github.com/cds-snc/forms-api/issues/371)) ([f9e7b46](https://github.com/cds-snc/forms-api/commit/f9e7b4664b2c6358f0966bb8af2e79a078585b2b))
+* **deps:** update dependency pyjwt to v2.13.0 ([#372](https://github.com/cds-snc/forms-api/issues/372)) ([2915574](https://github.com/cds-snc/forms-api/commit/291557491d1b9c2a4ba4281998b1af56402a5da3))
+* **deps:** update dependency vitest to v4 [security] ([#375](https://github.com/cds-snc/forms-api/issues/375)) ([bb7542e](https://github.com/cds-snc/forms-api/commit/bb7542e9b3b00ada194101ffae2a62059de32cfc))
+* remove unused responseRetriever utility script ([#377](https://github.com/cds-snc/forms-api/issues/377)) ([3de48f2](https://github.com/cds-snc/forms-api/commit/3de48f29b9e0294c18d81131aa84c20072825104))
+* upgrade @gcforms/database package to version 1.1.1 ([#380](https://github.com/cds-snc/forms-api/issues/380)) ([a608382](https://github.com/cds-snc/forms-api/commit/a608382d427d411d49d23ee5f07f4b0d49d468b3))
+
 ## [1.8.1](https://github.com/cds-snc/forms-api/compare/v1.8.0...v1.8.1) (2026-06-01)
 
 
