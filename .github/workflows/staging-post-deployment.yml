@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Report deployment to Sentinel
-        uses: cds-snc/sentinel-forward-data-action@52ea856d686360100a680e38c40134d4e010b94d # main
+        uses: cds-snc/sentinel-forward-data-action@e358bf24b818e68a22c9736715a3b544851aaba8 # main
         with:
           input_data: '{"product": "forms", "sha": "${{ github.sha }}", "version": "${{ github.sha }}", "repository": "${{ github.repository }}", "environment": "staging", "status": "${{ job.status }}"}'
           log_type: CDS_Product_Deployment_Data
