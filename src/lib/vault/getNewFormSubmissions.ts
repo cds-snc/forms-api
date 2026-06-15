@@ -17,7 +17,7 @@ export async function getNewFormSubmissions(
         await AwsServicesConnector.getInstance().dynamodbClient.send(
           new QueryCommand({
             TableName: "Vault",
-            IndexName: "StatusCreatedAt",
+            IndexName: "StatusCreatedAt_v2",
             ExclusiveStartKey: lastEvaluatedKey ?? undefined,
             Limit: limit - newFormSubmissions.length,
             KeyConditionExpression:
