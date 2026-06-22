@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
 import { createFreshdeskTicket } from "@lib/integration/freshdeskConnector.js";
 import got from "got";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("createFreshdeskTicket should", () => {
   beforeEach(() => {

@@ -1,6 +1,6 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
 import { versionMiddleware } from "@middleware/version.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 describe("versionMiddleware should", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();

@@ -1,13 +1,13 @@
-import { vi, describe, it, expect, beforeEach, beforeAll } from "vitest";
-import request from "supertest";
+import { authenticationMiddleware } from "@middleware/authentication.js";
+import type { ApiOperation } from "@operations/types/operation.js";
 import express, {
   type Response,
   type Request,
   type NextFunction,
 } from "express";
+import request from "supertest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { buildRouter } from "../src/router.js";
-import type { ApiOperation } from "@operations/types/operation.js";
-import { authenticationMiddleware } from "@middleware/authentication.js";
 
 vi.mock("@middleware/rateLimiter", () => ({
   rateLimiterMiddleware: (_: Request, __: Response, next: NextFunction) =>

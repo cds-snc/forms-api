@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as redisModule from "redis";
-import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const redisCreateClientSpy = vi.spyOn(redisModule, "createClient");
 

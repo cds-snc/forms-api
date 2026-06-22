@@ -17,7 +17,7 @@ jobs:
           DNS_PROXY_LOGANALYTICSWORKSPACEID: ${{ secrets.LOG_ANALYTICS_WORKSPACE_ID }}
           DNS_PROXY_LOGANALYTICSSHAREDKEY: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
       - name: Checkout Actions
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -38,10 +38,10 @@ jobs:
         with:
           token: ${{ steps.generate_token.outputs.token}}
           sign-commits: true
-          commit-message: 'Add catalog-info.yaml'
-          branch: 'backstage/catalog-info'
-          title: 'Add catalog-info.yaml'
-          body: 'Adding a basic catalog-info.yaml to start populating the backstage catalog with your components.'
-          labels: 'backstage'
+          commit-message: "Add catalog-info.yaml"
+          branch: "backstage/catalog-info"
+          title: "Add catalog-info.yaml"
+          body: "Adding a basic catalog-info.yaml to start populating the backstage catalog with your components."
+          labels: "backstage"
           add-paths: |
             catalog-info.yaml

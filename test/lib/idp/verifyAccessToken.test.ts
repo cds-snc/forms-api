@@ -1,21 +1,21 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
-  verifyAccessToken,
-  AccessTokenInvalidError,
-  AccessTokenExpiredError,
   AccessControlError,
+  AccessTokenExpiredError,
+  AccessTokenInvalidError,
   AccessTokenMalformedError,
+  verifyAccessToken,
 } from "@lib/idp/verifyAccessToken.js";
-import {
-  introspectAccessToken,
-  ZitadelConnectionError,
-} from "@lib/integration/zitadelConnector.js";
 import {
   getValueFromRedis,
   setValueInRedis,
 } from "@lib/integration/redis/redisClientAdapter.js";
-import { logMessage } from "@lib/logging/logger.js";
+import {
+  ZitadelConnectionError,
+  introspectAccessToken,
+} from "@lib/integration/zitadelConnector.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
+import { logMessage } from "@lib/logging/logger.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@lib/integration/redis/redisClientAdapter");
 const getValueFromRedisMock = vi.mocked(getValueFromRedis);

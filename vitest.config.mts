@@ -1,5 +1,5 @@
-import { defineConfig } from "vitest/config";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vitest/config";
 
 // biome-ignore lint/style/noDefaultExport: <explanation>
 export default defineConfig({

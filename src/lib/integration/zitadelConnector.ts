@@ -1,4 +1,3 @@
-import { SignJWT } from "jose";
 import { createPrivateKey } from "node:crypto";
 import {
   ZITADEL_APPLICATION_KEY,
@@ -7,6 +6,7 @@ import {
 } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
 import got from "got";
+import { SignJWT } from "jose";
 
 export type AccessTokenIntrospectionResult = {
   active: boolean;

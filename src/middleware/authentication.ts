@@ -1,15 +1,15 @@
-import type { NextFunction, Request, Response } from "express";
 import {
-  verifyAccessToken,
+  AccessControlError,
   AccessTokenExpiredError,
   AccessTokenInvalidError,
-  AccessControlError,
   AccessTokenMalformedError,
+  verifyAccessToken,
 } from "@lib/idp/verifyAccessToken.js";
 import {
   RequestContextualStoreKey,
   saveRequestContextData,
 } from "@lib/storage/requestContextualStore.js";
+import type { NextFunction, Request, Response } from "express";
 
 export async function authenticationMiddleware(
   request: Request,

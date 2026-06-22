@@ -1,17 +1,17 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import { mockClient } from "aws-sdk-client-mock";
 import {
   DynamoDBDocumentClient,
   GetCommand,
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
+import { logMessage } from "@lib/logging/logger.js";
 import { reportProblemWithFormSubmission } from "@lib/vault/reportProblemWithFormSubmission.js";
 import {
   FormSubmissionAlreadyReportedAsProblematicException,
   FormSubmissionNotFoundException,
 } from "@lib/vault/types/exceptions.types.js";
-import { logMessage } from "@lib/logging/logger.js";
+import { mockClient } from "aws-sdk-client-mock";
 import { buildMockedVaultItem } from "test/mocks/dynamodb.js";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const dynamoDbMock = mockClient(DynamoDBDocumentClient);
 

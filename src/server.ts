@@ -1,11 +1,11 @@
 import "dotenv/config";
-import express, { type Express } from "express";
 import { SERVER_PORT } from "@config";
-import { buildRouter } from "./router.js";
+import { prisma } from "@gcforms/database";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { prisma } from "@gcforms/database";
+import express, { type Express } from "express";
+import { buildRouter } from "./router.js";
 
 const server: Express = express();
 

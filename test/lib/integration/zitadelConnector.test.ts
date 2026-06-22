@@ -1,11 +1,11 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
-import { SignJWT } from "jose";
-import got from "got";
 import {
-  introspectAccessToken,
   ZitadelConnectionError,
+  introspectAccessToken,
 } from "@lib/integration/zitadelConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
+import got from "got";
+import { SignJWT } from "jose";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.spyOn(SignJWT.prototype, "sign").mockResolvedValue("signedJwtToken");
 

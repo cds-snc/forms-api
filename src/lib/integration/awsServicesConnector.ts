@@ -1,8 +1,8 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import { SQSClient } from "@aws-sdk/client-sqs";
-import { AWS_REGION } from "@config";
 import { S3Client } from "@aws-sdk/client-s3";
+import { SQSClient } from "@aws-sdk/client-sqs";
+import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { AWS_REGION } from "@config";
 
 const globalConfig = {
   region: AWS_REGION,

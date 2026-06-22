@@ -1,22 +1,22 @@
-import { Router } from "express";
-import { routeNotFoundMiddleware } from "@middleware/routeNotFound.js";
-import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler.js";
 import { authenticationMiddleware } from "@middleware/authentication.js";
+import { extractClientIpMiddleware } from "@middleware/extractClientIp.js";
+import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler.js";
 import { rateLimiterMiddleware } from "@middleware/rateLimiter.js";
+import { requestContextMiddleware } from "@middleware/requestContext.js";
+import { routeNotFoundMiddleware } from "@middleware/routeNotFound.js";
+import { versionMiddleware } from "@middleware/version.js";
 import { checkServiceHealthOperation } from "@operations/checkServiceHealth.js";
-import { retrieveTemplateOperationV1 } from "@operations/retrieveTemplate.v1.js";
-import { retrieveNewSubmissionsOperationV1 } from "@operations/retrieveNewSubmissions.v1.js";
-import { retrieveSubmissionOperationV1 } from "@operations/retrieveSubmission.v1.js";
 import { confirmSubmissionOperationV1 } from "@operations/confirmSubmission.v1.js";
 import { reportSubmissionOperationV1 } from "@operations/reportSubmission.v1.js";
-import { versionMiddleware } from "@middleware/version.js";
-import { requestContextMiddleware } from "@middleware/requestContext.js";
-import cors from "cors";
+import { retrieveNewSubmissionsOperationV1 } from "@operations/retrieveNewSubmissions.v1.js";
+import { retrieveSubmissionOperationV1 } from "@operations/retrieveSubmission.v1.js";
+import { retrieveTemplateOperationV1 } from "@operations/retrieveTemplate.v1.js";
 import type {
   ApiOperation,
   OperationHandler,
 } from "@operations/types/operation.js";
-import { extractClientIpMiddleware } from "@middleware/extractClientIp.js";
+import cors from "cors";
+import { Router } from "express";
 
 // Router configuration to inherit from parent router params
 const INHERIT_PARAMS = { mergeParams: true };

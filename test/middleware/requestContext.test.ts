@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
-import { requestContextMiddleware } from "@middleware/requestContext.js";
 import { AsyncLocalStorage } from "node:async_hooks";
+import { requestContextMiddleware } from "@middleware/requestContext.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 describe("requestContextMiddleware should", () => {
   const requestMock = getMockReq();

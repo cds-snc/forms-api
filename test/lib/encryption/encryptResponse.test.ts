@@ -1,8 +1,8 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
-import { encryptResponse } from "@lib/encryption/encryptResponse.js";
-import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as crypto from "node:crypto";
+import { encryptResponse } from "@lib/encryption/encryptResponse.js";
+import { logMessage } from "@lib/logging/logger.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("encryptFormSubmission should", () => {
   beforeEach(() => {

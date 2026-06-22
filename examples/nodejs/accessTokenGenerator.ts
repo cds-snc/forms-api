@@ -1,6 +1,6 @@
 import { createPrivateKey } from "node:crypto";
-import { SignJWT } from "jose";
 import axios from "axios";
+import { SignJWT } from "jose";
 import type { PrivateApiKey } from "./types.js";
 
 export function generateAccessToken(
