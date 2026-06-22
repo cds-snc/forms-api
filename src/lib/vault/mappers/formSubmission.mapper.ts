@@ -1,10 +1,10 @@
 import { logMessage } from "@lib/logging/logger.js";
 import {
-  type NewFormSubmission,
-  type FormSubmission,
-  SubmissionStatus,
-  type PartialAttachment,
   AttachmentScanStatus,
+  type FormSubmission,
+  type NewFormSubmission,
+  type PartialAttachment,
+  SubmissionStatus,
 } from "@lib/vault/types/formSubmission.types.js";
 
 export function mapNewFormSubmissionFromDynamoDbResponse(

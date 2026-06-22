@@ -1,19 +1,19 @@
+import { createWriteStream } from "node:fs";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import readline from "node:readline";
+import type { Readable } from "node:stream";
+import axios from "axios";
+import { generateAccessToken } from "./accessTokenGenerator.js";
+import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
+import { verifyIntegrity } from "./formSubmissionIntegrityVerifier.js";
+import { GCFormsApiClient } from "./gcFormsApiClient.js";
 import type {
   Attachment,
   FormSubmission,
   FormSubmissionProblem,
   PrivateApiKey,
 } from "./types.js";
-import { generateAccessToken } from "./accessTokenGenerator.js";
-import { GCFormsApiClient } from "./gcFormsApiClient.js";
-import { decryptFormSubmission } from "./formSubmissionDecrypter.js";
-import { verifyIntegrity } from "./formSubmissionIntegrityVerifier.js";
-import path from "node:path";
-import { createWriteStream } from "node:fs";
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
-import axios from "axios";
-import type { Readable } from "node:stream";
 
 const IDENTITY_PROVIDER_URL = "https://auth.forms-formulaires.alpha.canada.ca";
 const PROJECT_IDENTIFIER = "284778202772022819";

@@ -1,7 +1,7 @@
-import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { VAULT_FILE_STORAGE_BUCKET_NAME } from "@config";
+import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 export function getFormSubmissionAttachmentDownloadLink(

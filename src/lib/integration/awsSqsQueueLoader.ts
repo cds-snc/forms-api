@@ -1,5 +1,5 @@
-import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { GetQueueUrlCommand } from "@aws-sdk/client-sqs";
+import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
 
 let apiAuditLogSqsQueueUrl: string | null = null;

@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
 import { routeNotFoundMiddleware } from "@middleware/routeNotFound.js";
+import { beforeEach, describe, expect, it } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 describe("routeNotFoundMiddleware should", () => {
   const requestMock = getMockReq();

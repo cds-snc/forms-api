@@ -1,11 +1,11 @@
-import { introspectAccessToken } from "@lib/integration/zitadelConnector.js";
-import {
-  setValueInRedis,
-  getValueFromRedis,
-} from "@lib/integration/redis/redisClientAdapter.js";
 import { createHash } from "node:crypto";
-import { logMessage } from "@lib/logging/logger.js";
+import {
+  getValueFromRedis,
+  setValueInRedis,
+} from "@lib/integration/redis/redisClientAdapter.js";
+import { introspectAccessToken } from "@lib/integration/zitadelConnector.js";
 import { auditLog } from "@lib/logging/auditLogs.js";
+import { logMessage } from "@lib/logging/logger.js";
 
 export type VerifiedAccessToken = {
   expirationEpochTime: number;

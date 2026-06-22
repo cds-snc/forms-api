@@ -1,10 +1,10 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
-import { extractClientIpMiddleware } from "@middleware/extractClientIp.js";
 import {
   RequestContextualStoreKey,
   saveRequestContextData,
 } from "@lib/storage/requestContextualStore.js";
+import { extractClientIpMiddleware } from "@middleware/extractClientIp.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 vi.mock("@lib/storage/requestContextualStore");
 const saveRequestContextDataMock = vi.mocked(saveRequestContextData);

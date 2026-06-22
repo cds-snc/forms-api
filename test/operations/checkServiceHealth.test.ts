@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
 import { checkServiceHealthOperation } from "@operations/checkServiceHealth.js";
+import { beforeEach, describe, expect, it } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 describe("checkServiceHealthOperation handler should", () => {
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();

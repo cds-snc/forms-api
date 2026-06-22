@@ -1,16 +1,16 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
 import {
+  AccessControlError,
+  AccessTokenExpiredError,
+  AccessTokenInvalidError,
   type VerifiedAccessToken,
   verifyAccessToken,
-  AccessTokenInvalidError,
-  AccessTokenExpiredError,
-  AccessControlError,
 } from "@lib/idp/verifyAccessToken.js";
-import { authenticationMiddleware } from "@middleware/authentication.js";
 import { RequestContextualStoreKey } from "@lib/storage/requestContextualStore.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as requestContextualStoreModule from "@lib/storage/requestContextualStore.js";
+import { authenticationMiddleware } from "@middleware/authentication.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 vi.mock("@lib/idp/verifyAccessToken");
 const verifyAccessTokenMock = vi.mocked(verifyAccessToken);

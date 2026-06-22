@@ -1,6 +1,6 @@
+import type { PrismaClient } from "@gcforms/database";
 import { vi } from "vitest";
 import { mockDeep } from "vitest-mock-extended";
-import type { PrismaClient } from "@gcforms/database";
 
 process.env = {
   ...process.env,

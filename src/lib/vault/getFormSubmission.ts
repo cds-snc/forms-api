@@ -1,9 +1,9 @@
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
-import type { FormSubmission } from "@lib/vault/types/formSubmission.types.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
 import { mapFormSubmissionFromDynamoDbResponse } from "@lib/vault/mappers/formSubmission.mapper.js";
+import { FormSubmissionNotFoundException } from "@lib/vault/types/exceptions.types.js";
+import type { FormSubmission } from "@lib/vault/types/formSubmission.types.js";
 
 export async function getFormSubmission(
   formId: string,

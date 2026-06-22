@@ -1,5 +1,5 @@
-import type { NextFunction, Request, Response } from "express";
 import { logMessage } from "@lib/logging/logger.js";
+import type { NextFunction, Request, Response } from "express";
 
 export const versionMiddleware = (version: number) => {
   return (req: Request, _: Response, next: NextFunction) => {

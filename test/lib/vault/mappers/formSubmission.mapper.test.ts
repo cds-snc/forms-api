@@ -3,7 +3,7 @@ import {
   mapNewFormSubmissionFromDynamoDbResponse,
 } from "@lib/vault/mappers/formSubmission.mapper.js";
 import { AttachmentScanStatus } from "@lib/vault/types/formSubmission.types.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
 describe("in formSubmission mapper", () => {
   describe("mapNewFormSubmissionFromDynamoDbResponse should", () => {

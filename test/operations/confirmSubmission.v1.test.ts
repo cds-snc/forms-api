@@ -1,15 +1,15 @@
-import { vi, describe, beforeEach, it, expect } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
-import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
-import {
-  FormSubmissionAlreadyConfirmedException,
-  FormSubmissionNotFoundException,
-  FormSubmissionIncorrectConfirmationCodeException,
-} from "@lib/vault/types/exceptions.types.js";
-import { confirmSubmissionOperationV1 } from "@operations/confirmSubmission.v1.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as auditLogsModule from "@lib/logging/auditLogs.js";
 import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
+import { confirmFormSubmission } from "@lib/vault/confirmFormSubmission.js";
+import {
+  FormSubmissionAlreadyConfirmedException,
+  FormSubmissionIncorrectConfirmationCodeException,
+  FormSubmissionNotFoundException,
+} from "@lib/vault/types/exceptions.types.js";
+import { confirmSubmissionOperationV1 } from "@operations/confirmSubmission.v1.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 vi.mock("@lib/vault/confirmFormSubmission");
 const confirmFormSubmissionMock = vi.mocked(confirmFormSubmission);

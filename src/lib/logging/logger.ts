@@ -1,5 +1,5 @@
+import { ENVIRONMENT_MODE, EnvironmentMode } from "@config";
 import pino from "pino";
-import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 
 export const logMessage = pino({
   level: ENVIRONMENT_MODE === EnvironmentMode.local ? "debug" : "info",

@@ -1,15 +1,15 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
+import {
+  type ApiServiceAccount,
+  type PrismaClient,
+  prisma,
+} from "@gcforms/database";
 import { getPublicKey } from "@lib/formsClient/getPublicKey.js";
 import {
   getValueFromRedis,
   setValueInRedis,
 } from "@lib/integration/redis/redisClientAdapter.js";
 import { logMessage } from "@lib/logging/logger.js";
-import {
-  type ApiServiceAccount,
-  prisma,
-  type PrismaClient,
-} from "@gcforms/database";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { type DeepMockProxy, mockReset } from "vitest-mock-extended";
 
 vi.mock("@lib/integration/redis/redisClientAdapter");

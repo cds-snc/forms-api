@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import {
-  checkSchema,
   type Location,
-  validationResult,
   type Schema,
+  checkSchema,
+  validationResult,
 } from "express-validator";
 
 export function requestValidatorMiddleware(

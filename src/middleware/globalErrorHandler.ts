@@ -1,10 +1,10 @@
-import type { Request, Response, NextFunction } from "express";
 import { logMessage } from "@lib/logging/logger.js";
 import { refundConsumedToken } from "@lib/rateLimiting/tokenBucketLimiter.js";
 import {
   RequestContextualStoreKey,
   retrieveOptionalRequestContextData,
 } from "@lib/storage/requestContextualStore.js";
+import type { NextFunction, Request, Response } from "express";
 
 export async function globalErrorHandlerMiddleware(
   error: Error,

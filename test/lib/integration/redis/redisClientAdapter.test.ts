@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 import {
   getValueFromRedis,
   setValueInRedis,
 } from "@lib/integration/redis/redisClientAdapter.js";
+import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@lib/integration/redis/redisConnector");
 const redisConnectorMock = vi.mocked(RedisConnector);

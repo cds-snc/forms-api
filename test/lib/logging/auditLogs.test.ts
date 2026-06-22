@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, afterAll } from "vitest";
-import { mockClient } from "aws-sdk-client-mock";
-import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
-import { auditLog } from "@lib/logging/auditLogs.js";
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
+import { auditLog } from "@lib/logging/auditLogs.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { retrieveRequestContextData } from "@lib/storage/requestContextualStore.js";
+import { mockClient } from "aws-sdk-client-mock";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.unmock("@lib/logging/auditLogs");
 

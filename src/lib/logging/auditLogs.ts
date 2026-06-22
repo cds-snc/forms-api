@@ -1,8 +1,8 @@
 import { SendMessageCommand } from "@aws-sdk/client-sqs";
+import { ENVIRONMENT_MODE, EnvironmentMode } from "@config";
 import { AwsServicesConnector } from "@lib/integration/awsServicesConnector.js";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
 import { logMessage } from "@lib/logging/logger.js";
-import { EnvironmentMode, ENVIRONMENT_MODE } from "@config";
 import {
   RequestContextualStoreKey,
   retrieveRequestContextData,

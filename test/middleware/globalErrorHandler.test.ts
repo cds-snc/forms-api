@@ -1,11 +1,11 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
-import type { Request } from "express";
-import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler.js";
 import { logMessage } from "@lib/logging/logger.js";
 // biome-ignore lint/style/noNamespaceImport: <explanation>
 import * as tokenBucketLimiterModule from "@lib/rateLimiting/tokenBucketLimiter.js";
 import { retrieveOptionalRequestContextData } from "@lib/storage/requestContextualStore.js";
+import { globalErrorHandlerMiddleware } from "@middleware/globalErrorHandler.js";
+import type { Request } from "express";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 vi.mock("@lib/storage/requestContextualStore");
 const retrieveOptionalRequestContextDataMock = vi.mocked(

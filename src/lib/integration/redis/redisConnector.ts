@@ -1,6 +1,6 @@
-import { type RedisClientType, createClient } from "redis";
 import { REDIS_URL } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
+import { type RedisClientType, createClient } from "redis";
 
 export class RedisConnector {
   private static instance: RedisConnector | undefined = undefined;

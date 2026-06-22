@@ -1,6 +1,6 @@
-import got from "got";
 import { FRESHDESK_API_KEY, FRESHDESK_API_URL } from "@config";
 import { logMessage } from "@lib/logging/logger.js";
+import got from "got";
 
 export type FreshdeskTicketPayload = {
   name: string;

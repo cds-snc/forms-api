@@ -1,15 +1,15 @@
 import {
-  type RateLimiterAbstract,
-  RateLimiterMemory,
-  RateLimiterRedis,
-} from "rate-limiter-flexible";
-import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
-import {
   highRateLimiterConfiguration,
   lowRateLimiterConfiguration,
 } from "@config";
 import { getValueFromRedis } from "@lib/integration/redis/redisClientAdapter.js";
+import { RedisConnector } from "@lib/integration/redis/redisConnector.js";
 import { logMessage } from "@lib/logging/logger.js";
+import {
+  type RateLimiterAbstract,
+  RateLimiterMemory,
+  RateLimiterRedis,
+} from "rate-limiter-flexible";
 
 const REDIS_RATE_LIMIT_KEY_PREFIX: string = "rate-limit";
 

@@ -1,15 +1,15 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
-import { getMockReq, getMockRes } from "vitest-mock-express";
+import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
 import {
-  checkSchema,
+  type Result,
   type Schema,
-  validationResult,
   type ValidationChain,
   type ValidationError,
-  type Result,
+  checkSchema,
+  validationResult,
 } from "express-validator";
 import type { RunnableValidationChains } from "express-validator/lib/middlewares/schema.js";
-import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getMockReq, getMockRes } from "vitest-mock-express";
 
 vi.mock("express-validator");
 const checkSchemaMock = vi.mocked(checkSchema);

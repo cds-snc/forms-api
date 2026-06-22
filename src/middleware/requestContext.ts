@@ -1,5 +1,5 @@
-import type { NextFunction, Request, Response } from "express";
 import { requestContextualStore } from "@lib/storage/requestContextualStore.js";
+import type { NextFunction, Request, Response } from "express";
 
 export function requestContextMiddleware(
   _: Request,

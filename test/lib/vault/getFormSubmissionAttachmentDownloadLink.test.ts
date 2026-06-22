@@ -1,7 +1,7 @@
-import { vi, describe, it, expect, beforeEach } from "vitest";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { logMessage } from "@lib/logging/logger.js";
 import { getFormSubmissionAttachmentDownloadLink } from "@lib/vault/getFormSubmissionAttachmentDownloadLink.js";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@aws-sdk/s3-request-presigner");
 const getSignedUrlMock = vi.mocked(getSignedUrl);

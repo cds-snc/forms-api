@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { mockClient } from "aws-sdk-client-mock";
 import { GetQueueUrlCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { getApiAuditLogSqsQueueUrl } from "@lib/integration/awsSqsQueueLoader.js";
+import { mockClient } from "aws-sdk-client-mock";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const sqsMock = mockClient(SQSClient);
 
