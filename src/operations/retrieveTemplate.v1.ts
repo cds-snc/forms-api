@@ -17,9 +17,17 @@ async function v1(
   const serviceUserId = retrieveRequestContextData(
     RequestContextualStoreKey.serviceUserId,
   );
+  const version = Number(request.query.version ?? 1);
 
   try {
-    const formTemplate = await getFormTemplate(formId);
+    if (Number.isNaN(version)) {
+      response
+        .status(400)
+        .json({ error: "URL parameter 'version' should be a number" });
+      return;
+    }
+
+    const formTemplate = await getFormTemplate(formId, version);
 
     if (formTemplate === undefined) {
       response.status(404).json({ error: "Form template does not exist" });
@@ -38,7 +46,7 @@ async function v1(
   } catch (error) {
     next(
       new Error(
-        `[operation] Internal error while retrieving template. Params: formId = ${formId}`,
+        `[operation] Internal error while retrieving template. Params: formId = ${formId} ; version = ${request.query.version}`,
         { cause: error },
       ),
     );
