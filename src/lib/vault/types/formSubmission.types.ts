@@ -1,6 +1,7 @@
 export type NewFormSubmission = {
   name: string;
   createdAt: number;
+  version: number;
 };
 
 export const SubmissionStatus = {

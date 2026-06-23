@@ -11,13 +11,16 @@ export function mapNewFormSubmissionFromDynamoDbResponse(
   response: Record<string, unknown>,
 ): NewFormSubmission {
   try {
+    // response.Version could be undefined if API users are retrieving responses that have been created before we implemented the form versioning feature
     if (response.Name === undefined || response.CreatedAt === undefined) {
       throw new Error("Missing key properties in DynamoDB response");
     }
 
     if (
       typeof response.Name !== "string" ||
-      typeof response.CreatedAt !== "number"
+      typeof response.CreatedAt !== "number" ||
+      // response.Version could be undefined if API users are retrieving responses that have been created before we implemented the form versioning feature
+      (response.Version !== undefined && typeof response.Version !== "number")
     ) {
       throw new Error("Unexpected type in DynamoDB response");
     }
@@ -25,6 +28,7 @@ export function mapNewFormSubmissionFromDynamoDbResponse(
     return {
       name: response.Name,
       createdAt: response.CreatedAt,
+      version: response.Version ?? 1,
     };
   } catch (error) {
     logMessage.info(
