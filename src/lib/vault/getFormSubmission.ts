@@ -16,7 +16,7 @@ export async function getFormSubmission(
           TableName: "Vault",
           Key: { FormID: formId, NAME_OR_CONF: `NAME#${submissionName}` },
           ProjectionExpression:
-            "CreatedAt,#statusCreatedAtKey,ConfirmationCode,FormSubmission,FormSubmissionHash,SubmissionAttachments",
+            "CreatedAt,#statusCreatedAtKey,ConfirmationCode,FormSubmission,FormSubmissionHash,SubmissionAttachments,Version",
           ExpressionAttributeNames: {
             "#statusCreatedAtKey": "Status#CreatedAt",
           },

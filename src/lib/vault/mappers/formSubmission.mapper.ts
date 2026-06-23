@@ -51,6 +51,7 @@ export function mapFormSubmissionFromDynamoDbResponse(
       response.FormSubmission === undefined ||
       response.FormSubmissionHash === undefined
       // response.SubmissionAttachments could be undefined if API users are retrieving responses that have been created before we implemented the submission attachments feature
+      // response.Version could be undefined if API users are retrieving responses that have been created before we implemented the form versioning feature
     ) {
       throw new Error("Missing key properties in DynamoDB response");
     }
@@ -61,8 +62,11 @@ export function mapFormSubmissionFromDynamoDbResponse(
       typeof response.ConfirmationCode !== "string" ||
       typeof response.FormSubmission !== "string" ||
       typeof response.FormSubmissionHash !== "string" ||
+      // response.SubmissionAttachments could be undefined if API users are retrieving responses that have been created before we implemented the submission attachments feature
       (response.SubmissionAttachments !== undefined &&
-        typeof response.SubmissionAttachments !== "string")
+        typeof response.SubmissionAttachments !== "string") ||
+      // response.Version could be undefined if API users are retrieving responses that have been created before we implemented the form versioning feature
+      (response.Version !== undefined && typeof response.Version !== "number")
     ) {
       throw new Error("Unexpected type in DynamoDB response");
     }
@@ -78,6 +82,7 @@ export function mapFormSubmissionFromDynamoDbResponse(
             response.SubmissionAttachments,
           )
         : [],
+      version: response.Version ?? 1,
     };
   } catch (error) {
     logMessage.info(

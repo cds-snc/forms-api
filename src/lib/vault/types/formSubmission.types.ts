@@ -41,4 +41,5 @@ export type FormSubmission = {
   answers: string;
   checksum: string;
   attachments: PartialAttachment[];
+  version: number;
 };
