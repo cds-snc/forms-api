@@ -90,7 +90,7 @@ describe("retrieveTemplateOperation handler should", () => {
 
     expect(nextMock).toHaveBeenCalledWith(
       new Error(
-        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0",
+        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0 ; version = undefined",
       ),
     );
   });

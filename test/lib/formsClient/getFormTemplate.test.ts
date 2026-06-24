@@ -1,4 +1,8 @@
-import { type PrismaClient, type Template, prisma } from "@gcforms/database";
+import {
+  type PrismaClient,
+  type TemplateVersion,
+  prisma,
+} from "@gcforms/database";
 import { getFormTemplate } from "@lib/formsClient/getFormTemplate.js";
 import { logMessage } from "@lib/logging/logger.js";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -13,15 +17,15 @@ describe("getFormTemplate should", () => {
   });
 
   it("return an undefined form template if database was not able to find it", async () => {
-    prismaMock.template.findUnique.mockResolvedValueOnce(null);
+    prismaMock.templateVersion.findUnique.mockResolvedValueOnce(null);
 
-    const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m");
+    const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m", 1);
 
     expect(formTemplate).toBeUndefined();
   });
 
   it("return a form template if database was able to find it", async () => {
-    prismaMock.template.findUnique.mockResolvedValue({
+    prismaMock.templateVersion.findUnique.mockResolvedValue({
       jsonConfig: {
         elements: [
           {
@@ -30,9 +34,9 @@ describe("getFormTemplate should", () => {
           },
         ],
       },
-    } as unknown as Template);
+    } as unknown as TemplateVersion);
 
-    const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m");
+    const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m", 1);
 
     expect(formTemplate).toEqual({
       jsonConfig: {
@@ -48,12 +52,12 @@ describe("getFormTemplate should", () => {
 
   it("throw an error if database has an internal failure", async () => {
     const customError = new Error("custom error");
-    prismaMock.template.findUnique.mockRejectedValueOnce(customError);
+    prismaMock.templateVersion.findUnique.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
     await expect(() =>
-      getFormTemplate("clzamy5qv0000115huc4bh90m"),
-    ).rejects.toThrowError(customError);
+      getFormTemplate("clzamy5qv0000115huc4bh90m", 1),
+    ).rejects.toThrow(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

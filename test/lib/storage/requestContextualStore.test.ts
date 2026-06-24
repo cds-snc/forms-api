@@ -22,7 +22,7 @@ describe("requestContextualStore", () => {
     it("throw an error if the requestContextualStore is undefined", () => {
       expect(() =>
         saveRequestContextData(RequestContextualStoreKey.serviceUserId, "test"),
-      ).toThrowError("requestContextualStore is undefined");
+      ).toThrow("requestContextualStore is undefined");
     });
   });
 
@@ -40,7 +40,7 @@ describe("requestContextualStore", () => {
     it("throw an error if the requestContextualStore is undefined", () => {
       expect(() =>
         retrieveOptionalRequestContextData(RequestContextualStoreKey.clientIp),
-      ).toThrowError("requestContextualStore is undefined");
+      ).toThrow("requestContextualStore is undefined");
     });
   });
 
@@ -61,7 +61,7 @@ describe("requestContextualStore", () => {
 
         expect(() =>
           retrieveRequestContextData(RequestContextualStoreKey.clientIp),
-        ).toThrowError(
+        ).toThrow(
           "requestContextualStore does not have any set value for key: clientIp",
         );
       });
@@ -70,7 +70,7 @@ describe("requestContextualStore", () => {
     it("throw an error if the requestContextualStore is undefined", () => {
       expect(() =>
         retrieveRequestContextData(RequestContextualStoreKey.clientIp),
-      ).toThrowError("requestContextualStore is undefined");
+      ).toThrow("requestContextualStore is undefined");
     });
   });
 });

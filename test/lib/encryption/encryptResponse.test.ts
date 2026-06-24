@@ -32,9 +32,9 @@ describe("encryptFormSubmission should", () => {
     });
     const logMessageSpy = vi.spyOn(logMessage, "error");
 
-    expect(() =>
-      encryptResponse("serviceAccountPublicKey", "payload"),
-    ).toThrowError("custom error");
+    expect(() => encryptResponse("serviceAccountPublicKey", "payload")).toThrow(
+      "custom error",
+    );
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,
