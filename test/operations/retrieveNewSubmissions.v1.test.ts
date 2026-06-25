@@ -53,6 +53,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       {
         name: "ABC",
         createdAt: 123,
+        version: 8,
       },
     ]);
 
@@ -66,6 +67,7 @@ describe("retrieveNewSubmissionsOperation handler should", () => {
       {
         createdAt: 123,
         name: "ABC",
+        version: 8,
       },
     ]);
     expect(auditLogSpy).toHaveBeenNthCalledWith(1, {

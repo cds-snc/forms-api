@@ -1,5 +1,6 @@
 import {
   type PrismaClient,
+  type Template,
   type TemplateVersion,
   prisma,
 } from "@gcforms/database";
@@ -35,6 +36,35 @@ describe("getFormTemplate should", () => {
         ],
       },
     } as unknown as TemplateVersion);
+
+    const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m", 1);
+
+    expect(formTemplate).toEqual({
+      jsonConfig: {
+        elements: [
+          {
+            id: 1,
+            type: "textField",
+          },
+        ],
+      },
+    });
+  });
+
+  // This test can be deleted once form versioning is implemented in Production and migrated old form template database entries to the new versioned schema
+  it("return a form template even if form versioning is not fully deployed (testing fallback Prisma query)", async () => {
+    prismaMock.templateVersion.findUnique.mockResolvedValue(null);
+
+    prismaMock.template.findUnique.mockResolvedValue({
+      jsonConfig: {
+        elements: [
+          {
+            id: 1,
+            type: "textField",
+          },
+        ],
+      },
+    } as unknown as Template);
 
     const formTemplate = await getFormTemplate("clzamy5qv0000115huc4bh90m", 1);
 
