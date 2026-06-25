@@ -6,6 +6,7 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   test: {
+    silent: "passed-only",
     include: ["test/**/*.test.ts"],
     setupFiles: "vitest-setup.ts",
   },
