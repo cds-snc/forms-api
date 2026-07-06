@@ -95,7 +95,7 @@ describe("reportProblemWithFormSubmission should", () => {
         "clzamy5qv0000115huc4bh90m",
         "01-08-a571",
       ),
-    ).rejects.toThrowError(customError);
+    ).rejects.toThrow(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

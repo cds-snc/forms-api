@@ -33,7 +33,7 @@ describe("getFormSubmissionAttachmentDownloadLink should", () => {
       getFormSubmissionAttachmentDownloadLink(
         "form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/image.jpeg",
       ),
-    ).rejects.toThrowError(customError);
+    ).rejects.toThrow(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

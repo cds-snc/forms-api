@@ -17,21 +17,23 @@ vi.mocked(retrieveRequestContextData).mockReturnValue(
 );
 
 describe("retrieveTemplateOperation handler should", () => {
-  const requestMock = getMockReq({
-    params: {
-      formId: "clzsn6tao000611j50dexeob0",
-    },
-    serviceUserId: "clzsn6tao000611j50dexeob0",
-  });
+  let requestMock = getMockReq();
 
   const { res: responseMock, next: nextMock, clearMockRes } = getMockRes();
 
   beforeEach(() => {
     vi.clearAllMocks();
     clearMockRes();
+
+    requestMock = getMockReq({
+      params: {
+        formId: "clzsn6tao000611j50dexeob0",
+      },
+      serviceUserId: "clzsn6tao000611j50dexeob0",
+    });
   });
 
-  it("respond with success when form submission does exist", async () => {
+  it("respond with success when form template does exist", async () => {
     getFormTemplateMock.mockResolvedValueOnce({
       jsonConfig: {
         elements: [
@@ -42,6 +44,42 @@ describe("retrieveTemplateOperation handler should", () => {
         ],
       },
     });
+
+    await retrieveTemplateOperationV1.handler(
+      requestMock,
+      responseMock,
+      nextMock,
+    );
+
+    expect(responseMock.json).toHaveBeenCalledWith({
+      elements: [
+        {
+          id: 1,
+          type: "textField",
+        },
+      ],
+    });
+    expect(auditLogSpy).toHaveBeenNthCalledWith(1, {
+      userId: "clzsn6tao000611j50dexeob0",
+      subject: { type: "Form", id: "clzsn6tao000611j50dexeob0" },
+      event: "RetrieveTemplate",
+    });
+  });
+
+  it("respond with success when specific version of a form template does exist", async () => {
+    getFormTemplateMock.mockResolvedValueOnce({
+      jsonConfig: {
+        elements: [
+          {
+            id: 1,
+            type: "textField",
+          },
+        ],
+      },
+    });
+    requestMock.query = {
+      version: "8",
+    };
 
     await retrieveTemplateOperationV1.handler(
       requestMock,
@@ -79,6 +117,24 @@ describe("retrieveTemplateOperation handler should", () => {
     });
   });
 
+  it("respond with error when 'version' query parameter is not a number", async () => {
+    getFormTemplateMock.mockRejectedValueOnce(new Error("custom error"));
+    requestMock.query = {
+      version: "hello",
+    };
+
+    await retrieveTemplateOperationV1.handler(
+      requestMock,
+      responseMock,
+      nextMock,
+    );
+
+    expect(responseMock.status).toHaveBeenCalledWith(400);
+    expect(responseMock.json).toHaveBeenCalledWith({
+      error: "URL parameter 'version' should be a number",
+    });
+  });
+
   it("pass error to next function when processing fails due to internal error", async () => {
     getFormTemplateMock.mockRejectedValueOnce(new Error("custom error"));
 
@@ -90,7 +146,7 @@ describe("retrieveTemplateOperation handler should", () => {
 
     expect(nextMock).toHaveBeenCalledWith(
       new Error(
-        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0",
+        "[operation] Internal error while retrieving template. Params: formId = clzsn6tao000611j50dexeob0 ; version = undefined",
       ),
     );
   });

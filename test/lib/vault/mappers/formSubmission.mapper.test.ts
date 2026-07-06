@@ -11,12 +11,28 @@ describe("in formSubmission mapper", () => {
       const newFormSubmission = mapNewFormSubmissionFromDynamoDbResponse({
         Name: "18-06-977e7",
         CreatedAt: 1750263415913,
+        Version: 8,
       });
 
       expect(newFormSubmission).toEqual({
         name: "18-06-977e7",
         createdAt: 1750263415913,
+        version: 8,
       });
+    });
+
+    // This test can be deleted once form versioning is well established in Production
+    it("return proper NewFormSubmission when DynamoDB response does not include a Version attribute (testing backward compatibility with submissions that were produced when form versioning did not exist)", () => {
+      const newFormSubmission = mapNewFormSubmissionFromDynamoDbResponse({
+        Name: "18-06-977e7",
+        CreatedAt: 1750263415913,
+      });
+
+      expect(newFormSubmission).toEqual(
+        expect.objectContaining({
+          version: 1,
+        }),
+      );
     });
 
     it("throw an error when DynamoDB response is incomplete", () => {
@@ -24,7 +40,7 @@ describe("in formSubmission mapper", () => {
         mapNewFormSubmissionFromDynamoDbResponse({
           Name: "18-06-977e7",
         }),
-      ).toThrowError("Missing key properties in DynamoDB response");
+      ).toThrow("Missing key properties in DynamoDB response");
     });
 
     it("throw an error when DynamoDB response is invalid", () => {
@@ -33,7 +49,7 @@ describe("in formSubmission mapper", () => {
           Name: "18-06-977e7",
           CreatedAt: "1750263415913",
         }),
-      ).toThrowError("Unexpected type in DynamoDB response");
+      ).toThrow("Unexpected type in DynamoDB response");
     });
   });
 
@@ -53,6 +69,7 @@ describe("in formSubmission mapper", () => {
             scanStatus: "NO_THREATS_FOUND",
           },
         ]),
+        Version: 8,
       });
 
       expect(formSubmission).toEqual({
@@ -69,6 +86,7 @@ describe("in formSubmission mapper", () => {
             scanStatus: AttachmentScanStatus.noThreatsFound,
           },
         ],
+        version: 8,
       });
     });
 
@@ -88,6 +106,7 @@ describe("in formSubmission mapper", () => {
             scanStatus: "NO_THREATS_FOUND",
           },
         ]),
+        Version: 8,
       });
 
       expect(formSubmission).toEqual({
@@ -105,6 +124,7 @@ describe("in formSubmission mapper", () => {
             md5: undefined,
           },
         ],
+        version: 8,
       });
     });
 
@@ -115,6 +135,7 @@ describe("in formSubmission mapper", () => {
         ConfirmationCode: "99063d75-9804-4efa-8f4c-605b4ba6ad95",
         FormSubmission: '{"1":"Test response"}',
         FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
+        Version: 8,
       });
 
       expect(formSubmission).toEqual({
@@ -124,7 +145,25 @@ describe("in formSubmission mapper", () => {
         answers: '{"1":"Test response"}',
         checksum: "5981e9cd2a2f0032e9b8c99eb7bb8841",
         attachments: [],
+        version: 8,
       });
+    });
+
+    // This test can be deleted once form versioning is well established in Production
+    it("return proper FormSubmission when DynamoDB response does not include a Version attribute (testing backward compatibility with submissions that were produced when form versioning did not exist)", () => {
+      const formSubmission = mapFormSubmissionFromDynamoDbResponse({
+        CreatedAt: 1750263415913,
+        "Status#CreatedAt": "New#1750263415913",
+        ConfirmationCode: "99063d75-9804-4efa-8f4c-605b4ba6ad95",
+        FormSubmission: '{"1":"Test response"}',
+        FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
+      });
+
+      expect(formSubmission).toEqual(
+        expect.objectContaining({
+          version: 1,
+        }),
+      );
     });
 
     it("throw an error when SubmissionAttachments in DynamoDB response is present but invalid", () => {
@@ -137,7 +176,7 @@ describe("in formSubmission mapper", () => {
           FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
           SubmissionAttachments: [],
         }),
-      ).toThrowError("Unexpected type in DynamoDB response");
+      ).toThrow("Unexpected type in DynamoDB response");
     });
 
     it("throw an error when DynamoDB response is incomplete", () => {
@@ -148,7 +187,7 @@ describe("in formSubmission mapper", () => {
           ConfirmationCode: "99063d75-9804-4efa-8f4c-605b4ba6ad95",
           FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
         }),
-      ).toThrowError("Missing key properties in DynamoDB response");
+      ).toThrow("Missing key properties in DynamoDB response");
     });
 
     it("throw an error when DynamoDB response is invalid", () => {
@@ -160,7 +199,7 @@ describe("in formSubmission mapper", () => {
           FormSubmission: '{"1":"Test response"}',
           FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
         }),
-      ).toThrowError("Unexpected type in DynamoDB response");
+      ).toThrow("Unexpected type in DynamoDB response");
     });
   });
 });

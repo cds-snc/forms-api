@@ -118,7 +118,7 @@ describe("confirmFormSubmission should", () => {
         "01-08-a571",
         "620b203c-9836-4000-bf30-1c3bcc26b834",
       ),
-    ).rejects.toThrowError(customError);
+    ).rejects.toThrow(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

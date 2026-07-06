@@ -1,6 +1,7 @@
 export type NewFormSubmission = {
   name: string;
   createdAt: number;
+  version: number;
 };
 
 export const SubmissionStatus = {
@@ -40,4 +41,5 @@ export type FormSubmission = {
   answers: string;
   checksum: string;
   attachments: PartialAttachment[];
+  version: number;
 };

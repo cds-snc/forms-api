@@ -111,6 +111,7 @@ function buildJsonResponse(
         md5: attachment.md5,
       })),
     }),
+    version: formSubmission.version,
   });
 }
 

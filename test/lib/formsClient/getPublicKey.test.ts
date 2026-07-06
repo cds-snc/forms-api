@@ -56,7 +56,7 @@ describe("getPublicKey should", () => {
     prismaMock.apiServiceAccount.findUnique.mockRejectedValueOnce(customError);
     const logMessageSpy = vi.spyOn(logMessage, "info");
 
-    await expect(() => getPublicKey("254354365464565461")).rejects.toThrowError(
+    await expect(() => getPublicKey("254354365464565461")).rejects.toThrow(
       customError,
     );
 

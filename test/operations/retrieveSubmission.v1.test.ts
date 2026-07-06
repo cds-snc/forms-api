@@ -60,6 +60,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       answers: "",
       checksum: "",
       attachments: [],
+      version: 8,
     });
     getPublicKeyMock.mockResolvedValueOnce("publicKey");
     encryptResponseMock.mockReturnValueOnce({
@@ -91,6 +92,7 @@ describe("retrieveSubmissionOperation handler should", () => {
         confirmationCode: "",
         answers: "",
         checksum: "",
+        version: 8,
       }),
     );
 
@@ -117,6 +119,7 @@ describe("retrieveSubmissionOperation handler should", () => {
           scanStatus: AttachmentScanStatus.noThreatsFound,
         },
       ],
+      version: 8,
     });
     getFormSubmissionAttachmentDownloadLinkMock.mockResolvedValueOnce(
       "https://download-link",
@@ -160,6 +163,7 @@ describe("retrieveSubmissionOperation handler should", () => {
             isPotentiallyMalicious: false,
           },
         ],
+        version: 8,
       }),
     );
 
@@ -224,6 +228,7 @@ describe("retrieveSubmissionOperation handler should", () => {
             scanStatus: attachmentScanStatus,
           },
         ],
+        version: 8,
       });
       getFormSubmissionAttachmentDownloadLinkMock.mockResolvedValueOnce(
         "https://download-link",
@@ -253,6 +258,7 @@ describe("retrieveSubmissionOperation handler should", () => {
               isPotentiallyMalicious,
             },
           ],
+          version: 8,
         }),
       );
     },
@@ -274,6 +280,7 @@ describe("retrieveSubmissionOperation handler should", () => {
           scanStatus: AttachmentScanStatus.noThreatsFound,
         },
       ],
+      version: 8,
     });
     getFormSubmissionAttachmentDownloadLinkMock.mockRejectedValueOnce(
       new Error("custom error"),
@@ -300,6 +307,7 @@ describe("retrieveSubmissionOperation handler should", () => {
       answers: "",
       checksum: "",
       attachments: [],
+      version: 8,
     });
     getPublicKeyMock.mockImplementationOnce(() => {
       throw new Error("custom error");

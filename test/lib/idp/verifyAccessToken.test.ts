@@ -201,7 +201,7 @@ describe("verifyAccessToken should", () => {
           "RkS8hzu0MtwL+Qs2lK7KX9CLK7v6lxYpqs7ns5MwuOs=",
           "0000",
         ),
-      ).rejects.toThrowError(ZitadelConnectionError);
+      ).rejects.toThrow(ZitadelConnectionError);
 
       expect(logMessageSpy).toHaveBeenCalledWith(
         connectionError,

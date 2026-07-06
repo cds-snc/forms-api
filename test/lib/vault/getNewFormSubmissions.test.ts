@@ -30,10 +30,12 @@ describe("getNewFormSubmissions should", () => {
         {
           Name: "ABC",
           CreatedAt: 123,
+          Version: 8,
         },
         {
           Name: "DEF",
           CreatedAt: 123,
+          Version: 8,
         },
       ],
     });
@@ -54,11 +56,13 @@ describe("getNewFormSubmissions should", () => {
           {
             Name: "ABC",
             CreatedAt: 123,
+            Version: 8,
           },
         ],
         LastEvaluatedKey: {
           Name: "ABC",
           CreatedAt: 123,
+          Version: 8,
         },
       })
       .resolvesOnce({
@@ -66,10 +70,12 @@ describe("getNewFormSubmissions should", () => {
           {
             Name: "DEF",
             CreatedAt: 123,
+            Version: 8,
           },
           {
             Name: "GHI",
             CreatedAt: 123,
+            Version: 8,
           },
         ],
       });
@@ -83,6 +89,7 @@ describe("getNewFormSubmissions should", () => {
       {
         createdAt: 123,
         name: "ABC",
+        version: 8,
       },
     ]);
   });
@@ -95,15 +102,18 @@ describe("getNewFormSubmissions should", () => {
           {
             Name: "ABC",
             CreatedAt: 123,
+            Version: 8,
           },
           {
             Name: "DEF",
             CreatedAt: 123,
+            Version: 8,
           },
         ],
         LastEvaluatedKey: {
           Name: "DEF",
           CreatedAt: 123,
+          Version: 8,
         },
       })
       .resolvesOnce({
@@ -111,10 +121,12 @@ describe("getNewFormSubmissions should", () => {
           {
             Name: "GHI",
             CreatedAt: 123,
+            Version: 8,
           },
           {
             Name: "JKL",
             CreatedAt: 123,
+            Version: 8,
           },
         ],
       });
@@ -128,18 +140,22 @@ describe("getNewFormSubmissions should", () => {
       {
         createdAt: 123,
         name: "ABC",
+        version: 8,
       },
       {
         createdAt: 123,
         name: "DEF",
+        version: 8,
       },
       {
         createdAt: 123,
         name: "GHI",
+        version: 8,
       },
       {
         createdAt: 123,
         name: "JKL",
+        version: 8,
       },
     ]);
   });
@@ -151,7 +167,7 @@ describe("getNewFormSubmissions should", () => {
 
     await expect(
       getNewFormSubmissions("clzamy5qv0000115huc4bh90m", 100),
-    ).rejects.toThrowError(customError);
+    ).rejects.toThrow(customError);
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       customError,

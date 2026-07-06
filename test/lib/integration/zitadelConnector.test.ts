@@ -43,9 +43,9 @@ describe("introspectAccessToken should", () => {
 
     const logMessageSpy = vi.spyOn(logMessage, "info");
 
-    await expect(() =>
-      introspectAccessToken("accessToken"),
-    ).rejects.toThrowError(ZitadelConnectionError);
+    await expect(() => introspectAccessToken("accessToken")).rejects.toThrow(
+      ZitadelConnectionError,
+    );
 
     expect(logMessageSpy).toHaveBeenCalledWith(
       connectionError,

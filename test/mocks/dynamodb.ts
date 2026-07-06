@@ -10,5 +10,6 @@ export function buildMockedVaultItem(
     ConfirmationCode: confirmationCode,
     FormSubmission: '{"1":"Test response"}',
     FormSubmissionHash: "5981e9cd2a2f0032e9b8c99eb7bb8841",
+    Version: 8,
   };
 }

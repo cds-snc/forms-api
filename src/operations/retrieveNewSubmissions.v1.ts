@@ -48,9 +48,14 @@ async function v1(
 function buildResponse(newFormSubmissions: NewFormSubmission[]): {
   name: string;
   createdAt: number;
+  version: number;
 }[] {
   return newFormSubmissions.map((item) => {
-    return { name: item.name, createdAt: item.createdAt };
+    return {
+      name: item.name,
+      createdAt: item.createdAt,
+      version: item.version,
+    };
   });
 }
 
