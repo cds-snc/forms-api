@@ -1,10 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import {
-  type Location,
-  type Schema,
-  checkSchema,
-  validationResult,
-} from "express-validator";
+import { type Location, type Schema, checkSchema } from "express-validator";
 
 export function requestValidatorMiddleware(
   validationSchema: Schema,
@@ -16,18 +11,25 @@ export function requestValidatorMiddleware(
     next: NextFunction,
   ): Promise<void> => {
     try {
-      /**
-       * Because of an existing issue we have to run the next two lines of code instead of just the first one.
-       * See https://github.com/express-validator/express-validator/issues/1298
-       */
-      await checkSchema(validationSchema, validationLocations).run(request);
+      const schemaValidationResults = await checkSchema(
+        validationSchema,
+        validationLocations,
+      ).run(request);
 
-      const result = validationResult(request);
+      const isPayloadInvalid = schemaValidationResults.some(
+        (result) => result.isEmpty() === false,
+      );
 
-      if (result.isEmpty() === false) {
-        response
-          .status(400)
-          .json({ error: "Invalid payload", details: result.array() });
+      const detectedErrors = schemaValidationResults.flatMap((result) =>
+        result.array(),
+      );
+
+      if (isPayloadInvalid) {
+        response.status(400).json({
+          error: "Invalid payload",
+          details: detectedErrors,
+        });
+
         return;
       }
 

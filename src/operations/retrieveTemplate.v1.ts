@@ -5,8 +5,17 @@ import {
   RequestContextualStoreKey,
   retrieveRequestContextData,
 } from "@lib/storage/requestContextualStore.js";
+import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
 import type { ApiOperation } from "@operations/types/operation.js";
 import type { NextFunction, Request, Response } from "express";
+import type { Schema } from "express-validator";
+
+const validationSchema: Schema = {
+  version: {
+    optional: true,
+    isNumeric: { errorMessage: "Must be a number" },
+  },
+};
 
 async function v1(
   request: Request,
@@ -20,13 +29,6 @@ async function v1(
   const version = Number(request.query.version ?? 1);
 
   try {
-    if (Number.isNaN(version)) {
-      response
-        .status(400)
-        .json({ error: "URL parameter 'version' should be a number" });
-      return;
-    }
-
     const formTemplate = await getFormTemplate(formId, version);
 
     if (formTemplate === undefined) {
@@ -58,6 +60,6 @@ function buildResponse(formTemplate: FormTemplate): Record<string, unknown> {
 }
 
 export const retrieveTemplateOperationV1: ApiOperation = {
-  middleware: [],
+  middleware: [requestValidatorMiddleware(validationSchema, ["query"])],
   handler: v1,
 };

@@ -36,7 +36,7 @@ importers:
         specifier: ^4.21.0
         version: 4.22.2
       express-validator:
-        specifier: ^7.2.0
+        specifier: ^7.3.2
         version: 7.3.2
       got:
         specifier: ^14.4.7

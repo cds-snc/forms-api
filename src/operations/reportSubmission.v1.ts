@@ -23,11 +23,11 @@ import type { Schema } from "express-validator";
 const validationSchema: Schema = {
   contactEmail: {
     exists: { bail: true, errorMessage: "Missing contactEmail property" },
-    isEmail: true,
+    isEmail: { errorMessage: "Must be a valid email address" },
   },
   description: {
     exists: { bail: true, errorMessage: "Missing description property" },
-    isString: true,
+    isString: { errorMessage: "Must be a string" },
     isLength: {
       options: { min: 10, max: 1000 },
       errorMessage: "Text length must be between 10 and 1000 characters",
