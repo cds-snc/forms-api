@@ -1,0 +1,16 @@
+### Updating a form after publication
+
+You can update a form in settings. The live form will continue collecting responses until you publish the update.
+
+### Test your form before updating
+
+Non-developers may need to check with developers before editing the form. You may need to:
+- Adjust form questions and workflows.
+- Revise lists and spreadsheets for organizing responses. 
+- Update API integration.
+
+### After you publish
+
+The earlier version remains in our database. But you’ll no longer be able to view it.
+
+New form fillers only have access to the updated form. People mid-way through the previous form can complete the earlier version unless they reload the page. 
