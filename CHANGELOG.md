@@ -1,5 +1,46 @@
 # Changelog
 
+## [1.9.0](https://github.com/cds-snc/forms-api/compare/v1.8.1...v1.9.0) (2026-07-21)
+
+
+### Features
+
+* support form versioning ([#390](https://github.com/cds-snc/forms-api/issues/390)) ([1009dee](https://github.com/cds-snc/forms-api/commit/1009deee8bb8d4e3f9b340eac9287039465b52a3))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @gcforms/database to v1.1.2 ([#393](https://github.com/cds-snc/forms-api/issues/393)) ([d6b924f](https://github.com/cds-snc/forms-api/commit/d6b924f2debf94ba2ed2ab3a747d527a411df228))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump form-data from 4.0.5 to 4.0.6 in /examples/nodejs ([#386](https://github.com/cds-snc/forms-api/issues/386)) ([46c9004](https://github.com/cds-snc/forms-api/commit/46c90048f49ac319b390ef0e12b26e549ee66100))
+* **deps:** lock file maintenance ([#373](https://github.com/cds-snc/forms-api/issues/373)) ([31c39b4](https://github.com/cds-snc/forms-api/commit/31c39b41aa45d8cd0686714ef5d0d60c602bf0d4))
+* **deps:** lock file maintenance ([#379](https://github.com/cds-snc/forms-api/issues/379)) ([61c5017](https://github.com/cds-snc/forms-api/commit/61c501701e64568594f2fd818794da825f0b2ebe))
+* **deps:** lock file maintenance ([#391](https://github.com/cds-snc/forms-api/issues/391)) ([085a10d](https://github.com/cds-snc/forms-api/commit/085a10dfdaaf1e8c0cba34c6ec836ef0bb4b8023))
+* **deps:** lock file maintenance ([#395](https://github.com/cds-snc/forms-api/issues/395)) ([62e1a12](https://github.com/cds-snc/forms-api/commit/62e1a12f1ea56b42880b7595f5bea2a5a7ad006a))
+* **deps:** lock file maintenance ([#397](https://github.com/cds-snc/forms-api/issues/397)) ([5f2a11f](https://github.com/cds-snc/forms-api/commit/5f2a11f85c0021b32f5d10aeb07aa3a4f6c5bcf6))
+* **deps:** lock file maintenance ([#401](https://github.com/cds-snc/forms-api/issues/401)) ([27d641d](https://github.com/cds-snc/forms-api/commit/27d641d61ffc755108013a1c8768870f73c73db0))
+* **deps:** update all minor dependencies ([#394](https://github.com/cds-snc/forms-api/issues/394)) ([7c9ceba](https://github.com/cds-snc/forms-api/commit/7c9ceba0df0f49af538291f05e2c41d8b7ac0a83))
+* **deps:** update all minor dependencies to v10.34.1 ([#378](https://github.com/cds-snc/forms-api/issues/378)) ([af7fa0d](https://github.com/cds-snc/forms-api/commit/af7fa0d95615dd2c61b7ac73b3d777ef5baf51c8))
+* **deps:** update all non-major github action dependencies ([#371](https://github.com/cds-snc/forms-api/issues/371)) ([f9e7b46](https://github.com/cds-snc/forms-api/commit/f9e7b4664b2c6358f0966bb8af2e79a078585b2b))
+* **deps:** update all non-major github action dependencies ([#381](https://github.com/cds-snc/forms-api/issues/381)) ([09a7c5c](https://github.com/cds-snc/forms-api/commit/09a7c5c1f37afcdbf773094c1016d24a27c91321))
+* **deps:** update all patch dependencies ([#399](https://github.com/cds-snc/forms-api/issues/399)) ([9a4c8de](https://github.com/cds-snc/forms-api/commit/9a4c8de40304c703e2b6239c0e966aa030727123))
+* **deps:** update dependency cryptography to v48 [security] ([#383](https://github.com/cds-snc/forms-api/issues/383)) ([cb10b8b](https://github.com/cds-snc/forms-api/commit/cb10b8bba16bdc60143c17456a3019a1ba9b1266))
+* **deps:** update dependency pyjwt to v2.13.0 ([#372](https://github.com/cds-snc/forms-api/issues/372)) ([2915574](https://github.com/cds-snc/forms-api/commit/291557491d1b9c2a4ba4281998b1af56402a5da3))
+* **deps:** update dependency vitest to v4 [security] ([#375](https://github.com/cds-snc/forms-api/issues/375)) ([bb7542e](https://github.com/cds-snc/forms-api/commit/bb7542e9b3b00ada194101ffae2a62059de32cfc))
+* **deps:** update docker pin digests ([#385](https://github.com/cds-snc/forms-api/issues/385)) ([c55872a](https://github.com/cds-snc/forms-api/commit/c55872afb8dca7f64730bd584bf660582debdd4a))
+* **deps:** update github/codeql-action action to v3.36.3 ([#396](https://github.com/cds-snc/forms-api/issues/396)) ([549cc1b](https://github.com/cds-snc/forms-api/commit/549cc1bc18d65ec8939aa464660b80ccbe6d0257))
+* **deps:** update github/codeql-action action to v3.37.0 ([#400](https://github.com/cds-snc/forms-api/issues/400)) ([c352357](https://github.com/cds-snc/forms-api/commit/c3523576fd6cba8cee01b44a76e9bb19dcc94877))
+* **deps:** update mcr.microsoft.com/vscode/devcontainers/base:debian docker digest to 1a00517 ([#392](https://github.com/cds-snc/forms-api/issues/392)) ([febe582](https://github.com/cds-snc/forms-api/commit/febe5823a2e80357ae544cce95636124c5b3c395))
+* improve input validation method for get template operation ([#404](https://github.com/cds-snc/forms-api/issues/404)) ([4cee31c](https://github.com/cds-snc/forms-api/commit/4cee31c161b7b2e48547e64254760dee12981802))
+* pnpm upgrade ([#388](https://github.com/cds-snc/forms-api/issues/388)) ([ce740c3](https://github.com/cds-snc/forms-api/commit/ce740c362fe2f73d4dec93f4a2b6ed89aa257a8f))
+* remove conditional use of new Vault index ('StatusCreatedAt_v2') ([#398](https://github.com/cds-snc/forms-api/issues/398)) ([9ba3700](https://github.com/cds-snc/forms-api/commit/9ba37009cbc967303346b5bb449d4fa869153de0))
+* remove unused responseRetriever utility script ([#377](https://github.com/cds-snc/forms-api/issues/377)) ([3de48f2](https://github.com/cds-snc/forms-api/commit/3de48f29b9e0294c18d81131aa84c20072825104))
+* synced file(s) with cds-snc/site-reliability-engineering ([#389](https://github.com/cds-snc/forms-api/issues/389)) ([9553f9a](https://github.com/cds-snc/forms-api/commit/9553f9aee83f7281ca647658c8be3fe0eb54d06c))
+* upgrade @gcforms/database package to version 1.1.1 ([#380](https://github.com/cds-snc/forms-api/issues/380)) ([a608382](https://github.com/cds-snc/forms-api/commit/a608382d427d411d49d23ee5f07f4b0d49d468b3))
+
 ## [1.8.1](https://github.com/cds-snc/forms-api/compare/v1.8.0...v1.8.1) (2026-06-01)
 
 
