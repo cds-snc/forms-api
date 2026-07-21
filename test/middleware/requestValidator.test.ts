@@ -1,11 +1,8 @@
 import { requestValidatorMiddleware } from "@middleware/requestValidator.js";
 import {
-  type Result,
   type Schema,
   type ValidationChain,
-  type ValidationError,
   checkSchema,
-  validationResult,
 } from "express-validator";
 import type { RunnableValidationChains } from "express-validator/lib/middlewares/schema.js";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -13,11 +10,6 @@ import { getMockReq, getMockRes } from "vitest-mock-express";
 
 vi.mock("express-validator");
 const checkSchemaMock = vi.mocked(checkSchema);
-const validationResultMock = vi.mocked(validationResult);
-
-checkSchemaMock.mockReturnValue({
-  run: vi.fn(),
-} as unknown as RunnableValidationChains<ValidationChain>);
 
 describe("requestValidatorMiddleware should", () => {
   const requestMock = getMockReq();
@@ -29,9 +21,14 @@ describe("requestValidatorMiddleware should", () => {
   });
 
   it("pass to the next function when validation is successful", async () => {
-    validationResultMock.mockReturnValueOnce({
-      isEmpty: vi.fn().mockReturnValue(true),
-    } as Partial<Result<ValidationError>> as Result<ValidationError>);
+    checkSchemaMock.mockReturnValueOnce({
+      run: vi.fn().mockResolvedValueOnce([
+        {
+          isEmpty: vi.fn().mockReturnValue(true),
+          array: vi.fn().mockReturnValue([]),
+        },
+      ]),
+    } as unknown as RunnableValidationChains<ValidationChain>);
 
     await requestValidatorMiddleware({} as Schema)(
       requestMock,
@@ -43,18 +40,22 @@ describe("requestValidatorMiddleware should", () => {
   });
 
   it("respond with error when validation failed because errors were detected", async () => {
-    validationResultMock.mockReturnValueOnce({
-      isEmpty: vi.fn().mockReturnValue(false),
-      array: vi.fn().mockReturnValue([
+    checkSchemaMock.mockReturnValueOnce({
+      run: vi.fn().mockResolvedValueOnce([
         {
-          type: "test",
-          value: "test",
-          msg: "test",
-          path: "test",
-          location: "test",
+          isEmpty: vi.fn().mockReturnValue(false),
+          array: vi.fn().mockReturnValue([
+            {
+              type: "test",
+              value: "test",
+              msg: "test",
+              path: "test",
+              location: "test",
+            },
+          ]),
         },
       ]),
-    } as Partial<Result<ValidationError>> as Result<ValidationError>);
+    } as unknown as RunnableValidationChains<ValidationChain>);
 
     await requestValidatorMiddleware({} as Schema)(
       requestMock,
@@ -79,9 +80,9 @@ describe("requestValidatorMiddleware should", () => {
   });
 
   it("pass error to next function when processing fails due to internal error", async () => {
-    validationResultMock.mockReturnValueOnce({
-      array: vi.fn().mockReturnValue(new Error("custom error")),
-    } as Partial<Result<ValidationError>> as Result<ValidationError>);
+    checkSchemaMock.mockReturnValueOnce({
+      run: vi.fn().mockRejectedValueOnce(new Error("custom error")),
+    } as unknown as RunnableValidationChains<ValidationChain>);
 
     await requestValidatorMiddleware({} as Schema)(
       requestMock,

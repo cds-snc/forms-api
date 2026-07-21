@@ -118,21 +118,23 @@ describe("retrieveTemplateOperation handler should", () => {
   });
 
   it("respond with error when 'version' query parameter is not a number", async () => {
-    getFormTemplateMock.mockRejectedValueOnce(new Error("custom error"));
     requestMock.query = {
       version: "hello",
     };
 
-    await retrieveTemplateOperationV1.handler(
-      requestMock,
-      responseMock,
-      nextMock,
-    );
+    for (const middleware of retrieveTemplateOperationV1.middleware) {
+      await middleware(requestMock, responseMock, nextMock);
+    }
 
     expect(responseMock.status).toHaveBeenCalledWith(400);
-    expect(responseMock.json).toHaveBeenCalledWith({
-      error: "URL parameter 'version' should be a number",
-    });
+    expect(responseMock.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        error: "Invalid payload",
+        details: expect.arrayContaining([
+          expect.objectContaining({ msg: "Must be a number" }),
+        ]),
+      }),
+    );
   });
 
   it("pass error to next function when processing fails due to internal error", async () => {
