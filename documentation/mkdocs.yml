@@ -44,7 +44,6 @@ nav:
   - Getting started: getting-started.md
   - Authentication: authentication.md
   - Making requests: making-requests.md
-  - Form versioning: form-versioning.md
   - Monitoring: monitoring.md
   - Getting support: getting-support.md
 
@@ -65,7 +64,6 @@ plugins:
             Getting started: Pour commencer
             Authentication: Authentification
             Making requests: Effectuer des demandes
-            Form versioning: Gestion des versions des formulaires
             Monitoring: Surveiller
             Getting support: Obtenir du soutien
   - search

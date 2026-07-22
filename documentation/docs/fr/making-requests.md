@@ -47,15 +47,18 @@ Ce chemin d’URL renvoie une liste de soumissions qui comprend les 100 plus anc
 [
   {
     "name": "05-09-09f4",
-    "createdAt": 1725553403512
+    "createdAt": 1725553403512,
+    "version": 1
   },
   {
     "name": "05-09-9620",
-    "createdAt": 1725553404965
+    "createdAt": 1725553404965,
+    "version": 2
   },
   {
     "name": "05-09-75dc",
-    "createdAt": 1725553404972
+    "createdAt": 1725553404972,
+    "version": 2
   }
 ]
 ```
@@ -64,7 +67,11 @@ Ce chemin d’URL renvoie une liste de soumissions qui comprend les 100 plus anc
 </tr>
 </table>
 
-> _À noter : L'horodatage est en temps universel coordonné (TUC)._
+> _À noter :_
+> 
+> _L'attribut `createdAt` est un horodatage en temps universel coordonné (TUC)._
+>
+> _L'attribut `version` sert à identifier la version du formulaire qui a été utlisé lors de la soumission de la réponse_
 
 ### Récupérer des soumissions de formulaires **spécifiques**
 
@@ -145,20 +152,21 @@ Les données ressembleront à ceci lorsque des fichiers sont joints :
 
 ```json
 {
-   "createdAt": 1749476854628,
-   "status": "New",
-   "confirmationCode": "714dfe46-6fa1-4281-8d15-a39bcebc3c4f",
-   "answers": "{\"1\":\"Test1\",\"2\":\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\",\"3\":\"form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\",\"4\":\"form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\"}",
-   "checksum": "cc33cb49f6c088bf98b7315794db216e",
-   "attachments": [
-      {
-        "id": "04d8aff7-25d7-49e5-8f01-77a8b6fba214",
-        "name": "output.txt",
-        "downloadLink": "https://...",
-        "isPotentiallyMalicious": true,
-        "md5": "54b0c58c7ce9f2a8b551351102ee0938"
-      }
-   ]
+  "createdAt": 1749476854628,
+  "status": "New",
+  "confirmationCode": "714dfe46-6fa1-4281-8d15-a39bcebc3c4f",
+  "answers": "{\"1\":\"Test1\",\"2\":\"form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\",\"3\":\"form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\",\"4\":\"form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\"}",
+  "checksum": "cc33cb49f6c088bf98b7315794db216e",
+  "attachments": [
+    {
+      "id": "04d8aff7-25d7-49e5-8f01-77a8b6fba214",
+      "name": "output.txt",
+      "downloadLink": "https://...",
+      "isPotentiallyMalicious": true,
+      "md5": "54b0c58c7ce9f2a8b551351102ee0938"
+    }
+  ],
+  "version": 5
 }
 ```
 
@@ -314,6 +322,10 @@ Pour signaler un problème, incluez un message au format similaire à celui ci-d
 Ce chemin d’URL récupère les questions qui ont été posées au format JSON afin qu’elles puissent être plus facilement associées aux réponses récupérées :
 
 `GET /forms/{formID}/template`
+
+Optionnellement, vous pouvez passer un paramètre `version` pour demander une version spécifique. Si ce paramètre n'est pas fourni, la dernière version sera renvoyée :
+
+`GET /forms/{formID}/template?version=3`
 
 > _Remarque : Les questions seront dans une structure de données au format JSON lorsqu’elles seront récupérées. Cela est utile si vous transformez les données et que vous devez faire correspondre les réponses aux questions._
 
