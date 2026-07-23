@@ -24,12 +24,14 @@ class PrivateApiKey:
 class NewFormSubmission:
     name: str
     created_at: int
+    version: int
 
     @staticmethod
     def from_json(json_object: dict) -> "NewFormSubmission":
         return NewFormSubmission(
             name=json_object["name"],
             created_at=json_object["createdAt"],
+            version=json_object["version"],
         )
 
 
@@ -80,6 +82,7 @@ class FormSubmission:
     answers: str
     checksum: str
     attachments: Optional[List[Attachment]]
+    version: int
 
     @staticmethod
     def from_json(json_object: dict) -> "FormSubmission":
@@ -94,6 +97,7 @@ class FormSubmission:
                 if json_object.get("attachments")
                 else None
             ),
+            version=json_object["version"],
         )
 
 
