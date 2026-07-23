@@ -25,13 +25,13 @@ namespace dotnet
       this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
     }
 
-    public Task<object> GetFormTemplate()
+    public Task<object> GetFormTemplate(ushort? version)
     {
       try
       {
         return this
           .httpClient
-          .GetAsync($"/forms/{this.formId}/template")
+          .GetAsync($"/forms/{this.formId}/template{(version.HasValue ? $"?version={version.Value}" : "")}")
           .Result
           .EnsureSuccessStatusCode()
           .Content
