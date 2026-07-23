@@ -80,21 +80,33 @@ async function runRetrieveDecryptAndConfirmFormSubmissions(
     accessToken,
   );
 
-  console.info("\nRetrieving form template...\n");
-
-  const formTemplate = await apiClient.getFormTemplate();
-
-  console.info(truncateString(JSON.stringify(formTemplate)));
-
   console.info("\nRetrieving new form submissions...");
 
   const newFormSubmissions = await apiClient.getNewFormSubmissions();
 
   if (newFormSubmissions.length > 0) {
     console.info("\nNew form submissions:");
-    console.info(newFormSubmissions.map((x) => x.name).join(", "));
+    console.info(
+      newFormSubmissions.map((x) => `${x.name} (v${x.version})`).join(", "),
+    );
 
-    console.info("\nRetrieving, decrypting and confirming form submissions...");
+    console.info("\nRetrieving form templates...\n");
+
+    const formTemplateVersionsToDownload = Array.from(
+      new Set(newFormSubmissions.map((x) => x.version)),
+    );
+
+    const formTemplateVersions = await retrieveFormTemplateVersions(
+      apiClient,
+      formTemplateVersionsToDownload,
+    );
+
+    for (const [version, formTemplate] of formTemplateVersions) {
+      console.info(`Form template version ${version}:`);
+      console.info(`${truncateString(formTemplate)}\n`);
+    }
+
+    console.info("Retrieving, decrypting and confirming form submissions...");
 
     for (const newFormSubmission of newFormSubmissions) {
       console.info(`\nProcessing ${newFormSubmission.name}...\n`);
@@ -135,7 +147,12 @@ async function runRetrieveDecryptAndConfirmFormSubmissions(
         }`,
       );
 
-      await saveSubmissionLocally(newFormSubmission.name, formSubmission);
+      await saveSubmissionLocally(
+        newFormSubmission.name,
+        formSubmission,
+        formTemplateVersions.get(newFormSubmission.version) ?? "",
+        newFormSubmission.version,
+      );
 
       console.info("\nConfirming submission...");
 
@@ -147,7 +164,7 @@ async function runRetrieveDecryptAndConfirmFormSubmissions(
       console.info("\nSubmission confirmed");
 
       await requestUserInput(
-        "\n=> Press any key to continue processing form submissions or Ctrl-C to exit",
+        "\n=> Press enter to continue processing form submissions or Ctrl-C to exit",
       );
     }
   } else {
@@ -155,11 +172,28 @@ async function runRetrieveDecryptAndConfirmFormSubmissions(
   }
 }
 
+async function retrieveFormTemplateVersions(
+  apiClient: GCFormsApiClient,
+  versions: number[],
+): Promise<Map<number, string>> {
+  return Promise.all(
+    versions.map((version) => {
+      return apiClient
+        .getFormTemplate(version)
+        .then(
+          (formTemplate) => [version, JSON.stringify(formTemplate)] as const,
+        );
+    }),
+  ).then((formTemplateVersions) => new Map(formTemplateVersions));
+}
+
 async function saveSubmissionLocally(
   submissionName: string,
   submission: FormSubmission,
+  formTemplate: string,
+  version: number,
 ): Promise<void> {
-  console.info("\nSaving submission answers...");
+  console.info("\nSaving submission...");
 
   const submissionFolderPath = path.join("./", submissionName);
 
@@ -168,8 +202,13 @@ async function saveSubmissionLocally(
   });
 
   await writeFile(
-    path.join(submissionFolderPath, "answers.json"),
+    path.join(submissionFolderPath, "submission-answers.json"),
     submission.answers,
+  );
+
+  await writeFile(
+    path.join(submissionFolderPath, `form-template.v${version}.json`),
+    formTemplate,
   );
 
   if (submission.attachments) {
@@ -304,7 +343,7 @@ function requestUserInput(question: string): Promise<string> {
   );
 }
 
-function truncateString(str: string, maxLength = 2000) {
+function truncateString(str: string, maxLength = 500) {
   return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
 }
 
