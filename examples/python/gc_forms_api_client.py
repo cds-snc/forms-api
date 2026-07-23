@@ -19,9 +19,11 @@ class GCFormsApiClient:
             headers={"Authorization": f"Bearer {access_token}"},
         )
 
-    def get_form_template(self) -> dict:
+    def get_form_template(self, version: int | None = None) -> dict:
         try:
-            response = self.httpClient.get(f"/forms/{self.form_id}/template")
+            response = self.httpClient.get(
+                f"/forms/{self.form_id}/template{f"?version={version}" if version is not None else ""}"
+            )
             response.raise_for_status()
             return dict(response.json())
         except Exception as exception:

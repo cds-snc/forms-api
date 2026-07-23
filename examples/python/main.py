@@ -3,7 +3,12 @@ from pathlib import Path
 
 import requests
 from access_token_generator import AccessTokenGenerator
-from data_structures import Attachment, PrivateApiKey, FormSubmission, FormSubmissionProblem
+from data_structures import (
+    Attachment,
+    PrivateApiKey,
+    FormSubmission,
+    FormSubmissionProblem,
+)
 from gc_forms_api_client import GCFormsApiClient
 from form_submission_decrypter import FormSubmissionDecrypter
 from form_submission_integrity_verifier import FormSubmissionVerifier
@@ -17,15 +22,13 @@ def main() -> None:
     try:
         private_api_key = load_private_api_key()
 
-        menu_selection = input(
-            """
+        menu_selection = input("""
 I want to:
 (1) Generate and display an access token
 (2) Retrieve, decrypt and confirm form submissions
 (3) Report a problem with a form submission
 Selection (1):
-"""
-        )
+""")
 
         match menu_selection:
             case "2":
@@ -35,7 +38,8 @@ Selection (1):
             case _:
                 run_generate_access_token(private_api_key)
     except Exception as exception:
-            raise exception
+        raise exception
+
 
 def run_generate_access_token(private_api_key: PrivateApiKey) -> None:
     print("\nGenerating access token...")
@@ -47,7 +51,10 @@ def run_generate_access_token(private_api_key: PrivateApiKey) -> None:
     print("\nGenerated access token:")
     print(access_token)
 
-def run_retrieve_decrypt_and_confirm_form_submissions(private_api_key: PrivateApiKey) -> None:
+
+def run_retrieve_decrypt_and_confirm_form_submissions(
+    private_api_key: PrivateApiKey,
+) -> None:
     print("\nGenerating access token...")
 
     access_token = AccessTokenGenerator.generate(
@@ -58,12 +65,6 @@ def run_retrieve_decrypt_and_confirm_form_submissions(private_api_key: PrivateAp
         private_api_key.form_id, GCFORMS_API_URL, access_token
     )
 
-    print("\nRetrieving form template...\n")
-
-    form_template = api_client.get_form_template()
-
-    print(truncate_string(json.dumps(form_template)))
-
     print("\nRetrieving new form submissions...")
 
     new_form_submissions = api_client.get_new_form_submissions()
@@ -71,9 +72,23 @@ def run_retrieve_decrypt_and_confirm_form_submissions(private_api_key: PrivateAp
     if len(new_form_submissions) > 0:
         print("\nNew form submissions:")
 
-        print(", ".join(x.name for x in new_form_submissions))
+        print(", ".join(f"{x.name} (v{x.version})" for x in new_form_submissions))
 
-        print("\nRetrieving, decrypting and confirming form submissions...")
+        print("\nRetrieving form templates...\n")
+
+        form_template_versions_to_download = list(
+            set(x.version for x in new_form_submissions)
+        )
+
+        form_template_versions = retrieve_form_template_versions(
+            api_client, form_template_versions_to_download
+        )
+
+        for version, form_template in form_template_versions.items():
+            print(f"Form template version {version}:")
+            print(f"{truncate_string(form_template)}\n")
+
+        print("Retrieving, decrypting and confirming form submissions...")
 
         for new_form_submission in new_form_submissions:
             print(f"\nProcessing {new_form_submission.name}...\n")
@@ -110,7 +125,12 @@ def run_retrieve_decrypt_and_confirm_form_submissions(private_api_key: PrivateAp
                 f"\nIntegrity verification result: {'OK' if integrity_verification_result else 'INVALID'}"
             )
 
-            save_submission_locally(new_form_submission.name, form_submission)
+            save_submission_locally(
+                new_form_submission.name,
+                form_submission,
+                form_template_versions[new_form_submission.version],
+                new_form_submission.version,
+            )
 
             print("\nConfirming submission...")
 
@@ -121,20 +141,36 @@ def run_retrieve_decrypt_and_confirm_form_submissions(private_api_key: PrivateAp
             print("\nSubmission confirmed")
 
             input(
-                "\n=> Press any key to continue processing form submissions or Ctrl-C to exit"
+                "\n=> Press enter to continue processing form submissions or Ctrl-C to exit"
             )
     else:
         print("\nCould not find any new form submission!")
 
-def save_submission_locally(submission_name: str, submission: "FormSubmission") -> None:
-    print("\nSaving submission answers...")
+
+def retrieve_form_template_versions(
+    api_client: GCFormsApiClient,
+    versions: list[int],
+) -> dict[int, str]:
+    return {
+        version: json.dumps(api_client.get_form_template(version))
+        for version in versions
+    }
+
+
+def save_submission_locally(
+    submission_name: str, submission: FormSubmission, form_template: str, version: int
+) -> None:
+    print("\nSaving submission...")
 
     submission_folder_path = Path("./") / submission_name
 
     submission_folder_path.mkdir(parents=True, exist_ok=True)
 
-    with open(submission_folder_path / "answers.json", "w") as file:
+    with open(submission_folder_path / "submission-answers.json", "w") as file:
         file.write(submission.answers)
+
+    with open(submission_folder_path / f"form-template.v{version}.json", "w") as file:
+        file.write(form_template)
 
     if submission.attachments:
         print("\nSaving submission attachments...\n")
@@ -144,7 +180,10 @@ def save_submission_locally(submission_name: str, submission: "FormSubmission") 
 
     print(f"\nSubmission saved in folder named '{submission_folder_path}'")
 
-def download_and_save_attachment(attachment: Attachment, submission_folder_path: Path) -> None:
+
+def download_and_save_attachment(
+    attachment: Attachment, submission_folder_path: Path
+) -> None:
     try:
         response = requests.get(attachment.download_link, stream=True)
         response.raise_for_status()
@@ -153,9 +192,14 @@ def download_and_save_attachment(attachment: Attachment, submission_folder_path:
             for chunk in response.iter_content(chunk_size=8192):
                 file.write(chunk)
 
-        print(f"Submission attachment '{attachment.name}' has been saved {"(flagged as potentially malicious)" if attachment.is_potentially_malicious else ""}")
+        print(
+            f"Submission attachment '{attachment.name}' has been saved {"(flagged as potentially malicious)" if attachment.is_potentially_malicious else ""}"
+        )
     except Exception as e:
-        raise RuntimeError(f"Failed to download and save submission attachment {attachment.name}") from e
+        raise RuntimeError(
+            f"Failed to download and save submission attachment {attachment.name}"
+        ) from e
+
 
 def run_report_problem_with_form_submission(private_api_key: PrivateApiKey) -> None:
     submission_name = input("\nSubmission name:\n")
@@ -186,6 +230,7 @@ def run_report_problem_with_form_submission(private_api_key: PrivateApiKey) -> N
 
     print("\nSubmission has been reported")
 
+
 def load_private_api_key() -> PrivateApiKey:
     try:
         for file_path in Path(".").glob("*_private_api_key.json"):
@@ -199,8 +244,9 @@ def load_private_api_key() -> PrivateApiKey:
         )
     except Exception as exception:
         raise Exception("Failed to load private API key") from exception
-    
-def truncate_string(s: str, max_length: int = 2000) -> str:
+
+
+def truncate_string(s: str, max_length: int = 500) -> str:
     return s[:max_length] + "..." if len(s) > max_length else s
 
 
