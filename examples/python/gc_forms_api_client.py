@@ -9,37 +9,42 @@ from data_structures import (
 
 class GCFormsApiClient:
     form_id: str
-    httpClient: httpx.Client
+    httpClient: httpx.AsyncClient
 
     def __init__(self, form_id: str, api_url: str, access_token: str):
         self.form_id = form_id
-        self.httpClient = httpx.Client(
+        self.httpClient = httpx.AsyncClient(
             base_url=api_url,
             timeout=3,
             headers={"Authorization": f"Bearer {access_token}"},
         )
 
-    def get_form_template(self, version: int | None = None) -> dict:
+    async def get_form_template(self, version: int | None = None) -> dict:
         try:
-            response = self.httpClient.get(
-                f"/forms/{self.form_id}/template{f"?version={version}" if version is not None else ""}"
+            response = await self.httpClient.get(
+                f"/forms/{self.form_id}/template",
+                params={"version": version} if version is not None else None,
             )
             response.raise_for_status()
             return dict(response.json())
         except Exception as exception:
             raise Exception("Failed to retrieve form template") from exception
 
-    def get_new_form_submissions(self) -> List[NewFormSubmission]:
+    async def get_new_form_submissions(self) -> List[NewFormSubmission]:
         try:
-            response = self.httpClient.get(f"/forms/{self.form_id}/submission/new")
+            response = await self.httpClient.get(
+                f"/forms/{self.form_id}/submission/new"
+            )
             response.raise_for_status()
             return [NewFormSubmission.from_json(item) for item in response.json()]
         except Exception as exception:
             raise Exception("Failed to retrieve new form submissions") from exception
 
-    def get_form_submission(self, submission_name: str) -> EncryptedFormSubmission:
+    async def get_form_submission(
+        self, submission_name: str
+    ) -> EncryptedFormSubmission:
         try:
-            response = self.httpClient.get(
+            response = await self.httpClient.get(
                 f"/forms/{self.form_id}/submission/{submission_name}"
             )
             response.raise_for_status()
@@ -47,22 +52,22 @@ class GCFormsApiClient:
         except Exception as exception:
             raise Exception("Failed to retrieve form submission") from exception
 
-    def confirm_form_submission(
+    async def confirm_form_submission(
         self, submission_name: str, confirmation_code: str
     ) -> None:
         try:
-            response = self.httpClient.put(
+            response = await self.httpClient.put(
                 f"/forms/{self.form_id}/submission/{submission_name}/confirm/{confirmation_code}"
             )
             response.raise_for_status()
         except Exception as exception:
             raise Exception("Failed to confirm form submission") from exception
 
-    def report_problem_with_form_submission(
+    async def report_problem_with_form_submission(
         self, submission_name: str, problem: FormSubmissionProblem
     ) -> None:
         try:
-            response = self.httpClient.post(
+            response = await self.httpClient.post(
                 f"/forms/{self.form_id}/submission/{submission_name}/problem",
                 json=problem.to_json(),
             )
