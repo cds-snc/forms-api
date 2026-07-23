@@ -61,12 +61,6 @@ Selection (1):");
 
       GCFormsApiClient apiClient = new(privateApiKey.formId, GCFORMS_API_URL, accessToken);
 
-      Console.WriteLine("\nRetrieving form template...\n");
-
-      object formTemplate = await apiClient.GetFormTemplate();
-
-      Console.WriteLine(TruncateString(JsonSerializer.Serialize(formTemplate)));
-
       Console.WriteLine("\nRetrieving new form submissions...");
 
       List<NewFormSubmission> newFormSubmissions = await apiClient.GetNewFormSubmissions();
@@ -74,9 +68,21 @@ Selection (1):");
       if (newFormSubmissions.Count > 0)
       {
         Console.WriteLine($"\nNew form submissions:");
-        Console.WriteLine(string.Join(", ", newFormSubmissions.Select(x => x.name)));
+        Console.WriteLine(string.Join(", ", newFormSubmissions.Select(x => $"{x.name} (v{x.version})")));
 
-        Console.WriteLine("\nRetrieving, decrypting and confirming form submissions...");
+        Console.WriteLine("\nRetrieving form templates...\n");
+
+        IEnumerable<ushort> formTemplateVersionsToDownload = newFormSubmissions.Select(x => x.version).Distinct();
+
+        Dictionary<ushort, string> formTemplateVersions = await RetrieveFormTemplateVersions(apiClient, formTemplateVersionsToDownload);
+
+        foreach (var (version, formTemplate) in formTemplateVersions)
+        {
+          Console.WriteLine($"Form template version {version}:");
+          Console.WriteLine($"{TruncateString(formTemplate)}\n");
+        }
+
+        Console.WriteLine("Retrieving, decrypting and confirming form submissions...");
 
         foreach (NewFormSubmission newFormSubmission in newFormSubmissions)
         {
@@ -104,7 +110,7 @@ Selection (1):");
 
           Console.WriteLine($"\nIntegrity verification result: {(integrityVerificationResult ? "OK" : "INVALID")}");
 
-          await SaveSubmissionLocally(newFormSubmission.name, formSubmission);
+          await SaveSubmissionLocally(newFormSubmission.name, formSubmission, formTemplateVersions[newFormSubmission.version], newFormSubmission.version);
 
           Console.WriteLine("\nConfirming submission...");
 
@@ -112,7 +118,7 @@ Selection (1):");
 
           Console.WriteLine("\nSubmission confirmed");
 
-          Console.WriteLine("\n=> Press any key to continue processing form submissions or Ctrl-C to exit");
+          Console.WriteLine("\n=> Press enter to continue processing form submissions or Ctrl-C to exit");
           Console.ReadKey();
         }
       }
@@ -122,15 +128,37 @@ Selection (1):");
       }
     }
 
-    static async Task SaveSubmissionLocally(string submissionName, FormSubmission submission)
+    private static async Task<Dictionary<ushort, string>> RetrieveFormTemplateVersions(GCFormsApiClient apiClient, IEnumerable<ushort> versions)
     {
-      Console.WriteLine("\nSaving submission answers...");
+      KeyValuePair<ushort, string>[] formTemplateVersions = await Task.WhenAll(
+        versions.Select(async version =>
+        {
+          object formTemplate = await apiClient.GetFormTemplate(version);
+
+          return new KeyValuePair<ushort, string>(
+            version,
+            JsonSerializer.Serialize(formTemplate)
+          );
+        })
+      );
+
+      return formTemplateVersions.ToDictionary(
+        x => x.Key,
+        x => x.Value
+      );
+    }
+
+    static async Task SaveSubmissionLocally(string submissionName, FormSubmission submission, string formTemplate, ushort version)
+    {
+      Console.WriteLine("\nSaving submission...");
 
       string submissionFolderPath = Path.Combine(".", submissionName);
 
       Directory.CreateDirectory(submissionFolderPath);
 
-      await File.WriteAllTextAsync(Path.Combine(submissionFolderPath, "answers.json"), submission.answers);
+      await File.WriteAllTextAsync(Path.Combine(submissionFolderPath, "submission-answers.json"), submission.answers);
+
+      await File.WriteAllTextAsync(Path.Combine(submissionFolderPath, $"form-template.v{version}.json"), formTemplate);
 
       if (submission.attachments != null)
       {
@@ -146,17 +174,17 @@ Selection (1):");
       try
       {
         using var response = await sharedHttpClient.GetAsync(
-            attachment.downloadLink,
-            HttpCompletionOption.ResponseHeadersRead
+          attachment.downloadLink,
+          HttpCompletionOption.ResponseHeadersRead
         );
 
         response.EnsureSuccessStatusCode();
 
         using var fileStream = new FileStream(
-            Path.Combine(submissionFolderPath, attachment.name),
-            FileMode.Create,
-            FileAccess.Write,
-            FileShare.None
+          Path.Combine(submissionFolderPath, attachment.name),
+          FileMode.Create,
+          FileAccess.Write,
+          FileShare.None
         );
 
         await response.Content.CopyToAsync(fileStream);
@@ -234,7 +262,7 @@ Selection (1):");
 
     }
 
-    static string TruncateString(string str, int maxLength = 2000)
+    static string TruncateString(string str, int maxLength = 500)
     {
       if (string.IsNullOrEmpty(str))
         return str;
