@@ -18,9 +18,11 @@ export class GCFormsApiClient {
     });
   }
 
-  public getFormTemplate(): Promise<Record<string, unknown>> {
+  public getFormTemplate(version?: number): Promise<Record<string, unknown>> {
     return this.httpClient
-      .get<Record<string, unknown>>(`/forms/${this.formId}/template`)
+      .get<Record<string, unknown>>(
+        `/forms/${this.formId}/template${version ? `?version=${version}` : ""}`,
+      )
       .then((response) => response.data)
       .catch((error) => {
         throw new Error("Failed to retrieve form template", { cause: error });

@@ -8,6 +8,7 @@ export type PrivateApiKey = {
 export type NewFormSubmission = {
   name: string;
   createdAt: number;
+  version: number;
 };
 
 export type EncryptedFormSubmission = {
@@ -37,6 +38,7 @@ export type FormSubmission = {
   answers: string;
   checksum: string;
   attachments?: Attachment[];
+  version: number;
 };
 
 export type FormSubmissionProblem = {
