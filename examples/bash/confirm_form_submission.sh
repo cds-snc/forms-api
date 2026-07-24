@@ -2,8 +2,8 @@
 set -euo pipefail
 
 if [ "$#" -ne 3 ]; then
-    echo "Usage: $0 <access_token> <submission_name> <confirmation_code>"
-    exit 1
+  echo "Usage: $0 <access_token> <submission_name> <confirmation_code>"
+  exit 1
 fi
 
 # Load environment vars

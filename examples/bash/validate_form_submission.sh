@@ -2,8 +2,8 @@
 set -euo pipefail
 
 if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <answers> <checksum>"
-    exit 1
+  echo "Usage: $0 <answers> <checksum>"
+  exit 1
 fi
 
 # Calculate the form response's 'answers' checksum and compare it to the checksum

@@ -2,8 +2,8 @@
 set -euo pipefail
 
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <access_token>"
-    exit 1
+  echo "Usage: $0 <access_token>"
+  exit 1
 fi
 
 # Load environment vars
