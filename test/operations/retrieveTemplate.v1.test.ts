@@ -103,7 +103,7 @@ describe("retrieveTemplateOperation handler should", () => {
   });
 
   it("respond with error when form template does not exist", async () => {
-    getFormTemplateMock.mockResolvedValueOnce(undefined);
+    getFormTemplateMock.mockResolvedValueOnce(null);
 
     await retrieveTemplateOperationV1.handler(
       requestMock,
