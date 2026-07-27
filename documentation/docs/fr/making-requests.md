@@ -69,9 +69,9 @@ Ce chemin d’URL renvoie une liste de soumissions qui comprend les 100 plus anc
 
 > _À noter :_
 > 
-> _L'attribut `createdAt` est un horodatage en temps universel coordonné (TUC)._
+> _La propriété `createdAt` est un horodatage en temps universel coordonné (UTC)._
 >
-> _L'attribut `version` sert à identifier la version du formulaire qui a été utlisé lors de la soumission de la réponse_
+> _La propriété `version` sert à identifier la version du formulaire utlisée pour soumettre la réponse._
 
 ### Récupérer des soumissions de formulaires **spécifiques**
 
@@ -323,7 +323,7 @@ Ce chemin d’URL récupère les questions qui ont été posées au format JSON 
 
 `GET /forms/{formID}/template`
 
-Optionnellement, vous pouvez passer un paramètre `version` pour demander une version spécifique. Si ce paramètre n'est pas fourni, la dernière version sera renvoyée :
+Vous pouvez également transmettre un paramètre de version pour demander une version spécifique. Si le paramètre est manquant, la dernière version s’affichera.
 
 `GET /forms/{formID}/template?version=3`
 
