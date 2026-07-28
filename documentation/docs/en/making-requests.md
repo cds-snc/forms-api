@@ -321,7 +321,7 @@ This URL path retrieves the questions that were asked in JSON format so they can
 
 `GET /forms/{formID}/template`
 
-Optionally, you can pass a `version` parameter to request a specific version. If parameter is missing, latest version will be returned:
+Optionally, you can pass a `version` parameter to request a specific form version. If parameter is missing, latest version will be returned:
 
 `GET /forms/{formID}/template?version=3`
 

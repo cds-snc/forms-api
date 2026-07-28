@@ -323,7 +323,7 @@ Ce chemin d’URL récupère les questions qui ont été posées au format JSON 
 
 `GET /forms/{formID}/template`
 
-Vous pouvez également transmettre un paramètre de version pour demander une version spécifique. Si le paramètre est manquant, la dernière version s’affichera.
+Vous pouvez également transmettre un paramètre de version pour demander une version spécifique du formulaire. Si le paramètre est manquant, la dernière version s’affichera.
 
 `GET /forms/{formID}/template?version=3`
 
