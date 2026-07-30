@@ -26,12 +26,15 @@ async function v1(
   const serviceUserId = retrieveRequestContextData(
     RequestContextualStoreKey.serviceUserId,
   );
-  const version = Number(request.query.version ?? 1);
+  const version =
+    request.query.version !== undefined
+      ? Number(request.query.version)
+      : undefined;
 
   try {
     const formTemplate = await getFormTemplate(formId, version);
 
-    if (formTemplate === undefined) {
+    if (formTemplate === null) {
       response.status(404).json({ error: "Form template does not exist" });
       return;
     }
