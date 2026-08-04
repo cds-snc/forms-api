@@ -10,7 +10,7 @@ from data_structures import PrivateApiKey
 class AccessTokenGenerator:
 
     @staticmethod
-    def generate(
+    async def generate(
         identity_provider_url: str,
         project_identifier: str,
         private_api_key: PrivateApiKey,
@@ -42,9 +42,13 @@ class AccessTokenGenerator:
                 "scope": f"openid profile urn:zitadel:iam:org:project:id:{project_identifier}:aud",
             }
 
-            httpClient = httpx.Client(base_url=identity_provider_url, timeout=3)
+            async with httpx.AsyncClient(
+                base_url=identity_provider_url, timeout=3
+            ) as httpClient:
+                response = await httpClient.post(
+                    "/oauth/v2/token", data=request_parameters
+                )
 
-            response = httpClient.post("/oauth/v2/token", data=request_parameters)
             response.raise_for_status()
             responseAsJson = response.json()
 

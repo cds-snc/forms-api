@@ -19,6 +19,8 @@ namespace dotnet
     public required string name { get; set; }
 
     public required ulong createdAt { get; set; }
+
+    public required ushort version { get; set; }
   }
 
   public struct EncryptedFormSubmission
@@ -70,6 +72,8 @@ namespace dotnet
     public required string checksum { get; set; }
 
     public List<Attachment>? attachments { get; set; }
+
+    public required ushort version { get; set; }
   }
 
   public struct FormSubmissionProblem
