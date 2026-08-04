@@ -872,15 +872,18 @@
 <pre><code class="language-json">[
   {
     &quot;name&quot;: &quot;05-09-09f4&quot;,
-    &quot;createdAt&quot;: 1725553403512
+    &quot;createdAt&quot;: 1725553403512,
+    &quot;version&quot;: 1
   },
   {
     &quot;name&quot;: &quot;05-09-9620&quot;,
-    &quot;createdAt&quot;: 1725553404965
+    &quot;createdAt&quot;: 1725553404965,
+    &quot;version&quot;: 2
   },
   {
     &quot;name&quot;: &quot;05-09-75dc&quot;,
-    &quot;createdAt&quot;: 1725553404972
+    &quot;createdAt&quot;: 1725553404972,
+    &quot;version&quot;: 2,
   }
 ]
 </code></pre>
@@ -891,7 +894,9 @@
 </table>
 
 <blockquote>
-<p><em>Note: The timestamp is in Coordinated Universal Time (UTC).</em></p>
+<p><em>Note:</em></p>
+<p><em>The <code>createdAt</code> property is a timestamp in Coordinated Universal Time (UTC).</em></p>
+<p><em>The <code>version</code> property is used to identify which form version was used to submit the response.</em></p>
 </blockquote>
 <h3 id="retrieving-specific-form-submissions">Retrieving <strong>specific</strong> form submissions</h3>
 <h4 id="getting-the-form-submission">Getting the form submission</h4>
@@ -952,20 +957,21 @@
 <h4 id="example-of-response-data-with-files">Example of response data with files</h4>
 <p>Data will look something like this when files are attached:</p>
 <pre><code class="language-json">{
-   &quot;createdAt&quot;: 1749476854628,
-   &quot;status&quot;: &quot;New&quot;,
-   &quot;confirmationCode&quot;: &quot;714dfe46-6fa1-4281-8d15-a39bcebc3c4f&quot;,
-   &quot;answers&quot;: &quot;{\&quot;1\&quot;:\&quot;Test1\&quot;,\&quot;2\&quot;:\&quot;form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\&quot;,\&quot;3\&quot;:\&quot;form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\&quot;,\&quot;4\&quot;:\&quot;form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\&quot;}&quot;,
-   &quot;checksum&quot;: &quot;cc33cb49f6c088bf98b7315794db216e&quot;,
-   &quot;attachments&quot;: [
-      {
-        &quot;id&quot;: &quot;04d8aff7-25d7-49e5-8f01-77a8b6fba214&quot;,
-        &quot;name&quot;: &quot;output.txt&quot;,
-        &quot;downloadLink&quot;: &quot;https://...&quot;,
-        &quot;isPotentiallyMalicious&quot;: true,
-        &quot;md5&quot;: &quot;54b0c58c7ce9f2a8b551351102ee0938&quot;
-      }
-   ]
+  &quot;createdAt&quot;: 1749476854628,
+  &quot;status&quot;: &quot;New&quot;,
+  &quot;confirmationCode&quot;: &quot;714dfe46-6fa1-4281-8d15-a39bcebc3c4f&quot;,
+  &quot;answers&quot;: &quot;{\&quot;1\&quot;:\&quot;Test1\&quot;,\&quot;2\&quot;:\&quot;form_attachments/2025-06-09/8b42aafd-09e9-44ad-9208-d3891a7858df/output.txt\&quot;,\&quot;3\&quot;:\&quot;form_attachments/2025-06-09/9064b3c7-eee5-4599-99c8-a257b2b5f37d/a0393b10-396c-4b8d-a97c-15394fddda86.jpg\&quot;,\&quot;4\&quot;:\&quot;form_attachments/2025-06-09/0c7c3414-05e2-4ae6-a825-683857e4c0c4/IMG_0441.jpeg\&quot;}&quot;,
+  &quot;checksum&quot;: &quot;cc33cb49f6c088bf98b7315794db216e&quot;,
+  &quot;attachments&quot;: [
+    {
+      &quot;id&quot;: &quot;04d8aff7-25d7-49e5-8f01-77a8b6fba214&quot;,
+      &quot;name&quot;: &quot;output.txt&quot;,
+      &quot;downloadLink&quot;: &quot;https://...&quot;,
+      &quot;isPotentiallyMalicious&quot;: true,
+      &quot;md5&quot;: &quot;54b0c58c7ce9f2a8b551351102ee0938&quot;
+    }
+  ],
+  &quot;version&quot;: 5
 }
 </code></pre>
 <h5 id="http-request_2">HTTP request</h5>
@@ -1112,6 +1118,8 @@
 <h5 id="http-request_4">HTTP request</h5>
 <p>This URL path retrieves the questions that were asked in JSON format so they can more easily be associated with the answer data retrieved:</p>
 <p><code>GET /forms/{formID}/template</code></p>
+<p>Optionally, you can pass a <code>version</code> parameter to request a specific form version. If parameter is missing, latest version will be returned:</p>
+<p><code>GET /forms/{formID}/template?version=3</code></p>
 <blockquote>
 <p><em>Note: The questions will be in a data structure that is JSON format when retrieved. This helps if you’ll be transforming the data and need to match the answers to the questions.</em></p>
 </blockquote>
