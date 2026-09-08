@@ -4,6 +4,3 @@ minimumReleaseAge: 10080 # 7 days
 allowBuilds:
   '@biomejs/biome': false
   esbuild: false
-minimumReleaseAgeExclude:
-  # Renovate security update: pnpm@11.11.0
-  - pnpm@11.11.0
