@@ -24,8 +24,8 @@ importers:
         specifier: ^3.859.0
         version: 3.1123.0
       '@gcforms/database':
-        specifier: 1.1.7
-        version: 1.1.7(typescript@5.9.3)
+        specifier: 1.1.10
+        version: 1.1.10(typescript@5.9.3)
       cors:
         specifier: ^2.8.5
         version: 2.8.6
@@ -83,7 +83,7 @@ importers:
         version: 7.2.2(supports-color@7.2.0)
       tsc-alias:
         specifier: ^1.8.15
-        version: 1.9.3
+        version: 1.9.4
       tsx:
         specifier: ^4.19.1
         version: 4.23.13
@@ -434,8 +434,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@gcforms/database@1.1.7':
-    resolution: {integrity: sha512-GqXeO5l1W3JQAJr6U0Kls1v41RBcoNQGnEBMY5+hH0MBt+Vv6BRD6xx1KIWdtf/FPiBGlb77mu87nmSti16z7Q==}
+  '@gcforms/database@1.1.10':
+    resolution: {integrity: sha512-dt7XgKl2Bh3hG3bhiTCuXae2NyePZ4q/F+p0E9mvvQNfYZuSbrWzHNFM2H6aRqYvxzGefZAqJpIdy1jL1OEKUg==}
 
   '@jridgewell/sourcemap-codec@1.6.0':
     resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
@@ -1707,8 +1707,8 @@ packages:
       typescript:
         optional: true
 
-  tsc-alias@1.9.3:
-    resolution: {integrity: sha512-GKrkA/K5hwae80rlfJRazukMMMIUsIHRyb75lbEp+qaUP57sYmur2Z05dosZNBspByX3ZrxbLHkMRgLfVuUcYg==}
+  tsc-alias@1.9.4:
+    resolution: {integrity: sha512-vfhh/N9xQ6oRgdAvuXVbhHSsNtbk+D4LFbJ9YrFPTTP9evGAvf2Xc3MQ7lTVmnJNN+FnuoKHn3524CKDzFYOag==}
     engines: {node: '>=16.20.2'}
     hasBin: true
 
@@ -2234,7 +2234,7 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@gcforms/database@1.1.7(typescript@5.9.3)':
+  '@gcforms/database@1.1.10(typescript@5.9.3)':
     dependencies:
       '@aws-sdk/client-secrets-manager': 3.1123.0
       '@prisma/adapter-pg': 7.8.0
@@ -3524,7 +3524,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
-  tsc-alias@1.9.3:
+  tsc-alias@1.9.4:
     dependencies:
       chokidar: 3.6.0
       commander: 9.5.0
