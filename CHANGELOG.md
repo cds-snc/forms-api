@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.9.1](https://github.com/cds-snc/forms-api/compare/v1.9.0...v1.9.1) (2026-09-21)
+
+
+### Bug Fixes
+
+* **deps:** update all patch dependencies ([#410](https://github.com/cds-snc/forms-api/issues/410)) ([b5bede5](https://github.com/cds-snc/forms-api/commit/b5bede5fe06b13f345cc86672cb1fd8c488aaf91))
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#414](https://github.com/cds-snc/forms-api/issues/414)) ([b68f23e](https://github.com/cds-snc/forms-api/commit/b68f23e0300d626a8127ce090c3cff33aa10a242))
+* **deps:** lock file maintenance ([#419](https://github.com/cds-snc/forms-api/issues/419)) ([d7c9484](https://github.com/cds-snc/forms-api/commit/d7c94848b9b21826d7d1f3fa4880ecceeb625702))
+* **deps:** lock file maintenance ([#426](https://github.com/cds-snc/forms-api/issues/426)) ([fdd091e](https://github.com/cds-snc/forms-api/commit/fdd091e88d9fccd94e681005a74d1f2b173e9780))
+* **deps:** update all patch dependencies ([#416](https://github.com/cds-snc/forms-api/issues/416)) ([1133ff4](https://github.com/cds-snc/forms-api/commit/1133ff430edd58718b0ef67d92e0ab4df228240d))
+* **deps:** update dependency cryptography to v50 [security] ([#411](https://github.com/cds-snc/forms-api/issues/411)) ([ee81ec6](https://github.com/cds-snc/forms-api/commit/ee81ec60632f305672ff022d6bc569bca92701f9))
+* **deps:** update github/codeql-action action to v3.37.5 ([#413](https://github.com/cds-snc/forms-api/issues/413)) ([82135a8](https://github.com/cds-snc/forms-api/commit/82135a8920e28374f9215c2189eb13bdc835c7f7))
+* **deps:** update github/codeql-action action to v3.37.6 ([#417](https://github.com/cds-snc/forms-api/issues/417)) ([60ab6f9](https://github.com/cds-snc/forms-api/commit/60ab6f95e59fe0a5f391f9162a6d44fcba00b4c0))
+* **deps:** update github/codeql-action action to v3.37.7 ([#418](https://github.com/cds-snc/forms-api/issues/418)) ([23d7f0e](https://github.com/cds-snc/forms-api/commit/23d7f0e035ca8e3f93cefe8c80393b7350cda427))
+* **deps:** update github/codeql-action action to v3.37.8 ([#420](https://github.com/cds-snc/forms-api/issues/420)) ([0f6a748](https://github.com/cds-snc/forms-api/commit/0f6a748e3540c8862be57c983e6cdbe07c00bcd2))
+* **deps:** update github/codeql-action action to v3.37.9 ([#422](https://github.com/cds-snc/forms-api/issues/422)) ([f8c57da](https://github.com/cds-snc/forms-api/commit/f8c57dae5b17ea307c1a57782985a935af7c42b9))
+* **deps:** update github/codeql-action action to v3.38.0 ([#429](https://github.com/cds-snc/forms-api/issues/429)) ([d99f5a5](https://github.com/cds-snc/forms-api/commit/d99f5a5ecf3a2825cdb35e5800ed8d6de70f1ee9))
+* **deps:** update pnpm to v11.26.0 [security] ([#421](https://github.com/cds-snc/forms-api/issues/421)) ([13c854a](https://github.com/cds-snc/forms-api/commit/13c854a1008bd105541915e04d54249a5c5b80df))
+* **deps:** update pnpm/setup action to v2.1.0 ([#425](https://github.com/cds-snc/forms-api/issues/425)) ([4cc000d](https://github.com/cds-snc/forms-api/commit/4cc000da00b6076b95b9257d8daceef6c380a4db))
+* synced file(s) with cds-snc/site-reliability-engineering ([#423](https://github.com/cds-snc/forms-api/issues/423)) ([9811ce5](https://github.com/cds-snc/forms-api/commit/9811ce5cc1c9df0ef2e11d9d3ae7614722506faa))
+* synced file(s) with cds-snc/site-reliability-engineering ([#427](https://github.com/cds-snc/forms-api/issues/427)) ([a69e66c](https://github.com/cds-snc/forms-api/commit/a69e66c8885b2dfbbc7ac9399e05531cbef6ab78))
+* synced local '.github/workflows/export_github_data.yml' with remote 'tools/sre_file_sync/export_github_data.yml' ([9811ce5](https://github.com/cds-snc/forms-api/commit/9811ce5cc1c9df0ef2e11d9d3ae7614722506faa))
+
 ## [1.9.0](https://github.com/cds-snc/forms-api/compare/v1.8.1...v1.9.0) (2026-08-04)
 
 
