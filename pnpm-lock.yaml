@@ -24,8 +24,8 @@ importers:
         specifier: ^3.859.0
         version: 3.1151.0
       '@gcforms/database':
-        specifier: 1.1.7
-        version: 1.1.7(typescript@5.9.3)
+        specifier: 1.1.12
+        version: 1.1.12(typescript@5.9.3)
       cors:
         specifier: ^2.8.5
         version: 2.8.6
@@ -434,8 +434,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@gcforms/database@1.1.7':
-    resolution: {integrity: sha512-GqXeO5l1W3JQAJr6U0Kls1v41RBcoNQGnEBMY5+hH0MBt+Vv6BRD6xx1KIWdtf/FPiBGlb77mu87nmSti16z7Q==}
+  '@gcforms/database@1.1.12':
+    resolution: {integrity: sha512-7I6zJPRS97cd6ptCzb2SOcjcdpHqDUtftJl11ek3GlbdRt9pzL0IJypj+/64VaEiBlAH3Kges7zC/Bx0uoTHEA==}
 
   '@jridgewell/sourcemap-codec@1.6.0':
     resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
@@ -2230,7 +2230,7 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@gcforms/database@1.1.7(typescript@5.9.3)':
+  '@gcforms/database@1.1.12(typescript@5.9.3)':
     dependencies:
       '@aws-sdk/client-secrets-manager': 3.1151.0
       '@prisma/adapter-pg': 7.8.0
