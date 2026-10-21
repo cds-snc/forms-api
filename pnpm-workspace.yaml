@@ -4,3 +4,6 @@ minimumReleaseAge: 10080 # 7 days
 allowBuilds:
   '@biomejs/biome': false
   esbuild: false
+minimumReleaseAgeExclude:
+  # Renovate security update: vite@8.2.4
+  - vite@8.2.4
