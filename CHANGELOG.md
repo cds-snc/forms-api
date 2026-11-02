@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.9.2](https://github.com/cds-snc/forms-api/compare/v1.9.1...v1.9.2) (2026-11-02)
+
+
+### Miscellaneous Chores
+
+* **deps:** lock file maintenance ([#446](https://github.com/cds-snc/forms-api/issues/446)) ([df16531](https://github.com/cds-snc/forms-api/commit/df165312e70da9ee5ccb016ab8be8a25b8ce7c0e))
+* **deps:** lock file maintenance ([#452](https://github.com/cds-snc/forms-api/issues/452)) ([d57ad8e](https://github.com/cds-snc/forms-api/commit/d57ad8e7e250ef72d0dc1f77ec7a87aae48cd419))
+* **deps:** update all patch dependencies ([#450](https://github.com/cds-snc/forms-api/issues/450)) ([c22b9d3](https://github.com/cds-snc/forms-api/commit/c22b9d3c7cdccbc87c5d519cb12ebdb9c3cd0fb2))
+* **deps:** update github/codeql-action action to v3.39.0 ([#445](https://github.com/cds-snc/forms-api/issues/445)) ([ea06124](https://github.com/cds-snc/forms-api/commit/ea061248fd8ddb46faadc80f1ba60b5df265a483))
+* **deps:** update github/codeql-action action to v3.39.1 ([#451](https://github.com/cds-snc/forms-api/issues/451)) ([0f1ddac](https://github.com/cds-snc/forms-api/commit/0f1ddacda5c24dd606e927a3bea8d8f1b20bdbb5))
+* update Github actions requiring public ECR image to alleviate rate limiting issue ([#449](https://github.com/cds-snc/forms-api/issues/449)) ([9b4e733](https://github.com/cds-snc/forms-api/commit/9b4e73310f548b5a6f8a7eca60ce29932b204d70))
+
 ## [1.9.1](https://github.com/cds-snc/forms-api/compare/v1.9.0...v1.9.1) (2026-10-21)
 
 
